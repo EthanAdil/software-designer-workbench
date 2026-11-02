@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="color-scheme" content="light dark" />
+<title>09 · 信息安全（3 题）+ 标准化与知识产权（3 题） · 软件设计师</title>
+<link rel="stylesheet" href="../../assets/css/main.css" />
+<link rel="stylesheet" href="../../assets/css/doc.css" />
+</head>
+<body class="doc-body">
+<header class="doc-topbar">
+  <a class="doc-back" href="../../index.html">← 返回工作台</a>
+  <span class="doc-crumb">docs / 02-知识点精要</span>
+</header>
+<main class="doc">
+<h1>09 · 信息安全（3 题）+ 标准化与知识产权（3 题）</h1>
+<blockquote><p>这两个模块合计 6 题，全部是记忆型，适合考前 4~6 周集中处理，投入产出比极高。</p></blockquote>
+<h2>一、密码学</h2>
+<div class="doc-table"><table><thead><tr><th>类型</th><th>算法</th><th>密钥长度</th><th>用途</th></tr></thead><tbody><tr><td>对称</td><td>DES</td><td>56 位</td><td>数据加密</td></tr><tr><td>对称</td><td>3DES</td><td>112/168 位</td><td>兼容旧系统</td></tr><tr><td>对称</td><td>AES</td><td>128/192/256 位</td><td>主流对称加密</td></tr><tr><td>对称</td><td>IDEA、RC4</td><td>—</td><td>特定场景</td></tr><tr><td>非对称</td><td>RSA</td><td>1024/2048 位</td><td>加密、签名、密钥交换</td></tr><tr><td>非对称</td><td>ECC</td><td>较短</td><td>移动端、资源受限</td></tr><tr><td>非对称</td><td>DSA</td><td>—</td><td>仅用于签名</td></tr><tr><td>哈希</td><td>MD5</td><td>输出 128 位</td><td>完整性校验（已不推荐）</td></tr><tr><td>哈希</td><td>SHA-1</td><td>输出 160 位</td><td>完整性校验</td></tr><tr><td>哈希</td><td>SHA-256</td><td>输出 256 位</td><td>当前主流</td></tr></tbody></table></div>
+<p><strong>方向不要记反</strong></p>
+<pre><code>加密传输：发送方用【接收方公钥】加密 → 接收方用【自己私钥】解密
+数字签名：发送方用【自己私钥】签名 → 接收方用【发送方公钥】验证</code></pre>
+<p>数字签名保证<strong>完整性 + 不可否认性</strong>，但不保证机密性。<br />哈希是单向的，<strong>不能解密</strong>，不属于加密算法。<br />MAC/HMAC 用共享密钥保证完整性与认证，但<strong>不提供不可否认性</strong>。</p>
+<h2>二、认证与安全体系</h2>
+<div class="doc-table"><table><thead><tr><th>概念</th><th>作用</th></tr></thead><tbody><tr><td>数字证书</td><td>由 CA 签发，绑定公钥与持有者身份，防中间人</td></tr><tr><td>PKI</td><td>CA、RA、证书库、CRL、密钥管理</td></tr><tr><td>防火墙（包过滤）</td><td>网络层检查地址与端口，快但粗</td></tr><tr><td>防火墙（应用代理）</td><td>应用层解析内容，细但慢</td></tr><tr><td>IDS</td><td>被动检测并告警</td></tr><tr><td>IPS</td><td>主动检测并阻断</td></tr><tr><td>VPN（IPSec）</td><td>网络层，AH/ESP</td></tr><tr><td>VPN（SSL）</td><td>应用层，浏览器即可</td></tr><tr><td>等级保护</td><td>分五级，一级最低</td></tr></tbody></table></div>
+<p><strong>信息安全五要素</strong>：机密性、完整性、可用性、可控性、不可否认性。</p>
+<p><strong>常见攻击</strong>：DDoS、ARP 欺骗、DNS 劫持、SQL 注入、XSS、CSRF、暴力破解、重放攻击、社会工程。</p>
+<p><strong>恶意代码</strong>：病毒（需宿主）、蠕虫（自主传播）、木马（远控后门）、逻辑炸弹（条件触发）。</p>
+<h2>三、标准化</h2>
+<div class="doc-table"><table><thead><tr><th>代号</th><th>含义</th></tr></thead><tbody><tr><td>GB</td><td>强制性国家标准</td></tr><tr><td>GB/T</td><td>推荐性国家标准</td></tr><tr><td>GJB</td><td>国家军用标准</td></tr><tr><td>DB</td><td>地方标准</td></tr><tr><td>Q/</td><td>企业标准</td></tr><tr><td>SJ</td><td>电子行业标准</td></tr></tbody></table></div>
+<p><strong>组织</strong>：ISO（国际标准化组织）、IEC（国际电工委员会）、ITU-T（国际电信联盟）、IEEE（美国电气电子工程师学会）。<br />标准有效期一般 5 年，需复审。</p>
+<h2>四、知识产权（四组数字必背）</h2>
+<div class="doc-table"><table><thead><tr><th>权利</th><th>保护期</th></tr></thead><tbody><tr><td>著作权（署名权、修改权、保护作品完整权）</td><td><strong>永久</strong></td></tr><tr><td>著作权（发表权、财产权，自然人）</td><td>作者终生 + 死后 <strong>50 年</strong></td></tr><tr><td>著作权（法人作品）</td><td>首次发表后 <strong>50 年</strong></td></tr><tr><td>发明专利</td><td><strong>20 年</strong>（自申请日）</td></tr><tr><td>实用新型</td><td><strong>10 年</strong></td></tr><tr><td>外观设计</td><td><strong>15 年</strong>（2021 年修法后）</td></tr><tr><td>商标</td><td><strong>10 年</strong>，可无限次续展</td></tr><tr><td>商业秘密</td><td>无期限，需采取保密措施</td></tr></tbody></table></div>
+<p><strong>归属规则</strong></p>
+<div class="doc-table"><table><thead><tr><th>场景</th><th>归属</th></tr></thead><tbody><tr><td>委托开发，合同有约定</td><td>按约定</td></tr><tr><td>委托开发，<strong>无约定</strong></td><td><strong>受托方（开发者）</strong></td></tr><tr><td>职务作品（一般）</td><td>作者，单位有两年优先使用权</td></tr><tr><td>职务作品（主要利用单位物质技术条件、单位担责）</td><td>作者仅署名权，其余归单位</td></tr><tr><td>软件著作权保护对象</td><td>程序及其文档（不保护思想、算法、处理过程）</td></tr></tbody></table></div>
+<h2>五、自检题</h2>
+<ol><li>数字签名用谁的私钥？验证用谁的公钥？</li><li>要避免"读脏数据"，隔离级别至少是什么？</li><li>委托开发无约定时著作权归谁？</li><li>外观设计专利保护期是多少年？</li><li>蠕虫与病毒的核心区别？</li></ol>
+<blockquote><p>答案速查：1) 发送方私钥签名，发送方公钥验证；2) READ COMMITTED；3) 受托方；4) 15 年；5) 蠕虫可独立运行并自主传播，病毒需寄生宿主。</p></blockquote>
+</main>
+<footer class="doc-footer">本文档由同名 Markdown 生成（UTF-8 编码）；内容修改请改 .md 后重新运行 <code>node tools/build-docs.js</code>。</footer>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="color-scheme" content="light dark" />
+<title>04 · 程序设计语言与编译原理（上午 5 题） · 软件设计师</title>
+<link rel="stylesheet" href="../../assets/css/main.css" />
+<link rel="stylesheet" href="../../assets/css/doc.css" />
+</head>
+<body class="doc-body">
+<header class="doc-topbar">
+  <a class="doc-back" href="../../index.html">← 返回工作台</a>
+  <span class="doc-crumb">docs / 02-知识点精要</span>
+</header>
+<main class="doc">
+<h1>04 · 程序设计语言与编译原理（上午 5 题）</h1>
+<h2>一、编译过程五阶段</h2>
+<div class="doc-table"><table><thead><tr><th>阶段</th><th>输入</th><th>输出</th><th>用到的理论</th><th>典型任务</th></tr></thead><tbody><tr><td>词法分析</td><td>源程序字符流</td><td>token 序列</td><td>正规式 / 有限自动机</td><td>识别标识符、常数、关键字</td></tr><tr><td>语法分析</td><td>token 序列</td><td>语法树</td><td>上下文无关文法</td><td>检查结构是否符合文法</td></tr><tr><td>语义分析</td><td>语法树</td><td>带语义信息的中间表示</td><td>属性文法</td><td>类型检查、变量是否声明</td></tr><tr><td>中间代码生成与优化</td><td>中间表示</td><td>优化的中间代码</td><td>—</td><td>四元式、常量合并、循环优化</td></tr><tr><td>目标代码生成</td><td>中间代码</td><td>目标机器代码</td><td>—</td><td>寄存器分配、指令选择</td></tr></tbody></table></div>
+<blockquote><p><strong>最常考的一句话</strong>："变量是否已声明"属于<strong>语义分析</strong>，不是语法分析。</p></blockquote>
+<p>编译 vs 解释：编译先整体翻译再执行（快、跨平台差）；解释逐句翻译执行（慢、跨平台好）。</p>
+<h2>二、文法与自动机</h2>
+<pre><code>0 型 短语文法  &gt;  1 型 上下文有关  &gt;  2 型 上下文无关  &gt;  3 型 正规文法
+                                    ↑ 程序语言语法         ↑ 词法（正规式）</code></pre>
+<div class="doc-table"><table><thead><tr><th>概念</th><th>关键点</th></tr></thead><tbody><tr><td>DFA</td><td>每个状态对每个输入<strong>至多一条</strong>出边，无 ε 转移</td></tr><tr><td>NFA</td><td>允许多条出边与 ε 转移</td></tr><tr><td>两者关系</td><td>识别能力等价，都可识别正规集；NFA 可用子集构造法转 DFA</td></tr><tr><td>正规式</td><td>描述词法规则，如 `(a\</td><td class="doc-extra-cell">b)*abb` 表示"以 abb 结尾的 a、b 串"</td></tr><tr><td>二义性文法</td><td>同一个句子存在两棵不同语法树</td></tr></tbody></table></div>
+<h2>三、表达式转换（每年必考）</h2>
+<p><strong>中缀 → 后缀</strong></p>
+<ol><li>遇操作数直接输出；</li><li>遇运算符：弹出栈中优先级 ≥ 当前的全部运算符，再入栈；</li><li>遇 <code>(</code> 直接入栈，遇 <code>)</code> 弹栈直到 <code>(</code>；</li><li>扫描结束，弹出栈中剩余运算符。</li></ol>
+<pre><code>a + b * (c - d)   →   a b c d - * +
+(a + b) * c       →   a b + c *</code></pre>
+<p><strong>后缀求值</strong>：遇操作数入栈；遇运算符弹出两个（先出的是右操作数）运算后入栈。</p>
+<p><code>3 4 + 5 *</code> → (3+4)=7 → 7×5 = <strong>35</strong></p>
+<h2>四、程序语言基础</h2>
+<div class="doc-table"><table><thead><tr><th>概念</th><th>说明</th></tr></thead><tbody><tr><td>传值</td><td>形参是实参副本，函数内修改不影响实参（C 默认）</td></tr><tr><td>传地址/引用</td><td>形参与实参同一存储，修改生效</td></tr><tr><td>传名</td><td>宏展开式替换，可能重复求值</td></tr><tr><td>静态类型</td><td>编译期检查（C/Java/C++）</td></tr><tr><td>动态类型</td><td>运行期检查（Python/JS/Ruby）</td></tr><tr><td>语言范型</td><td>命令式（C）、面向对象（Java）、函数式（Lisp）、逻辑式（Prolog）</td></tr></tbody></table></div>
+<h2>五、中间代码与优化</h2>
+<ul><li>中间代码形式：四元式 <code>(运算符, 操作数1, 操作数2, 结果)</code>、三元式、逆波兰式、树。</li><li>局部优化：基本块内的常量合并、公共子表达式删除、死代码消除。</li><li>循环优化：循环不变式外提、强度削弱（乘法换加法）、循环展开。</li></ul>
+<h2>六、自检题</h2>
+<ol><li>词法分析用什么理论？语法分析用什么文法？</li><li><code>a*(b+c)-d</code> 的后缀表达式是什么？</li><li>DFA 与 NFA 的本质区别是什么？</li><li>"数组下标越界检查"属于哪个阶段？</li><li>编译方式与解释方式各自的优缺点？</li></ol>
+<blockquote><p>答案速查：1) 正规式/有限自动机，上下文无关文法（2 型）；2) <code>abc+*d-</code>；3) DFA 每个状态对每个输入至多一条转移且无 ε 边；4) 语义分析（运行期检查则属目标代码/运行时，考试通常按语义分析答）；5) 编译快但需重新编译、跨平台差；解释灵活但慢。</p></blockquote>
+</main>
+<footer class="doc-footer">本文档由同名 Markdown 生成（UTF-8 编码）；内容修改请改 .md 后重新运行 <code>node tools/build-docs.js</code>。</footer>
+</body>
+</html>

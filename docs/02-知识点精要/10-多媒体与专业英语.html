@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="color-scheme" content="light dark" />
+<title>10 · 多媒体（2 题）+ 专业英语（5 题） · 软件设计师</title>
+<link rel="stylesheet" href="../../assets/css/main.css" />
+<link rel="stylesheet" href="../../assets/css/doc.css" />
+</head>
+<body class="doc-body">
+<header class="doc-topbar">
+  <a class="doc-back" href="../../index.html">← 返回工作台</a>
+  <span class="doc-crumb">docs / 02-知识点精要</span>
+</header>
+<main class="doc">
+<h1>10 · 多媒体（2 题）+ 专业英语（5 题）</h1>
+<h2>一、多媒体计算三公式</h2>
+<pre><code>音频数据量(字节) = 采样频率 × 量化位数 × 声道数 × 时间(秒) / 8
+图像数据量(字节) = 水平像素 × 垂直像素 × 颜色深度 / 8
+视频数据量(字节) = 帧率 × 每帧数据量 × 时间(秒)</code></pre>
+<p><strong>例题</strong></p>
+<div class="doc-table"><table><thead><tr><th>题目</th><th>计算</th><th>结果</th></tr></thead><tbody><tr><td>44.1kHz、16 位、双声道、1 分钟</td><td>44100×16×2×60/8</td><td>≈ 10.1 MB</td></tr><tr><td>1024×768、24 位真彩色、未压缩</td><td>1024×768×24/8</td><td>≈ 2.25 MB</td></tr><tr><td>25fps、每帧 1MB、10 秒</td><td>25×1MB×10</td><td>250 MB</td></tr></tbody></table></div>
+<p><strong>采样定理</strong>：采样频率 ≥ 2 倍信号最高频率。人耳 20Hz~20kHz，故 CD 用 44.1kHz。</p>
+<h2>二、格式特性</h2>
+<div class="doc-table"><table><thead><tr><th>格式</th><th>类型</th><th>有损/无损</th><th>透明</th><th>动画</th><th>适用</th></tr></thead><tbody><tr><td>BMP</td><td>位图</td><td>无损</td><td>不支持</td><td>否</td><td>原始位图存储</td></tr><tr><td>JPG</td><td>位图</td><td><strong>有损</strong></td><td>不支持</td><td>否</td><td>照片</td></tr><tr><td>GIF</td><td>位图</td><td>无损</td><td>支持（1 位）</td><td><strong>支持</strong></td><td>图标、简单动图（256 色）</td></tr><tr><td>PNG</td><td>位图</td><td>无损</td><td>支持（alpha）</td><td>否</td><td>网页图形、截图</td></tr><tr><td>SVG</td><td><strong>矢量</strong></td><td>无损</td><td>支持</td><td>支持（SMIL）</td><td>图标、图表</td></tr><tr><td>WAV</td><td>音频</td><td>无损</td><td>—</td><td>—</td><td>原始音频</td></tr><tr><td>MP3</td><td>音频</td><td>有损</td><td>—</td><td>—</td><td>音乐分发</td></tr><tr><td>MIDI</td><td>音频</td><td>—</td><td>—</td><td>—</td><td><strong>演奏指令，非波形</strong>，不含人声</td></tr></tbody></table></div>
+<h2>三、压缩与冗余</h2>
+<div class="doc-table"><table><thead><tr><th>冗余类型</th><th>含义</th><th>利用方式</th></tr></thead><tbody><tr><td>空间冗余</td><td>相邻像素相似</td><td>JPEG 的 DCT</td></tr><tr><td>时间冗余</td><td>相邻帧相似</td><td>MPEG 运动补偿</td></tr><tr><td>视觉冗余</td><td>人眼不敏感</td><td>量化表、色度下采样</td></tr><tr><td>编码冗余</td><td>码长分配不合理</td><td>哈夫曼编码</td></tr></tbody></table></div>
+<p>无损：哈夫曼、游程 RLE、LZW、算术编码。<br />有损：JPEG（静态）、MPEG（运动）、MP3。<br />压缩比 = 压缩前 / 压缩后。</p>
+<h2>四、专业英语应试策略</h2>
+<p><strong>题材分布</strong>：软件工程、数据库、网络、操作系统、AI/新技术，各 1 篇左右。</p>
+<p><strong>解题四步</strong></p>
+<ol><li>先通读全文抓主题（30 秒），不要被生词卡住；</li><li>看空格前后判断词性与搭配（冠词/形容词后填名词，助动词后填动词原形/过去分词）；</li><li>抓逻辑连接词：<code>however</code>（转折）、<code>therefore</code>（因果）、<code>in addition</code>（递进）、<code>whereas</code>（对比）；</li><li>排除法 + 专业词优先（与主题强相关的术语正确率更高）。</li></ol>
+<p><strong>高频词表（按题材）</strong></p>
+<div class="doc-table"><table><thead><tr><th>题材</th><th>词汇</th></tr></thead><tbody><tr><td>软件工程</td><td>requirement, architecture, module, coupling, cohesion, iteration, deployment, maintenance, refactor, framework</td></tr><tr><td>数据库</td><td>schema, transaction, commit, rollback, index, normalization, redundancy, primary key, query optimization, concurrency</td></tr><tr><td>网络</td><td>bandwidth, latency, protocol, packet, routing, congestion, throughput, encryption, handshake, topology</td></tr><tr><td>操作系统</td><td>process, thread, scheduling, virtual memory, deadlock, paging, kernel, semaphore</td></tr><tr><td>新技术</td><td>machine learning, neural network, cloud computing, container, microservice, blockchain, edge computing</td></tr></tbody></table></div>
+<p><strong>常见干扰项特征</strong></p>
+<ul><li>词性正确但语义相反（如 improve / impair）</li><li>与主题无关的同领域词（讲数据库却给 network）</li><li>单复数或时态不符</li></ul>
+<h2>五、自检题</h2>
+<ol><li>采样频率 8kHz、8 位、单声道、30 秒的音频数据量是多少？</li><li>一幅 800×600 的 8 位灰度图未压缩占多少 KB？</li><li>为什么说 MIDI 不能用来录歌？</li><li>支持透明通道且无损的位图格式是？</li><li>专业英语中 <code>however</code> 提示什么逻辑关系？</li></ol>
+<blockquote><p>答案速查：1) 8000×8×1×30/8 = 240,000 B ≈ 234 KB；2) 800×600×8/8 = 480,000 B ≈ 469 KB；3) MIDI 记录演奏指令（音高、力度、时长），不含波形采样，无法记录人声；4) PNG；5) 转折。</p></blockquote>
+</main>
+<footer class="doc-footer">本文档由同名 Markdown 生成（UTF-8 编码）；内容修改请改 .md 后重新运行 <code>node tools/build-docs.js</code>。</footer>
+</body>
+</html>

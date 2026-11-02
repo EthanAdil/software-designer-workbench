@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="color-scheme" content="light dark" />
+<title>06 · 面向对象与 UML（上午 9 题 + 下午 2 题） · 软件设计师</title>
+<link rel="stylesheet" href="../../assets/css/main.css" />
+<link rel="stylesheet" href="../../assets/css/doc.css" />
+</head>
+<body class="doc-body">
+<header class="doc-topbar">
+  <a class="doc-back" href="../../index.html">← 返回工作台</a>
+  <span class="doc-crumb">docs / 02-知识点精要</span>
+</header>
+<main class="doc">
+<h1>06 · 面向对象与 UML（上午 9 题 + 下午 2 题）</h1>
+<h2>一、类图五种关系</h2>
+<div class="doc-table"><table><thead><tr><th>关系</th><th>图形</th><th>语义</th><th>代码体现</th></tr></thead><tbody><tr><td>依赖</td><td>虚线 + 开口箭头</td><td>临时使用</td><td>方法参数、局部变量</td></tr><tr><td>关联</td><td>实线（可带箭头）</td><td>长期结构关系</td><td>成员变量</td></tr><tr><td>聚合</td><td>空心菱形（菱形在整体端）</td><td>整体-部分，可分离</td><td>成员对象，外部创建</td></tr><tr><td>组合</td><td>实心菱形（菱形在整体端）</td><td>整体-部分，同生共死</td><td>成员对象，内部创建</td></tr><tr><td>泛化</td><td>实线 + 空心三角（指向父类）</td><td>继承</td><td><code>extends</code></td></tr><tr><td>实现</td><td>虚线 + 空心三角（指向接口）</td><td>实现接口</td><td><code>implements</code></td></tr></tbody></table></div>
+<p><strong>多重度</strong>：<code>1</code>、<code>0..1</code>、<code>*</code>、<code>1..*</code>。</p>
+<h2>二、UML 图分类</h2>
+<div class="doc-table"><table><thead><tr><th>类别</th><th>图</th><th>用途</th></tr></thead><tbody><tr><td>结构图</td><td>类图</td><td>类、属性、方法、关系</td></tr><tr><td>结构图</td><td>对象图</td><td>某一时刻的对象快照</td></tr><tr><td>结构图</td><td>包图</td><td>组织与依赖</td></tr><tr><td>结构图</td><td>构件图</td><td>物理组件与接口</td></tr><tr><td>结构图</td><td>部署图</td><td>节点与部署</td></tr><tr><td>行为图</td><td>用例图</td><td>参与者与系统功能</td></tr><tr><td>行为图</td><td>活动图</td><td>业务流程/算法，支持并发与泳道</td></tr><tr><td>行为图</td><td>状态图</td><td>单个对象生命周期</td></tr><tr><td>行为图</td><td>顺序图</td><td>消息的时间顺序</td></tr><tr><td>行为图</td><td>通信图</td><td>对象链接关系（消息编号表顺序）</td></tr></tbody></table></div>
+<p><strong>用例关系</strong>：<code>include</code> 必然包含的公共行为；<code>extend</code> 条件触发的扩展；泛化。</p>
+<h2>三、设计模式 23 种</h2>
+<p><strong>创建型（5）</strong></p>
+<div class="doc-table"><table><thead><tr><th>模式</th><th>一句话意图</th></tr></thead><tbody><tr><td>单例 Singleton</td><td>保证唯一实例 + 全局访问点</td></tr><tr><td>工厂方法 Factory Method</td><td>定义创建接口，子类决定实例化哪个类</td></tr><tr><td>抽象工厂 Abstract Factory</td><td>创建一系列相关对象（多产品族）</td></tr><tr><td>建造者 Builder</td><td>分步构建复杂对象，构建与表示分离</td></tr><tr><td>原型 Prototype</td><td>通过克隆已有对象创建新对象</td></tr></tbody></table></div>
+<p><strong>结构型（7）</strong></p>
+<div class="doc-table"><table><thead><tr><th>模式</th><th>一句话意图</th></tr></thead><tbody><tr><td>适配器 Adapter</td><td>接口转换，让不兼容的类协同</td></tr><tr><td>桥接 Bridge</td><td>抽象与实现分离，各自独立变化</td></tr><tr><td>组合 Composite</td><td>树形结构表示整体-部分，统一对待</td></tr><tr><td>装饰 Decorator</td><td>动态给对象添加职责</td></tr><tr><td>外观 Facade</td><td>为子系统提供统一的高层接口</td></tr><tr><td>享元 Flyweight</td><td>共享细粒度对象，节省内存</td></tr><tr><td>代理 Proxy</td><td>控制对对象的访问</td></tr></tbody></table></div>
+<p><strong>行为型（11）</strong></p>
+<div class="doc-table"><table><thead><tr><th>模式</th><th>一句话意图</th></tr></thead><tbody><tr><td>职责链 Chain of Responsibility</td><td>请求沿链传递，直到被处理</td></tr><tr><td>命令 Command</td><td>把请求封装为对象，支持撤销/排队</td></tr><tr><td>解释器 Interpreter</td><td>给定语言定义文法并解释句子</td></tr><tr><td>迭代器 Iterator</td><td>顺序访问聚合元素而不暴露内部</td></tr><tr><td>中介者 Mediator</td><td>集中处理对象间的复杂交互</td></tr><tr><td>备忘录 Memento</td><td>捕获并恢复对象内部状态</td></tr><tr><td>观察者 Observer</td><td>一对多依赖，状态变化自动通知</td></tr><tr><td>状态 State</td><td>状态改变时行为随之改变</td></tr><tr><td>策略 Strategy</td><td>算法族可互换，客户端选择</td></tr><tr><td>模板方法 Template Method</td><td>父类定骨架，子类实现步骤</td></tr><tr><td>访问者 Visitor</td><td>在不改变元素类的前提下增加操作</td></tr></tbody></table></div>
+<h2>四、易混辨析（高频）</h2>
+<div class="doc-table"><table><thead><tr><th>对比</th><th>区别</th></tr></thead><tbody><tr><td>适配器 vs 桥接</td><td>适配器事后补救（已有类接口不合）；桥接事前设计（抽象与实现分离）</td></tr><tr><td>策略 vs 状态</td><td>策略由客户端选算法；状态由对象内部迁移驱动</td></tr><tr><td>装饰 vs 代理</td><td>装饰叠加职责；代理控制访问（远程/延迟/权限）</td></tr><tr><td>工厂方法 vs 抽象工厂</td><td>前者一类产品；后者一系列产品族</td></tr><tr><td>聚合 vs 组合</td><td>菱形都在整体端，实心才是强拥有</td></tr><tr><td>重载 vs 重写</td><td>重载同类同名不同参（编译期）；重写子类覆盖父类同名同参（运行期）</td></tr></tbody></table></div>
+<h2>五、面向对象设计原则</h2>
+<div class="doc-table"><table><thead><tr><th>原则</th><th>含义</th></tr></thead><tbody><tr><td>单一职责 SRP</td><td>一个类只负责一件事</td></tr><tr><td>开闭 OCP</td><td>对扩展开放，对修改关闭</td></tr><tr><td>里氏替换 LSP</td><td>子类可替换父类且不破坏语义</td></tr><tr><td>接口隔离 ISP</td><td>不强迫依赖无用接口</td></tr><tr><td>依赖倒置 DIP</td><td>依赖抽象而非具体实现</td></tr></tbody></table></div>
+<h2>六、自检题</h2>
+<ol><li>组合与聚合的图形区别在哪一端？</li><li>希望"动态给对象加功能"，选什么模式？</li><li>一个系统要支持多种数据库驱动切换，用什么模式？</li><li><code>include</code> 与 <code>extend</code> 的使用场景区别？</li><li>单例模式的关键实现要点？</li></ol>
+<blockquote><p>答案速查：1) 菱形都画在"整体"一端，实心为组合；2) 装饰模式；3) 策略/工厂方法/桥接均可，视"是否需整体替换实现"答桥接或策略；4) include 是必然包含的公共行为，extend 是条件/可选扩展；5) 私有构造 + 静态私有实例 + 静态公共获取方法（并发下需双检锁或静态内部类）。</p></blockquote>
+</main>
+<footer class="doc-footer">本文档由同名 Markdown 生成（UTF-8 编码）；内容修改请改 .md 后重新运行 <code>node tools/build-docs.js</code>。</footer>
+</body>
+</html>

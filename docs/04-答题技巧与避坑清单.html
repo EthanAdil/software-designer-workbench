@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="color-scheme" content="light dark" />
+<title>04 · 答题技巧与避坑清单 · 软件设计师</title>
+<link rel="stylesheet" href="../assets/css/main.css" />
+<link rel="stylesheet" href="../assets/css/doc.css" />
+</head>
+<body class="doc-body">
+<header class="doc-topbar">
+  <a class="doc-back" href="../index.html">← 返回工作台</a>
+  <span class="doc-crumb">docs</span>
+</header>
+<main class="doc">
+<h1>04 · 答题技巧与避坑清单</h1>
+<h2>一、上午卷时间分配（75 题 / 120 分钟）</h2>
+<div class="doc-table"><table><thead><tr><th>时段</th><th>动作</th><th>目标</th></tr></thead><tbody><tr><td>0~40 分钟</td><td>第一遍：会做的直接做，不确定的标记</td><td>完成 55~60 题</td></tr><tr><td>40~70 分钟</td><td>第二遍：处理标记题，排除法</td><td>补到 68~70 题</td></tr><tr><td>70~95 分钟</td><td>第三遍：计算题重算、易混概念复核</td><td>确认前 60 题无误</td></tr><tr><td>95~115 分钟</td><td>答题卡核对，确认无漏答</td><td>全卷完成</td></tr><tr><td>115~120 分钟</td><td>留出 5 分钟机动</td><td>—</td></tr></tbody></table></div>
+<p><strong>核心原则</strong>：<strong>先拿确定的 60 分，再抢不确定的 15 分</strong>。一道题超过 90 秒没有思路，立刻标记跳过。</p>
+<h2>二、答题顺序策略</h2>
+<ol><li><strong>先做专业英语</strong>：5 题独立成篇，读完就能答，适合开场热身（约 8 分钟）。</li><li><strong>再做软件工程、面向对象、数据库</strong>：分值最高且判断快，先把基本盘拿稳。</li><li><strong>接着做组成原理、操作系统、数据结构</strong>：计算题需要脑力，放在状态最好的中段。</li><li><strong>最后做网络、安全、标准、多媒体</strong>：碎片记忆题，快速判断。</li></ol>
+<p>遇到"完全没印象"的题：用排除法删掉 2 个明显错误的，剩余凭第一直觉选，<strong>不要反复改</strong>（统计上第一直觉正确率更高）。</p>
+<h2>三、蒙题原则（用于完全不会的题）</h2>
+<div class="doc-table"><table><thead><tr><th>场景</th><th>倾向</th></tr></thead><tbody><tr><td>选项中有"一定""必须""所有""只能"</td><td>多为错误项</td></tr><tr><td>两个选项语义完全相反</td><td>答案常在其中之一</td></tr><tr><td>涉及年限、位数的数值题</td><td>优先选"常见值"（20 年、50 年、128 位）</td></tr><tr><td>概念辨析题</td><td>选表述最完整、最"学术"的一项</td></tr><tr><td>计算题选项差距大</td><td>先做量级估算，排除量级不符的</td></tr><tr><td>实在无法判断</td><td>统一选同一字母，别乱跳</td></tr></tbody></table></div>
+<h2>四、机考操作要点</h2>
+<ul><li>熟悉<strong>标记、跳题、答题卡定位</strong>三个功能，考前用模考系统练 2 次。</li><li>上午卷答完后<strong>不要急着交卷</strong>，剩余时间自动划给下午卷，先仔细检查。</li><li>下午卷是<strong>文本框录入</strong>，写完先自查拼写和编号。</li><li>机考不提供编程环境，代码题是"阅读 + 填空"，不是真跑代码。</li><li>草稿纸由考场提供，计算题务必写过程，便于回头检查。</li><li><strong>中途不休息</strong>，考前少喝水。</li></ul>
+<h2>五、高频失分点 TOP 20</h2>
+<p><strong>概念类</strong></p>
+<ol><li>耦合与内聚的高低方向记反（耦合越低越好，内聚越高越好）</li><li>把"改善性维护"答成"改正性维护"（改善性占比最大）</li><li>数字签名与加密的公私钥方向记反</li><li>混淆 <code>include</code>（必然）与 <code>extend</code>（条件）</li><li>聚合/组合的菱形位置与实心空心记错</li><li>把"已定义级"与"已管理级"顺序记反（CMMI 3 级是已定义）</li><li>逻辑独立性与物理独立性的映像记反</li><li>进程"阻塞 → 运行"当成合法转换</li></ol>
+<p><strong>计算类</strong></p>
+<ol start="9"><li>补码负端范围少算一个（-2<sup>(n-1)</sup>）</li><li>流水线加速比分母用错（应为流水执行时间）</li><li>Cache 平均访问时间漏掉"未命中时先查 Cache"那一段</li><li>页面置换手算时忘记更新"最近使用"顺序</li><li>哈夫曼 WPL 算成"权值和"而不是"加权路径长度"</li><li>二叉树 <code>n0 = n2 + 1</code> 套用到多叉树</li><li>子网可用主机数忘记减 2</li><li>周转时间忘记减到达时间</li><li>音频容量计算忘记除以 8（bit → Byte）</li><li>关键路径 <code>ve</code> 取最小、<code>vl</code> 取最大（恰好反了）</li></ol>
+<p><strong>规范类</strong></p>
+<ol start="19"><li>关系模式不标 PK/FK</li><li>SQL 用 <code>= NULL</code> 而不是 <code>IS NULL</code></li></ol>
+<h2>六、易混概念速查表</h2>
+<div class="doc-table"><table><thead><tr><th>A</th><th>B</th><th>区分要点</th></tr></thead><tbody><tr><td>编译</td><td>解释</td><td>整体翻译 vs 逐句翻译</td></tr><tr><td>静态类型</td><td>动态类型</td><td>编译期检查 vs 运行期检查</td></tr><tr><td>重载</td><td>重写</td><td>同类不同参（编译期）vs 子类覆盖（运行期）</td></tr><tr><td>策略</td><td>状态</td><td>客户端选算法 vs 内部状态驱动</td></tr><tr><td>装饰</td><td>代理</td><td>加职责 vs 控访问</td></tr><tr><td>适配器</td><td>桥接</td><td>事后补救 vs 事前设计</td></tr><tr><td>白盒</td><td>黑盒</td><td>看内部逻辑 vs 看输入输出</td></tr><tr><td>判定覆盖</td><td>条件覆盖</td><td>判定整体真假 vs 单个条件取值</td></tr><tr><td>驱动模块</td><td>桩模块</td><td>模拟上层调用 vs 模拟下层被调</td></tr><tr><td>逻辑独立性</td><td>物理独立性</td><td>外模式/模式 vs 模式/内模式</td></tr><tr><td>2NF</td><td>3NF</td><td>消除部分依赖 vs 消除传递依赖</td></tr><tr><td>READ COMMITTED</td><td>REPEATABLE READ</td><td>避免脏读 vs 避免不可重复读</td></tr></tbody></table></div>
+<h2>七、考前一周清单</h2>
+<p><strong>学习上</strong></p>
+<ul class="task-list"><li class="task"><input type="checkbox" disabled /> <span>只看错题本 + 必看清单，不做新题、不碰偏题</span></li><li class="task"><input type="checkbox" disabled /> <span>每天 1 套"30 题轻量卷"保持手感（约 30 分钟）</span></li><li class="task"><input type="checkbox" disabled /> <span>公式卡过 3 遍：补码、流水线、Cache、页面置换、McCabe、子网、容量、关键路径</span></li><li class="task"><input type="checkbox" disabled /> <span>数字表过 3 遍：著作权 50 年、发明 20 年、实用新型 10 年、外观 15 年、商标 10 年</span></li><li class="task"><input type="checkbox" disabled /> <span>下午题模板各默写 1 遍（DFD 四步、数据库三问、算法四步）</span></li></ul>
+<p><strong>事务上</strong></p>
+<ul class="task-list"><li class="task"><input type="checkbox" disabled /> <span>打印准考证（多备 1 份），核对考点地址与考试时间</span></li><li class="task"><input type="checkbox" disabled /> <span>身份证在有效期内</span></li><li class="task"><input type="checkbox" disabled /> <span>提前 1 天踩点，估算通勤时间，预留 30 分钟缓冲</span></li><li class="task"><input type="checkbox" disabled /> <span>准备好黑色签字笔、铅笔（考场一般提供草稿纸）</span></li></ul>
+<p><strong>状态上</strong></p>
+<ul class="task-list"><li class="task"><input type="checkbox" disabled /> <span>提前 3 天把作息调到"上午 8:30 最清醒"</span></li><li class="task"><input type="checkbox" disabled /> <span>考前一晚不熬夜，睡眠比多背 10 个知识点更重要</span></li><li class="task"><input type="checkbox" disabled /> <span>进考场前只翻"必看清单"第一页，不翻新内容</span></li></ul>
+<h2>八、考场心态</h2>
+<ol><li><strong>第一题不会很正常</strong>，标记跳过，不要影响后面 74 题。</li><li><strong>上午卷目标不是满分</strong>，允许错 15 题；错 20 题也还在合格线附近。</li><li><strong>下午卷先写会的小问</strong>，每道题的第 (1) 问通常最简单，先把分拿到手。</li><li><strong>不要和某道题较劲</strong>，一道 15 分的题最多花 25 分钟。</li><li><strong>交卷前一定检查答题卡</strong>，漏答一题就是 1 分，可能决定过不过。</li></ol>
+<blockquote><p>最后一句：软考是"及格赛"不是"选拔赛"。把该拿的分拿稳，比追求难题更重要。</p></blockquote>
+</main>
+<footer class="doc-footer">本文档由同名 Markdown 生成（UTF-8 编码）；内容修改请改 .md 后重新运行 <code>node tools/build-docs.js</code>。</footer>
+</body>
+</html>

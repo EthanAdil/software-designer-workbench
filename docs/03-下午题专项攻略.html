@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="color-scheme" content="light dark" />
+<title>03 · 下午题（应用技术）专项攻略 · 软件设计师</title>
+<link rel="stylesheet" href="../assets/css/main.css" />
+<link rel="stylesheet" href="../assets/css/doc.css" />
+</head>
+<body class="doc-body">
+<header class="doc-topbar">
+  <a class="doc-back" href="../index.html">← 返回工作台</a>
+  <span class="doc-crumb">docs</span>
+</header>
+<main class="doc">
+<h1>03 · 下午题（应用技术）专项攻略</h1>
+<blockquote><p>下午卷 75 分，45 分合格，是"一科不过全盘重来"的高风险科目。它的特点是：<strong>题型固定、模板可背、答案可练</strong>。</p></blockquote>
+<h2>一、试卷结构</h2>
+<p>常规设置为 6 道大题，完成 5 道（前 4 道必答，第 5、6 道为 Java / C++ 二选一）：</p>
+<div class="doc-table"><table><thead><tr><th>题号</th><th>题型</th><th>分值</th><th>说明</th></tr></thead><tbody><tr><td>1</td><td>数据流图 DFD</td><td>15</td><td>补外部实体、数据存储、数据流、保持父子图平衡</td></tr><tr><td>2</td><td>UML 建模</td><td>15</td><td>补类图关系/多重度、用例、顺序图、状态图</td></tr><tr><td>3</td><td>数据库设计</td><td>15</td><td>补 ER 图、转关系模式、写 SQL</td></tr><tr><td>4</td><td>算法设计</td><td>15</td><td>补代码、写复杂度、说明算法思想</td></tr><tr><td>5 / 6</td><td>Java / C++</td><td>15</td><td>设计模式代码填空 + 设计原则说明</td></tr></tbody></table></div>
+<p><strong>答题时间</strong>：120 分钟，建议每题 20~22 分钟，留 10 分钟检查。</p>
+<h2>二、通用答题纪律</h2>
+<ol><li><strong>先写编号再写内容</strong>：<code>(1) 学生、教务管理员</code>，不要写成一段话。</li><li><strong>不留空</strong>：不会的题也要写合理猜测，主观题按点给分，写了才可能得分。</li><li><strong>用题目里的术语</strong>：题目叫"加工"就别写"处理"，题目叫"数据存储"就别写"数据库表"。</li><li><strong>分点、分行</strong>：一个要点一行，阅卷是按关键词找分。</li><li><strong>SQL 写完整</strong>：<code>SELECT … FROM … WHERE …</code>，缺关键字直接扣分，末尾分号可写可不写。</li><li><strong>关系模式标主外键</strong>：<code>学生(学号 PK, 姓名)</code>，不标 PK/FK 通常要扣分。</li></ol>
+<h2>三、DFD（数据流图）</h2>
+<p><strong>四要素</strong>：外部实体、加工（处理）、数据存储、数据流。</p>
+<p><strong>解题顺序</strong></p>
+<pre><code>1. 先找外部实体：谁在使用系统？谁在给系统提供数据？（人/组织/外部系统）
+2. 再定数据存储：系统要长期保存什么？题目里"XX库""XX表""XX档案"都是存储
+3. 然后补加工：把"动词"找出来（验证、计算、生成、更新）
+4. 最后连数据流：每条流必须有"起点 → 终点"，不能悬空</code></pre>
+<p><strong>检查清单</strong></p>
+<ul class="task-list"><li class="task"><input type="checkbox" disabled /> <span>每个加工都有输入和输出（无"黑洞"、无"奇迹"）</span></li><li class="task"><input type="checkbox" disabled /> <span>父图与子图的输入流集合一致、输出流集合一致（<strong>平衡</strong>）</span></li><li class="task"><input type="checkbox" disabled /> <span>外部实体在系统边界外，不与数据存储直接相连</span></li><li class="task"><input type="checkbox" disabled /> <span>数据流不能双向箭头（要拆成两条）</span></li><li class="task"><input type="checkbox" disabled /> <span>不出现控制流（"若…则…"不是数据流）</span></li></ul>
+<p><strong>高频陷阱</strong></p>
+<div class="doc-table"><table><thead><tr><th>陷阱</th><th>正确做法</th></tr></thead><tbody><tr><td>把"库存表"当外部实体</td><td>系统内部维护的数据集合 = 数据存储</td></tr><tr><td>漏掉"费率表""路由表"</td><td>凡系统要查询的静态表都是存储</td></tr><tr><td>父子图不平衡</td><td>子图不能凭空多出跨边界的流</td></tr></tbody></table></div>
+<h2>四、UML 建模</h2>
+<p><strong>常见问法</strong>：补类名、补关系（关联/聚合/组合/泛化）、补多重度、补用例、补顺序图消息、补状态与事件。</p>
+<p><strong>从题干文字到模型的映射</strong></p>
+<div class="doc-table"><table><thead><tr><th>题干措辞</th><th>模型元素</th></tr></thead><tbody><tr><td>"一个 X 包含多个 Y""X 由 Y 组成，Y 不能独立存在"</td><td>组合，<code>1 : *</code></td></tr><tr><td>"X 有多个 Y，Y 可以独立存在"</td><td>聚合，<code>1 : *</code></td></tr><tr><td>"一个 X 对应多个 Y，一个 Y 只属于一个 X"</td><td>关联，<code>1 : 0..*</code></td></tr><tr><td>"X 是一种 Y"</td><td>泛化（继承）</td></tr><tr><td>"X 使用 Y 完成某操作"</td><td>依赖</td></tr><tr><td>动词（提交、查询、计算）</td><td>方法（操作）</td></tr><tr><td>名词（订单、房间）</td><td>类</td></tr><tr><td>数量词（一个、多个、至少一个）</td><td>多重度</td></tr></tbody></table></div>
+<p><strong>顺序图答题格式</strong></p>
+<pre><code>对象：客人、预订界面、预订控制器、房间、预订单
+消息：客人→界面:提交预订(房型,日期)
+      界面→控制器:创建预订(参数)
+      控制器→房间:查询可用(日期)
+      ...</code></pre>
+<p><strong>状态图</strong>：列出状态 → 找事件 → 标监护条件 → 确认哪些迁移非法（业务约束）。</p>
+<h2>五、数据库设计</h2>
+<p><strong>三问套路</strong></p>
+<ol><li><strong>补 ER 图</strong>：找实体（名词）、找联系（动词）、定联系类型（看数量关系）。</li><li><strong>转关系模式</strong>：实体→表；<code>1:n</code> 把 1 端主键放 n 端；<code>m:n</code> 独立成表（主键为组合）。标注 <code>PK</code> / <code>FK</code>。</li><li><strong>写 SQL</strong>：多为"查询满足条件的记录""统计分组""创建视图"。</li></ol>
+<p><strong>SQL 书写模板</strong></p>
+<pre><code class="language-sql">-- 条件查询 + 连接
+SELECT a.列, b.列
+FROM 表A a JOIN 表B b ON a.外键 = b.主键
+WHERE 条件;
+
+-- 分组统计
+SELECT 分组列, COUNT(*) / AVG(列) / SUM(列)
+FROM 表
+GROUP BY 分组列
+HAVING 聚合条件;
+
+-- 不存在/未匹配
+SELECT * FROM A WHERE NOT EXISTS (SELECT 1 FROM B WHERE B.外键 = A.主键);
+
+-- 视图
+CREATE VIEW 视图名 AS SELECT ...;</code></pre>
+<p><strong>踩分点</strong>：<code>IS NULL</code> 不能写 <code>= NULL</code>；聚合条件用 <code>HAVING</code>；<code>COUNT(*)</code> 与 <code>COUNT(列)</code> 的区别；<code>ORDER BY</code> 与 <code>LIMIT/TOP</code> 的位置。</p>
+<h2>六、算法设计</h2>
+<p><strong>四步法</strong></p>
+<ol><li>读题干说明的算法思想（题目通常已经把思路讲清楚，只是代码有洞）；</li><li>定位空格的上下文：空在条件里 → 填比较表达式；空在语句里 → 填赋值或调用；</li><li>检查边界：循环起止、数组下标、初始值；</li><li>复杂度题：看循环层数与递归深度。</li></ol>
+<p><strong>常考算法与模板</strong></p>
+<div class="doc-table"><table><thead><tr><th>算法</th><th>关键代码特征</th><th>复杂度</th></tr></thead><tbody><tr><td>一次遍历求最大/次大</td><td><code>if (a[i] &gt; max1) { max2 = max1; max1 = a[i]; }</code></td><td>O(n)</td></tr><tr><td>二分查找</td><td><code>while (low &lt;= high) { mid = (low+high)/2; ... }</code></td><td>O(log n)</td></tr><tr><td>0-1 背包</td><td><code>dp[j] = max(dp[j], dp[j-w[i]] + v[i])</code>，<strong>j 逆序</strong></td><td>O(nC)</td></tr><tr><td>最长递增子序列</td><td><code>dp[i] = max(dp[j]) + 1 (j &lt; i 且 a[j] &lt; a[i])</code></td><td>O(n²)</td></tr><tr><td>归并排序</td><td>分治 + 合并辅助数组</td><td>O(n log n)</td></tr><tr><td>图遍历</td><td>DFS 递归/栈，BFS 队列</td><td>O(n+e)</td></tr></tbody></table></div>
+<p><strong>必答的两句话</strong></p>
+<ul><li>逆序原因：<strong>保证每件物品只选一次；正序会变成完全背包</strong>。</li><li>空间优化：<strong>一维滚动数组把 O(nC) 降到 O(C)</strong>。</li></ul>
+<h2>七、Java / C++ 设计模式题</h2>
+<p><strong>答题步骤</strong></p>
+<ol><li>先看类图或题干提到的模式名（常直接给出，如"采用策略模式"）；</li><li>看接口/抽象类定义了哪些方法 → 空多半是实现该方法；</li><li>看构造方法与成员变量 → 空多半是类型声明或注入；</li><li>看调用处 → 空多半是方法名；</li><li>设计原则题：写"原则名 + 一句对应说明"。</li></ol>
+<p><strong>高频模式与空位特征</strong></p>
+<div class="doc-table"><table><thead><tr><th>模式</th><th>常见空位</th></tr></thead><tbody><tr><td>策略</td><td>成员类型（接口名）、<code>strategy.method()</code>、setter 参数类型</td></tr><tr><td>观察者</td><td><code>attach/addObserver</code>、<code>for (Observer o : list)</code>、<code>update</code></td></tr><tr><td>模板方法</td><td>抽象方法名、<code>public 继承 基类</code></td></tr><tr><td>单例</td><td>私有构造、<code>static</code> 实例、<code>getInstance</code></td></tr><tr><td>工厂方法</td><td>返回类型、<code>new 具体类()</code></td></tr><tr><td>装饰</td><td>父类引用、<code>super.method()</code>、包装调用</td></tr></tbody></table></div>
+<h2>八、检查清单（交卷前 5 分钟）</h2>
+<ul class="task-list"><li class="task"><input type="checkbox" disabled /> <span>每道题都写了编号（(1)(2)(3)）</span></li><li class="task"><input type="checkbox" disabled /> <span>关系模式标了 PK / FK</span></li><li class="task"><input type="checkbox" disabled /> <span>SQL 有 <code>SELECT</code>、<code>FROM</code>，条件完整</span></li><li class="task"><input type="checkbox" disabled /> <span>代码填空的括号、分号没漏</span></li><li class="task"><input type="checkbox" disabled /> <span>复杂度写了 O( ) 形式</span></li><li class="task"><input type="checkbox" disabled /> <span>没有留空题</span></li><li class="task"><input type="checkbox" disabled /> <span>5 道题都作答了（第 5/6 题二选一，不要两道都写一半）</span></li></ul>
+</main>
+<footer class="doc-footer">本文档由同名 Markdown 生成（UTF-8 编码）；内容修改请改 .md 后重新运行 <code>node tools/build-docs.js</code>。</footer>
+</body>
+</html>

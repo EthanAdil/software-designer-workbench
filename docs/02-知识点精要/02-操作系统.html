@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="color-scheme" content="light dark" />
+<title>02 · 操作系统（上午 6 题） · 软件设计师</title>
+<link rel="stylesheet" href="../../assets/css/main.css" />
+<link rel="stylesheet" href="../../assets/css/doc.css" />
+</head>
+<body class="doc-body">
+<header class="doc-topbar">
+  <a class="doc-back" href="../../index.html">← 返回工作台</a>
+  <span class="doc-crumb">docs / 02-知识点精要</span>
+</header>
+<main class="doc">
+<h1>02 · 操作系统（上午 6 题）</h1>
+<h2>一、进程与状态</h2>
+<pre><code>三态：就绪 ⇄ 运行 → 阻塞 → 就绪
+禁止：阻塞 → 运行（必须先回就绪）、就绪 → 阻塞</code></pre>
+<div class="doc-table"><table><thead><tr><th>状态转换</th><th>触发者</th><th>原因</th></tr></thead><tbody><tr><td>就绪 → 运行</td><td>调度程序</td><td>被选中</td></tr><tr><td>运行 → 就绪</td><td>进程自身/系统</td><td>时间片到、被抢占</td></tr><tr><td>运行 → 阻塞</td><td>进程自身</td><td>请求 I/O、申请资源失败、等待事件</td></tr><tr><td>阻塞 → 就绪</td><td>系统</td><td>等待的事件发生</td></tr></tbody></table></div>
+<h2>二、PV 操作（必考）</h2>
+<pre><code>P(S): S = S - 1;  if (S &lt; 0) 阻塞当前进程
+V(S): S = S + 1;  if (S &lt;= 0) 唤醒一个等待进程
+
+S &gt; 0  : 还有 S 个可用资源
+S = 0  : 资源刚好用完，无等待
+S &lt; 0  : |S| 个进程在等待</code></pre>
+<p><strong>生产者-消费者（缓冲区容量 n）</strong></p>
+<div class="doc-table"><table><thead><tr><th>信号量</th><th>初值</th><th>含义</th></tr></thead><tbody><tr><td>mutex</td><td>1</td><td>互斥访问缓冲区</td></tr><tr><td>empty</td><td>n</td><td>空闲槽位数</td></tr><tr><td>full</td><td>0</td><td>已放产品数</td></tr></tbody></table></div>
+<pre><code>生产者：P(empty) → P(mutex) → 放产品 → V(mutex) → V(full)
+消费者：P(full)  → P(mutex) → 取产品 → V(mutex) → V(empty)</code></pre>
+<blockquote><p>顺序不可颠倒：先 P 资源信号量，再 P 互斥信号量。反过来会死锁。</p></blockquote>
+<h2>三、存储管理</h2>
+<div class="doc-table"><table><thead><tr><th>方式</th><th>地址结构</th><th>碎片</th><th>特点</th></tr></thead><tbody><tr><td>页式</td><td>页号 + 页内地址</td><td>内部碎片</td><td>无外部碎片，需页表</td></tr><tr><td>段式</td><td>段号 + 段内地址</td><td>外部碎片</td><td>便于共享与保护</td></tr><tr><td>段页式</td><td>段号 + 页号 + 页内地址</td><td>内部碎片</td><td>两次查表，开销大</td></tr></tbody></table></div>
+<p><strong>地址换算</strong>：页面大小 4KB = <code>0x1000</code>，低 12 位为页内偏移。<br />例：逻辑地址 <code>0x2A5F</code> → 页号 2，偏移 <code>0xA5F</code>。</p>
+<p><strong>页面置换</strong></p>
+<div class="doc-table"><table><thead><tr><th>算法</th><th>特点</th></tr></thead><tbody><tr><td>OPT</td><td>理论最优，无法实现，作对比基准</td></tr><tr><td>FIFO</td><td>实现简单，存在 Belady 异常</td></tr><tr><td>LRU</td><td>最近最久未使用，性能接近 OPT，实现需硬件支持</td></tr><tr><td>LFU</td><td>按访问频率淘汰</td></tr></tbody></table></div>
+<h2>四、文件与设备</h2>
+<div class="doc-table"><table><thead><tr><th>物理结构</th><th>随机访问</th><th>扩展</th><th>碎片</th></tr></thead><tbody><tr><td>连续</td><td>支持</td><td>困难</td><td>有外部碎片</td></tr><tr><td>链接</td><td>不支持（只能顺序）</td><td>容易</td><td>无</td></tr><tr><td>索引</td><td>支持</td><td>容易</td><td>索引表占空间</td></tr></tbody></table></div>
+<p><strong>位示图换算</strong>（字号、位号从 0 开始）</p>
+<pre><code>字号 = 物理块号 / 字长
+位号 = 物理块号 % 字长
+物理块号 = 字号 × 字长 + 位号</code></pre>
+<p><strong>磁盘调度</strong></p>
+<div class="doc-table"><table><thead><tr><th>算法</th><th>策略</th><th>缺点</th></tr></thead><tbody><tr><td>FCFS</td><td>按请求顺序</td><td>移臂距离大</td></tr><tr><td>SSTF</td><td>最近的先服务</td><td>可能饥饿</td></tr><tr><td>SCAN</td><td>单向扫到端点再折返</td><td>边缘请求等待久</td></tr><tr><td>CSCAN</td><td>到端点直接回起点</td><td>回程不服务</td></tr></tbody></table></div>
+<h2>五、调度与周转</h2>
+<pre><code>周转时间 = 完成时间 - 到达时间
+带权周转时间 = 周转时间 / 服务时间
+平均周转时间 = Σ周转时间 / 作业数</code></pre>
+<p>调度算法：FCFS（公平）、SJF（平均等待最短，可能饥饿）、优先级、时间片轮转、多级反馈队列。</p>
+<h2>六、自检题</h2>
+<ol><li>信号量初值 3，当前值 -1，说明什么？</li><li>优先级反转与死锁的区别？</li><li>LRU 与 FIFO 在"增加物理块缺页反而增多"上分别表现如何？</li><li>页面大小 8KB，逻辑地址 0x3FFF 的页号与偏移？</li><li>4 个作业 FCFS，如何算平均带权周转时间？</li></ol>
+<blockquote><p>答案速查：1) 3 个资源已全部分配，且还有 1 个进程在等待；2) 优先级反转是调度问题（低优先级持锁阻塞高优先级），死锁是循环等待；3) FIFO 有 Belady 异常，LRU 不会；4) 页号 1，偏移 0x1FFF；5) 先算完成时间→周转→除以服务时间。</p></blockquote>
+</main>
+<footer class="doc-footer">本文档由同名 Markdown 生成（UTF-8 编码）；内容修改请改 .md 后重新运行 <code>node tools/build-docs.js</code>。</footer>
+</body>
+</html>
