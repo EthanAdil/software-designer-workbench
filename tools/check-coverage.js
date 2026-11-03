@@ -61,9 +61,9 @@ const EX = sandbox.window.RK_EXAMS;
  * -------------------------------------------------------------------------- */
 const POINT_TOPICS = {
   'computer-system|数据表示与运算': ['数据表示', '浮点数', '运算方法', '校验码'],
-  'computer-system|CPU 与体系结构': ['体系结构', '指令流水线'],
-  'computer-system|存储系统': ['Cache'],
-  'computer-system|总线、I/O 与可靠性': ['可靠性'],
+  'computer-system|CPU 与体系结构': ['体系结构', '指令流水线', 'CPU'],
+  'computer-system|存储系统': ['Cache', '存储系统'],
+  'computer-system|总线、I/O 与可靠性': ['可靠性', '总线', 'I/O 方式'],
   'computer-system|性能指标': ['性能指标'],
 
   'os|进程管理': ['进程管理', 'PV 操作', '死锁'],
@@ -71,12 +71,12 @@ const POINT_TOPICS = {
   'os|文件与设备管理': ['文件管理', '设备管理'],
   'os|作业与进程调度': ['调度算法'],
 
-  'ds-algorithm|线性结构': ['队列', '串'],
-  'ds-algorithm|树与二叉树': ['二叉树性质', '二叉树遍历', '哈夫曼树', '二叉排序树'],
+  'ds-algorithm|线性结构': ['队列', '串', '栈', '线性表'],
+  'ds-algorithm|树与二叉树': ['二叉树性质', '二叉树遍历', '哈夫曼树', '二叉排序树', 'B树'],
   'ds-algorithm|图': ['图', '最小生成树', '最短路径', '拓扑排序', '关键路径'],
   'ds-algorithm|查找': ['查找', '散列表'],
   'ds-algorithm|排序': ['排序'],
-  'ds-algorithm|算法设计与复杂度': ['复杂度'],
+  'ds-algorithm|算法设计与复杂度': ['复杂度', '算法设计'],
 
   'programming-language|语言基础': ['语言基础', '参数传递'],
   'programming-language|文法与自动机': ['正规式', '有限自动机', '文法'],
@@ -93,34 +93,34 @@ const POINT_TOPICS = {
   'oo-uml|面向对象基础': ['面向对象基础'],
   'oo-uml|UML 图': ['UML 图', '类图关系', '用例图'],
   'oo-uml|设计模式（按目的分三类）': ['设计模式'],
-  'oo-uml|面向对象分析与设计': ['设计原则'],
+  'oo-uml|面向对象分析与设计': ['设计原则', 'OOA'],
 
   'database|数据库体系结构': ['数据库体系结构'],
   'database|ER 模型与关系转换': ['ER 模型'],
   'database|关系代数与规范化': ['关系代数', '规范化'],
   'database|SQL': ['SQL', '索引'],
   'database|事务与并发': ['事务', '并发控制'],
-  'database|备份与恢复': [],
+  'database|备份与恢复': ['备份与恢复'],
 
   'network|分层模型': ['分层模型', '传输层'],
   'network|IP 地址与子网': ['IP 地址', '子网划分', 'CIDR'],
   'network|TCP 与 UDP': ['TCP'],
   'network|应用层与网络管理': ['应用层', '路由协议'],
-  'network|传输介质与编码': [],
+  'network|传输介质与编码': ['传输介质'],
 
   'security|密码学基础': ['密码学', '哈希'],
-  'security|认证与签名': ['数字签名', 'PKI'],
+  'security|认证与签名': ['数字签名', 'PKI', 'MAC'],
   'security|网络攻击与防护': ['防护技术', '恶意代码'],
-  'security|安全体系与管理': [],
+  'security|安全体系与管理': ['安全体系'],
 
   'standard-law|标准化': ['标准化'],
   'standard-law|著作权': ['著作权', '软件著作权'],
-  'standard-law|专利与商标': ['专利', '商标'],
-  'standard-law|侵权与责任': [],
+  'standard-law|专利与商标': ['专利', '商标', '商业秘密'],
+  'standard-law|侵权与责任': ['侵权'],
 
   'multimedia|音频': ['音频'],
   'multimedia|图像': ['图像'],
-  'multimedia|视频': [],
+  'multimedia|视频': ['视频'],
   'multimedia|压缩': ['压缩', '格式'],
 
   'english|高频题材': ['专业英语'],
