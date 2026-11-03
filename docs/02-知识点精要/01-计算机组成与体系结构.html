@@ -15,33 +15,97 @@
 </header>
 <main class="doc">
 <h1>01 · 计算机组成与体系结构（上午 7 题）</h1>
-<h2>一、必须背下的数值</h2>
-<div class="doc-table"><table><thead><tr><th>项目</th><th>结论</th></tr></thead><tbody><tr><td>n 位补码范围</td><td><code>-2<sup>(n-1)</sup> ~ 2<sup>(n-1)</sup>-1</code></td></tr><tr><td>n 位原码/反码范围</td><td><code>-(2<sup>(n-1)</sup>-1) ~ 2<sup>(n-1)</sup>-1</code></td></tr><tr><td>8 位补码特殊值</td><td><code>10000000 = -128</code>（无对应正数）</td></tr><tr><td>IEEE 754 单精度</td><td>1 符号 + 8 阶码 + 23 尾数（32 位）</td></tr><tr><td>IEEE 754 双精度</td><td>1 + 11 + 52（64 位）</td></tr><tr><td>移码</td><td>补码符号位取反</td></tr><tr><td>海明码校验位</td><td><code>2<sup>k</sup> ≥ n + k + 1</code></td></tr><tr><td>CRC 补零个数</td><td>等于生成多项式最高次幂</td></tr></tbody></table></div>
-<h2>二、公式表</h2>
-<p><strong>流水线</strong></p>
-<pre><code>k 段流水线执行 n 条指令所需时钟周期 = k + (n - 1)
+<blockquote><p>本模块公式固定、套路清晰：计算题集中在补码、浮点、校验码、流水线、Cache、可靠性、性能七处；概念题集中在 RISC/CISC、Flynn、总线、I/O 方式、寻址方式。目标是计算题一分不丢，概念题最多错一道。</p></blockquote>
+<h2>一、考点地图</h2>
+<div class="doc-table"><table><thead><tr><th>考点</th><th>近年题量</th><th>常见问法</th><th>难度</th></tr></thead><tbody><tr><td>数据表示</td><td>1~2</td><td>补码表示范围、真值换算、溢出判断</td><td>易~中</td></tr><tr><td>浮点数</td><td>0~1</td><td>IEEE 754 位划分、阶码与尾数的作用</td><td>易</td></tr><tr><td>校验码</td><td>0~1</td><td>海明码需几位校验位、CRC 补几个 0</td><td>中</td></tr><tr><td>CPU 与体系结构</td><td>1~2</td><td>RISC/CISC 特征、Flynn 分类、寄存器功能</td><td>易</td></tr><tr><td>存储系统</td><td>1~2</td><td>Cache 映射地址结构、平均访问时间、主存编址</td><td>中~难</td></tr><tr><td>指令流水线</td><td>1</td><td>执行周期数、吞吐率、加速比</td><td>中</td></tr><tr><td>总线与 I/O</td><td>0~1</td><td>总线分类与带宽、四种 I/O 控制方式</td><td>易</td></tr><tr><td>可靠性与性能</td><td>1</td><td>串并联可靠度、MIPS 与 CPI</td><td>易~中</td></tr></tbody></table></div>
+<h2>二、数据表示</h2>
+<h3>2.1 四种机器数</h3>
+<p>计算机中的数有原码、反码、补码、移码四种表示。正数的原码、反码、补码完全相同；负数的反码是原码符号位不变、其余位取反，补码是反码末位加 1。</p>
+<p><strong>为什么用补码</strong>：补码把减法统一成加法（<code>A - B = A + (-B)的补码</code>），减法器可以省掉；同时 0 的补码表示唯一，而原码有 <code>+0</code> 和 <code>-0</code> 两个零。这两点是补码成为计算机内部整数标准表示的原因。</p>
+<p>n 位机器的表示范围：</p>
+<div class="doc-table"><table><thead><tr><th>编码</th><th>范围</th><th>特点</th></tr></thead><tbody><tr><td>原码/反码</td><td><code>-(2<sup>(n-1)</sup>-1) ~ 2<sup>(n-1)</sup>-1</code></td><td>关于 0 对称，有两个零</td></tr><tr><td>补码</td><td><code>-2<sup>(n-1)</sup> ~ 2<sup>(n-1)</sup>-1</code></td><td>负数端多一个，0 唯一</td></tr><tr><td>移码</td><td>补码符号位取反</td><td>用于浮点数阶码，便于比较大小</td></tr></tbody></table></div>
+<p><strong>典型考法</strong>：8 位补码 <code>10000000</code> 的真值是多少？按权展开为 <code>-2<sup>7</sup> = -128</code>，它没有对应的正数，是补码范围负端的"多出来的那一个"。这类题不要用"取反加一"倒推，直接按位权算最快。</p>
+<h3>2.2 溢出判断</h3>
+<ul><li><strong>双符号位（变形补码）</strong>：结果 <code>00</code> 正常、<code>01</code> 正溢、<code>10</code> 负溢、<code>11</code> 正常（负数）。</li><li><strong>单符号位</strong>：最高位进位与次高位进位不同（异或为 1）即溢出。</li></ul>
+<p>考试常给"两数相加、问是否溢出、结果是什么"，先判符号位与进位，再决定是否保留结果。</p>
+<h3>2.3 浮点数</h3>
+<p>浮点数由阶码和尾数组成：<strong>阶码决定表示范围，尾数决定表示精度</strong>。这是每年最容易出的概念题。</p>
+<p>IEEE 754 标准：</p>
+<div class="doc-table"><table><thead><tr><th>类型</th><th>符号位</th><th>阶码</th><th>尾数</th><th>总位数</th><th>偏置值</th></tr></thead><tbody><tr><td>单精度 float</td><td>1</td><td>8</td><td>23</td><td>32</td><td>127</td></tr><tr><td>双精度 double</td><td>1</td><td>11</td><td>52</td><td>64</td><td>1023</td></tr></tbody></table></div>
+<p>规格化数的尾数隐含最高位 1（隐藏位），实际精度比尾数位数多 1 位。阶码用移码表示，便于硬件直接比较两数大小。</p>
+<p><strong>判断技巧</strong>：题目问"范围"找阶码位数，问"精度"找尾数位数，问"能表示多少个不同值"用 <code>2^总位数</code> 估算。</p>
+<h3>2.4 校验码</h3>
+<p><strong>海明码</strong>：在 n 位信息位中插入 k 位校验位，需满足 <code>2<sup>k</sup> ≥ n + k + 1</code>，可检 1 位错并纠 1 位错。</p>
+<p>例：8 位信息位需要几位校验位？</p>
+<ul><li>k=3：<code>2<sup>3</sup> = 8 &lt; 8+3+1 = 12</code>，不够；</li><li>k=4：<code>2<sup>4</sup> = 16 ≥ 8+4+1 = 13</code>，够。</li></ul>
+<p>故至少 4 位。这类题不要死记"8 位配 4 位"，每次都代不等式。</p>
+<p><strong>CRC 循环冗余校验</strong>：用生成多项式做模 2 除法，余数拼在信息码后。<strong>信息码后补 0 的个数等于生成多项式的最高次幂</strong>，如 <code>G(x)=x³+x+1</code> 补 3 个 0。CRC 检错能力强，但一般不用于纠错。</p>
+<h2>三、CPU 与体系结构</h2>
+<h3>3.1 CPU 组成与寄存器</h3>
+<p>CPU = 运算器 + 控制器 + 寄存器组。</p>
+<ul><li>运算器：ALU（算术逻辑单元）、累加寄存器 ACC、状态/标志寄存器 PSW。</li><li>控制器：程序计数器 PC（下一条指令地址）、指令寄存器 IR（当前指令）、指令译码器、时序部件。</li><li>寄存器组：通用寄存器、暂存寄存器。</li></ul>
+<p><strong>指令周期</strong>：取指 → 间址 → 执行 → 中断，四个阶段并非每条指令都完整经历。</p>
+<h3>3.2 CISC 与 RISC</h3>
+<div class="doc-table"><table><thead><tr><th>对比项</th><th>CISC</th><th>RISC</th></tr></thead><tbody><tr><td>指令数量</td><td>多、功能复杂</td><td>少、精简</td></tr><tr><td>指令长度</td><td>变长</td><td>定长</td></tr><tr><td>寻址方式</td><td>丰富</td><td>少</td></tr><tr><td>访存指令</td><td>任意指令可访存</td><td>只有 Load/Store 访存</td></tr><tr><td>控制器</td><td>多为微程序控制</td><td>多为硬布线控制</td></tr><tr><td>流水线</td><td>不易实现</td><td>天然友好</td></tr></tbody></table></div>
+<p>RISC 的"精简"是为了让每条指令都能在一个时钟周期内完成，从而把流水线效率做高。</p>
+<h3>3.3 Flynn 分类</h3>
+<p>按<strong>指令流</strong>和<strong>数据流</strong>的多倍性划分：</p>
+<div class="doc-table"><table><thead><tr><th>类型</th><th>含义</th><th>典型</th></tr></thead><tbody><tr><td>SISD</td><td>单指令流单数据流</td><td>传统单处理器</td></tr><tr><td>SIMD</td><td>单指令流多数据流</td><td>向量机、阵列处理机、GPU</td></tr><tr><td>MISD</td><td>多指令流单数据流</td><td>理论模型，实际少见</td></tr><tr><td>MIMD</td><td>多指令流多数据流</td><td>多处理机、多核、集群</td></tr></tbody></table></div>
+<h3>3.4 寻址方式</h3>
+<div class="doc-table"><table><thead><tr><th>方式</th><th>操作数位置</th><th>特点</th></tr></thead><tbody><tr><td>立即寻址</td><td>指令中</td><td>最快，操作数是常量</td></tr><tr><td>直接寻址</td><td>主存，指令给地址</td><td>一次访存</td></tr><tr><td>间接寻址</td><td>主存，指令给地址的地址</td><td>两次访存，可扩大寻址范围</td></tr><tr><td>寄存器寻址</td><td>寄存器</td><td>速度快，不访存</td></tr><tr><td>寄存器间接</td><td>主存，地址在寄存器</td><td>一次访存</td></tr><tr><td>变址寻址</td><td>主存，变址寄存器 + 形式地址</td><td>适合数组遍历</td></tr><tr><td>相对寻址</td><td>主存，PC + 偏移</td><td>适合程序浮动、转移指令</td></tr><tr><td>基址寻址</td><td>主存，基址寄存器 + 偏移</td><td>适合多道程序重定位</td></tr></tbody></table></div>
+<p>考法：给出指令和寄存器/存储器状态，问"取到的操作数是多少"。按"先找地址、再取内容"的顺序一步步写。</p>
+<h3>3.5 指令流水线</h3>
+<p>k 段流水线执行 n 条指令：</p>
+<pre><code>所需时钟周期 = k + (n - 1)
 吞吐率 TP = n / 总时间
 加速比 S = 顺序执行时间 / 流水执行时间 = (k × n) / (k + n - 1)</code></pre>
-<p><strong>Cache</strong></p>
-<pre><code>平均访问时间 = 命中率 × Cache 时间 + 未命中率 × (Cache 时间 + 主存时间)
-直接映射地址 = 标记 tag | 行号 | 块内地址
+<p><strong>例</strong>：5 段流水线、每段 1 个时钟周期、执行 100 条指令。</p>
+<ul><li>周期数 = 5 + 99 = 104；</li><li>顺序执行需 5 × 100 = 500 周期；</li><li>加速比 = 500 / 104 ≈ 4.81，接近段数上限 5。</li></ul>
+<p><strong>流水线冲突</strong>：结构冲突（硬件资源争用）、数据冲突（后一条依赖前一条结果）、控制冲突（转移指令改变取指方向）。考试若问"影响流水线性能的因素"，答这三类。</p>
+<h2>四、存储系统</h2>
+<h3>4.1 存储层次与局部性</h3>
+<p>寄存器 → Cache → 主存 → 辅存，越靠近 CPU 越快、越贵、容量越小。</p>
+<p><strong>局部性原理</strong>是 Cache 有效的理论基础：</p>
+<ul><li>时间局部性：刚被访问的数据/指令很可能再次被访问（循环变量）；</li><li>空间局部性：相邻地址的数据很可能被访问（数组、顺序指令）。</li></ul>
+<h3>4.2 Cache 三种映射</h3>
+<div class="doc-table"><table><thead><tr><th>映射方式</th><th>地址结构</th><th>冲突</th><th>比较器</th><th>特点</th></tr></thead><tbody><tr><td>直接映射</td><td>标记 + 行号 + 块内地址</td><td>冲突多</td><td>1 个</td><td>硬件最简单</td></tr><tr><td>全相联</td><td>标记 + 块内地址</td><td>无冲突</td><td>全部行</td><td>最灵活、成本最高</td></tr><tr><td>组相联</td><td>标记 + 组号 + 块内地址</td><td>组内冲突</td><td>组内路数</td><td>折中方案</td></tr></tbody></table></div>
+<p><strong>直接映射地址位数计算</strong>：</p>
+<pre><code>块内地址位数 = log2(块大小)
 行号位数 = log2(Cache 容量 / 块大小)
-块内地址位数 = log2(块大小)</code></pre>
-<p><strong>存储与性能</strong></p>
-<pre><code>主存容量 = 单元数 × 每单元位数
-MIPS = 主频(MHz) / CPI
-执行时间 = 指令数 × CPI × 时钟周期</code></pre>
-<p><strong>可靠性</strong></p>
+标记位数 = 主存地址位数 - 行号位数 - 块内地址位数</code></pre>
+<p><strong>平均访问时间</strong>（未命中时先查 Cache 再访主存）：</p>
+<pre><code>平均访问时间 = 命中率 × Cache 时间 + 未命中率 × (Cache 时间 + 主存时间)</code></pre>
+<p>例：Cache 2ns、主存 20ns、命中率 95% → <code>0.95×2 + 0.05×22 = 3.0ns</code>。注意未命中路径要加上查 Cache 的 2ns，这是最常见的失分点。</p>
+<h3>4.3 主存编址</h3>
+<pre><code>主存容量 = 存储单元个数 × 每个单元位数
+地址线位数 = log2(存储单元个数)
+数据线位数 = 每个单元位数</code></pre>
+<p>例：按字节编址、容量 1MB，则单元数 <code>2<sup>20</sup></code>，地址线 20 根。</p>
+<h3>4.4 磁盘与 RAID（低频）</h3>
+<ul><li>RAID0：条带化，无冗余，性能最高、可靠性最低；</li><li>RAID1：镜像，空间利用率 50%，允许一块盘故障；</li><li>RAID5：分布式奇偶校验，允许一块盘故障，空间利用率 <code>(n-1)/n</code>；</li><li>RAID6：双校验，允许两块盘故障；</li><li>RAID10：先镜像再条带，兼顾性能与可靠性。</li></ul>
+<p>考试若问"允许一块磁盘故障且利用率较高"，选 RAID5。</p>
+<h2>五、总线、I/O 与可靠性</h2>
+<h3>5.1 总线</h3>
+<div class="doc-table"><table><thead><tr><th>总线</th><th>作用</th><th>宽度决定</th></tr></thead><tbody><tr><td>数据总线</td><td>传输数据</td><td>一次能传多少位</td></tr><tr><td>地址总线</td><td>传输地址</td><td>可寻址空间（2^宽度）</td></tr><tr><td>控制总线</td><td>传输命令、时序、状态</td><td>—</td></tr></tbody></table></div>
+<p><strong>总线带宽 = 总线宽度（字节）× 总线频率</strong>。例：32 位宽、33MHz → <code>4B × 33M = 132MB/s</code>。</p>
+<h3>5.2 I/O 四种控制方式</h3>
+<div class="doc-table"><table><thead><tr><th>方式</th><th>CPU 干预程度</th><th>数据单位</th><th>特点</th></tr></thead><tbody><tr><td>程序查询（轮询）</td><td>全程等待</td><td>字/字节</td><td>最简单，CPU 利用率最低</td></tr><tr><td>中断</td><td>每个字/字节中断一次</td><td>字/字节</td><td>CPU 与 I/O 并行，但频繁中断开销大</td></tr><tr><td>DMA</td><td>只在传输开始和结束干预</td><td>数据块</td><td>数据不经过 CPU，适合高速块设备</td></tr><tr><td>通道</td><td>最少</td><td>一组数据块</td><td>专用 I/O 处理器执行通道程序</td></tr></tbody></table></div>
+<p>考法：问"哪种方式 CPU 干预最少"→ 通道；"哪种适合磁盘成块传输"→ DMA；"数据是否经过 CPU"→ DMA 不经过。</p>
+<h3>5.3 可靠性与性能</h3>
 <pre><code>串联：R = R1 × R2 × … × Rn
 并联：R = 1 - (1-R1)(1-R2)…(1-Rn)
-MTBF = 1 / 失效率</code></pre>
-<h2>三、高频考点清单</h2>
-<ul class="task-list"><li class="task"><input type="checkbox" disabled /> <span>补码与原码互转、表示范围、溢出判断（双符号位 01 正溢、10 负溢）</span></li><li class="task"><input type="checkbox" disabled /> <span>浮点数中阶码与尾数各自的作用</span></li><li class="task"><input type="checkbox" disabled /> <span>海明码校验位个数计算、CRC 模 2 除法</span></li><li class="task"><input type="checkbox" disabled /> <span>流水线周期数、吞吐率、加速比</span></li><li class="task"><input type="checkbox" disabled /> <span>Cache 三种映射（直接/全相联/组相联）的地址结构与冲突特征</span></li><li class="task"><input type="checkbox" disabled /> <span>RISC 与 CISC 的特征区分</span></li><li class="task"><input type="checkbox" disabled /> <span>Flynn 分类（SISD / SIMD / MISD / MIMD）</span></li><li class="task"><input type="checkbox" disabled /> <span>总线三类的功能、I/O 四种控制方式</span></li><li class="task"><input type="checkbox" disabled /> <span>串联/并联可靠性计算</span></li></ul>
-<h2>四、易混对比</h2>
-<div class="doc-table"><table><thead><tr><th>对比项</th><th>A</th><th>B</th></tr></thead><tbody><tr><td>寻址方式多、指令变长</td><td>CISC</td><td>RISC 是定长、少寻址</td></tr><tr><td>控制方式</td><td>CISC 多用微程序</td><td>RISC 多用硬布线</td></tr><tr><td>访存指令</td><td>CISC 任意指令可访存</td><td>RISC 只有 Load/Store</td></tr><tr><td>中断 vs DMA</td><td>中断每字节/字都要 CPU 介入</td><td>DMA 成块传输，CPU 只起止干预</td></tr><tr><td>直接映射</td><td>硬件简单、冲突多</td><td>全相联：灵活、比较器多、成本高</td></tr></tbody></table></div>
-<h2>五、自检题（能秒答才算过关）</h2>
-<ol><li>字长 12 位，补码表示整数，范围是多少？</li><li>5 段流水线，每段 2ns，执行 50 条指令需要多少时间？加速比多少？</li><li>Cache 4KB、块 16B、主存 1MB，直接映射时 tag 几位？</li><li>三部件串联，可靠度 0.95、0.9、0.9，系统可靠度多少？</li><li>生成多项式 <code>x<sup>4</sup> + x + 1</code>，CRC 需补几个 0？</li></ol>
-<blockquote><p>答案速查：1) -2048~2047；2) 108ns，加速比 ≈ 4.63；3) 20-8-4=8 位；4) 0.7695；5) 4 个。</p></blockquote>
+MTBF = 1 / 失效率
+MIPS = 主频(MHz) / CPI
+执行时间 = 指令数 × CPI × 时钟周期</code></pre>
+<p>例：3 个部件串联、可靠度均 0.9 → <code>0.9³ = 0.729</code>；若改为 3 个并联 → <code>1-0.1³ = 0.999</code>。并联冗余是提高可靠性的主要手段。</p>
+<p>例：主频 2GHz、CPI=2 → <code>MIPS = 2000/2 = 1000</code>。</p>
+<h2>六、速记表</h2>
+<div class="doc-table"><table><thead><tr><th>项目</th><th>结论</th></tr></thead><tbody><tr><td>n 位补码范围</td><td><code>-2<sup>(n-1)</sup> ~ 2<sup>(n-1)</sup>-1</code></td></tr><tr><td>n 位原码/反码范围</td><td><code>-(2<sup>(n-1)</sup>-1) ~ 2<sup>(n-1)</sup>-1</code></td></tr><tr><td>8 位补码特殊值</td><td><code>10000000 = -128</code></td></tr><tr><td>IEEE 754 单精度</td><td>1 + 8 + 23 = 32 位，偏置 127</td></tr><tr><td>IEEE 754 双精度</td><td>1 + 11 + 52 = 64 位，偏置 1023</td></tr><tr><td>移码</td><td>补码符号位取反</td></tr><tr><td>海明码</td><td><code>2<sup>k</sup> ≥ n + k + 1</code></td></tr><tr><td>CRC 补零</td><td>等于生成多项式最高次幂</td></tr><tr><td>流水线周期数</td><td><code>k + (n-1)</code></td></tr><tr><td>加速比</td><td><code>(k×n) / (k+n-1)</code></td></tr><tr><td>直接映射标记位</td><td>主存地址位 - 行号位 - 块内地址位</td></tr><tr><td>总线带宽</td><td>宽度（字节）× 频率</td></tr><tr><td>串联/并联可靠度</td><td>乘积 / <code>1-∏(1-Ri)</code></td></tr></tbody></table></div>
+<h2>七、易错辨析</h2>
+<div class="doc-table"><table><thead><tr><th>错误认知</th><th>正确结论</th><th>原因</th></tr></thead><tbody><tr><td>补码范围关于 0 对称</td><td>负数端多一个 <code>-2<sup>(n-1)</sup></code></td><td>0 只占一个编码，负数多占一个</td></tr><tr><td>阶码决定精度、尾数决定范围</td><td>说反了：阶码定范围、尾数定精度</td><td>阶码是 2 的指数，尾数是有效数字</td></tr><tr><td>流水线加速比分母是单条指令时间</td><td>分母是流水执行总时间</td><td>加速比比较的是"整批任务"的耗时</td></tr><tr><td>Cache 未命中只算主存时间</td><td>要加上查 Cache 的时间</td><td>未命中时 Cache 已经查过一次</td></tr><tr><td>DMA 传输的数据经过 CPU</td><td>DMA 数据直接在设备与主存间传送</td><td>CPU 只做初始化与结束处理</td></tr><tr><td>地址总线宽度决定数据传送速度</td><td>地址线决定寻址空间，数据线决定一次传输位数</td><td>两者作用不同</td></tr></tbody></table></div>
+<h2>八、自检题（能秒答才算过关）</h2>
+<ol><li>字长 12 位，补码表示整数，范围是多少？</li><li>8 位补码 <code>11111111</code> 的真值是多少？</li><li>IEEE 754 单精度中，阶码和尾数各多少位？谁决定范围？</li><li>16 位信息位用海明码，至少需要几位校验位？</li><li>生成多项式 <code>x<sup>4</sup> + x + 1</code>，CRC 需在信息码后补几个 0？</li><li>5 段流水线、每段 2ns，执行 50 条指令需要多少时间？加速比多少？</li><li>Cache 4KB、块 16B、主存 1MB，直接映射时标记几位？</li><li>Cache 存取 1ns、主存 10ns、命中率 90%，未命中先查 Cache，平均访问时间是多少？</li><li>三部件串联，可靠度 0.95、0.9、0.9，系统可靠度是多少？</li><li>主频 3GHz、CPI=1.5，MIPS 是多少？</li></ol>
+<blockquote><p>答案与解析：<br />1) <code>-2048 ~ 2047</code>。<br />2) <code>-1</code>（按权展开：-128+64+32+16+8+4+2+1）。<br />3) 阶码 8 位、尾数 23 位；阶码决定范围。<br />4) <code>2<sup>k</sup> ≥ 16+k+1</code>，k=5 时 32 ≥ 22，故 5 位（k=4 时 16 &lt; 21）。<br />5) 4 个（最高次为 4）。<br />6) 周期数 <code>5+49=54</code>，时间 <code>54×2=108ns</code>；加速比 <code>(5×50)/54 ≈ 4.63</code>。<br />7) 主存 20 位，块内 4 位，行号 <code>log2(4096/16)=8</code> 位，标记 <code>20-8-4=8</code> 位。<br />8) <code>0.9×1 + 0.1×11 = 2.0ns</code>。<br />9) <code>0.95×0.9×0.9 = 0.7695</code>。<br />10) <code>3000/1.5 = 2000</code>。</p></blockquote>
 </main>
 <footer class="doc-footer">本文档由同名 Markdown 生成（UTF-8 编码）；内容修改请改 .md 后重新运行 <code>node tools/build-docs.js</code>。</footer>
 </body>

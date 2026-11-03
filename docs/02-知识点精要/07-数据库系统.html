@@ -15,47 +15,124 @@
 </header>
 <main class="doc">
 <h1>07 · 数据库系统（上午 7 题 + 下午 1 题）</h1>
-<h2>一、三级模式与两级映像</h2>
-<div class="doc-table"><table><thead><tr><th>模式</th><th>别名</th><th>描述</th><th>数量</th></tr></thead><tbody><tr><td>外模式</td><td>子模式 / 用户模式</td><td>用户看到的数据视图</td><td>多个</td></tr><tr><td>模式</td><td>概念模式 / 逻辑模式</td><td>全体数据的逻辑结构</td><td>一个</td></tr><tr><td>内模式</td><td>存储模式</td><td>物理存储结构</td><td>一个</td></tr></tbody></table></div>
-<div class="doc-table"><table><thead><tr><th>映像</th><th>保证</th></tr></thead><tbody><tr><td>外模式/模式</td><td><strong>逻辑独立性</strong>（逻辑结构变，用户视图不变）</td></tr><tr><td>模式/内模式</td><td><strong>物理独立性</strong>（存储变，逻辑结构不变）</td></tr></tbody></table></div>
-<h2>二、ER 模型转换</h2>
-<div class="doc-table"><table><thead><tr><th>联系类型</th><th>转换方式</th></tr></thead><tbody><tr><td>1:1</td><td>可合并到任一端，把另一端主键作为外键</td></tr><tr><td>1:n</td><td>把 1 端主键放入 n 端作外键</td></tr><tr><td>m:n</td><td><strong>必须独立建表</strong>，主键为两端主键的组合，可携带联系属性</td></tr></tbody></table></div>
-<ul><li>多值属性：单独成表</li><li>弱实体：依赖强实体的主键</li><li>ER 图合并冲突：属性冲突、命名冲突、结构冲突</li></ul>
-<h2>三、关系代数</h2>
-<div class="doc-table"><table><thead><tr><th>运算</th><th>符号</th><th>含义</th><th>SQL 对应</th></tr></thead><tbody><tr><td>选择</td><td>σ</td><td>按条件取行</td><td>WHERE</td></tr><tr><td>投影</td><td>π</td><td>取列并去重</td><td>SELECT</td></tr><tr><td>连接</td><td>⋈</td><td>按条件合并两表</td><td>JOIN</td></tr><tr><td>笛卡儿积</td><td>×</td><td>全组合</td><td>CROSS JOIN</td></tr><tr><td>并/差/交</td><td>∪ / − / ∩</td><td>集合运算</td><td>UNION / EXCEPT / INTERSECT</td></tr><tr><td>除</td><td>÷</td><td>"对所有…"语义</td><td>NOT EXISTS 嵌套</td></tr></tbody></table></div>
-<h2>四、规范化</h2>
-<div class="doc-table"><table><thead><tr><th>范式</th><th>要求</th><th>消除的问题</th></tr></thead><tbody><tr><td>1NF</td><td>属性不可再分</td><td>非原子属性</td></tr><tr><td>2NF</td><td>1NF + 消除非主属性对码的<strong>部分</strong>依赖</td><td>部分依赖</td></tr><tr><td>3NF</td><td>2NF + 消除非主属性对码的<strong>传递</strong>依赖</td><td>传递依赖</td></tr><tr><td>BCNF</td><td>所有非平凡函数依赖的决定因素都是候选键</td><td>主属性对码的依赖</td></tr></tbody></table></div>
-<p><strong>候选键求解（闭包法）</strong>：从每个属性/属性组出发求闭包，若闭包包含全部属性且无冗余，则为候选键。</p>
-<p><strong>无损连接分解判定</strong>：<code>R1 ∩ R2 → R1 - R2</code> 或 <code>R1 ∩ R2 → R2 - R1</code> 成立。</p>
-<h2>五、SQL 要点</h2>
-<pre><code class="language-sql">-- 执行顺序：FROM → WHERE → GROUP BY → HAVING → SELECT → ORDER BY
-SELECT 列, 聚合函数
-FROM 表 [JOIN 表 ON 条件]
-WHERE 行条件
-GROUP BY 分组列
-HAVING 分组后条件
-ORDER BY 排序列 [ASC|DESC];</code></pre>
-<div class="doc-table"><table><thead><tr><th>类别</th><th>语句</th></tr></thead><tbody><tr><td>DDL</td><td>CREATE / ALTER / DROP</td></tr><tr><td>DML</td><td>SELECT / INSERT / UPDATE / DELETE</td></tr><tr><td>DCL</td><td>GRANT / REVOKE</td></tr><tr><td>事务</td><td>COMMIT / ROLLBACK / SAVEPOINT</td></tr></tbody></table></div>
-<p><strong>经典写法</strong></p>
-<pre><code class="language-sql">-- 每门课平均分 &gt; 80
-SELECT 课程号, AVG(成绩) FROM 选课 GROUP BY 课程号 HAVING AVG(成绩) &gt; 80;
+<blockquote><p>上午考"三级模式、ER 转换、候选键与范式、SQL、并发"，下午必有一道数据库设计题（补 ER 图 + 转关系模式 + 写 SQL）。本篇的 SQL 例题要能手写出来。</p></blockquote>
+<h2>一、考点地图</h2>
+<div class="doc-table"><table><thead><tr><th>考点</th><th>近年题量</th><th>常见问法</th><th>难度</th></tr></thead><tbody><tr><td>数据库体系结构</td><td>1</td><td>三级模式、两级映像与独立性</td><td>易</td></tr><tr><td>ER 模型与转换</td><td>1~2</td><td>联系类型转关系模式、主外键、合并冲突</td><td>中</td></tr><tr><td>关系代数与规范化</td><td>2~3</td><td>候选键、范式判定、无损分解、关系代数运算</td><td>中~难</td></tr><tr><td>SQL</td><td>2</td><td>分组筛选、连接、子查询、视图、授权</td><td>中</td></tr><tr><td>事务与并发</td><td>1~2</td><td>ACID、隔离级别、S/X 锁、两段锁</td><td>中</td></tr><tr><td>备份与恢复</td><td>0~1</td><td>转储类型、日志 UNDO/REDO、检查点</td><td>易</td></tr></tbody></table></div>
+<h2>二、数据库体系结构</h2>
+<h3>2.1 三级模式</h3>
+<div class="doc-table"><table><thead><tr><th>模式</th><th>别名</th><th>描述</th><th>数量</th></tr></thead><tbody><tr><td>外模式</td><td>子模式/用户模式</td><td>用户看到的数据视图</td><td>多个</td></tr><tr><td>模式</td><td>概念模式/逻辑模式</td><td>全体数据的逻辑结构</td><td>一个</td></tr><tr><td>内模式</td><td>存储模式</td><td>物理存储结构</td><td>一个</td></tr></tbody></table></div>
+<h3>2.2 两级映像与独立性</h3>
+<div class="doc-table"><table><thead><tr><th>映像</th><th>保证</th><th>含义</th></tr></thead><tbody><tr><td>外模式/模式</td><td><strong>逻辑独立性</strong></td><td>逻辑结构改变，用户视图与应用程序不变</td></tr><tr><td>模式/内模式</td><td><strong>物理独立性</strong></td><td>存储结构改变，逻辑结构不变</td></tr></tbody></table></div>
+<p>记忆：<strong>外-逻、内-物</strong>——外模式对应逻辑独立性，内模式对应物理独立性。</p>
+<h3>2.3 数据模型与 DBMS</h3>
+<p>数据模型三要素：数据结构（描述对象与联系）、数据操作（增删改查）、完整性约束（实体/参照/用户定义）。</p>
+<p>DBMS 主要功能：数据定义、数据操纵、数据库运行管理（并发、恢复、完整性）、数据库建立与维护、数据字典。</p>
+<h2>三、ER 模型与关系转换</h2>
+<h3>3.1 ER 三要素</h3>
+<ul><li>实体：矩形；属性：椭圆；联系：菱形。</li><li>联系类型：1:1、1:n、m:n。</li><li>弱实体：双线矩形，依赖强实体的主键存在，不能独立存在。</li><li>多值属性：双线椭圆，转换时单独成表。</li><li>派生属性：虚线椭圆，可由其他属性计算，不存储。</li></ul>
+<h3>3.2 转换规则</h3>
+<div class="doc-table"><table><thead><tr><th>联系类型</th><th>转换方式</th><th>说明</th></tr></thead><tbody><tr><td>1:1</td><td>可合并到任一端</td><td>把另一端主键作为外键，加入唯一约束</td></tr><tr><td>1:n</td><td>把 1 端主键放入 n 端作外键</td><td>n 端是"多"的一方</td></tr><tr><td>m:n</td><td><strong>必须独立建表</strong></td><td>主键为两端主键的组合，联系属性放入该表</td></tr></tbody></table></div>
+<p><strong>例</strong>：教师与课程之间是 m:n 的"讲授"联系，带"课时"属性。<br />转换为：教师（教师号，姓名）、课程（课程号，课程名）、讲授（教师号，课程号，课时），主键为（教师号，课程号），两个外键分别引用教师与课程。</p>
+<p><strong>判断技巧</strong>：看"一个 X 能对应几个 Y"——两边都是多，就独立建表；一边是多，就把"一"端主键塞到"多"端。</p>
+<h3>3.3 ER 图合并冲突</h3>
+<div class="doc-table"><table><thead><tr><th>冲突类型</th><th>例子</th></tr></thead><tbody><tr><td>属性冲突</td><td>同一属性在不同子系统中类型/单位不同</td></tr><tr><td>命名冲突</td><td>同名异义、异名同义</td></tr><tr><td>结构冲突</td><td>同一对象在不同图中分别作为实体和属性</td></tr></tbody></table></div>
+<h2>四、关系代数与规范化</h2>
+<h3>4.1 关系代数</h3>
+<div class="doc-table"><table><thead><tr><th>运算</th><th>符号</th><th>含义</th><th>SQL 对应</th></tr></thead><tbody><tr><td>选择</td><td>σ</td><td>按条件取行</td><td>WHERE</td></tr><tr><td>投影</td><td>π</td><td>取列并去重</td><td>SELECT DISTINCT</td></tr><tr><td>连接</td><td>⋈</td><td>按条件合并两表</td><td>JOIN</td></tr><tr><td>笛卡儿积</td><td>×</td><td>全组合</td><td>CROSS JOIN</td></tr><tr><td>并/差/交</td><td>∪ / − / ∩</td><td>集合运算</td><td>UNION / EXCEPT / INTERSECT</td></tr><tr><td>除</td><td>÷</td><td>"对所有…"语义</td><td>NOT EXISTS 双重否定</td></tr></tbody></table></div>
+<p><strong>除运算</strong>：<code>R(A,B) ÷ S(B)</code> 得到"在 R 中与 S 中所有 B 值都有关的 A 值"。例：<code>选课(学号,课程号) ÷ 课程(课程号)</code> = 选修了全部课程的学生。考试若考"没有选修某课的学生"，用差集或 NOT EXISTS。</p>
+<h3>4.2 函数依赖</h3>
+<ul><li>完全函数依赖：<code>X→Y</code>，且 X 的任何真子集都不能决定 Y；</li><li>部分函数依赖：X 的某个真子集就能决定 Y；</li><li>传递函数依赖：<code>X→Y, Y→Z</code> 且 Y 不决定 X，则 X 传递决定 Z。</li></ul>
+<h3>4.3 候选键求解（闭包法）</h3>
+<p>属性集 X 的闭包 <code>X+</code>：从 X 出发，反复用函数依赖扩展，直到不再增加。</p>
+<p>求候选键步骤：</p>
+<ol><li>找出只出现在依赖左边、从不出现在右边的属性，必属于候选键；</li><li>从这些属性出发求闭包；</li><li>若闭包包含全部属性，则为候选键；否则尝试加入其他属性，直到闭包完整；</li><li>去掉冗余属性，得到最小候选键。</li></ol>
+<p><strong>例</strong>：<code>R(A,B,C)</code>，<code>F={A→B, B→C}</code>。</p>
+<ul><li><code>A+ = ABC</code>（A→B，B→C），故 A 是候选键；</li><li><code>B+ = BC</code>，不含 A；<code>C+ = C</code>；<code>AB+ = ABC</code> 但 A 已足够，故候选键只有 A。</li></ul>
+<h3>4.4 范式判定</h3>
+<div class="doc-table"><table><thead><tr><th>范式</th><th>要求</th><th>消除的问题</th></tr></thead><tbody><tr><td>1NF</td><td>属性不可再分</td><td>非原子属性</td></tr><tr><td>2NF</td><td>1NF + 消除非主属性对码的<strong>部分</strong>依赖</td><td>部分依赖</td></tr><tr><td>3NF</td><td>2NF + 消除非主属性对码的<strong>传递</strong>依赖</td><td>传递依赖</td></tr><tr><td>BCNF</td><td>每个非平凡函数依赖的决定因素都是候选键</td><td>主属性对码的依赖</td></tr></tbody></table></div>
+<p>判定顺序：先找候选键 → 看是否有非主属性对码的部分依赖（2NF）→ 看是否有传递依赖（3NF）→ 看每个决定因素是否都是候选键（BCNF）。</p>
+<p><strong>例</strong>：<code>R(A,B,C)</code>，<code>F={A→B, B→C}</code>，候选键 A。</p>
+<ul><li>A→B 是完全依赖，B→C 是传递依赖（A→B→C），所以 R 满足 2NF 但不满足 3NF。</li><li>分解为 <code>R1(A,B)</code>、<code>R2(B,C)</code>：R1 的键是 A、R2 的键是 B，都满足 3NF 与 BCNF。</li></ul>
+<h3>4.5 无损连接与保持依赖</h3>
+<p><strong>无损连接判定</strong>（分解为两个关系时）：<code>R1 ∩ R2 → R1 - R2</code> 或 <code>R1 ∩ R2 → R2 - R1</code> 成立。</p>
+<p>上例：<code>R1∩R2 = B</code>，<code>R1-R2 = A</code>，<code>R2-R1 = C</code>。<code>B→C</code> 成立，故无损。</p>
+<p><strong>保持函数依赖</strong>：分解后各关系的函数依赖并集，能推出原关系 F 中的每个依赖。无损连接与保持依赖是两个独立目标，有时不能同时满足（3NF 分解可同时满足，BCNF 分解不一定保持依赖）。</p>
+<p><strong>最小函数依赖集</strong>三步：右边单属性化 → 去掉冗余依赖 → 去掉左边冗余属性。</p>
+<h2>五、SQL</h2>
+<h3>5.1 分类</h3>
+<div class="doc-table"><table><thead><tr><th>类别</th><th>语句</th></tr></thead><tbody><tr><td>DDL</td><td>CREATE / ALTER / DROP</td></tr><tr><td>DML</td><td>SELECT / INSERT / UPDATE / DELETE</td></tr><tr><td>DCL</td><td>GRANT / REVOKE</td></tr><tr><td>事务控制</td><td>COMMIT / ROLLBACK / SAVEPOINT</td></tr></tbody></table></div>
+<h3>5.2 执行顺序与连接</h3>
+<pre><code>FROM → WHERE → GROUP BY → HAVING → SELECT → ORDER BY</code></pre>
+<ul><li>WHERE 作用于分组前，HAVING 作用于分组后，聚合条件必须写在 HAVING；</li><li>INNER JOIN 只保留匹配行；LEFT JOIN 保留左表全部行，右表无匹配填 NULL；RIGHT JOIN 反之；</li><li>子查询：<code>IN</code> 适合非相关子查询，<code>EXISTS</code> 适合相关子查询（外层每行执行一次）。</li></ul>
+<h3>5.3 经典写法</h3>
+<pre><code class="language-sql">-- 每门课平均分 &gt; 80，按平均分降序
+SELECT 课程号, AVG(成绩) AS 平均分
+FROM 选课
+GROUP BY 课程号
+HAVING AVG(成绩) &gt; 80
+ORDER BY 平均分 DESC;
 
 -- 没被选修的课程
-SELECT * FROM 课程 WHERE 课程号 NOT IN (SELECT 课程号 FROM 选课);
+SELECT 课程号, 课程名
+FROM 课程
+WHERE 课程号 NOT IN (SELECT 课程号 FROM 选课);
 
--- 尚未归还
-SELECT * FROM 借阅 WHERE 归还日期 IS NULL;
+-- 尚未归还的借阅记录（多表连接）
+SELECT 读者.姓名, 图书.书名, 借阅.借阅日期
+FROM 借阅
+JOIN 读者 ON 借阅.读者号 = 读者.读者号
+JOIN 图书 ON 借阅.书号 = 图书.书号
+WHERE 借阅.归还日期 IS NULL;
 
--- 前 3 名
-SELECT 工号, SUM(工时) AS 总工时 FROM 参与 GROUP BY 工号 ORDER BY 总工时 DESC LIMIT 3;</code></pre>
+-- 借阅次数不少于 3 次的读者
+SELECT 读者号, COUNT(*) AS 借阅次数
+FROM 借阅
+GROUP BY 读者号
+HAVING COUNT(*) &gt;= 3;
+
+-- 前 3 名（MySQL 写法）
+SELECT 工号, SUM(工时) AS 总工时
+FROM 参与
+GROUP BY 工号
+ORDER BY 总工时 DESC
+LIMIT 3;
+
+-- 授权
+GRANT SELECT, UPDATE ON 选课 TO 教务员;</code></pre>
+<h3>5.4 视图、索引与约束</h3>
+<ul><li><strong>视图</strong>：虚表，不存数据（物化视图除外），用于简化查询与权限控制；含聚合、DISTINCT、GROUP BY 的视图通常不可更新。</li><li><strong>索引</strong>：加快查询、减慢增删改；聚簇索引决定物理顺序，一张表只能有一个；非聚簇索引需回表。</li><li><strong>约束</strong>：PRIMARY KEY（非空唯一）、FOREIGN KEY（参照完整性）、UNIQUE、CHECK、NOT NULL。</li></ul>
 <h2>六、事务与并发</h2>
-<p><strong>ACID</strong>：原子性、一致性、隔离性、持久性。</p>
+<h3>6.1 ACID</h3>
+<div class="doc-table"><table><thead><tr><th>特性</th><th>含义</th><th>保障手段</th></tr></thead><tbody><tr><td>原子性 A</td><td>事务要么全做、要么全不做</td><td>日志 UNDO</td></tr><tr><td>一致性 C</td><td>事务前后数据库都处于一致状态</td><td>完整性约束 + 应用逻辑</td></tr><tr><td>隔离性 I</td><td>并发事务互不干扰</td><td>锁、MVCC</td></tr><tr><td>持久性 D</td><td>提交后永久保存</td><td>日志 REDO</td></tr></tbody></table></div>
+<h3>6.2 并发问题与隔离级别</h3>
+<div class="doc-table"><table><thead><tr><th>问题</th><th>含义</th></tr></thead><tbody><tr><td>丢失更新</td><td>两个事务同时读同一数据，后写覆盖先写</td></tr><tr><td>读脏数据</td><td>读到另一个事务未提交的数据</td></tr><tr><td>不可重复读</td><td>同一事务两次读同一行，结果不同（被修改）</td></tr><tr><td>幻读</td><td>同一事务两次查询，结果集行数不同（被插入/删除）</td></tr></tbody></table></div>
 <div class="doc-table"><table><thead><tr><th>隔离级别</th><th>脏读</th><th>不可重复读</th><th>幻读</th></tr></thead><tbody><tr><td>READ UNCOMMITTED</td><td>可能</td><td>可能</td><td>可能</td></tr><tr><td>READ COMMITTED</td><td>不会</td><td>可能</td><td>可能</td></tr><tr><td>REPEATABLE READ</td><td>不会</td><td>不会</td><td>可能</td></tr><tr><td>SERIALIZABLE</td><td>不会</td><td>不会</td><td>不会</td></tr></tbody></table></div>
-<p><strong>封锁</strong>：共享锁 S（读）、排他锁 X（写）。<br /><strong>两段锁协议</strong>：扩展阶段只加锁、收缩阶段只解锁；遵守 2PL 的调度一定可串行化，但可能死锁。<br /><strong>死锁预防</strong>：一次封锁法、顺序封锁法。</p>
-<p><strong>备份恢复</strong>：静态/动态转储、海量/增量转储、日志（UNDO 撤销未提交、REDO 重做已提交）、检查点。</p>
-<h2>七、自检题</h2>
-<ol><li>逻辑独立性由哪个映像保证？</li><li><code>R(A,B,C)</code>，<code>F={A→B, B→C}</code>，候选键是什么？</li><li>m:n 联系转关系模式时主键怎么定？</li><li>哪种隔离级别能避免幻读？</li><li>两段锁协议能保证什么，不能避免什么？</li></ol>
-<blockquote><p>答案速查：1) 外模式/模式映像；2) A（A+=ABC）；3) 两端主键的组合；4) SERIALIZABLE；5) 保证可串行化，不能避免死锁。</p></blockquote>
+<p>记忆：级别越高，一致性越强、并发越低。避免脏读至少 READ COMMITTED，避免幻读必须 SERIALIZABLE。</p>
+<h3>6.3 封锁与两段锁</h3>
+<ul><li>共享锁 S（读锁）：多个事务可同时持有；</li><li>排他锁 X（写锁）：与任何锁互斥。</li></ul>
+<p><strong>两段锁协议（2PL）</strong>：扩展阶段只能加锁、不能解锁；收缩阶段只能解锁、不能加锁。遵守 2PL 的调度一定可串行化，但可能死锁。</p>
+<p>死锁预防：一次封锁法（一次性申请全部锁）、顺序封锁法（按固定顺序申请）。死锁检测：事务依赖图，出现环即死锁。</p>
+<h2>七、备份与恢复</h2>
+<div class="doc-table"><table><thead><tr><th>分类</th><th>类型</th><th>特点</th></tr></thead><tbody><tr><td>按状态</td><td>静态转储（冷备）</td><td>停机、一致性好</td></tr><tr><td>按状态</td><td>动态转储（热备）</td><td>不停机、需日志配合</td></tr><tr><td>按范围</td><td>海量转储</td><td>全量备份</td></tr><tr><td>按范围</td><td>增量转储</td><td>只备份上次备份后变化的数据</td></tr></tbody></table></div>
+<p><strong>日志恢复</strong>：</p>
+<ul><li>UNDO：撤销未提交的事务（原子性）；</li><li>REDO：重做已提交但尚未写回磁盘的事务（持久性）；</li><li>检查点：定期把内存中的脏页刷盘并记录检查点，恢复时只需从检查点开始扫描，减少恢复时间。</li></ul>
+<p>故障类型：事务故障（回滚该事务）、系统故障（重启，UNDO 未提交 + REDO 已提交）、介质故障（用备份 + 日志恢复）。</p>
+<h2>八、速记表</h2>
+<pre><code>三级模式：外模式、模式、内模式
+两级映像：外/模 = 逻辑独立性；模/内 = 物理独立性
+1:1 合并任一端；1:n 一端主键进 n 端；m:n 独立建表
+候选键：闭包包含全部属性且最小
+2NF 消部分依赖；3NF 消传递依赖；BCNF 决定因素都是候选键
+无损：R1∩R2 → R1-R2 或 R2-R1
+SQL 顺序：FROM → WHERE → GROUP BY → HAVING → SELECT → ORDER BY
+隔离级别：RU &lt; RC &lt; RR &lt; SERIALIZABLE
+2PL：扩展只加锁、收缩只解锁，可串行化但可能死锁
+UNDO 撤未提交；REDO 重做已提交</code></pre>
+<h2>九、易错辨析</h2>
+<div class="doc-table"><table><thead><tr><th>错误认知</th><th>正确结论</th><th>原因</th></tr></thead><tbody><tr><td>外模式/模式映像保证物理独立性</td><td>保证逻辑独立性</td><td>外模式对应用户视图</td></tr><tr><td>m:n 联系可以合并到任一端</td><td>必须独立建表</td><td>两端主键组合才能唯一标识</td></tr><tr><td>3NF 一定满足 BCNF</td><td>不一定</td><td>主属性对码的依赖仍可能存在</td></tr><tr><td>HAVING 可以用 WHERE 替代</td><td>聚合条件必须用 HAVING</td><td>WHERE 在分组前执行</td></tr><tr><td>视图是物理表</td><td>视图是虚表</td><td>数据仍在基表中</td></tr><tr><td>READ COMMITTED 能避免幻读</td><td>只能避免脏读</td><td>幻读需 SERIALIZABLE</td></tr><tr><td>遵守 2PL 一定不会死锁</td><td>2PL 保证可串行化，不避免死锁</td><td>加锁顺序可能成环</td></tr><tr><td>动态转储不需要日志</td><td>动态转储必须配合日志</td><td>转储期间数据可能不一致</td></tr></tbody></table></div>
+<h2>十、自检题</h2>
+<ol><li>逻辑独立性由哪个映像保证？</li><li><code>R(A,B,C)</code>，<code>F={A→B, B→C}</code>，候选键是什么？属于第几范式？</li><li>m:n 联系转关系模式时主键怎么定？</li><li>哪种隔离级别能避免幻读？</li><li>两段锁协议能保证什么，不能避免什么？</li><li>无损连接分解的判定条件是什么？</li><li><code>选课(学号,课程号) ÷ 课程(课程号)</code> 的语义是什么？</li><li>查询"平均分大于 80 的课程号及平均分"怎么写？</li><li>UNDO 与 REDO 分别恢复什么？</li><li>静态转储与动态转储的区别？</li></ol>
+<blockquote><p>答案与解析：<br />1) 外模式/模式映像。<br />2) 候选键 A；满足 2NF，不满足 3NF（存在 A→B→C 传递依赖）。<br />3) 两端主键的组合，联系属性一并放入。<br />4) SERIALIZABLE。<br />5) 保证调度可串行化；不能避免死锁。<br />6) <code>R1∩R2 → R1-R2</code> 或 <code>R1∩R2 → R2-R1</code> 成立。<br />7) 选修了全部课程的学生。<br />8) <code>SELECT 课程号, AVG(成绩) FROM 选课 GROUP BY 课程号 HAVING AVG(成绩) &gt; 80;</code><br />9) UNDO 撤销未提交事务；REDO 重做已提交但未写盘的事务。<br />10) 静态转储需停机、一致性好；动态转储不停机、需日志配合。</p></blockquote>
 </main>
 <footer class="doc-footer">本文档由同名 Markdown 生成（UTF-8 编码）；内容修改请改 .md 后重新运行 <code>node tools/build-docs.js</code>。</footer>
 </body>

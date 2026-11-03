@@ -43,7 +43,7 @@ window.RK_EXAMS = {
       kind: 'stage',
       paper: 'morning',
       name: '阶段三测评 · 全模块综合',
-      desc: '全模块综合检验，重点看小模块（网络/安全/标准/多媒体/英语）是否已补齐。',
+      desc: '全模块综合检验，重点看小模块（网络/安全/标准/多媒体/英语/新技术）是否已补齐。',
       duration: 50,
       passScore: 45,
       targetScore: 65,
@@ -52,14 +52,15 @@ window.RK_EXAMS = {
         { module: 'os', count: 3 },
         { module: 'ds-algorithm', count: 6 },
         { module: 'programming-language', count: 3 },
-        { module: 'software-engineering', count: 8 },
+        { module: 'software-engineering', count: 7 },
         { module: 'oo-uml', count: 6 },
         { module: 'database', count: 5 },
         { module: 'network', count: 4 },
         { module: 'security', count: 2 },
         { module: 'standard-law', count: 2 },
         { module: 'multimedia', count: 1 },
-        { module: 'english', count: 1 }
+        { module: 'english', count: 1 },
+        { module: 'tech', count: 1 }
       ]
     }
   ],
@@ -137,16 +138,17 @@ window.RK_EXAMS = {
   var defaultRules = [
     { module: 'computer-system', count: 7 },
     { module: 'os', count: 6 },
-    { module: 'ds-algorithm', count: 9 },
+    { module: 'ds-algorithm', count: 8 },
     { module: 'programming-language', count: 5 },
-    { module: 'software-engineering', count: 13 },
+    { module: 'software-engineering', count: 12 },
     { module: 'oo-uml', count: 9 },
     { module: 'database', count: 7 },
     { module: 'network', count: 6 },
     { module: 'security', count: 3 },
     { module: 'standard-law', count: 3 },
     { module: 'multimedia', count: 2 },
-    { module: 'english', count: 5 }
+    { module: 'english', count: 5 },
+    { module: 'tech', count: 2 }
   ];
   list.mocks.forEach(function (m) {
     m.paper = 'morning';

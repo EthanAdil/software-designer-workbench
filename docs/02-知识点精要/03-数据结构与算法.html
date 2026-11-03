@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="color-scheme" content="light dark" />
-<title>03 · 数据结构与算法（上午 9 题 + 下午 1 题） · 软件设计师</title>
+<title>03 · 数据结构与算法（上午 8 题 + 下午 1 题） · 软件设计师</title>
 <link rel="stylesheet" href="../../assets/css/main.css" />
 <link rel="stylesheet" href="../../assets/css/doc.css" />
 </head>
@@ -14,29 +14,107 @@
   <span class="doc-crumb">docs / 02-知识点精要</span>
 </header>
 <main class="doc">
-<h1>03 · 数据结构与算法（上午 9 题 + 下午 1 题）</h1>
-<h2>一、二叉树性质（背死）</h2>
-<div class="doc-table"><table><thead><tr><th>性质</th><th>公式</th></tr></thead><tbody><tr><td>叶子与二度结点</td><td><code>n0 = n2 + 1</code></td></tr><tr><td>第 i 层最多结点</td><td><code>2<sup>(i-1)</sup></code></td></tr><tr><td>高度 h 最多结点</td><td><code>2<sup>h</sup> - 1</code></td></tr><tr><td>n 个结点完全二叉树高度</td><td><code>⌈log2(n+1)⌉</code></td></tr><tr><td>完全二叉树结点 i 的左/右孩子</td><td><code>2i</code> / <code>2i+1</code>（从 1 编号）</td></tr><tr><td>完全二叉树结点 i 的父结点</td><td><code>⌊i/2⌋</code></td></tr><tr><td>哈夫曼 WPL</td><td><code>Σ(权值 × 路径长度)</code></td></tr></tbody></table></div>
-<p><strong>遍历口诀</strong>：先序"根左右"、中序"左根右"、后序"左右根"。<br />由"先序 + 中序"或"后序 + 中序"可唯一确定二叉树；"先序 + 后序"不能。</p>
-<h2>二、排序对比表（高频）</h2>
+<h1>03 · 数据结构与算法（上午 8 题 + 下午 1 题）</h1>
+<blockquote><p>上午题量最大的计算型模块，也是下午算法设计题的基础。复习顺序：二叉树性质 → 排序对比表 → 图算法 → 查找 → 算法策略。性质与复杂度是"背了就能拿"的确定分，手算题必须动笔。</p></blockquote>
+<h2>一、考点地图</h2>
+<div class="doc-table"><table><thead><tr><th>考点</th><th>近年题量</th><th>常见问法</th><th>难度</th></tr></thead><tbody><tr><td>线性表、栈、队列、串</td><td>1~2</td><td>循环队列元素个数、栈的应用、KMP</td><td>易~中</td></tr><tr><td>树与二叉树</td><td>2</td><td>性质计算、遍历还原、哈夫曼 WPL、BST/AVL</td><td>中</td></tr><tr><td>图</td><td>2</td><td>存储选择、遍历、最小生成树、最短路径、拓扑、关键路径</td><td>中~难</td></tr><tr><td>查找</td><td>1</td><td>二分比较次数、散列 ASL、装填因子</td><td>中</td></tr><tr><td>排序</td><td>1~2</td><td>稳定性、时间/空间复杂度、建堆</td><td>易~中</td></tr><tr><td>算法设计与复杂度</td><td>1~2</td><td>策略识别、复杂度排序、递推式</td><td>中</td></tr></tbody></table></div>
+<h2>二、线性结构</h2>
+<h3>2.1 顺序表与链表</h3>
+<div class="doc-table"><table><thead><tr><th>对比</th><th>顺序表</th><th>链表</th></tr></thead><tbody><tr><td>存储</td><td>连续空间</td><td>离散结点 + 指针</td></tr><tr><td>随机访问</td><td>O(1)</td><td>O(n)</td></tr><tr><td>插入/删除</td><td>O(n)，平均移动 n/2</td><td>O(1)（已知前驱）</td></tr><tr><td>空间</td><td>可能预留浪费</td><td>每结点多一个指针开销</td></tr></tbody></table></div>
+<p>考试常问"频繁插入删除、很少随机访问"选链表；"需要按下标随机访问"选顺序表。</p>
+<h3>2.2 栈与队列</h3>
+<ul><li>栈：后进先出。典型应用是表达式求值、递归调用、括号匹配、进制转换、撤销操作。</li><li>队列：先进先出。典型应用是 BFS、缓冲区、打印任务排队。</li></ul>
+<p><strong>循环队列</strong>（容量 m，牺牲一个单元判满）：</p>
+<pre><code>队空：front == rear
+队满：(rear + 1) % m == front
+元素个数：(rear - front + m) % m</code></pre>
+<h3>2.3 串与 KMP</h3>
+<p>朴素匹配 BF 最坏 O(n×m)：主串每失配一次，模式串回退到开头。</p>
+<p>KMP 的核心是 <strong>next 数组</strong>：记录模式串每个位置之前的"最长公共前后缀长度"，失配时模式串跳到 <code>next[j]</code> 而不是回到 0，主串指针不回退，时间复杂度 O(n+m)。</p>
+<p>考试若问"KMP 相比 BF 的改进"，答"利用已匹配信息，避免主串指针回溯"。</p>
+<h2>三、树与二叉树</h2>
+<h3>3.1 基本性质（必背）</h3>
+<div class="doc-table"><table><thead><tr><th>性质</th><th>公式</th></tr></thead><tbody><tr><td>叶子与二度结点</td><td><code>n0 = n2 + 1</code></td></tr><tr><td>第 i 层最多结点</td><td><code>2<sup>(i-1)</sup></code></td></tr><tr><td>高度 h 的二叉树最多结点</td><td><code>2<sup>h</sup> - 1</code></td></tr><tr><td>n 个结点的完全二叉树高度</td><td><code>⌈log2(n+1)⌉</code></td></tr><tr><td>完全二叉树结点 i 的左/右孩子</td><td><code>2i</code> / <code>2i+1</code>（从 1 编号）</td></tr><tr><td>完全二叉树结点 i 的父结点</td><td><code>⌊i/2⌋</code></td></tr></tbody></table></div>
+<p><code>n0 = n2 + 1</code> 的推导：设结点总数 <code>n = n0 + n1 + n2</code>，边数 <code>n - 1 = n1 + 2n2</code>，两式联立得 <code>n0 = n2 + 1</code>。这个推导只对二叉树成立，不要套到多叉树。</p>
+<h3>3.2 遍历与还原</h3>
+<pre><code>先序：根 → 左 → 右
+中序：左 → 根 → 右
+后序：左 → 右 → 根
+层序：按层从左到右</code></pre>
+<ul><li>先序 + 中序、后序 + 中序、层序 + 中序可以唯一确定二叉树；</li><li>先序 + 后序不能唯一确定（无法区分只有一个孩子时在左还是在右）。</li></ul>
+<p><strong>还原步骤</strong>：先序的第一个是根，在中序中找到根的位置，左边是左子树、右边是右子树，递归处理。</p>
+<h3>3.3 哈夫曼树</h3>
+<p>构造：每次从森林中取两个权值最小的树合并，新结点权值为两者之和，重复直到只剩一棵树。</p>
+<pre><code>WPL = Σ(叶子权值 × 叶子到根的路径长度)</code></pre>
+<p>哈夫曼编码是最优前缀码，WPL 最小；但编码不唯一（左右子树可交换），只要 WPL 相同即为正确。</p>
+<p><strong>例</strong>：权值 <code>{5,7,8,11,15,25}</code>。</p>
+<ul><li>合并 5+7=12 → <code>{8,11,12,15,25}</code>；</li><li>合并 8+11=19 → <code>{12,15,19,25}</code>；</li><li>合并 12+15=27 → <code>{19,25,27}</code>；</li><li>合并 19+25=44 → <code>{27,44}</code>；</li><li>合并 27+44=71。</li></ul>
+<p>叶子深度：5、7、8、11 为 3，15、25 为 2。<br />WPL = <code>(5+7+8+11)×3 + (15+25)×2 = 31×3 + 40×2 = 173</code>。</p>
+<p>验算技巧：WPL 等于<strong>所有非叶结点权值之和</strong>，即 <code>12+19+27+44+71 = 173</code>，两种算法结果一致即可确认。</p>
+<h3>3.4 二叉排序树与平衡树</h3>
+<ul><li>BST：左子树 &lt; 根 &lt; 右子树，<strong>中序遍历得到递增序列</strong>；查找平均 O(log n)，退化成链表时 O(n)。</li><li>AVL：任一结点左右子树高度差 ≤ 1。失衡时有四种旋转：LL（右旋）、RR（左旋）、LR（先左后右）、RL（先右后左）。</li><li>红黑树：近似平衡，插入删除旋转次数少，Java 的 TreeMap、Linux 调度器使用。</li></ul>
+<h3>3.5 B 树与 B+ 树</h3>
+<div class="doc-table"><table><thead><tr><th>对比</th><th>B 树</th><th>B+ 树</th></tr></thead><tbody><tr><td>数据位置</td><td>所有结点都可存数据</td><td>数据只在叶子结点</td></tr><tr><td>叶子链接</td><td>无</td><td>叶子结点成链表</td></tr><tr><td>查找</td><td>可能在内部结点命中</td><td>每次都要到叶子</td></tr><tr><td>范围查询</td><td>不方便</td><td>沿叶子链表顺序扫描，高效</td></tr><tr><td>典型用途</td><td>文件索引</td><td>数据库索引（MySQL InnoDB）</td></tr></tbody></table></div>
+<p>B 树的阶 m 表示每个结点最多 m 个孩子、m-1 个关键字。数据库选 B+ 树，核心原因是<strong>叶子链表使范围查询和全表扫描更高效，且内部结点不存数据、同样大小能存更多索引项</strong>。</p>
+<h2>四、图</h2>
+<h3>4.1 存储结构</h3>
+<div class="doc-table"><table><thead><tr><th>结构</th><th>空间</th><th>适用</th><th>特点</th></tr></thead><tbody><tr><td>邻接矩阵</td><td>O(n²)</td><td>稠密图</td><td>判断两点是否相邻 O(1)；无向图对称</td></tr><tr><td>邻接表</td><td>O(n+e)</td><td>稀疏图</td><td>找某点所有邻接点快；判断相邻需遍历链表</td></tr></tbody></table></div>
+<p>无向图邻接矩阵第 i 行非零个数 = 顶点 i 的度；有向图第 i 行非零个数 = 出度，第 i 列 = 入度。</p>
+<h3>4.2 遍历</h3>
+<ul><li>DFS：栈/递归，一条路走到底再回退；</li><li>BFS：队列，按层扩展。</li></ul>
+<p>邻接表存储时两种遍历均为 O(n+e)；邻接矩阵为 O(n²)。</p>
+<h3>4.3 最小生成树</h3>
+<div class="doc-table"><table><thead><tr><th>算法</th><th>复杂度</th><th>适用</th><th>思路</th></tr></thead><tbody><tr><td>Prim</td><td>O(n²)</td><td>稠密图</td><td>从一个顶点出发，每次加入最近的非树顶点</td></tr><tr><td>Kruskal</td><td>O(e log e)</td><td>稀疏图</td><td>按边权排序，用并查集避免成环</td></tr></tbody></table></div>
+<p>两者都基于贪心，得到的 MST 权值相同（可能不唯一）。</p>
+<h3>4.4 最短路径</h3>
+<ul><li>Dijkstra：单源、非负权、O(n²)，贪心；</li><li>Floyd：全源、可含负权（不能有负环）、O(n³)，动态规划；</li><li>Bellman-Ford：单源、可含负权、O(n×e)，可判负环。</li></ul>
+<p><strong>Dijkstra 不能处理负权边</strong>：它一旦确定某点最短距离就不再更新，负权边可能让后续路径更短。</p>
+<h3>4.5 拓扑排序与关键路径</h3>
+<p><strong>拓扑排序（AOV 网）</strong>：反复找入度为 0 的顶点输出并删除其出边。若结束后仍有顶点，说明存在环，工程上表示循环依赖。</p>
+<p><strong>关键路径（AOE 网）</strong>：</p>
+<pre><code>ve（最早发生时间）：从源点正推，取所有前驱路径的最大值
+vl（最迟发生时间）：从汇点逆推，取所有后继路径的最小值
+活动的最早开始 e = 弧尾的 ve
+活动的最迟开始 l = 弧头的 vl - 活动工期
+总时差 = l - e，为 0 的活动是关键活动
+关键路径 = 从源点到汇点的最长路径，决定最短工期</code></pre>
+<p><strong>例</strong>：<code>v1→v2(3)</code>、<code>v1→v3(2)</code>、<code>v2→v4(2)</code>、<code>v3→v4(4)</code>、<code>v4→v5(3)</code>。</p>
+<ul><li>ve：v1=0，v2=3，v3=2，v4=max(3+2,2+4)=6，v5=6+3=9；</li><li>vl：v5=9，v4=6，v3=6-4=2，v2=6-2=4，v1=min(4-3,2-2)=0；</li><li>关键活动：a2（v1→v3）、a4（v3→v4）、a5（v4→v5），关键路径 <code>v1→v3→v4→v5</code>，工期 9。</li></ul>
+<p>总时差为 0 的活动不一定都在同一条路径上，判断关键路径要从源点连到汇点。</p>
+<h2>五、查找</h2>
+<div class="doc-table"><table><thead><tr><th>方法</th><th>前提</th><th>平均复杂度</th><th>要点</th></tr></thead><tbody><tr><td>顺序查找</td><td>无</td><td>O(n)</td><td>ASL 成功 = (n+1)/2</td></tr><tr><td>二分查找</td><td>有序 + 顺序存储</td><td>O(log n)</td><td>最多比较 <code>⌈log2(n+1)⌉</code> 次</td></tr><tr><td>二叉排序树</td><td>—</td><td>平均 O(log n)，最坏 O(n)</td><td>中序遍历有序</td></tr><tr><td>散列表</td><td>—</td><td>平均 O(1)</td><td>ASL 与装填因子 α 有关</td></tr></tbody></table></div>
+<p><strong>二分查找</strong>：长度为 1000 的有序表，<code>⌈log2(1001)⌉ = 10</code>，最多比较 10 次。判定树的高度即最多比较次数。</p>
+<p><strong>散列表</strong>：装填因子 <code>α = n/m</code>（n 为元素数、m 为表长）。α 越大冲突越多、查找越慢。</p>
+<p>冲突处理：</p>
+<ul><li>开放定址：线性探测（冲突后顺序找下一个空位，易产生堆积）、二次探测、双重散列；</li><li>链地址法：同义词挂链，α 可以大于 1。</li></ul>
+<p><strong>ASL 计算</strong>：成功 ASL = 各元素比较次数之和 / 元素个数；失败 ASL 要按每个散列地址出发探测到空位的次数求平均。考试通常只考成功 ASL。</p>
+<h2>六、排序</h2>
 <div class="doc-table"><table><thead><tr><th>算法</th><th>平均</th><th>最坏</th><th>空间</th><th>稳定性</th></tr></thead><tbody><tr><td>直接插入</td><td>O(n²)</td><td>O(n²)</td><td>O(1)</td><td>稳定</td></tr><tr><td>冒泡</td><td>O(n²)</td><td>O(n²)</td><td>O(1)</td><td>稳定</td></tr><tr><td>简单选择</td><td>O(n²)</td><td>O(n²)</td><td>O(1)</td><td>不稳定</td></tr><tr><td>希尔</td><td>O(n<sup>1.3</sup>)</td><td>O(n²)</td><td>O(1)</td><td>不稳定</td></tr><tr><td>快速</td><td>O(n log n)</td><td>O(n²)</td><td>O(log n)</td><td>不稳定</td></tr><tr><td>归并</td><td>O(n log n)</td><td>O(n log n)</td><td>O(n)</td><td>稳定</td></tr><tr><td>堆</td><td>O(n log n)</td><td>O(n log n)</td><td>O(1)</td><td>不稳定</td></tr><tr><td>基数</td><td>O(d(n+r))</td><td>O(d(n+r))</td><td>O(n+r)</td><td>稳定</td></tr></tbody></table></div>
-<ul><li>稳定：插入、冒泡、归并、基数</li><li>快排最坏出现在<strong>基本有序</strong>时（首元素作枢轴）</li><li>建堆 O(n)，堆排序整体 O(n log n)</li></ul>
-<h2>三、图算法</h2>
-<div class="doc-table"><table><thead><tr><th>算法</th><th>用途</th><th>复杂度</th><th>适用</th></tr></thead><tbody><tr><td>Prim</td><td>最小生成树</td><td>O(n²)</td><td>稠密图</td></tr><tr><td>Kruskal</td><td>最小生成树</td><td>O(e log e)</td><td>稀疏图</td></tr><tr><td>Dijkstra</td><td>单源最短路径</td><td>O(n²)</td><td>非负权</td></tr><tr><td>Floyd</td><td>全源最短路径</td><td>O(n³)</td><td>小规模</td></tr><tr><td>拓扑排序</td><td>依赖排序</td><td>O(n+e)</td><td>AOV 网</td></tr><tr><td>关键路径</td><td>最短工期</td><td>O(n+e)</td><td>AOE 网</td></tr></tbody></table></div>
-<p><strong>存储选择</strong>：邻接矩阵 O(n²) 适合稠密图；邻接表 O(n+e) 适合稀疏图。<br /><strong>无向图</strong>：邻接矩阵第 i 行非零个数 = 顶点 i 的度。<br /><strong>关键路径</strong>：<code>ve</code> 取最大、<code>vl</code> 取最小，<code>ve == vl</code> 的事件在关键路径上，总时差 = <code>vl - ve - 工期</code>。</p>
-<h2>四、查找</h2>
-<div class="doc-table"><table><thead><tr><th>方法</th><th>前提</th><th>复杂度</th><th>要点</th></tr></thead><tbody><tr><td>顺序查找</td><td>无</td><td>O(n)</td><td>ASL = (n+1)/2</td></tr><tr><td>二分查找</td><td>有序 + 顺序存储</td><td>O(log n)</td><td>最多比较 <code>⌈log2(n+1)⌉</code> 次</td></tr><tr><td>二叉排序树</td><td>—</td><td>平均 O(log n)，最坏 O(n)</td><td>中序遍历有序</td></tr><tr><td>散列表</td><td>—</td><td>平均 O(1)</td><td>ASL 与装填因子 α 相关</td></tr></tbody></table></div>
-<p>装填因子 <code>α = n / m</code>；开放定址要求 α ≤ 0.75 左右；链地址法可 &gt; 1。</p>
-<h2>五、其他必记</h2>
-<pre><code>循环队列元素个数 = (rear - front + m) % m
-队空 front == rear；队满 (rear + 1) % m == front（牺牲一个单元）
-KMP 时间 O(n + m)，next 数组记录最长公共前后缀
-复杂度递增：O(1) &lt; O(log n) &lt; O(n) &lt; O(n log n) &lt; O(n²) &lt; O(n³) &lt; O(2ⁿ) &lt; O(n!)</code></pre>
-<h2>六、算法设计策略</h2>
-<div class="doc-table"><table><thead><tr><th>策略</th><th>特征</th><th>典型题</th></tr></thead><tbody><tr><td>分治</td><td>分解 → 递归求解 → 合并</td><td>归并排序、二分查找、大整数乘法</td></tr><tr><td>动态规划</td><td>最优子结构 + 重叠子问题</td><td>背包、LCS、矩阵连乘、最短路径</td></tr><tr><td>贪心</td><td>局部最优推全局最优</td><td>活动安排、哈夫曼、最小生成树</td></tr><tr><td>回溯</td><td>DFS 搜索解空间树</td><td>N 皇后、迷宫、子集和</td></tr></tbody></table></div>
-<h2>七、自检题</h2>
-<ol><li>一棵二叉树有 20 个叶子结点、15 个一度结点，总结点数是多少？</li><li>6 个权值 {1,2,3,4,5,6} 构造哈夫曼树，WPL 是多少？</li><li>1000 个元素二分查找最多比较几次？</li><li>有 5 个顶点的完全无向图有多少条边？</li><li>快排递归深度最坏是多少？</li></ol>
-<blockquote><p>答案速查：1) n0=n2+1 → n2=19，总数 = 20+15+19 = 54；2) 逐次合并最小两个，WPL = 51；3) 10 次；4) C(5,2) = 10 条；5) O(n)。</p></blockquote>
+<p>记忆要点：</p>
+<ul><li><strong>稳定</strong>：插入、冒泡、归并、基数（口诀"插冒归基"）；</li><li>快排最坏 O(n²) 出现在序列基本有序、且以首元素为枢轴时；</li><li>建堆 O(n)，堆排序整体 O(n log n)；取前 k 大用堆最划算；</li><li>归并排序需要 O(n) 辅助空间，是唯一稳定的 O(n log n) 比较排序；</li><li>基数排序不是比较排序，适合整数且位数不多。</li></ul>
+<h2>七、算法设计与复杂度</h2>
+<div class="doc-table"><table><thead><tr><th>策略</th><th>核心特征</th><th>典型问题</th><th>是否保证最优</th></tr></thead><tbody><tr><td>分治</td><td>分解 → 递归求解 → 合并</td><td>归并排序、二分查找、大整数乘法</td><td>是</td></tr><tr><td>动态规划</td><td>最优子结构 + 重叠子问题，填表</td><td>0-1 背包、LCS、矩阵连乘、Floyd</td><td>是</td></tr><tr><td>贪心</td><td>局部最优推全局最优</td><td>活动安排、哈夫曼、Prim/Kruskal、分数背包</td><td>不一定</td></tr><tr><td>回溯</td><td>DFS 搜索解空间树，剪枝</td><td>N 皇后、迷宫、子集和</td><td>是（穷举）</td></tr></tbody></table></div>
+<p><strong>易混</strong>：0-1 背包用动态规划（物品不可分割，贪心会错）；分数背包用贪心（按单位价值排序）。</p>
+<p><strong>复杂度递增</strong>：</p>
+<pre><code>O(1) &lt; O(log n) &lt; O(n) &lt; O(n log n) &lt; O(n²) &lt; O(n³) &lt; O(2<sup>n</sup>) &lt; O(n!)</code></pre>
+<p><strong>递推式速判</strong>（主定理的常用结论）：</p>
+<div class="doc-table"><table><thead><tr><th>递推式</th><th>结果</th><th>典型</th></tr></thead><tbody><tr><td><code>T(n)=T(n/2)+O(1)</code></td><td>O(log n)</td><td>二分查找</td></tr><tr><td><code>T(n)=2T(n/2)+O(n)</code></td><td>O(n log n)</td><td>归并排序</td></tr><tr><td><code>T(n)=2T(n/2)+O(1)</code></td><td>O(n)</td><td>二叉树遍历</td></tr><tr><td><code>T(n)=T(n-1)+O(1)</code></td><td>O(n)</td><td>线性递归</td></tr><tr><td><code>T(n)=2T(n-1)+O(1)</code></td><td>O(2<sup>n</sup>)</td><td>汉诺塔</td></tr></tbody></table></div>
+<h2>八、速记表</h2>
+<pre><code>n0 = n2 + 1（仅二叉树）
+完全二叉树高度 = ⌈log2(n+1)⌉
+循环队列元素个数 = (rear - front + m) % m
+哈夫曼 WPL = Σ(权值 × 深度)
+Prim O(n²) 稠密；Kruskal O(e log e) 稀疏
+Dijkstra 单源非负；Floyd 全源 O(n³)
+拓扑排序剩顶点 ⇒ 有环
+关键路径：ve 取最大、vl 取最小、总时差 0
+二分最多比较 ⌈log2(n+1)⌉ 次
+稳定排序：插入、冒泡、归并、基数</code></pre>
+<h2>九、易错辨析</h2>
+<div class="doc-table"><table><thead><tr><th>错误认知</th><th>正确结论</th><th>原因</th></tr></thead><tbody><tr><td>n0 = n2 + 1 对所有树成立</td><td>只对二叉树成立</td><td>多叉树边数与度数的关系不同</td></tr><tr><td>先序 + 后序能唯一确定二叉树</td><td>不能</td><td>无法判断单孩子结点在左还是右</td></tr><tr><td>哈夫曼编码唯一</td><td>编码不唯一，WPL 唯一</td><td>左右子树可交换</td></tr><tr><td>快排平均和最坏都是 O(n log n)</td><td>最坏 O(n²)</td><td>枢轴划分极不平衡</td></tr><tr><td>Dijkstra 可处理负权</td><td>不能</td><td>贪心确定后不再更新</td></tr><tr><td>堆排序空间 O(n)</td><td>O(1)</td><td>原地排序</td></tr><tr><td>归并排序不稳定</td><td>稳定</td><td>合并时相等元素保持原序</td></tr><tr><td>拓扑排序唯一</td><td>一般不唯一</td><td>同时有多个入度 0 顶点时顺序可变</td></tr></tbody></table></div>
+<h2>十、自检题</h2>
+<ol><li>一棵二叉树有 20 个叶子结点、15 个一度结点，总结点数是多少？</li><li>6 个权值 <code>{1,2,3,4,5,6}</code> 构造哈夫曼树，WPL 是多少？</li><li>1000 个元素二分查找最多比较几次？</li><li>5 个顶点的完全无向图有多少条边？</li><li>先序 <code>ABDECF</code>、中序 <code>DBEAFC</code>，求后序。</li><li>有向图邻接矩阵第 i 行非零个数表示什么？</li><li>关键路径上的活动总时差是多少？</li><li>哪些排序算法稳定？哪些空间复杂度为 O(1)？</li><li><code>T(n)=2T(n/2)+O(n)</code> 的时间复杂度是多少？</li><li>0-1 背包为什么不能用贪心？</li></ol>
+<blockquote><p>答案与解析：<br />1) <code>n0=n2+1</code> → n2=19，总数 <code>20+15+19=54</code>。<br />2) 逐次合并最小两个，WPL = 51。<br />3) <code>⌈log2(1001)⌉ = 10</code> 次。<br />4) <code>C(5,2)=10</code> 条。<br />5) 根 A，左子树 DBE、右子树 FC；后序 <code>DEBFC A</code> → <code>DEBFCA</code>。<br />6) 顶点 i 的出度。<br />7) 0。<br />8) 稳定：插入、冒泡、归并、基数；空间 O(1)：插入、冒泡、选择、希尔、堆。<br />9) O(n log n)（归并排序型）。<br />10) 物品不可分割，按单位价值贪心可能剩下空间浪费，得不到最优解。</p></blockquote>
 </main>
 <footer class="doc-footer">本文档由同名 Markdown 生成（UTF-8 编码）；内容修改请改 .md 后重新运行 <code>node tools/build-docs.js</code>。</footer>
 </body>

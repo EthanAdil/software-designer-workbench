@@ -38,16 +38,17 @@ window.RK = window.RK || {};
   RK.MODULES = [
     { key: 'computer-system', name: '计算机组成与体系结构', short: '组成原理', weight: 7, color: '#4c66f0', doc: 'docs/02-知识点精要/01-计算机组成与体系结构.html' },
     { key: 'os', name: '操作系统', short: '操作系统', weight: 6, color: '#8b5cf6', doc: 'docs/02-知识点精要/02-操作系统.html' },
-    { key: 'ds-algorithm', name: '数据结构与算法', short: '数据结构', weight: 9, color: '#0ea5a4', doc: 'docs/02-知识点精要/03-数据结构与算法.html' },
+    { key: 'ds-algorithm', name: '数据结构与算法', short: '数据结构', weight: 8, color: '#0ea5a4', doc: 'docs/02-知识点精要/03-数据结构与算法.html' },
     { key: 'programming-language', name: '程序设计语言与编译', short: '程序语言', weight: 5, color: '#f59e0b', doc: 'docs/02-知识点精要/04-程序设计语言与编译原理.html' },
-    { key: 'software-engineering', name: '软件工程', short: '软件工程', weight: 13, color: '#e0554b', doc: 'docs/02-知识点精要/05-软件工程.html' },
+    { key: 'software-engineering', name: '软件工程', short: '软件工程', weight: 12, color: '#e0554b', doc: 'docs/02-知识点精要/05-软件工程.html' },
     { key: 'oo-uml', name: '面向对象与 UML', short: '面向对象', weight: 9, color: '#d946ef', doc: 'docs/02-知识点精要/06-面向对象与UML.html' },
     { key: 'database', name: '数据库系统', short: '数据库', weight: 7, color: '#0d9488', doc: 'docs/02-知识点精要/07-数据库系统.html' },
     { key: 'network', name: '计算机网络', short: '网络', weight: 6, color: '#2563eb', doc: 'docs/02-知识点精要/08-计算机网络.html' },
     { key: 'security', name: '信息安全', short: '信息安全', weight: 3, color: '#b45309', doc: 'docs/02-知识点精要/09-信息安全与知识产权.html' },
     { key: 'standard-law', name: '标准化与知识产权', short: '标准法规', weight: 3, color: '#64748b', doc: 'docs/02-知识点精要/09-信息安全与知识产权.html' },
     { key: 'multimedia', name: '多媒体基础', short: '多媒体', weight: 2, color: '#db2777', doc: 'docs/02-知识点精要/10-多媒体与专业英语.html' },
-    { key: 'english', name: '专业英语', short: '专业英语', weight: 5, color: '#475569', doc: 'docs/02-知识点精要/10-多媒体与专业英语.html' }
+    { key: 'english', name: '专业英语', short: '专业英语', weight: 5, color: '#475569', doc: 'docs/02-知识点精要/10-多媒体与专业英语.html' },
+    { key: 'tech', name: '新技术应用', short: '新技术', weight: 2, color: '#0891b2', doc: 'docs/02-知识点精要/11-新技术应用.html' }
   ];
 
   RK.MODULE_MAP = {};

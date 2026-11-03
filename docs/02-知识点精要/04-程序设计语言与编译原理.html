@@ -15,28 +15,78 @@
 </header>
 <main class="doc">
 <h1>04 · 程序设计语言与编译原理（上午 5 题）</h1>
-<h2>一、编译过程五阶段</h2>
-<div class="doc-table"><table><thead><tr><th>阶段</th><th>输入</th><th>输出</th><th>用到的理论</th><th>典型任务</th></tr></thead><tbody><tr><td>词法分析</td><td>源程序字符流</td><td>token 序列</td><td>正规式 / 有限自动机</td><td>识别标识符、常数、关键字</td></tr><tr><td>语法分析</td><td>token 序列</td><td>语法树</td><td>上下文无关文法</td><td>检查结构是否符合文法</td></tr><tr><td>语义分析</td><td>语法树</td><td>带语义信息的中间表示</td><td>属性文法</td><td>类型检查、变量是否声明</td></tr><tr><td>中间代码生成与优化</td><td>中间表示</td><td>优化的中间代码</td><td>—</td><td>四元式、常量合并、循环优化</td></tr><tr><td>目标代码生成</td><td>中间代码</td><td>目标机器代码</td><td>—</td><td>寄存器分配、指令选择</td></tr></tbody></table></div>
-<blockquote><p><strong>最常考的一句话</strong>："变量是否已声明"属于<strong>语义分析</strong>，不是语法分析。</p></blockquote>
-<p>编译 vs 解释：编译先整体翻译再执行（快、跨平台差）；解释逐句翻译执行（慢、跨平台好）。</p>
-<h2>二、文法与自动机</h2>
-<pre><code>0 型 短语文法  &gt;  1 型 上下文有关  &gt;  2 型 上下文无关  &gt;  3 型 正规文法
-                                    ↑ 程序语言语法         ↑ 词法（正规式）</code></pre>
-<div class="doc-table"><table><thead><tr><th>概念</th><th>关键点</th></tr></thead><tbody><tr><td>DFA</td><td>每个状态对每个输入<strong>至多一条</strong>出边，无 ε 转移</td></tr><tr><td>NFA</td><td>允许多条出边与 ε 转移</td></tr><tr><td>两者关系</td><td>识别能力等价，都可识别正规集；NFA 可用子集构造法转 DFA</td></tr><tr><td>正规式</td><td>描述词法规则，如 `(a\</td><td class="doc-extra-cell">b)*abb` 表示"以 abb 结尾的 a、b 串"</td></tr><tr><td>二义性文法</td><td>同一个句子存在两棵不同语法树</td></tr></tbody></table></div>
-<h2>三、表达式转换（每年必考）</h2>
-<p><strong>中缀 → 后缀</strong></p>
-<ol><li>遇操作数直接输出；</li><li>遇运算符：弹出栈中优先级 ≥ 当前的全部运算符，再入栈；</li><li>遇 <code>(</code> 直接入栈，遇 <code>)</code> 弹栈直到 <code>(</code>；</li><li>扫描结束，弹出栈中剩余运算符。</li></ol>
+<blockquote><p>题量不大但性价比高：概念题靠对比记忆，表达式转换靠手熟，文法与自动机只考到"认得、会判断"的深度，不需要形式化证明。</p></blockquote>
+<h2>一、考点地图</h2>
+<div class="doc-table"><table><thead><tr><th>考点</th><th>近年题量</th><th>常见问法</th><th>难度</th></tr></thead><tbody><tr><td>语言基础与范型</td><td>1</td><td>编译/解释、静态/动态类型、语言分类</td><td>易</td></tr><tr><td>参数传递</td><td>1</td><td>传值/传址/传名、程序输出结果</td><td>中</td></tr><tr><td>文法与自动机</td><td>1~2</td><td>乔姆斯基分类、正规式含义、DFA 特征</td><td>中</td></tr><tr><td>编译过程</td><td>1</td><td>各阶段任务、符号表、中间代码形式</td><td>易~中</td></tr><tr><td>表达式转换</td><td>1</td><td>中缀转后缀、后缀求值、表达式树</td><td>中</td></tr></tbody></table></div>
+<h2>二、语言基础</h2>
+<h3>2.1 编译与解释</h3>
+<div class="doc-table"><table><thead><tr><th>对比</th><th>编译方式</th><th>解释方式</th></tr></thead><tbody><tr><td>过程</td><td>先整体翻译成目标代码，再执行</td><td>逐句翻译、逐句执行</td></tr><tr><td>执行效率</td><td>高</td><td>低</td></tr><tr><td>跨平台性</td><td>差，换平台需重新编译</td><td>好，有解释器即可</td></tr><tr><td>典型</td><td>C、C++、Go</td><td>Python、JavaScript、Ruby</td></tr></tbody></table></div>
+<p>编译方式把翻译与运行分开，运行时没有翻译开销，所以快；解释方式不生成目标文件，换平台只需换解释器，所以灵活。考试常问"哪种方式执行效率高/可移植性好"。</p>
+<h3>2.2 静态类型与动态类型</h3>
+<ul><li>静态类型：编译期确定并检查类型，如 C、C++、Java、Go；类型错误在编译阶段暴露。</li><li>动态类型：运行期才确定类型，如 Python、JavaScript、Ruby；灵活但错误发现晚。</li></ul>
+<p>注意"强/弱类型"是另一个维度：强类型不允许隐式跨类型转换，弱类型允许（如 C 的指针与整数互转）。</p>
+<h3>2.3 语言范型</h3>
+<div class="doc-table"><table><thead><tr><th>范型</th><th>核心思想</th><th>代表语言</th></tr></thead><tbody><tr><td>命令式（过程式）</td><td>用语句改变状态</td><td>C、Pascal、Fortran</td></tr><tr><td>面向对象</td><td>对象 + 消息，封装继承多态</td><td>Java、C++、C#</td></tr><tr><td>函数式</td><td>函数是一等公民，无副作用</td><td>Lisp、Scheme、Haskell</td></tr><tr><td>逻辑式</td><td>声明事实与规则，由系统求解</td><td>Prolog</td></tr></tbody></table></div>
+<h3>2.4 参数传递</h3>
+<div class="doc-table"><table><thead><tr><th>方式</th><th>传递内容</th><th>能否修改实参</th><th>说明</th></tr></thead><tbody><tr><td>传值</td><td>实参的副本</td><td>不能</td><td>C 的默认方式</td></tr><tr><td>传地址/引用</td><td>实参的地址</td><td>能</td><td>C 的指针、C++ 的引用</td></tr><tr><td>传值-结果</td><td>传入副本，返回时写回</td><td>能（返回时）</td><td>也叫复制-恢复</td></tr><tr><td>传名</td><td>实参表达式文本替换</td><td>能，且可能重复求值</td><td>类似宏展开</td></tr></tbody></table></div>
+<p><strong>例</strong>：<code>void swap(int a, int b)</code> 以 <code>swap(x, y)</code> 调用，函数内交换的是副本，<code>x、y</code> 不变；改为 <code>swap(int &amp;a, int &amp;b)</code> 才会交换。</p>
+<p><strong>传名的陷阱</strong>：若实参是 <code>i++</code>，函数体内每引用一次形参就自增一次，最终 <code>i</code> 可能增加多次。这是"传名"最典型的考法。</p>
+<h3>2.5 作用域与绑定</h3>
+<ul><li><strong>静态作用域（词法作用域）</strong>：变量的可见范围由源代码的嵌套结构决定，编译期即可确定，绝大多数语言采用。</li><li><strong>动态作用域</strong>：变量可见范围由调用链决定，运行期才能确定，早期 Lisp 使用。</li><li><strong>静态绑定（早绑定）</strong>：编译期确定调用哪个函数，如重载、非虚方法。</li><li><strong>动态绑定（晚绑定）</strong>：运行期根据对象实际类型确定，如重写、虚函数。</li></ul>
+<h2>三、文法与自动机</h2>
+<h3>3.1 乔姆斯基四类文法</h3>
+<div class="doc-table"><table><thead><tr><th>类型</th><th>名称</th><th>产生式限制</th><th>识别器</th><th>用途</th></tr></thead><tbody><tr><td>0 型</td><td>短语文法</td><td>无限制</td><td>图灵机</td><td>自然语言、通用计算</td></tr><tr><td>1 型</td><td>上下文有关</td><td><code>αAβ → αγβ</code>，γ 非空</td><td>线性有界自动机</td><td>少数语言特性</td></tr><tr><td>2 型</td><td>上下文无关</td><td><code>A → γ</code>，A 为非终结符</td><td>下推自动机</td><td>程序语言语法</td></tr><tr><td>3 型</td><td>正规文法</td><td><code>A → aB</code> 或 <code>A → a</code></td><td>有限自动机</td><td>词法规则、正规式</td></tr></tbody></table></div>
+<p>记忆：<strong>词法用 3 型（正规式/有限自动机），语法用 2 型（上下文无关文法）</strong>。这是编译原理最常考的一句话。</p>
+<h3>3.2 推导、语法树与二义性</h3>
+<ul><li>推导：从开始符号出发，反复用产生式替换非终结符，得到句子；</li><li>最左推导：每次替换最左边的非终结符；最右推导反之；</li><li>语法树：推导的图形表示，叶子是终结符，内部结点是非终结符；</li><li><strong>二义性</strong>：同一个句子存在两棵不同的语法树（或两个不同的最左推导）。</li></ul>
+<p>二义性文法无法用于编译，需要改写文法或增加优先级/结合性规则来消除。</p>
+<h3>3.3 正规式与有限自动机</h3>
+<div class="doc-table"><table><thead><tr><th>概念</th><th>关键点</th></tr></thead><tbody><tr><td>DFA</td><td>每个状态对每个输入符号<strong>至多一条</strong>转移，无 ε 转移</td></tr><tr><td>NFA</td><td>允许多条转移与 ε 转移</td></tr><tr><td>等价性</td><td>DFA 与 NFA 识别能力相同，都识别正规集</td></tr><tr><td>转换</td><td>NFA 用子集构造法转 DFA；DFA 可最小化</td></tr><tr><td>正规式</td><td>描述词法规则，如 `(a\</td><td class="doc-extra-cell">b)*abb` 表示"以 abb 结尾的 a、b 串"</td></tr></tbody></table></div>
+<p><strong>正规式含义判断</strong>：<code>(a|b)*abb</code> 中 <code>(a|b)*</code> 是任意长度的 a/b 串前缀，整体表示所有以 <code>abb</code> 结尾的串。考试常给几个串问"哪个不被该正规式接受"，逐个对照后缀即可。</p>
+<p><strong>DFA 的"确定性"</strong>：同一状态、同一输入符号，下一状态唯一；与状态数多少、是否有终态无关。</p>
+<h3>3.4 语法分析方法（低频但偶考）</h3>
+<div class="doc-table"><table><thead><tr><th>方法</th><th>方向</th><th>特点</th></tr></thead><tbody><tr><td>递归下降</td><td>自顶向下</td><td>为每个非终结符写一个函数，直观、需消除左递归</td></tr><tr><td>LL(1)</td><td>自顶向下</td><td>预测分析，看 1 个输入符号，要求无左递归、无公共左因子</td></tr><tr><td>LR(1)</td><td>自底向上</td><td>移进-归约，分析能力强于 LL，能处理更多文法</td></tr></tbody></table></div>
+<p>考试若问"哪种方法能力更强"，答 LR；问"自顶向下的代表"，答递归下降/LL。</p>
+<h2>四、编译过程</h2>
+<h3>4.1 五个阶段</h3>
+<div class="doc-table"><table><thead><tr><th>阶段</th><th>输入</th><th>输出</th><th>用到的理论</th><th>典型任务</th></tr></thead><tbody><tr><td>词法分析</td><td>源程序字符流</td><td>token 序列</td><td>正规式、有限自动机</td><td>识别关键字、标识符、常数</td></tr><tr><td>语法分析</td><td>token 序列</td><td>语法树</td><td>上下文无关文法</td><td>检查结构是否符合文法</td></tr><tr><td>语义分析</td><td>语法树</td><td>带语义信息的中间表示</td><td>属性文法</td><td>类型检查、变量是否声明</td></tr><tr><td>中间代码生成与优化</td><td>中间表示</td><td>优化的中间代码</td><td>—</td><td>四元式、常量合并、循环优化</td></tr><tr><td>目标代码生成</td><td>中间代码</td><td>目标机器代码</td><td>—</td><td>寄存器分配、指令选择</td></tr></tbody></table></div>
+<p><strong>最容易错的一句话</strong>："变量是否已声明""运算类型是否匹配"属于<strong>语义分析</strong>，不是语法分析。语法分析只管结构（括号是否配对、语句是否符合文法），不管含义。</p>
+<p><strong>符号表</strong>贯穿编译全过程，记录标识符的名字、类型、作用域、存储地址，各阶段都要查表或更新表。</p>
+<h3>4.2 中间代码</h3>
+<div class="doc-table"><table><thead><tr><th>形式</th><th>说明</th></tr></thead><tbody><tr><td>四元式</td><td><code>(运算符, 操作数1, 操作数2, 结果)</code>，最常用</td></tr><tr><td>三元式</td><td>省略结果，用序号引用中间结果</td></tr><tr><td>逆波兰式</td><td>后缀表达式</td></tr><tr><td>树</td><td>语法树/表达式树</td></tr><tr><td>三地址码</td><td><code>x = y op z</code> 形式</td></tr></tbody></table></div>
+<p>中间代码的好处：与具体机器无关，便于优化和移植；后端只需针对不同目标机生成代码。</p>
+<h3>4.3 代码优化</h3>
+<div class="doc-table"><table><thead><tr><th>层次</th><th>例子</th></tr></thead><tbody><tr><td>局部优化</td><td>基本块内常量合并、公共子表达式删除、死代码消除</td></tr><tr><td>循环优化</td><td>循环不变式外提、强度削弱（乘法换加法）、循环展开</td></tr><tr><td>全局优化</td><td>全局公共子表达式、代码移动、寄存器分配</td></tr></tbody></table></div>
+<p><strong>强度削弱</strong>的典型例子：把循环内的 <code>i*4</code> 换成 <code>i&lt;&lt;2</code> 或累加 4，把乘法降为移位/加法。</p>
+<h2>五、表达式与程序结构</h2>
+<h3>5.1 中缀转后缀</h3>
+<p>规则：</p>
+<ol><li>遇操作数直接输出；</li><li>遇运算符，弹出栈中优先级<strong>大于或等于</strong>当前运算符的全部运算符，再把当前运算符入栈（左结合，同级也弹）；</li><li>遇 <code>(</code> 直接入栈；遇 <code>)</code> 弹栈直到 <code>(</code>，括号不输出；</li><li>扫描结束，弹出栈中剩余运算符。</li></ol>
+<p>例：</p>
 <pre><code>a + b * (c - d)   →   a b c d - * +
-(a + b) * c       →   a b + c *</code></pre>
-<p><strong>后缀求值</strong>：遇操作数入栈；遇运算符弹出两个（先出的是右操作数）运算后入栈。</p>
-<p><code>3 4 + 5 *</code> → (3+4)=7 → 7×5 = <strong>35</strong></p>
-<h2>四、程序语言基础</h2>
-<div class="doc-table"><table><thead><tr><th>概念</th><th>说明</th></tr></thead><tbody><tr><td>传值</td><td>形参是实参副本，函数内修改不影响实参（C 默认）</td></tr><tr><td>传地址/引用</td><td>形参与实参同一存储，修改生效</td></tr><tr><td>传名</td><td>宏展开式替换，可能重复求值</td></tr><tr><td>静态类型</td><td>编译期检查（C/Java/C++）</td></tr><tr><td>动态类型</td><td>运行期检查（Python/JS/Ruby）</td></tr><tr><td>语言范型</td><td>命令式（C）、面向对象（Java）、函数式（Lisp）、逻辑式（Prolog）</td></tr></tbody></table></div>
-<h2>五、中间代码与优化</h2>
-<ul><li>中间代码形式：四元式 <code>(运算符, 操作数1, 操作数2, 结果)</code>、三元式、逆波兰式、树。</li><li>局部优化：基本块内的常量合并、公共子表达式删除、死代码消除。</li><li>循环优化：循环不变式外提、强度削弱（乘法换加法）、循环展开。</li></ul>
-<h2>六、自检题</h2>
-<ol><li>词法分析用什么理论？语法分析用什么文法？</li><li><code>a*(b+c)-d</code> 的后缀表达式是什么？</li><li>DFA 与 NFA 的本质区别是什么？</li><li>"数组下标越界检查"属于哪个阶段？</li><li>编译方式与解释方式各自的优缺点？</li></ol>
-<blockquote><p>答案速查：1) 正规式/有限自动机，上下文无关文法（2 型）；2) <code>abc+*d-</code>；3) DFA 每个状态对每个输入至多一条转移且无 ε 边；4) 语义分析（运行期检查则属目标代码/运行时，考试通常按语义分析答）；5) 编译快但需重新编译、跨平台差；解释灵活但慢。</p></blockquote>
+(a + b) * c       →   a b + c *
+a * (b + c) - d   →   a b c + * d -</code></pre>
+<h3>5.2 后缀求值</h3>
+<p>遇操作数入栈；遇运算符弹出两个操作数（<strong>先弹出的是右操作数</strong>），运算后结果入栈。</p>
+<p><code>3 4 + 5 *</code> → 先算 <code>3+4=7</code>，再算 <code>7×5=35</code>。</p>
+<h3>5.3 表达式树</h3>
+<p>表达式树的中序遍历是原中缀表达式，后序遍历是后缀表达式，前序遍历是前缀表达式。题目给出表达式树问遍历结果时，按"左-根-右"等规则直接读。</p>
+<h3>5.4 程序结构</h3>
+<p>结构化程序设计的三种基本控制结构：顺序、选择、循环。GOTO 语句破坏结构化，应避免。结构化设计强调<strong>单入口、单出口</strong>，便于验证与维护。</p>
+<h2>六、速记表</h2>
+<pre><code>词法：正规式 / 有限自动机（3 型）
+语法：上下文无关文法（2 型）
+语义：类型检查、变量声明
+乔姆斯基：0 型 &gt; 1 型 &gt; 2 型 &gt; 3 型（限制由松到紧）
+DFA：同状态同输入至多一条转移，无 ε
+中缀转后缀：同级也弹栈；括号不输出
+后缀求值：先弹出的是右操作数
+中间代码：四元式、三元式、逆波兰、树、三地址码</code></pre>
+<h2>七、易错辨析</h2>
+<div class="doc-table"><table><thead><tr><th>错误认知</th><th>正确结论</th><th>原因</th></tr></thead><tbody><tr><td>变量未声明由语法分析发现</td><td>由语义分析发现</td><td>语法只检查结构，不检查含义</td></tr><tr><td>编译方式可移植性好</td><td>解释方式可移植性好</td><td>编译产物绑定目标平台</td></tr><tr><td>DFA 可以有 ε 转移</td><td>DFA 不允许 ε 转移</td><td>ε 转移是 NFA 的特征</td></tr><tr><td>语法分析用正规式</td><td>语法分析用上下文无关文法</td><td>正规式只能描述词法</td></tr><tr><td>后缀转换时同级运算符不弹栈</td><td>同为左结合时要弹栈</td><td>保证运算顺序正确</td></tr><tr><td>传值调用能改变实参</td><td>传值只改副本</td><td>形参与实参是两份存储</td></tr><tr><td>重载是运行期绑定</td><td>重载是编译期绑定，重写是运行期绑定</td><td>重载由参数静态类型决定</td></tr></tbody></table></div>
+<h2>八、自检题</h2>
+<ol><li>词法分析用什么理论？语法分析用什么文法？</li><li><code>a*(b+c)-d</code> 的后缀表达式是什么？</li><li>DFA 与 NFA 的本质区别是什么？</li><li>"数组下标越界检查"属于哪个阶段？</li><li>编译方式与解释方式各自的优缺点？</li><li>传名调用为什么可能让实参被多次求值？</li><li>乔姆斯基 2 型文法对应哪种自动机？</li><li><code>(a|b)*abb</code> 是否接受串 <code>aabb</code>？是否接受 <code>abab</code>？</li><li>四元式与三元式的主要区别是什么？</li><li>循环不变式外提属于哪类优化？</li></ol>
+<blockquote><p>答案与解析：<br />1) 正规式/有限自动机；上下文无关文法（2 型）。<br />2) <code>a b c + * d -</code>。<br />3) DFA 每个状态对每个输入至多一条转移且无 ε 边；NFA 允许多条与 ε 转移。<br />4) 语义分析（若强调运行期检查，则属于运行时支撑，考试按语义分析答）。<br />5) 编译执行快、跨平台差；解释灵活、跨平台好但慢。<br />6) 传名是文本替换，形参在函数体每出现一次就重新求值一次。<br />7) 下推自动机。<br />8) <code>aabb</code> 接受（以 abb 结尾）；<code>abab</code> 不接受（不以 abb 结尾）。<br />9) 四元式显式给出结果变量，三元式用序号引用中间结果、不产生新变量。<br />10) 循环优化。</p></blockquote>
 </main>
 <footer class="doc-footer">本文档由同名 Markdown 生成（UTF-8 编码）；内容修改请改 .md 后重新运行 <code>node tools/build-docs.js</code>。</footer>
 </body>

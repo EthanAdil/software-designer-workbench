@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="color-scheme" content="light dark" />
+<title>11 · 新技术应用（上午 2 题） · 软件设计师</title>
+<link rel="stylesheet" href="../../assets/css/main.css" />
+<link rel="stylesheet" href="../../assets/css/doc.css" />
+</head>
+<body class="doc-body">
+<header class="doc-topbar">
+  <a class="doc-back" href="../../index.html">← 返回工作台</a>
+  <span class="doc-crumb">docs / 02-知识点精要</span>
+</header>
+<main class="doc">
+<h1>11 · 新技术应用（上午 2 题）</h1>
+<blockquote><p>第 5 版教材新增的稳定考点，近年上午卷通常 1~2 题，全部是概念辨析，不涉及计算。复习策略是"背边界"：分清 IaaS/PaaS/SaaS、分清机器学习四类、分清三种链与 5G 三场景。</p></blockquote>
+<h2>一、考点地图</h2>
+<div class="doc-table"><table><thead><tr><th>考点</th><th>近年题量</th><th>常见问法</th><th>难度</th></tr></thead><tbody><tr><td>云计算</td><td>0~1</td><td>服务模式边界、部署形态、容器与虚拟机</td><td>易</td></tr><tr><td>大数据</td><td>0~1</td><td>4V 含义、Hadoop 组件、批处理与流处理</td><td>易</td></tr><tr><td>人工智能</td><td>0~1</td><td>机器学习分类、CNN/RNN/Transformer 适用</td><td>易</td></tr><tr><td>物联网与 5G</td><td>0~1</td><td>三层架构、通信技术、5G 三大场景</td><td>易</td></tr><tr><td>区块链与边缘计算</td><td>0~1</td><td>五特征、三种链、共识机制、云边协同</td><td>易~中</td></tr></tbody></table></div>
+<h2>二、云计算</h2>
+<h3>2.1 定义与特征</h3>
+<p>云计算通过网络按需提供可配置的计算资源（网络、服务器、存储、应用、服务），用户按使用量付费。</p>
+<p>五个基本特征：</p>
+<ol><li>按需自服务：用户自助申请，无需人工干预；</li><li>广泛网络接入：通过标准网络访问；</li><li>资源池化：资源以池的形式共享，多租户隔离；</li><li>快速弹性：可快速扩容与缩容；</li><li>服务可计量：按使用量计费与监控。</li></ol>
+<h3>2.2 三种服务模式</h3>
+<div class="doc-table"><table><thead><tr><th>模式</th><th>提供内容</th><th>用户负责</th><th>典型例子</th></tr></thead><tbody><tr><td>IaaS</td><td>虚拟机、存储、网络等基础设施</td><td>操作系统、中间件、应用、数据</td><td>AWS EC2、阿里云 ECS</td></tr><tr><td>PaaS</td><td>开发运行平台、中间件、数据库服务</td><td>应用与数据</td><td>Google App Engine、Heroku</td></tr><tr><td>SaaS</td><td>可直接使用的软件</td><td>只管使用与配置</td><td>Office 365、企业邮箱、在线 CRM</td></tr></tbody></table></div>
+<p>判断技巧：<strong>用户是否要管操作系统</strong>——要管是 IaaS；不管 OS 但要部署自己的应用是 PaaS；连应用都不用开发、直接使用是 SaaS。</p>
+<h3>2.3 部署形态</h3>
+<div class="doc-table"><table><thead><tr><th>形态</th><th>特点</th></tr></thead><tbody><tr><td>公有云</td><td>云服务商运营，多租户共享，成本低</td></tr><tr><td>私有云</td><td>企业自建自用，安全可控，成本高</td></tr><tr><td>混合云</td><td>关键业务私有云、弹性业务公有云</td></tr><tr><td>社区云</td><td>特定群体（如某行业）共同使用</td></tr></tbody></table></div>
+<h3>2.4 虚拟化与容器</h3>
+<div class="doc-table"><table><thead><tr><th>对比</th><th>虚拟机</th><th>容器</th></tr></thead><tbody><tr><td>隔离层次</td><td>硬件级，含完整 Guest OS</td><td>进程级，共享宿主机内核</td></tr><tr><td>启动速度</td><td>分钟级</td><td>秒级</td></tr><tr><td>资源开销</td><td>大</td><td>小</td></tr><tr><td>隔离性</td><td>强</td><td>较弱</td></tr><tr><td>典型</td><td>VMware、KVM</td><td>Docker、containerd</td></tr></tbody></table></div>
+<p><strong>云原生</strong>四要素：容器化、微服务、DevOps、持续交付。Kubernetes 是容器编排的事实标准，负责调度、扩缩容、服务发现。</p>
+<h2>三、大数据</h2>
+<h3>3.1 4V 特征</h3>
+<div class="doc-table"><table><thead><tr><th>特征</th><th>含义</th></tr></thead><tbody><tr><td>Volume</td><td>数据体量大（TB/PB 级）</td></tr><tr><td>Velocity</td><td>产生与处理速度快，实时性要求高</td></tr><tr><td>Variety</td><td>类型多样：结构化、半结构化、非结构化</td></tr><tr><td>Value</td><td>价值密度低，需从海量数据中挖掘</td></tr></tbody></table></div>
+<p>扩展的第五个 V 是 Veracity（真实性/质量），强调数据可信度。</p>
+<h3>3.2 处理流程</h3>
+<pre><code>数据采集 → 预处理（清洗、集成、变换、归约）→ 存储 → 分析挖掘 → 可视化</code></pre>
+<h3>3.3 Hadoop 生态</h3>
+<div class="doc-table"><table><thead><tr><th>组件</th><th>作用</th></tr></thead><tbody><tr><td>HDFS</td><td>分布式文件系统，NameNode 管元数据、DataNode 存数据块，多副本</td></tr><tr><td>MapReduce</td><td>批处理计算模型，Map 分片处理、Reduce 汇总</td></tr><tr><td>YARN</td><td>资源调度，ResourceManager 全局、NodeManager 单机</td></tr><tr><td>Hive</td><td>类 SQL 数据仓库，把 SQL 转为 MapReduce/Spark 任务</td></tr><tr><td>HBase</td><td>基于 HDFS 的列式 NoSQL 数据库，适合随机读写</td></tr><tr><td>Spark</td><td>内存计算，比 MapReduce 快，支持批处理与流处理</td></tr></tbody></table></div>
+<h3>3.4 批处理与流处理</h3>
+<div class="doc-table"><table><thead><tr><th>类型</th><th>数据形态</th><th>延迟</th><th>典型</th></tr></thead><tbody><tr><td>批处理</td><td>有界、已落地</td><td>分钟~小时</td><td>MapReduce、Hive</td></tr><tr><td>流处理</td><td>无界、持续到达</td><td>毫秒~秒</td><td>Flink、Spark Streaming、Storm</td></tr></tbody></table></div>
+<p><strong>数据仓库 vs 数据湖</strong>：数据仓库存结构化、已建模数据（schema-on-write），适合 BI 报表；数据湖存原始数据（schema-on-read），适合探索式分析与机器学习。</p>
+<h2>四、人工智能</h2>
+<h3>4.1 三大研究取向</h3>
+<div class="doc-table"><table><thead><tr><th>取向</th><th>核心思想</th><th>代表</th></tr></thead><tbody><tr><td>符号主义</td><td>用符号与逻辑规则模拟智能</td><td>专家系统、知识图谱、逻辑推理</td></tr><tr><td>连接主义</td><td>用神经网络模拟大脑连接</td><td>深度学习、大模型</td></tr><tr><td>行为主义</td><td>智能体在与环境交互中学习</td><td>强化学习、机器人</td></tr></tbody></table></div>
+<h3>4.2 机器学习分类</h3>
+<div class="doc-table"><table><thead><tr><th>类型</th><th>数据</th><th>任务</th><th>典型算法</th></tr></thead><tbody><tr><td>监督学习</td><td>有标签</td><td>分类、回归</td><td>线性回归、逻辑回归、决策树、SVM、KNN、随机森林</td></tr><tr><td>无监督学习</td><td>无标签</td><td>聚类、降维</td><td>K-means、DBSCAN、PCA</td></tr><tr><td>半监督学习</td><td>少量标签 + 大量无标签</td><td>分类</td><td>自训练、图半监督</td></tr><tr><td>强化学习</td><td>奖励信号</td><td>序列决策</td><td>Q-learning、DQN、策略梯度</td></tr></tbody></table></div>
+<h3>4.3 深度学习主干</h3>
+<div class="doc-table"><table><thead><tr><th>结构</th><th>擅长</th><th>典型应用</th></tr></thead><tbody><tr><td>CNN</td><td>图像、局部特征、卷积与池化</td><td>图像分类、目标检测、人脸识别</td></tr><tr><td>RNN/LSTM</td><td>序列、时序依赖</td><td>语音识别、文本生成、股价预测</td></tr><tr><td>Transformer</td><td>自注意力、长距离依赖、可并行</td><td>机器翻译、大语言模型、多模态</td></tr></tbody></table></div>
+<h3>4.4 大模型与生成式 AI</h3>
+<ul><li><strong>预训练</strong>：在海量无标注语料上自监督学习，得到基础模型；</li><li><strong>微调（SFT）</strong>：用标注数据调整模型以适应具体任务；</li><li><strong>RLHF</strong>：基于人类反馈的强化学习，使输出更符合人类偏好；</li><li><strong>提示工程</strong>：通过设计输入提示引导模型输出；</li><li><strong>RAG（检索增强生成）</strong>：先检索外部知识库再生成，缓解幻觉、保证时效性；</li><li><strong>幻觉</strong>：模型生成看似合理但与事实不符的内容，是大模型的主要风险之一。</li></ul>
+<p>常见应用：计算机视觉、自然语言处理（翻译、摘要、问答）、语音识别与合成、推荐系统、自动驾驶。</p>
+<h3>4.5 过拟合与评估</h3>
+<p>过拟合：模型在训练集表现好、测试集表现差。对策：增加数据、正则化（L1/L2）、Dropout、早停、交叉验证、简化模型。</p>
+<p>评估指标：准确率、精确率、召回率、F1、ROC-AUC；回归用 MSE/MAE/R²。</p>
+<h2>五、物联网与 5G</h2>
+<h3>5.1 物联网架构</h3>
+<div class="doc-table"><table><thead><tr><th>层次</th><th>作用</th><th>典型技术/设备</th></tr></thead><tbody><tr><td>感知层</td><td>数据采集与识别</td><td>传感器、RFID、二维码、摄像头</td></tr><tr><td>网络层</td><td>数据传输</td><td>NB-IoT、LoRa、ZigBee、4G/5G</td></tr><tr><td>平台层</td><td>设备管理、数据汇聚</td><td>物联网平台、边缘网关</td></tr><tr><td>应用层</td><td>业务呈现</td><td>智能家居、车联网、工业互联网</td></tr></tbody></table></div>
+<p>三特征：全面感知、可靠传输、智能处理。</p>
+<h3>5.2 物联网通信技术</h3>
+<div class="doc-table"><table><thead><tr><th>技术</th><th>特点</th><th>适用</th></tr></thead><tbody><tr><td>NB-IoT</td><td>窄带、低功耗、广覆盖、大连接、成本低</td><td>抄表、井盖、环境监测</td></tr><tr><td>LoRa</td><td>远距离、低功耗、自组网</td><td>园区、农业</td></tr><tr><td>ZigBee</td><td>短距离、低功耗、Mesh 组网</td><td>智能家居</td></tr><tr><td>5G</td><td>高速率、低时延、大连接</td><td>车联网、工业控制</td></tr></tbody></table></div>
+<h3>5.3 5G 三大场景</h3>
+<div class="doc-table"><table><thead><tr><th>场景</th><th>全称</th><th>特点</th><th>应用</th></tr></thead><tbody><tr><td>eMBB</td><td>增强移动宽带</td><td>高速率</td><td>4K/8K 视频、VR/AR</td></tr><tr><td>mMTC</td><td>海量机器类通信</td><td>高连接密度、低功耗</td><td>智慧城市、传感器网络</td></tr><tr><td>uRLLC</td><td>低时延高可靠</td><td>毫秒级时延、高可靠</td><td>远程手术、车联网、工业控制</td></tr></tbody></table></div>
+<h2>六、区块链与边缘计算</h2>
+<h3>6.1 区块链特征</h3>
+<div class="doc-table"><table><thead><tr><th>特征</th><th>含义</th></tr></thead><tbody><tr><td>去中心化</td><td>无单一中心节点，节点共同维护</td></tr><tr><td>不可篡改</td><td>区块哈希链式相连，修改需重算后续所有区块</td></tr><tr><td>可追溯</td><td>每笔交易有完整历史记录</td></tr><tr><td>公开透明</td><td>公有链数据对所有节点可见</td></tr><tr><td>集体维护</td><td>共识机制保证各节点账本一致</td></tr></tbody></table></div>
+<p>核心技术：哈希链、数字签名、共识机制、智能合约、P2P 网络。</p>
+<h3>6.2 三种链与共识机制</h3>
+<div class="doc-table"><table><thead><tr><th>类型</th><th>准入</th><th>典型</th><th>特点</th></tr></thead><tbody><tr><td>公有链</td><td>任何人可加入</td><td>比特币、以太坊</td><td>完全去中心化，性能较低</td></tr><tr><td>联盟链</td><td>许可节点加入</td><td>Hyperledger Fabric</td><td>多机构共享，兼顾效率与可控</td></tr><tr><td>私有链</td><td>单一组织内部</td><td>企业内部账本</td><td>中心化程度高，性能好</td></tr></tbody></table></div>
+<div class="doc-table"><table><thead><tr><th>共识机制</th><th>原理</th><th>适用</th></tr></thead><tbody><tr><td>PoW</td><td>算力竞争解题，最长链胜出</td><td>公有链，能耗高</td></tr><tr><td>PoS</td><td>按权益（持币量）选记账人</td><td>公有链，能耗低</td></tr><tr><td>PBFT</td><td>多轮投票达成拜占庭容错</td><td>联盟链，确定性强、节点数受限</td></tr></tbody></table></div>
+<p><strong>不可能三角</strong>：去中心化、安全性、可扩展性三者难以同时最优。</p>
+<p><strong>智能合约</strong>：部署在链上的自动执行代码，条件满足即触发，不可篡改。</p>
+<h3>6.3 边缘计算</h3>
+<p>把计算、存储、网络能力下沉到靠近数据源的一侧（网关、基站、设备），就近处理。</p>
+<p>价值：降低时延、减少回传带宽、本地数据不出域（隐私）、支持离线自治。与云计算是<strong>云边协同</strong>关系：边缘做实时处理，云端做全局分析与模型训练。</p>
+<p>相关概念：数字孪生（物理实体的虚拟映射）、AR/VR（增强/虚拟现实）、微服务（独立部署的小服务）、容器编排（Kubernetes）。</p>
+<h2>七、速记表</h2>
+<pre><code>云计算五特征：按需自服务、广泛接入、资源池化、快速弹性、可计量
+IaaS 管基础设施；PaaS 管平台；SaaS 管软件
+容器共享内核、秒级启动；虚拟机含 Guest OS、隔离强
+大数据 4V：Volume、Velocity、Variety、Value（价值密度低）
+HDFS：NameNode 管元数据，DataNode 存数据
+批处理 MapReduce/Hive；流处理 Flink/Spark Streaming
+机器学习：监督（有标签）、无监督（聚类降维）、半监督、强化（奖励）
+CNN 图像、RNN 序列、Transformer 注意力
+物联网：感知（传感器/RFID）→ 网络（NB-IoT/LoRa/5G）→ 应用
+5G：eMBB 高速率、mMTC 大连接、uRLLC 低时延
+区块链五特征：去中心化、不可篡改、可追溯、公开透明、集体维护
+公有链 PoW/PoS；联盟链 PBFT
+边缘计算：就近处理、低时延、云边协同</code></pre>
+<h2>八、易错辨析</h2>
+<div class="doc-table"><table><thead><tr><th>错误认知</th><th>正确结论</th><th>原因</th></tr></thead><tbody><tr><td>IaaS 提供开发平台</td><td>IaaS 只提供基础设施，PaaS 才提供平台</td><td>责任边界不同</td></tr><tr><td>SaaS 需要用户部署应用</td><td>SaaS 直接使用软件</td><td>应用由服务商托管</td></tr><tr><td>大数据价值密度高</td><td>价值密度低，需挖掘</td><td>单条数据价值有限</td></tr><tr><td>容器是轻量虚拟机</td><td>容器共享宿主机内核，不是虚拟化硬件</td><td>隔离机制不同</td></tr><tr><td>无监督学习需要标签</td><td>不需要标签</td><td>聚类/降维靠数据相似性</td></tr><tr><td>Transformer 只能做文本</td><td>也可用于图像、多模态</td><td>自注意力是通用结构</td></tr><tr><td>区块链绝对安全</td><td>存在 51% 攻击、合约漏洞等风险</td><td>不可篡改依赖共识</td></tr><tr><td>边缘计算替代云计算</td><td>云边协同，不是替代</td><td>各自承担不同任务</td></tr><tr><td>NB-IoT 适合视频监控</td><td>NB-IoT 带宽低，适合小数据</td><td>视频需高带宽</td></tr></tbody></table></div>
+<h2>九、自检题</h2>
+<ol><li>用户通过浏览器直接使用在线文档，属于 IaaS、PaaS 还是 SaaS？</li><li>容器与虚拟机的主要区别是什么？</li><li>大数据 4V 分别指什么？"价值密度低"如何理解？</li><li>HDFS 中 NameNode 与 DataNode 各负责什么？</li><li>对实时传感器数据做毫秒级告警，应选批处理还是流处理？</li><li>无标签数据的聚类属于哪类机器学习？</li><li>CNN、RNN、Transformer 各擅长什么？</li><li>物联网三层架构分别包含哪些设备/技术？</li><li>5G 三大场景分别面向什么业务？</li><li>公有链与联盟链的共识机制有何不同？</li><li>边缘计算的核心价值是什么？</li><li>RAG 能缓解大模型的什么问题？</li></ol>
+<blockquote><p>答案与解析：<br />1) SaaS。<br />2) 容器共享宿主机内核、启动快、开销小；虚拟机含完整 Guest OS、隔离性强。<br />3) Volume 体量大、Velocity 速度快、Variety 类型多、Value 价值密度低；单条数据价值有限，需大规模分析提炼。<br />4) NameNode 管理命名空间与元数据；DataNode 存储数据块并定期汇报。<br />5) 流处理（Flink/Spark Streaming）。<br />6) 无监督学习。<br />7) CNN 图像、RNN 序列、Transformer 长距离依赖与并行（大模型基础）。<br />8) 感知层（传感器、RFID、摄像头）、网络层（NB-IoT、LoRa、5G）、应用层（智能家居、车联网等）。<br />9) eMBB 高速率、mMTC 大连接、uRLLC 低时延高可靠。<br />10) 公有链常用 PoW/PoS，开放但性能较低；联盟链常用 PBFT，节点受控、确定性强。<br />11) 就近处理，降低时延与回传带宽，保护本地数据隐私，与云端协同。<br />12) 缓解幻觉、补充时效性知识（先检索外部知识再生成）。</p></blockquote>
+</main>
+<footer class="doc-footer">本文档由同名 Markdown 生成（UTF-8 编码）；内容修改请改 .md 后重新运行 <code>node tools/build-docs.js</code>。</footer>
+</body>
+</html>

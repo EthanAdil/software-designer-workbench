@@ -15,31 +15,96 @@
 </header>
 <main class="doc">
 <h1>08 · 计算机网络（上午 6 题）</h1>
-<h2>一、分层与协议对照</h2>
+<blockquote><p>题量稳定、套路固定：分层模型 1 题、IP 与子网 2 题、TCP 1~2 题、应用层与端口 1 题。子网划分必须练到能心算子网掩码与可用地址范围。</p></blockquote>
+<h2>一、考点地图</h2>
+<div class="doc-table"><table><thead><tr><th>考点</th><th>近年题量</th><th>常见问法</th><th>难度</th></tr></thead><tbody><tr><td>分层模型</td><td>1</td><td>层号与协议/设备对应、数据单元</td><td>易</td></tr><tr><td>IP 地址与子网</td><td>2</td><td>分类、私有地址、子网划分、CIDR 聚合</td><td>中</td></tr><tr><td>TCP 与 UDP</td><td>1~2</td><td>握手/挥手、TIME_WAIT、拥塞控制</td><td>中</td></tr><tr><td>应用层与网络管理</td><td>1</td><td>DNS 查询方式、默认端口、路由协议</td><td>易</td></tr><tr><td>传输介质与编码</td><td>0~1</td><td>双绞线/光纤、曼彻斯特编码、复用</td><td>易</td></tr></tbody></table></div>
+<h2>二、分层模型</h2>
+<h3>2.1 OSI 与 TCP/IP</h3>
 <div class="doc-table"><table><thead><tr><th>OSI</th><th>TCP/IP</th><th>协议</th><th>设备</th><th>数据单元</th></tr></thead><tbody><tr><td>应用层</td><td>应用层</td><td>HTTP、FTP、SMTP、POP3、DNS、DHCP、SNMP、Telnet</td><td>网关</td><td>报文</td></tr><tr><td>表示层</td><td>应用层</td><td>加密、压缩、编码</td><td>—</td><td>—</td></tr><tr><td>会话层</td><td>应用层</td><td>会话建立与管理</td><td>—</td><td>—</td></tr><tr><td>传输层</td><td>传输层</td><td>TCP、UDP</td><td>—</td><td>段（TCP）/数据报（UDP）</td></tr><tr><td>网络层</td><td>网际层</td><td>IP、ICMP、ARP、RARP、IGMP</td><td>路由器</td><td>分组</td></tr><tr><td>数据链路层</td><td>网络接口层</td><td>PPP、HDLC、Ethernet</td><td>网桥、交换机</td><td>帧</td></tr><tr><td>物理层</td><td>网络接口层</td><td>—</td><td>中继器、集线器</td><td>比特</td></tr></tbody></table></div>
-<h2>二、IP 与子网</h2>
-<div class="doc-table"><table><thead><tr><th>类别</th><th>首字节范围</th><th>默认掩码</th></tr></thead><tbody><tr><td>A</td><td>1~126</td><td>/8</td></tr><tr><td>B</td><td>128~191</td><td>/16</td></tr><tr><td>C</td><td>192~223</td><td>/24</td></tr><tr><td>D（组播）</td><td>224~239</td><td>—</td></tr><tr><td>E（保留）</td><td>240~255</td><td>—</td></tr></tbody></table></div>
-<p><strong>私有地址</strong>：<code>10.0.0.0/8</code>、<code>172.16.0.0/12</code>（172.16~172.31）、<code>192.168.0.0/16</code></p>
-<p><strong>子网划分</strong></p>
+<p>记忆：<strong>ARP 在网络层</strong>（虽然它解析 MAC 地址），<strong>ICMP 在网络层</strong>（ping 使用），<strong>交换机在数据链路层</strong>，<strong>路由器在网络层</strong>。</p>
+<h3>2.2 封装与解封装</h3>
+<p>发送方自上而下逐层加首部：应用数据 → TCP 段 → IP 分组 → 帧 → 比特；接收方自下而上逐层去首部。每层只关心对等层的首部，这是分层设计的核心。</p>
+<h2>三、IP 地址与子网</h2>
+<h3>3.1 IPv4 分类与私有地址</h3>
+<div class="doc-table"><table><thead><tr><th>类别</th><th>首字节范围</th><th>默认掩码</th><th>用途</th></tr></thead><tbody><tr><td>A</td><td>1~126</td><td>/8</td><td>大型网络</td></tr><tr><td>B</td><td>128~191</td><td>/16</td><td>中型网络</td></tr><tr><td>C</td><td>192~223</td><td>/24</td><td>小型网络</td></tr><tr><td>D</td><td>224~239</td><td>—</td><td>组播</td></tr><tr><td>E</td><td>240~255</td><td>—</td><td>保留</td></tr></tbody></table></div>
+<p>私有地址：<code>10.0.0.0/8</code>、<code>172.16.0.0/12</code>（172.16~172.31）、<code>192.168.0.0/16</code>。私有地址不能直接在公网路由，需 NAT 转换。</p>
+<p>特殊地址：<code>127.0.0.1</code> 回环、<code>0.0.0.0</code> 本机/默认路由、<code>255.255.255.255</code> 受限广播。</p>
+<h3>3.2 子网划分</h3>
 <pre><code>借 n 位主机位 → 2<sup>n</sup> 个子网
-每子网可用主机数 = 2<sup>m</sup> - 2（m 为剩余主机位，减去网络地址与广播地址）</code></pre>
-<p><strong>常见掩码速查</strong></p>
-<div class="doc-table"><table><thead><tr><th>掩码</th><th>前缀</th><th>每子网地址数</th><th>可用主机数</th></tr></thead><tbody><tr><td>255.255.255.128</td><td>/25</td><td>128</td><td>126</td></tr><tr><td>255.255.255.192</td><td>/26</td><td>64</td><td>62</td></tr><tr><td>255.255.255.224</td><td>/27</td><td>32</td><td>30</td></tr><tr><td>255.255.255.240</td><td>/28</td><td>16</td><td>14</td></tr><tr><td>255.255.255.248</td><td>/29</td><td>8</td><td>6</td></tr></tbody></table></div>
-<p><strong>CIDR 聚合</strong>：找公共前缀。<code>192.168.0.0/24</code> + <code>192.168.1.0/24</code> → <code>192.168.0.0/23</code>。路由时<strong>最长前缀匹配</strong>优先。</p>
-<h2>三、TCP 与 UDP</h2>
-<div class="doc-table"><table><thead><tr><th>特性</th><th>TCP</th><th>UDP</th></tr></thead><tbody><tr><td>连接</td><td>面向连接</td><td>无连接</td></tr><tr><td>可靠性</td><td>可靠（确认、重传、排序）</td><td>不可靠</td></tr><tr><td>开销</td><td>首部 20 字节起</td><td>首部 8 字节</td></tr><tr><td>适用</td><td>文件传输、网页、邮件</td><td>实时音视频、DNS、DHCP</td></tr></tbody></table></div>
-<p><strong>三次握手</strong>：<code>SYN</code> → <code>SYN+ACK</code> → <code>ACK</code><br /><strong>四次挥手</strong>：<code>FIN</code> → <code>ACK</code> → <code>FIN</code> → <code>ACK</code>，主动关闭方进入 <code>TIME_WAIT</code> 等待 <strong>2MSL</strong>（保证最后 ACK 可达 + 让旧报文消失）。</p>
-<p><strong>拥塞控制四阶段</strong></p>
-<div class="doc-table"><table><thead><tr><th>阶段</th><th>行为</th></tr></thead><tbody><tr><td>慢开始</td><td>cwnd 从 1 开始，每 RTT 翻倍（指数）</td></tr><tr><td>拥塞避免</td><td>cwnd 每 RTT 加 1（线性），达到 ssthresh 后进入</td></tr><tr><td>快重传</td><td>收到 3 个重复 ACK 立即重传丢失段，不等超时</td></tr><tr><td>快恢复</td><td>ssthresh 与 cwnd 减半，直接进入拥塞避免</td></tr></tbody></table></div>
-<h2>四、应用层与端口</h2>
+每个子网地址数 = 2<sup>m</sup>（m 为剩余主机位）
+可用主机数 = 2<sup>m</sup> - 2（扣除网络地址与广播地址）
+子网掩码 = 原掩码 + n 个 1</code></pre>
+<p><strong>例</strong>：<code>192.168.1.0/24</code> 划分为 4 个等长子网。</p>
+<ul><li>需借 2 位 → 掩码 <code>/26</code> = <code>255.255.255.192</code>；</li><li>每子网 64 个地址，可用 62 个；</li><li>四个子网：<code>.0/26</code>、<code>.64/26</code>、<code>.128/26</code>、<code>.192/26</code>。</li></ul>
+<p><strong>掩码速查</strong>：</p>
+<div class="doc-table"><table><thead><tr><th>掩码</th><th>前缀</th><th>地址数</th><th>可用主机</th></tr></thead><tbody><tr><td>255.255.255.128</td><td>/25</td><td>128</td><td>126</td></tr><tr><td>255.255.255.192</td><td>/26</td><td>64</td><td>62</td></tr><tr><td>255.255.255.224</td><td>/27</td><td>32</td><td>30</td></tr><tr><td>255.255.255.240</td><td>/28</td><td>16</td><td>14</td></tr><tr><td>255.255.255.248</td><td>/29</td><td>8</td><td>6</td></tr><tr><td>255.255.255.252</td><td>/30</td><td>4</td><td>2</td></tr></tbody></table></div>
+<p><code>/30</code> 只有 2 个可用地址，常用于点对点链路。</p>
+<h3>3.3 CIDR 聚合</h3>
+<p>把连续网段按共同前缀合并。判断方法：把变化的字节写成二进制，找最长公共前缀。</p>
+<p><strong>例</strong>：<code>192.168.4.0/24</code> 与 <code>192.168.5.0/24</code>。</p>
+<pre><code>4 = 00000100
+5 = 00000101
+前 7 位相同（0000010），第 8 位不同 → 合并为 /23
+结果：192.168.4.0/23（覆盖 4.0 ~ 5.255）</code></pre>
+<p><strong>易错点</strong>：能否聚合看"第三个字节的二进制公共前缀"，不是看数字差 1 就一定可以。<code>192.168.4.0/24</code> 与 <code>192.168.6.0/24</code> 差 2，公共前缀只有 6 位，需 <code>/22</code> 才能覆盖（但会多包含 4~7 四个网段）。</p>
+<p><strong>最长前缀匹配</strong>：路由表中多条路由都能匹配目标地址时，选前缀最长（最具体）的一条。</p>
+<h3>3.4 IPv6</h3>
+<p>128 位，冒号十六进制表示，8 组每组 4 位十六进制；连续的 0 可用 <code>::</code> 压缩一次。支持无状态地址自动配置（SLAAC），首部简化、取消首部校验和，地址空间远大于 IPv4。</p>
+<h2>四、TCP 与 UDP</h2>
+<h3>4.1 对比</h3>
+<div class="doc-table"><table><thead><tr><th>特性</th><th>TCP</th><th>UDP</th></tr></thead><tbody><tr><td>连接</td><td>面向连接</td><td>无连接</td></tr><tr><td>可靠性</td><td>可靠（确认、重传、排序）</td><td>不可靠</td></tr><tr><td>传输方式</td><td>字节流</td><td>数据报</td></tr><tr><td>首部</td><td>20 字节起</td><td>8 字节</td></tr><tr><td>适用</td><td>文件传输、网页、邮件</td><td>实时音视频、DNS、DHCP、TFTP</td></tr></tbody></table></div>
+<h3>4.2 三次握手与四次挥手</h3>
+<pre><code>三次握手：SYN → SYN+ACK → ACK
+四次挥手：FIN → ACK → FIN → ACK</code></pre>
+<ul><li>第二次握手的标志位是 <code>SYN=1, ACK=1</code>；</li><li>主动关闭方进入 <code>TIME_WAIT</code>，等待 <code>2MSL</code>，目的是保证最后一个 ACK 能到达对方，并让本次连接的旧报文在网络中消失；</li><li>半关闭：一方发送 FIN 后仍可接收数据。</li></ul>
+<h3>4.3 流量控制与拥塞控制</h3>
+<p><strong>流量控制</strong>：接收方通过窗口字段通告可接收的字节数，发送方据此调整发送量，防止接收方缓冲区溢出。</p>
+<p><strong>拥塞控制</strong>四阶段：</p>
+<div class="doc-table"><table><thead><tr><th>阶段</th><th>行为</th></tr></thead><tbody><tr><td>慢开始</td><td>cwnd 从 1 开始，每收到一个 ACK 加 1，每个 RTT 翻倍（指数）</td></tr><tr><td>拥塞避免</td><td>cwnd 达到 ssthresh 后，每个 RTT 加 1（线性）</td></tr><tr><td>快重传</td><td>收到 3 个重复 ACK 立即重传丢失段，不等超时</td></tr><tr><td>快恢复</td><td>ssthresh 与 cwnd 减半，直接进入拥塞避免</td></tr></tbody></table></div>
+<p><strong>超时</strong>时：<code>ssthresh = cwnd/2</code>，<code>cwnd = 1</code>，重新慢开始。</p>
+<p>例：初始 <code>cwnd=1, ssthresh=8</code>，慢开始阶段 cwnd 依次为 1、2、4、8；到 8 后转拥塞避免，依次 9、10、11……若此时超时，则 <code>ssthresh=5</code>（取半），<code>cwnd=1</code> 重新开始。</p>
+<h2>五、应用层与网络管理</h2>
+<h3>5.1 端口</h3>
 <div class="doc-table"><table><thead><tr><th>服务</th><th>协议</th><th>端口</th></tr></thead><tbody><tr><td>Web</td><td>HTTP / HTTPS</td><td>80 / 443</td></tr><tr><td>文件传输</td><td>FTP（控制/数据）</td><td>21 / 20</td></tr><tr><td>远程登录</td><td>Telnet / SSH</td><td>23 / 22</td></tr><tr><td>邮件</td><td>SMTP / POP3 / IMAP</td><td>25 / 110 / 143</td></tr><tr><td>域名</td><td>DNS</td><td>53（UDP，区域传送用 TCP）</td></tr><tr><td>动态主机配置</td><td>DHCP</td><td>67 / 68</td></tr><tr><td>网络管理</td><td>SNMP</td><td>161 / 162</td></tr></tbody></table></div>
-<p><strong>DNS 查询</strong>：客户端→本地域名服务器为递归；本地→根/顶级域为迭代。<br /><strong>记录类型</strong>：A（IPv4）、AAAA（IPv6）、CNAME（别名）、MX（邮件）、NS（域名服务器）。</p>
-<h2>五、路由与其他</h2>
-<div class="doc-table"><table><thead><tr><th>协议</th><th>类型</th><th>算法</th><th>特点</th></tr></thead><tbody><tr><td>RIP</td><td>内部网关</td><td>距离向量</td><td>跳数度量，最大 15 跳</td></tr><tr><td>OSPF</td><td>内部网关</td><td>链路状态（Dijkstra）</td><td>收敛快，支持区域划分</td></tr><tr><td>BGP</td><td>外部网关</td><td>路径向量</td><td>自治系统之间</td></tr></tbody></table></div>
-<p><strong>编码</strong>：曼彻斯特（自同步，效率 50%）、差分曼彻斯特、NRZ、4B/5B。<br /><strong>复用</strong>：FDM（频分）、TDM（时分）、WDM（波分）、CDM（码分）。</p>
-<h2>六、自检题</h2>
-<ol><li><code>/26</code> 掩码是什么？每个子网可用主机数？</li><li>交换机能否隔离广播域？</li><li>TCP 三次握手的第二次标志位是什么？</li><li>RIP 用什么算法？最大跳数？</li><li>192.168.4.0/24 与 192.168.5.0/24 能否聚合为 /23？</li></ol>
-<blockquote><p>答案速查：1) 255.255.255.192，62 台；2) 不能，需 VLAN 或路由器；3) SYN=1, ACK=1；4) 距离向量，15 跳；5) 不能，第三字节 00000100 与 00000101 前 7 位不同，需 /22 才覆盖。</p></blockquote>
+<h3>5.2 DNS</h3>
+<ul><li><strong>递归查询</strong>：客户端 → 本地域名服务器，本地服务器负责查到最终结果；</li><li><strong>迭代查询</strong>：本地服务器 → 根/顶级域/权威服务器，每次返回下一级服务器地址，由本地服务器继续问。</li></ul>
+<p>记录类型：A（IPv4）、AAAA（IPv6）、CNAME（别名）、MX（邮件）、NS（域名服务器）、PTR（反向解析）。</p>
+<h3>5.3 HTTP 与 FTP</h3>
+<ul><li>HTTP 无状态，默认 80；HTTPS 用 TLS 加密，默认 443；</li><li>HTTP/1.1 支持持久连接、管线化；HTTP/2 多路复用、首部压缩；</li><li>FTP 使用两条连接：控制连接 21、数据连接 20（主动模式）；被动模式数据端口随机。</li></ul>
+<h3>5.4 路由协议</h3>
+<div class="doc-table"><table><thead><tr><th>协议</th><th>类型</th><th>算法</th><th>特点</th></tr></thead><tbody><tr><td>RIP</td><td>内部网关</td><td>距离向量</td><td>跳数度量，最大 15 跳，16 表示不可达</td></tr><tr><td>OSPF</td><td>内部网关</td><td>链路状态（Dijkstra）</td><td>收敛快，支持区域划分，度量是带宽</td></tr><tr><td>BGP</td><td>外部网关</td><td>路径向量</td><td>自治系统之间，策略路由</td></tr></tbody></table></div>
+<h3>5.5 网络管理</h3>
+<p>SNMP 用于读取/设置设备管理信息（MIB），Trap（162）用于设备主动告警；管理站与代理之间通信。</p>
+<h2>六、传输介质与编码</h2>
+<h3>6.1 传输介质</h3>
+<div class="doc-table"><table><thead><tr><th>介质</th><th>距离/特点</th><th>适用</th></tr></thead><tbody><tr><td>双绞线（UTP/STP）</td><td>100m（以太网）</td><td>局域网布线</td></tr><tr><td>同轴电缆</td><td>抗干扰较好，已少用</td><td>有线电视、早期以太网</td></tr><tr><td>光纤（单模）</td><td>远距离、带宽高、成本高</td><td>骨干网、城域网</td></tr><tr><td>光纤（多模）</td><td>近距离、成本低</td><td>机房内、园区网</td></tr><tr><td>无线</td><td>Wi-Fi、蓝牙、4G/5G</td><td>移动接入、物联网</td></tr></tbody></table></div>
+<h3>6.2 编码</h3>
+<div class="doc-table"><table><thead><tr><th>编码</th><th>特点</th></tr></thead><tbody><tr><td>曼彻斯特</td><td>每位中间跳变，自同步，效率 50%</td></tr><tr><td>差分曼彻斯特</td><td>位中间跳变用于同步，位开始是否有跳变表示 0/1</td></tr><tr><td>NRZ</td><td>不归零，连续相同位时无跳变，难同步</td></tr><tr><td>4B/5B</td><td>4 位数据映射为 5 位码，保证跳变，效率 80%</td></tr></tbody></table></div>
+<p><strong>曼彻斯特编码效率 50%</strong>：每传 1 位需要 2 个信号周期，波特率是数据率的 2 倍。</p>
+<h3>6.3 复用与局域网</h3>
+<ul><li>频分 FDM：不同频率信道并行；</li><li>时分 TDM：不同时隙轮流；</li><li>波分 WDM：光纤中不同波长；</li><li>码分 CDM：不同正交码，抗干扰强。</li></ul>
+<p><strong>CSMA/CD</strong>：先听后发、边发边听、冲突停发、随机重发，用于早期共享式以太网；交换式以太网全双工不需要 CSMA/CD。</p>
+<p><strong>VLAN</strong>：在交换机上逻辑划分广播域，不同 VLAN 需三层设备才能互通。交换机不能隔离广播域，路由器可以。</p>
+<p><strong>以太网帧</strong>：目的 MAC + 源 MAC + 类型 + 数据 + FCS，最小帧长 64 字节（保证冲突检测）。</p>
+<h2>七、速记表</h2>
+<pre><code>OSI 七层：物、数、网、传、会、表、应
+设备：中继器/集线器（物理）、交换机/网桥（链路）、路由器（网络）、网关（高层）
+私有地址：10/8、172.16/12、192.168/16
+子网可用主机 = 2<sup>m</sup> - 2
+/26 = 255.255.255.192，62 台
+/30 只有 2 个可用地址
+CIDR 聚合找最长公共前缀
+TCP 首部 20B 起，UDP 8B
+TIME_WAIT 等 2MSL
+慢开始指数、拥塞避免线性、快重传 3 个重复 ACK
+端口：HTTP 80、HTTPS 443、FTP 21/20、SSH 22、SMTP 25、POP3 110、DNS 53
+RIP 距离向量 15 跳；OSPF 链路状态；BGP 路径向量
+曼彻斯特效率 50%</code></pre>
+<h2>八、易错辨析</h2>
+<div class="doc-table"><table><thead><tr><th>错误认知</th><th>正确结论</th><th>原因</th></tr></thead><tbody><tr><td>可用主机数不减 2</td><td>必须减网络地址与广播地址</td><td>两个地址不能分配给主机</td></tr><tr><td>交换机可以隔离广播域</td><td>交换机不能，VLAN/路由器可以</td><td>交换机在同一广播域内转发</td></tr><tr><td>DNS 查询都是递归</td><td>客户端到本地是递归，本地到根是迭代</td><td>承担查询责任不同</td></tr><tr><td>TCP 第二次握手只有 SYN</td><td>是 SYN+ACK</td><td>既确认又发起</td></tr><tr><td>192.168.4.0/24 与 5.0/24 不能聚合</td><td>可以聚合为 /23</td><td>第三个字节前 7 位相同</td></tr><tr><td>曼彻斯特编码效率 100%</td><td>效率 50%</td><td>每位需要两次跳变</td></tr><tr><td>ARP 属于链路层</td><td>ARP 属于网络层</td><td>它解析 IP 到 MAC，但工作在网际层</td></tr><tr><td>光纤单模适合近距离</td><td>单模适合远距离，多模适合近距离</td><td>单模芯径小、色散低</td></tr></tbody></table></div>
+<h2>九、自检题</h2>
+<ol><li><code>/26</code> 掩码是什么？每个子网可用主机数？</li><li>交换机能否隔离广播域？</li><li>TCP 三次握手的第二次标志位是什么？</li><li>RIP 用什么算法？最大跳数？</li><li><code>192.168.4.0/24</code> 与 <code>192.168.5.0/24</code> 能否聚合？结果是什么？</li><li>私有地址有哪三段？</li><li>主动关闭方为什么要等待 2MSL？</li><li>慢开始阶段 cwnd 如何增长？超时后如何变化？</li><li>曼彻斯特编码的效率是多少？为什么？</li><li>路由器与交换机分别工作在哪一层？</li></ol>
+<blockquote><p>答案与解析：<br />1) <code>255.255.255.192</code>，62 台。<br />2) 不能；需 VLAN 或路由器。<br />3) <code>SYN=1, ACK=1</code>。<br />4) 距离向量；最大 15 跳，16 表示不可达。<br />5) 能，聚合为 <code>192.168.4.0/23</code>（第三个字节前 7 位相同）。<br />6) <code>10.0.0.0/8</code>、<code>172.16.0.0/12</code>、<code>192.168.0.0/16</code>。<br />7) 保证最后一个 ACK 到达对方，并让旧报文在网络中消失。<br />8) 每个 RTT 翻倍（指数）；超时后 <code>ssthresh=cwnd/2</code>、<code>cwnd=1</code>，重新慢开始。<br />9) 50%；每传 1 位需要 2 个信号周期。<br />10) 路由器在网络层，交换机在数据链路层。</p></blockquote>
 </main>
 <footer class="doc-footer">本文档由同名 Markdown 生成（UTF-8 编码）；内容修改请改 .md 后重新运行 <code>node tools/build-docs.js</code>。</footer>
 </body>

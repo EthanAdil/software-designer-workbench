@@ -132,7 +132,7 @@ window.RK_PLAN = {
       range: '2027-01-11 ~ 2027-03-07',
       weekRange: 'W11 ~ W18',
       color: '#e0554b',
-      goal: '拿下上午卷分值最高的两块（软件工程 13 题、面向对象 9 题）加上数据库 7 题，把总分天花板抬到 65 分区间。',
+      goal: '拿下上午卷分值最高的两块（软件工程 12 题、面向对象 9 题）加上数据库 7 题，把总分天花板抬到 65 分区间。',
       focus: ['software-engineering', 'oo-uml', 'database'],
       targetScore: 60,
       targetNote: '阶段测评 ≥ 60 分；软件工程与面向对象两模块正确率必须 ≥ 75%',
@@ -227,7 +227,7 @@ window.RK_PLAN = {
       weekRange: 'W19 ~ W24',
       color: '#d946ef',
       goal: '攻克下午卷五大题型（DFD、UML、数据库设计、算法、Java/C++），同时清扫上午卷剩余的小模块，两科同时逼近合格线以上 15 分。',
-      focus: ['software-engineering', 'oo-uml', 'database', 'ds-algorithm', 'network', 'security', 'standard-law', 'multimedia', 'english'],
+      focus: ['software-engineering', 'oo-uml', 'database', 'ds-algorithm', 'network', 'security', 'standard-law', 'multimedia', 'english', 'tech'],
       targetScore: 65,
       targetNote: '阶段测评 ≥ 65 分；下午卷单题得分率 ≥ 60%',
       keyActions: [
@@ -289,7 +289,8 @@ window.RK_PLAN = {
             { id: 'w24-t1', text: '整理 100 个高频专业词汇，做 5 篇英文完形填空', hours: 4 },
             { id: 'w24-t2', text: '完成「阶段三测评」（45 题 / 50 分钟）', hours: 2 },
             { id: 'w24-t3', text: '完成 2 道下午案例（自评模式），对照参考答案打分', hours: 4 },
-            { id: 'w24-t4', text: '汇总三次测评的模块得分，列出"最后 30 天必须补的 3 个短板"', hours: 2 }
+            { id: 'w24-t4', text: '新技术专题：云计算 IaaS/PaaS/SaaS、大数据 4V、机器学习四类、物联网三层、区块链五特征，背完刷 10 题', hours: 3 },
+            { id: 'w24-t5', text: '汇总三次测评的模块得分，列出"最后 30 天必须补的 3 个短板"', hours: 2 }
           ]
         }
       ]

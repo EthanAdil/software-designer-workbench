@@ -15,26 +15,61 @@
 </header>
 <main class="doc">
 <h1>06 · 面向对象与 UML（上午 9 题 + 下午 2 题）</h1>
-<h2>一、类图五种关系</h2>
+<blockquote><p>这一模块属于"看懂就会"：UML 考图形符号与图种识别，设计模式考场景与意图匹配。23 个模式不必背实现，但要能用一句话说清"它解决什么问题"。</p></blockquote>
+<h2>一、考点地图</h2>
+<div class="doc-table"><table><thead><tr><th>考点</th><th>近年题量</th><th>常见问法</th><th>难度</th></tr></thead><tbody><tr><td>面向对象基础</td><td>1~2</td><td>封装继承多态、重载与重写、SOLID 原则</td><td>易</td></tr><tr><td>UML 图</td><td>2~3</td><td>图种识别、类图关系符号、用例 include/extend、多重度</td><td>易~中</td></tr><tr><td>设计模式</td><td>3~5</td><td>场景选模式、意图匹配、易混模式辨析</td><td>中</td></tr><tr><td>OOA/OOD</td><td>0~1</td><td>分析模型与设计模型的区别、用例驱动</td><td>易</td></tr></tbody></table></div>
+<h2>二、面向对象基础</h2>
+<h3>2.1 四大特性</h3>
+<div class="doc-table"><table><thead><tr><th>特性</th><th>含义</th><th>作用</th></tr></thead><tbody><tr><td>封装</td><td>隐藏内部实现，只暴露接口</td><td>降低耦合、保护数据</td></tr><tr><td>继承</td><td>子类复用父类的属性与方法</td><td>复用与扩展</td></tr><tr><td>多态</td><td>同一消息被不同对象接收产生不同行为</td><td>提高扩展性</td></tr><tr><td>抽象</td><td>提取共性，忽略细节</td><td>简化问题</td></tr></tbody></table></div>
+<p><strong>多态的两种形态</strong>：</p>
+<ul><li>编译期多态（静态绑定）：重载，编译时根据参数类型/个数决定调用哪个方法；</li><li>运行期多态（动态绑定）：重写/虚函数，运行时根据对象实际类型决定调用哪个实现。</li></ul>
+<h3>2.2 重载与重写</h3>
+<div class="doc-table"><table><thead><tr><th>对比</th><th>重载 overload</th><th>重写 override</th></tr></thead><tbody><tr><td>发生位置</td><td>同一个类中</td><td>子类与父类之间</td></tr><tr><td>方法名</td><td>相同</td><td>相同</td></tr><tr><td>参数列表</td><td>必须不同</td><td>必须相同</td></tr><tr><td>返回值</td><td>可不同</td><td>相同或协变</td></tr><tr><td>绑定时机</td><td>编译期</td><td>运行期</td></tr><tr><td>访问权限</td><td>无限制</td><td>不能比父类更严格</td></tr></tbody></table></div>
+<h3>2.3 SOLID 五原则</h3>
+<div class="doc-table"><table><thead><tr><th>原则</th><th>含义</th><th>反例</th></tr></thead><tbody><tr><td>单一职责 SRP</td><td>一个类只负责一件事</td><td>一个类既管订单又管发邮件</td></tr><tr><td>开闭 OCP</td><td>对扩展开放、对修改关闭</td><td>每加一种折扣就改 if-else</td></tr><tr><td>里氏替换 LSP</td><td>子类可替换父类且不破坏语义</td><td>正方形继承长方形导致面积错误</td></tr><tr><td>接口隔离 ISP</td><td>不强迫依赖无用接口</td><td>胖接口让实现类空实现一堆方法</td></tr><tr><td>依赖倒置 DIP</td><td>依赖抽象而非具体实现</td><td>业务层直接 new 具体数据库驱动</td></tr></tbody></table></div>
+<p><strong>抽象类与接口</strong>：抽象类可有属性与部分实现，表示"是什么"；接口只声明行为，表示"能做什么"。Java 类单继承、接口多实现。</p>
+<h2>三、UML 图</h2>
+<h3>3.1 图分类</h3>
+<div class="doc-table"><table><thead><tr><th>类别</th><th>图</th><th>用途</th></tr></thead><tbody><tr><td>结构图</td><td>类图</td><td>类、属性、方法、关系</td></tr><tr><td>结构图</td><td>对象图</td><td>某一时刻的对象快照</td></tr><tr><td>结构图</td><td>包图</td><td>组织与依赖</td></tr><tr><td>结构图</td><td>构件图</td><td>物理组件与接口</td></tr><tr><td>结构图</td><td>部署图</td><td>节点与部署</td></tr><tr><td>结构图</td><td>组合结构图</td><td>类内部的组合结构</td></tr><tr><td>行为图</td><td>用例图</td><td>参与者与系统功能</td></tr><tr><td>行为图</td><td>活动图</td><td>业务流程/算法，支持并发与泳道</td></tr><tr><td>行为图</td><td>状态图</td><td>单个对象生命周期</td></tr><tr><td>行为图</td><td>顺序图</td><td>消息的时间顺序</td></tr><tr><td>行为图</td><td>通信图</td><td>对象链接关系（消息编号表顺序）</td></tr><tr><td>行为图</td><td>定时图</td><td>状态随时间变化</td></tr><tr><td>行为图</td><td>交互概览图</td><td>多个交互的组合</td></tr></tbody></table></div>
+<p>考试常问"描述对象生命周期用哪种图"→ 状态图；"强调消息时间顺序"→ 顺序图；"强调对象链接关系"→ 通信图；"部署节点"→ 部署图。</p>
+<h3>3.2 类图六种关系</h3>
 <div class="doc-table"><table><thead><tr><th>关系</th><th>图形</th><th>语义</th><th>代码体现</th></tr></thead><tbody><tr><td>依赖</td><td>虚线 + 开口箭头</td><td>临时使用</td><td>方法参数、局部变量</td></tr><tr><td>关联</td><td>实线（可带箭头）</td><td>长期结构关系</td><td>成员变量</td></tr><tr><td>聚合</td><td>空心菱形（菱形在整体端）</td><td>整体-部分，可分离</td><td>成员对象，外部创建</td></tr><tr><td>组合</td><td>实心菱形（菱形在整体端）</td><td>整体-部分，同生共死</td><td>成员对象，内部创建</td></tr><tr><td>泛化</td><td>实线 + 空心三角（指向父类）</td><td>继承</td><td><code>extends</code></td></tr><tr><td>实现</td><td>虚线 + 空心三角（指向接口）</td><td>实现接口</td><td><code>implements</code></td></tr></tbody></table></div>
-<p><strong>多重度</strong>：<code>1</code>、<code>0..1</code>、<code>*</code>、<code>1..*</code>。</p>
-<h2>二、UML 图分类</h2>
-<div class="doc-table"><table><thead><tr><th>类别</th><th>图</th><th>用途</th></tr></thead><tbody><tr><td>结构图</td><td>类图</td><td>类、属性、方法、关系</td></tr><tr><td>结构图</td><td>对象图</td><td>某一时刻的对象快照</td></tr><tr><td>结构图</td><td>包图</td><td>组织与依赖</td></tr><tr><td>结构图</td><td>构件图</td><td>物理组件与接口</td></tr><tr><td>结构图</td><td>部署图</td><td>节点与部署</td></tr><tr><td>行为图</td><td>用例图</td><td>参与者与系统功能</td></tr><tr><td>行为图</td><td>活动图</td><td>业务流程/算法，支持并发与泳道</td></tr><tr><td>行为图</td><td>状态图</td><td>单个对象生命周期</td></tr><tr><td>行为图</td><td>顺序图</td><td>消息的时间顺序</td></tr><tr><td>行为图</td><td>通信图</td><td>对象链接关系（消息编号表顺序）</td></tr></tbody></table></div>
-<p><strong>用例关系</strong>：<code>include</code> 必然包含的公共行为；<code>extend</code> 条件触发的扩展；泛化。</p>
-<h2>三、设计模式 23 种</h2>
-<p><strong>创建型（5）</strong></p>
+<p>强弱顺序：依赖 &lt; 关联 &lt; 聚合 &lt; 组合 &lt; 泛化/实现（后两者是继承关系，不是组合强弱）。</p>
+<p><strong>多重度</strong>：<code>1</code>（恰好一个）、<code>0..1</code>（零或一个）、<code>*</code>（零或多个）、<code>1..*</code>（至少一个）、<code>m..n</code>。</p>
+<p>例："一个读者可以借多本书，一本书同一时刻只能被一个读者借" → 读者端 <code>1</code>，图书端 <code>0..*</code>（历史借阅）或 <code>0..1</code>（当前借阅），要看题目语义。</p>
+<h3>3.3 用例图</h3>
+<ul><li>参与者：人或其他系统，用小人表示；</li><li>用例：椭圆，表示一个完整功能；</li><li><strong>include</strong>：必然发生的公共行为，箭头指向被包含用例（如"下单"include"登录校验"）；</li><li><strong>extend</strong>：可选/条件触发的扩展，箭头指向基础用例（如"支付"extend"使用优惠券"）；</li><li>泛化：参与者之间、用例之间的继承。</li></ul>
+<h3>3.4 顺序图与状态图</h3>
+<p><strong>顺序图</strong>：对象横向排列，生命线向下延伸，消息箭头表示调用，激活条表示对象正在执行。同步消息实心箭头、异步消息开口箭头、返回消息虚线箭头。组合片段 <code>alt</code>（分支）、<code>loop</code>（循环）、<code>opt</code>（可选）。</p>
+<p><strong>状态图</strong>：圆角矩形表示状态，实心圆表示初态，同心圆表示终态；迁移箭头标注"事件 [监护条件] / 动作"。</p>
+<p><strong>活动图</strong>：圆角矩形表示活动，菱形表示判定，粗横线表示并发分叉/汇合，泳道表示责任划分。</p>
+<h2>四、设计模式</h2>
+<h3>4.1 创建型（5）</h3>
 <div class="doc-table"><table><thead><tr><th>模式</th><th>一句话意图</th></tr></thead><tbody><tr><td>单例 Singleton</td><td>保证唯一实例 + 全局访问点</td></tr><tr><td>工厂方法 Factory Method</td><td>定义创建接口，子类决定实例化哪个类</td></tr><tr><td>抽象工厂 Abstract Factory</td><td>创建一系列相关对象（多产品族）</td></tr><tr><td>建造者 Builder</td><td>分步构建复杂对象，构建与表示分离</td></tr><tr><td>原型 Prototype</td><td>通过克隆已有对象创建新对象</td></tr></tbody></table></div>
-<p><strong>结构型（7）</strong></p>
+<h3>4.2 结构型（7）</h3>
 <div class="doc-table"><table><thead><tr><th>模式</th><th>一句话意图</th></tr></thead><tbody><tr><td>适配器 Adapter</td><td>接口转换，让不兼容的类协同</td></tr><tr><td>桥接 Bridge</td><td>抽象与实现分离，各自独立变化</td></tr><tr><td>组合 Composite</td><td>树形结构表示整体-部分，统一对待</td></tr><tr><td>装饰 Decorator</td><td>动态给对象添加职责</td></tr><tr><td>外观 Facade</td><td>为子系统提供统一的高层接口</td></tr><tr><td>享元 Flyweight</td><td>共享细粒度对象，节省内存</td></tr><tr><td>代理 Proxy</td><td>控制对对象的访问</td></tr></tbody></table></div>
-<p><strong>行为型（11）</strong></p>
+<h3>4.3 行为型（11）</h3>
 <div class="doc-table"><table><thead><tr><th>模式</th><th>一句话意图</th></tr></thead><tbody><tr><td>职责链 Chain of Responsibility</td><td>请求沿链传递，直到被处理</td></tr><tr><td>命令 Command</td><td>把请求封装为对象，支持撤销/排队</td></tr><tr><td>解释器 Interpreter</td><td>给定语言定义文法并解释句子</td></tr><tr><td>迭代器 Iterator</td><td>顺序访问聚合元素而不暴露内部</td></tr><tr><td>中介者 Mediator</td><td>集中处理对象间的复杂交互</td></tr><tr><td>备忘录 Memento</td><td>捕获并恢复对象内部状态</td></tr><tr><td>观察者 Observer</td><td>一对多依赖，状态变化自动通知</td></tr><tr><td>状态 State</td><td>状态改变时行为随之改变</td></tr><tr><td>策略 Strategy</td><td>算法族可互换，客户端选择</td></tr><tr><td>模板方法 Template Method</td><td>父类定骨架，子类实现步骤</td></tr><tr><td>访问者 Visitor</td><td>在不改变元素类的前提下增加操作</td></tr></tbody></table></div>
-<h2>四、易混辨析（高频）</h2>
-<div class="doc-table"><table><thead><tr><th>对比</th><th>区别</th></tr></thead><tbody><tr><td>适配器 vs 桥接</td><td>适配器事后补救（已有类接口不合）；桥接事前设计（抽象与实现分离）</td></tr><tr><td>策略 vs 状态</td><td>策略由客户端选算法；状态由对象内部迁移驱动</td></tr><tr><td>装饰 vs 代理</td><td>装饰叠加职责；代理控制访问（远程/延迟/权限）</td></tr><tr><td>工厂方法 vs 抽象工厂</td><td>前者一类产品；后者一系列产品族</td></tr><tr><td>聚合 vs 组合</td><td>菱形都在整体端，实心才是强拥有</td></tr><tr><td>重载 vs 重写</td><td>重载同类同名不同参（编译期）；重写子类覆盖父类同名同参（运行期）</td></tr></tbody></table></div>
-<h2>五、面向对象设计原则</h2>
-<div class="doc-table"><table><thead><tr><th>原则</th><th>含义</th></tr></thead><tbody><tr><td>单一职责 SRP</td><td>一个类只负责一件事</td></tr><tr><td>开闭 OCP</td><td>对扩展开放，对修改关闭</td></tr><tr><td>里氏替换 LSP</td><td>子类可替换父类且不破坏语义</td></tr><tr><td>接口隔离 ISP</td><td>不强迫依赖无用接口</td></tr><tr><td>依赖倒置 DIP</td><td>依赖抽象而非具体实现</td></tr></tbody></table></div>
-<h2>六、自检题</h2>
-<ol><li>组合与聚合的图形区别在哪一端？</li><li>希望"动态给对象加功能"，选什么模式？</li><li>一个系统要支持多种数据库驱动切换，用什么模式？</li><li><code>include</code> 与 <code>extend</code> 的使用场景区别？</li><li>单例模式的关键实现要点？</li></ol>
-<blockquote><p>答案速查：1) 菱形都画在"整体"一端，实心为组合；2) 装饰模式；3) 策略/工厂方法/桥接均可，视"是否需整体替换实现"答桥接或策略；4) include 是必然包含的公共行为，extend 是条件/可选扩展；5) 私有构造 + 静态私有实例 + 静态公共获取方法（并发下需双检锁或静态内部类）。</p></blockquote>
+<h3>4.4 场景关键词定位</h3>
+<div class="doc-table"><table><thead><tr><th>题干关键词</th><th>模式</th></tr></thead><tbody><tr><td>唯一实例、全局配置</td><td>单例</td></tr><tr><td>子类决定创建哪种产品</td><td>工厂方法</td></tr><tr><td>一套界面控件、多风格（Windows/Mac）</td><td>抽象工厂</td></tr><tr><td>分步骤组装复杂对象（套餐、合同）</td><td>建造者</td></tr><tr><td>复制已有对象、创建成本高</td><td>原型</td></tr><tr><td>接口不兼容、旧系统适配</td><td>适配器</td></tr><tr><td>抽象与实现两个维度独立扩展</td><td>桥接</td></tr><tr><td>树形菜单、文件目录统一处理</td><td>组合</td></tr><tr><td>动态加功能、可叠加（咖啡加料）</td><td>装饰</td></tr><tr><td>一键启动子系统、简化调用</td><td>外观</td></tr><tr><td>大量相似对象共享（棋子、字符）</td><td>享元</td></tr><tr><td>权限控制、延迟加载、远程代理</td><td>代理</td></tr><tr><td>多级审批、逐级处理</td><td>职责链</td></tr><tr><td>撤销、重做、操作排队</td><td>命令</td></tr><tr><td>自定义表达式/规则解析</td><td>解释器</td></tr><tr><td>统一遍历不同集合</td><td>迭代器</td></tr><tr><td>复杂网状交互、中心协调</td><td>中介者</td></tr><tr><td>存档/恢复、快照</td><td>备忘录</td></tr><tr><td>订阅通知、事件监听</td><td>观察者</td></tr><tr><td>状态迁移驱动行为（订单状态）</td><td>状态</td></tr><tr><td>算法可替换（折扣、排序策略）</td><td>策略</td></tr><tr><td>固定流程、步骤可变</td><td>模板方法</td></tr><tr><td>稳定数据结构上增加新操作</td><td>访问者</td></tr></tbody></table></div>
+<h3>4.5 易混辨析</h3>
+<div class="doc-table"><table><thead><tr><th>对比</th><th>区别</th></tr></thead><tbody><tr><td>适配器 vs 桥接</td><td>适配器事后补救（已有类接口不合）；桥接事前设计（抽象与实现分离）</td></tr><tr><td>策略 vs 状态</td><td>策略由客户端选算法；状态由对象内部迁移驱动</td></tr><tr><td>装饰 vs 代理</td><td>装饰叠加职责；代理控制访问（远程/延迟/权限）</td></tr><tr><td>工厂方法 vs 抽象工厂</td><td>前者一类产品；后者一系列产品族</td></tr><tr><td>组合 vs 聚合</td><td>菱形都在整体端，实心才是强拥有</td></tr><tr><td>重载 vs 重写</td><td>重载同类同名不同参（编译期）；重写子类覆盖父类同名同参（运行期）</td></tr><tr><td>外观 vs 中介者</td><td>外观简化单向调用；中介者协调多向交互</td></tr></tbody></table></div>
+<h2>五、面向对象分析与设计</h2>
+<ul><li><strong>OOA（分析）</strong>：从问题域识别对象、属性、服务与关系，建立类图/用例图，不涉及具体实现。</li><li><strong>OOD（设计）</strong>：在分析模型基础上补充接口、抽象类、设计模式、数据库映射等实现细节。</li><li><strong>领域模型</strong>：描述问题域概念（如"订单""客户"），不含技术细节；</li><li><strong>设计模型</strong>：描述实现结构（如"OrderDAO""PaymentService"），含技术决策。</li></ul>
+<p>OOA/OOD 都强调：高内聚低耦合、依赖抽象、单一职责、用例驱动、迭代增量。</p>
+<h2>六、速记表</h2>
+<pre><code>类图关系：依赖虚线、关联实线、聚合空心菱形、组合实心菱形、泛化空心三角实线、实现空心三角虚线
+菱形永远在"整体"一端
+include 必然发生；extend 条件触发
+状态图管单个对象；顺序图管消息时间顺序；通信图管链接
+创建型 5：单例、工厂方法、抽象工厂、建造者、原型
+结构型 7：适配器、桥接、组合、装饰、外观、享元、代理
+行为型 11：职责链、命令、解释器、迭代器、中介者、备忘录、观察者、状态、策略、模板方法、访问者</code></pre>
+<h2>七、易错辨析</h2>
+<div class="doc-table"><table><thead><tr><th>错误认知</th><th>正确结论</th><th>原因</th></tr></thead><tbody><tr><td>聚合与组合的菱形画在部分端</td><td>画在整体端</td><td>菱形表示"整体"这一方</td></tr><tr><td>include 是可选扩展</td><td>include 是必然包含，extend 才可选</td><td>箭头方向与语义不同</td></tr><tr><td>策略模式由状态驱动</td><td>策略由客户端选择，状态由内部迁移驱动</td><td>两者意图不同</td></tr><tr><td>装饰模式改变对象接口</td><td>装饰保持接口不变、动态加职责</td><td>否则客户端无法透明使用</td></tr><tr><td>抽象工厂只创建一个产品</td><td>创建一系列相关产品（产品族）</td><td>与工厂方法的区别</td></tr><tr><td>顺序图强调对象链接</td><td>顺序图强调时间顺序，通信图强调链接</td><td>两者侧重点不同</td></tr><tr><td>重写是编译期绑定</td><td>重写是运行期绑定</td><td>依赖对象实际类型</td></tr></tbody></table></div>
+<h2>八、自检题</h2>
+<ol><li>组合与聚合的图形区别在哪一端？</li><li>希望"动态给对象加功能"，选什么模式？</li><li>一个系统要支持多种数据库驱动切换，用什么模式？</li><li><code>include</code> 与 <code>extend</code> 的使用场景区别？</li><li>单例模式的关键实现要点？</li><li>顺序图与通信图各自的侧重点是什么？</li><li>"多级审批、逐级处理"适合什么模式？</li><li>抽象工厂与工厂方法的核心区别？</li><li>状态图适合描述什么？活动图的并发如何表示？</li><li>依赖倒置原则的含义是什么？</li></ol>
+<blockquote><p>答案与解析：<br />1) 菱形都画在"整体"一端，实心为组合、空心为聚合。<br />2) 装饰模式。<br />3) 桥接（抽象与实现分离）或策略（算法可替换），看是否需要整体替换实现；答桥接更稳。<br />4) include 是必然包含的公共行为；extend 是条件/可选扩展。<br />5) 私有构造 + 静态私有实例 + 静态公共获取方法；并发下用双检锁或静态内部类。<br />6) 顺序图强调消息的时间顺序；通信图强调对象之间的链接关系。<br />7) 职责链模式。<br />8) 工厂方法创建一类产品；抽象工厂创建一系列相关产品（产品族）。<br />9) 状态图描述单个对象在生命周期内的状态与迁移；活动图用同步条（粗横线）表示并发分叉与汇合。<br />10) 高层模块与低层模块都依赖抽象，抽象不依赖细节，细节依赖抽象。</p></blockquote>
 </main>
 <footer class="doc-footer">本文档由同名 Markdown 生成（UTF-8 编码）；内容修改请改 .md 后重新运行 <code>node tools/build-docs.js</code>。</footer>
 </body>

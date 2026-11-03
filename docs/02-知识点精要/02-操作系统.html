@@ -15,43 +15,110 @@
 </header>
 <main class="doc">
 <h1>02 · 操作系统（上午 6 题）</h1>
-<h2>一、进程与状态</h2>
-<pre><code>三态：就绪 ⇄ 运行 → 阻塞 → 就绪
-禁止：阻塞 → 运行（必须先回就绪）、就绪 → 阻塞</code></pre>
-<div class="doc-table"><table><thead><tr><th>状态转换</th><th>触发者</th><th>原因</th></tr></thead><tbody><tr><td>就绪 → 运行</td><td>调度程序</td><td>被选中</td></tr><tr><td>运行 → 就绪</td><td>进程自身/系统</td><td>时间片到、被抢占</td></tr><tr><td>运行 → 阻塞</td><td>进程自身</td><td>请求 I/O、申请资源失败、等待事件</td></tr><tr><td>阻塞 → 就绪</td><td>系统</td><td>等待的事件发生</td></tr></tbody></table></div>
-<h2>二、PV 操作（必考）</h2>
-<pre><code>P(S): S = S - 1;  if (S &lt; 0) 阻塞当前进程
-V(S): S = S + 1;  if (S &lt;= 0) 唤醒一个等待进程
-
-S &gt; 0  : 还有 S 个可用资源
-S = 0  : 资源刚好用完，无等待
-S &lt; 0  : |S| 个进程在等待</code></pre>
-<p><strong>生产者-消费者（缓冲区容量 n）</strong></p>
+<blockquote><p>三大计算题源：PV 操作、页面置换、磁盘调度；其余以概念辨析为主。PV 操作几乎年年出现，这一节必须练到能默写。</p></blockquote>
+<h2>一、考点地图</h2>
+<div class="doc-table"><table><thead><tr><th>考点</th><th>近年题量</th><th>常见问法</th><th>难度</th></tr></thead><tbody><tr><td>进程与线程</td><td>1~2</td><td>三态转换、PCB、线程共享哪些资源</td><td>易</td></tr><tr><td>PV 操作与同步</td><td>1</td><td>信号量初值、S 值含义、生产者-消费者</td><td>中</td></tr><tr><td>死锁</td><td>0~1</td><td>四个必要条件、银行家算法安全序列</td><td>中</td></tr><tr><td>存储管理</td><td>1~2</td><td>页式地址换算、段页式、页面置换缺页数</td><td>中~难</td></tr><tr><td>文件管理</td><td>1</td><td>物理结构对比、inode、位示图换算</td><td>易~中</td></tr><tr><td>设备管理</td><td>1</td><td>磁盘调度总移道数、SPOOLing</td><td>中</td></tr><tr><td>作业与进程调度</td><td>1</td><td>周转时间、带权周转时间、SJF</td><td>中</td></tr></tbody></table></div>
+<h2>二、进程与线程</h2>
+<h3>2.1 进程的定义与 PCB</h3>
+<p>进程是程序在一个数据集合上的一次运行过程，是系统进行资源分配和调度的基本单位。进程实体由<strong>程序段、数据段、PCB</strong> 三部分组成。</p>
+<p><strong>PCB（进程控制块）是进程存在的唯一标志</strong>。操作系统通过 PCB 感知进程、保存现场（程序计数器、寄存器、状态字）、记录资源清单。题目问"进程存在的标志"或"进程切换时保存现场的地方"，答案都是 PCB。</p>
+<h3>2.2 进程状态</h3>
+<pre><code>三态：就绪 → 运行 → 阻塞 → 就绪
+五态：新建 → 就绪 ⇄ 运行 → 终止，运行 → 阻塞 → 就绪</code></pre>
+<p>三条不能发生的转换：</p>
+<ul><li>阻塞 → 运行：必须先回到就绪队列，等待调度；</li><li>就绪 → 阻塞：就绪进程没有 CPU，无法发起 I/O 请求；</li><li>（五态中）终止 → 其他状态。</li></ul>
+<p><strong>转换的触发者</strong>：就绪→运行由调度程序触发；运行→就绪由时间片到或被抢占触发；运行→阻塞由进程自身请求 I/O 或等待事件触发；阻塞→就绪由等待的事件完成触发。</p>
+<h3>2.3 线程</h3>
+<p>线程是 CPU 调度的基本单位。同一进程内的线程<strong>共享</strong>地址空间、全局变量、打开的文件等资源，但<strong>各自独立</strong>拥有栈、寄存器上下文、程序计数器。</p>
+<p>对比：进程切换要切换地址空间（开销大），线程切换在同一地址空间内完成（开销小）。用户级线程由线程库管理、内核不可见；内核级线程由内核调度、可多核并行。</p>
+<h3>2.4 进程通信</h3>
+<div class="doc-table"><table><thead><tr><th>方式</th><th>特点</th></tr></thead><tbody><tr><td>共享存储</td><td>最快，需同步互斥保护</td></tr><tr><td>消息传递</td><td>通过发送/接收消息，适合分布式</td></tr><tr><td>管道</td><td>半双工、字节流，有亲缘关系的进程常用</td></tr><tr><td>信号</td><td>异步通知，用于事件处理</td></tr></tbody></table></div>
+<h2>三、PV 操作与同步</h2>
+<h3>3.1 信号量语义</h3>
+<pre><code>P(S)：S = S - 1；若 S &lt; 0，则阻塞当前进程
+V(S)：S = S + 1；若 S ≤ 0，则唤醒一个等待进程</code></pre>
+<p>S 的取值含义：</p>
+<div class="doc-table"><table><thead><tr><th>S 值</th><th>含义</th></tr></thead><tbody><tr><td>S &gt; 0</td><td>还有 S 个可用资源</td></tr><tr><td>S = 0</td><td>资源刚好用完，无进程等待</td></tr><tr><td>S &lt; 0</td><td>有 `</td><td class="doc-extra-cell">S</td><td class="doc-extra-cell">` 个进程在等待该资源</td></tr></tbody></table></div>
+<p>注意 P 是"先减再判断"，V 是"先加再判断"。顺序写反，整道题全错。</p>
+<h3>3.2 生产者-消费者（缓冲区容量 n）</h3>
 <div class="doc-table"><table><thead><tr><th>信号量</th><th>初值</th><th>含义</th></tr></thead><tbody><tr><td>mutex</td><td>1</td><td>互斥访问缓冲区</td></tr><tr><td>empty</td><td>n</td><td>空闲槽位数</td></tr><tr><td>full</td><td>0</td><td>已放产品数</td></tr></tbody></table></div>
-<pre><code>生产者：P(empty) → P(mutex) → 放产品 → V(mutex) → V(full)
-消费者：P(full)  → P(mutex) → 取产品 → V(mutex) → V(empty)</code></pre>
-<blockquote><p>顺序不可颠倒：先 P 资源信号量，再 P 互斥信号量。反过来会死锁。</p></blockquote>
-<h2>三、存储管理</h2>
-<div class="doc-table"><table><thead><tr><th>方式</th><th>地址结构</th><th>碎片</th><th>特点</th></tr></thead><tbody><tr><td>页式</td><td>页号 + 页内地址</td><td>内部碎片</td><td>无外部碎片，需页表</td></tr><tr><td>段式</td><td>段号 + 段内地址</td><td>外部碎片</td><td>便于共享与保护</td></tr><tr><td>段页式</td><td>段号 + 页号 + 页内地址</td><td>内部碎片</td><td>两次查表，开销大</td></tr></tbody></table></div>
-<p><strong>地址换算</strong>：页面大小 4KB = <code>0x1000</code>，低 12 位为页内偏移。<br />例：逻辑地址 <code>0x2A5F</code> → 页号 2，偏移 <code>0xA5F</code>。</p>
-<p><strong>页面置换</strong></p>
-<div class="doc-table"><table><thead><tr><th>算法</th><th>特点</th></tr></thead><tbody><tr><td>OPT</td><td>理论最优，无法实现，作对比基准</td></tr><tr><td>FIFO</td><td>实现简单，存在 Belady 异常</td></tr><tr><td>LRU</td><td>最近最久未使用，性能接近 OPT，实现需硬件支持</td></tr><tr><td>LFU</td><td>按访问频率淘汰</td></tr></tbody></table></div>
-<h2>四、文件与设备</h2>
-<div class="doc-table"><table><thead><tr><th>物理结构</th><th>随机访问</th><th>扩展</th><th>碎片</th></tr></thead><tbody><tr><td>连续</td><td>支持</td><td>困难</td><td>有外部碎片</td></tr><tr><td>链接</td><td>不支持（只能顺序）</td><td>容易</td><td>无</td></tr><tr><td>索引</td><td>支持</td><td>容易</td><td>索引表占空间</td></tr></tbody></table></div>
-<p><strong>位示图换算</strong>（字号、位号从 0 开始）</p>
-<pre><code>字号 = 物理块号 / 字长
+<pre><code>生产者：P(empty) → P(mutex) → 放入产品 → V(mutex) → V(full)
+消费者：P(full)  → P(mutex) → 取出产品 → V(mutex) → V(empty)</code></pre>
+<p><strong>顺序不可颠倒</strong>：先 P 资源信号量、再 P 互斥信号量。若先 P(mutex) 再 P(empty)，缓冲区满时生产者持锁等待，消费者无法进入临界区取产品，形成死锁。</p>
+<h3>3.3 读者-写者（读优先）</h3>
+<pre><code>count = 0；mutex = 1（保护 count）；rw = 1（读写互斥）
+
+读者：P(mutex) → count++ → 若 count==1 则 P(rw) → V(mutex) → 读 → P(mutex) → count-- → 若 count==0 则 V(rw) → V(mutex)
+写者：P(rw) → 写 → V(rw)</code></pre>
+<p>考试若只考初值，记"互斥信号量初值 1、同步信号量初值 0（或资源数）"即可。</p>
+<h2>四、死锁</h2>
+<h3>4.1 四个必要条件</h3>
+<p>互斥、请求并保持、不可剥夺、环路等待。四个条件<strong>同时满足</strong>才可能死锁，破坏任意一个即可预防。</p>
+<div class="doc-table"><table><thead><tr><th>策略</th><th>做法</th><th>代价</th></tr></thead><tbody><tr><td>预防</td><td>破坏四个条件之一（如一次申请全部资源）</td><td>资源利用率低</td></tr><tr><td>避免</td><td>银行家算法，分配前判断是否安全</td><td>需预知最大需求</td></tr><tr><td>检测</td><td>资源分配图化简、找环</td><td>需定期运行检测算法</td></tr><tr><td>解除</td><td>撤销进程或剥夺资源</td><td>实现复杂</td></tr></tbody></table></div>
+<h3>4.2 银行家算法</h3>
+<p>系统维护 Available（可用资源）、Max（最大需求）、Allocation（已分配）、Need = Max - Allocation。每次试分配后检查是否存在<strong>安全序列</strong>：找一个 Need ≤ Available 的进程，假设它完成并释放资源，重复直到所有进程完成。</p>
+<p><strong>例</strong>：三类资源 A/B/C，Available = (3,3,2)。</p>
+<div class="doc-table"><table><thead><tr><th>进程</th><th>Allocation</th><th>Need</th></tr></thead><tbody><tr><td>P0</td><td>(0,1,0)</td><td>(7,4,3)</td></tr><tr><td>P1</td><td>(2,0,0)</td><td>(1,2,2)</td></tr><tr><td>P2</td><td>(3,0,2)</td><td>(6,0,0)</td></tr><tr><td>P3</td><td>(2,1,1)</td><td>(0,1,1)</td></tr><tr><td>P4</td><td>(0,0,2)</td><td>(4,3,1)</td></tr></tbody></table></div>
+<p>求解：P1 的 Need (1,2,2) ≤ (3,3,2)，先完成 P1，Available 变为 (5,3,2)；接着 P3 可完成 → (7,4,3)；P4 可完成 → (7,4,5)；P0 可完成 → (7,5,5)；P2 最后完成。安全序列为 <code>P1 → P3 → P4 → P0 → P2</code>（P2 与 P0 顺序可交换）。</p>
+<p>考试通常只问"下列哪个是安全序列"，按上述步骤逐个验证选项即可。</p>
+<h2>五、存储管理</h2>
+<h3>5.1 页式、段式、段页式</h3>
+<div class="doc-table"><table><thead><tr><th>方式</th><th>地址结构</th><th>碎片</th><th>特点</th></tr></thead><tbody><tr><td>页式</td><td>页号 + 页内地址</td><td>内部碎片</td><td>无外部碎片，页表存于内存，TLB 加速</td></tr><tr><td>段式</td><td>段号 + 段内地址</td><td>外部碎片</td><td>按逻辑划分，便于共享与保护</td></tr><tr><td>段页式</td><td>段号 + 页号 + 页内地址</td><td>内部碎片</td><td>两次查表，开销最大</td></tr></tbody></table></div>
+<p><strong>地址换算</strong>：页面大小 4KB = <code>0x1000</code>，低 12 位是页内偏移。例：逻辑地址 <code>0x2A5F</code> → 页号 <code>2</code>、偏移 <code>0xA5F</code>。计算时先把页面大小写成 2 的幂，再按位切分，比除法快。</p>
+<h3>5.2 虚拟存储</h3>
+<p>虚拟存储利用局部性原理，只把当前用到的页调入内存，其余留在辅存，从而用较小的物理内存运行较大的程序。</p>
+<ul><li><strong>缺页中断</strong>：访问的页不在内存，触发中断调页；</li><li><strong>抖动（颠簸）</strong>：分配的物理块不足，刚换出的页立刻又要换入，CPU 大部分时间耗在换页上；</li><li><strong>工作集</strong>：进程在某段时间内实际访问的页面集合，用于给进程分配足够的物理块。</li></ul>
+<h3>5.3 页面置换</h3>
+<div class="doc-table"><table><thead><tr><th>算法</th><th>规则</th><th>特点</th></tr></thead><tbody><tr><td>OPT</td><td>淘汰未来最长时间不用的页</td><td>理论最优，无法实现，作基准</td></tr><tr><td>FIFO</td><td>淘汰最早进入的页</td><td>简单，存在 Belady 异常</td></tr><tr><td>LRU</td><td>淘汰最近最久未使用的页</td><td>接近 OPT，需硬件支持</td></tr><tr><td>LFU</td><td>淘汰访问次数最少的页</td><td>对突发访问不友好</td></tr></tbody></table></div>
+<p><strong>Belady 异常</strong>：增加物理块数，缺页次数反而增加，只出现在 FIFO 一类算法中，LRU 不会。</p>
+<p><strong>例</strong>：3 个物理块，引用串 <code>1,2,3,4,1,2,5,1,2,3,4,5</code>，LRU 缺页次数。</p>
+<div class="doc-table"><table><thead><tr><th>访问</th><th>内存块（左为最久未用）</th><th>结果</th></tr></thead><tbody><tr><td>1</td><td>1</td><td>缺</td></tr><tr><td>2</td><td>1,2</td><td>缺</td></tr><tr><td>3</td><td>1,2,3</td><td>缺</td></tr><tr><td>4</td><td>2,3,4</td><td>缺（淘汰 1）</td></tr><tr><td>1</td><td>3,4,1</td><td>缺（淘汰 2）</td></tr><tr><td>2</td><td>4,1,2</td><td>缺（淘汰 3）</td></tr><tr><td>5</td><td>1,2,5</td><td>缺（淘汰 4）</td></tr><tr><td>1</td><td>2,5,1</td><td>命中</td></tr><tr><td>2</td><td>5,1,2</td><td>命中</td></tr><tr><td>3</td><td>1,2,3</td><td>缺（淘汰 5）</td></tr><tr><td>4</td><td>2,3,4</td><td>缺（淘汰 1）</td></tr><tr><td>5</td><td>3,4,5</td><td>缺（淘汰 2）</td></tr></tbody></table></div>
+<p>缺页 10 次。手算时维护"最近使用顺序"一行，比画三格更容易检查。</p>
+<h2>六、文件管理</h2>
+<h3>6.1 物理结构</h3>
+<div class="doc-table"><table><thead><tr><th>结构</th><th>随机访问</th><th>扩展</th><th>碎片</th><th>适用</th></tr></thead><tbody><tr><td>连续</td><td>支持</td><td>困难</td><td>外部碎片</td><td>顺序读写、只读文件</td></tr><tr><td>链接</td><td>不支持，只能顺序</td><td>容易</td><td>无</td><td>顺序文件、日志</td></tr><tr><td>索引</td><td>支持</td><td>容易</td><td>索引表占空间</td><td>随机访问的大文件</td></tr></tbody></table></div>
+<p><strong>索引文件容量</strong>：一级索引可寻址 <code>块大小 / 索引项大小</code> 个块，再乘块大小。例：块 1KB、索引项 4B → 256 个块 → 最大 256KB。</p>
+<h3>6.2 目录与 inode</h3>
+<ul><li>绝对路径从根目录开始，相对路径从当前目录开始；</li><li>索引结点（inode）把文件名与文件属性分离：目录项只存"文件名 + inode 号"，inode 存权限、大小、物理地址等；</li><li>硬链接共享 inode，删除一个名字不删数据；软链接是独立的文件，存目标路径。</li></ul>
+<h3>6.3 空闲空间管理</h3>
+<p><strong>位示图</strong>：每一位对应一个物理块，1 表示占用、0 表示空闲。</p>
+<pre><code>字号 = 物理块号 / 字长（整数除法）
 位号 = 物理块号 % 字长
 物理块号 = 字号 × 字长 + 位号</code></pre>
-<p><strong>磁盘调度</strong></p>
-<div class="doc-table"><table><thead><tr><th>算法</th><th>策略</th><th>缺点</th></tr></thead><tbody><tr><td>FCFS</td><td>按请求顺序</td><td>移臂距离大</td></tr><tr><td>SSTF</td><td>最近的先服务</td><td>可能饥饿</td></tr><tr><td>SCAN</td><td>单向扫到端点再折返</td><td>边缘请求等待久</td></tr><tr><td>CSCAN</td><td>到端点直接回起点</td><td>回程不服务</td></tr></tbody></table></div>
-<h2>五、调度与周转</h2>
+<p>例：字长 32、块号 100 → 字号 <code>100/32 = 3</code>、位号 <code>100%32 = 4</code>。</p>
+<p>其他方式：空闲表、空闲链表、成组链接（UNIX 使用，把空闲块分组，每组第一块记录下一组的块号）。</p>
+<h2>七、设备管理</h2>
+<h3>7.1 磁盘调度</h3>
+<div class="doc-table"><table><thead><tr><th>算法</th><th>策略</th><th>缺点</th></tr></thead><tbody><tr><td>FCFS</td><td>按请求到达顺序</td><td>移臂距离大</td></tr><tr><td>SSTF</td><td>先服务离当前磁头最近的请求</td><td>远端请求可能饥饿</td></tr><tr><td>SCAN（电梯）</td><td>单向扫描到端点再折返</td><td>边缘磁道等待久</td></tr><tr><td>CSCAN</td><td>到端点直接回到起点，单向服务</td><td>回程不服务</td></tr></tbody></table></div>
+<p><strong>例</strong>：磁头当前在 53，请求序列 <code>98,183,37,122,14,124,65,67</code>，SSTF 的总移道数。</p>
+<pre><code>53 → 65(12) → 67(2) → 37(30) → 14(23) → 98(84) → 122(24) → 124(2) → 183(59)
+总移道数 = 12+2+30+23+84+24+2+59 = 236</code></pre>
+<p>SCAN 题要先确认初始方向（向大或向小），方向不同结果不同，题干没写时按"向磁道号增大方向"处理并注明。</p>
+<h3>7.2 SPOOLing 与缓冲</h3>
+<p>SPOOLing 用磁盘上的输入井/输出井把独占设备虚拟成共享设备，典型应用是打印缓冲：多个进程的打印任务先落盘排队，再由守护进程依次送打印机。</p>
+<p>缓冲：单缓冲使处理与传输部分重叠；双缓冲进一步减少等待；缓冲池供多个进程共享。</p>
+<h2>八、作业与进程调度</h2>
 <pre><code>周转时间 = 完成时间 - 到达时间
 带权周转时间 = 周转时间 / 服务时间
 平均周转时间 = Σ周转时间 / 作业数</code></pre>
-<p>调度算法：FCFS（公平）、SJF（平均等待最短，可能饥饿）、优先级、时间片轮转、多级反馈队列。</p>
-<h2>六、自检题</h2>
-<ol><li>信号量初值 3，当前值 -1，说明什么？</li><li>优先级反转与死锁的区别？</li><li>LRU 与 FIFO 在"增加物理块缺页反而增多"上分别表现如何？</li><li>页面大小 8KB，逻辑地址 0x3FFF 的页号与偏移？</li><li>4 个作业 FCFS，如何算平均带权周转时间？</li></ol>
-<blockquote><p>答案速查：1) 3 个资源已全部分配，且还有 1 个进程在等待；2) 优先级反转是调度问题（低优先级持锁阻塞高优先级），死锁是循环等待；3) FIFO 有 Belady 异常，LRU 不会；4) 页号 1，偏移 0x1FFF；5) 先算完成时间→周转→除以服务时间。</p></blockquote>
+<div class="doc-table"><table><thead><tr><th>算法</th><th>特点</th></tr></thead><tbody><tr><td>FCFS</td><td>公平、实现简单，短作业等待久</td></tr><tr><td>SJF</td><td>平均等待/周转时间最短，长作业可能饥饿</td></tr><tr><td>优先级</td><td>可静态或动态，动态优先级可缓解饥饿</td></tr><tr><td>时间片轮转</td><td>响应快，时间片过大退化为 FCFS，过小切换开销大</td></tr><tr><td>多级反馈队列</td><td>兼顾响应与吞吐，新进程进高优先级队列</td></tr></tbody></table></div>
+<p><strong>例</strong>：4 个作业 <code>(到达, 服务) = (0,3)、(2,6)、(4,4)、(6,5)</code>，FCFS 调度。</p>
+<div class="doc-table"><table><thead><tr><th>作业</th><th>开始</th><th>完成</th><th>周转</th><th>带权</th></tr></thead><tbody><tr><td>J1</td><td>0</td><td>3</td><td>3</td><td>1.00</td></tr><tr><td>J2</td><td>3</td><td>9</td><td>7</td><td>1.17</td></tr><tr><td>J3</td><td>9</td><td>13</td><td>9</td><td>2.25</td></tr><tr><td>J4</td><td>13</td><td>18</td><td>12</td><td>2.40</td></tr></tbody></table></div>
+<p>平均周转时间 <code>(3+7+9+12)/4 = 7.75</code>，平均带权周转时间 <code>(1+1.17+2.25+2.4)/4 ≈ 1.70</code>。</p>
+<h2>九、速记表</h2>
+<pre><code>三态：就绪→运行→阻塞→就绪；阻塞不能直接回运行
+P：减 1 再判断；V：加 1 再判断
+S&lt;0 时 |S| = 等待进程数
+互斥信号量初值 1；同步信号量初值 0 或资源数
+死锁四条件：互斥、请求并保持、不可剥夺、环路等待
+页内地址位数 = log2(页面大小)
+字号 = 块号 / 字长；位号 = 块号 % 字长
+周转 = 完成 - 到达；带权 = 周转 / 服务</code></pre>
+<h2>十、易错辨析</h2>
+<div class="doc-table"><table><thead><tr><th>错误认知</th><th>正确结论</th><th>原因</th></tr></thead><tbody><tr><td>阻塞可以直接转为运行</td><td>必须先转就绪，再被调度</td><td>阻塞结束时 CPU 可能正被占用</td></tr><tr><td>信号量为负表示资源数为负</td><td>负值的绝对值是等待进程数</td><td>资源数最少为 0</td></tr><tr><td>先 P(mutex) 再 P(empty) 更安全</td><td>顺序反了会死锁</td><td>持锁等待资源，消费者进不来</td></tr><tr><td>页式存储有外部碎片</td><td>页式只有内部碎片</td><td>页大小固定，最后一页可能浪费</td></tr><tr><td>增加物理块一定减少缺页</td><td>FIFO 可能出现 Belady 异常</td><td>淘汰策略与访问序列不匹配</td></tr><tr><td>磁盘调度 SSTF 最优</td><td>SSTF 只是每次最近，可能饥饿</td><td>全局最优需 SCAN 类策略</td></tr><tr><td>线程有独立地址空间</td><td>同进程线程共享地址空间</td><td>线程只独占栈和寄存器</td></tr></tbody></table></div>
+<h2>十一、自检题</h2>
+<ol><li>信号量初值 3，当前值 -1，说明什么？</li><li>生产者-消费者中，若把 <code>P(empty)</code> 与 <code>P(mutex)</code> 顺序颠倒，会发生什么？</li><li>死锁的四个必要条件是什么？银行家算法属于哪种策略？</li><li>页面大小 8KB，逻辑地址 <code>0x3FFF</code> 的页号与页内偏移是多少？</li><li>3 个物理块，引用串 <code>1,2,3,4,1,2,5</code>，FIFO 的缺页次数是多少？</li><li>字长 32、块号 100，位示图的字号和位号是多少？</li><li>磁头在 50，请求 <code>10,20,30,40,60</code>，SSTF 的总移道数是多少？</li><li>4 个作业 FCFS，如何计算平均带权周转时间？</li><li>为什么说"增加物理块可能让 FIFO 缺页更多"？</li><li>线程切换为什么比进程切换快？</li></ol>
+<blockquote><p>答案与解析：<br />1) 3 个资源已全部分配，另有 1 个进程在等待。<br />2) 缓冲区满时生产者持锁等待 empty，消费者无法进入临界区取产品，形成死锁。<br />3) 互斥、请求并保持、不可剥夺、环路等待；银行家算法属于死锁避免。<br />4) <code>0x3FFF = 16383</code>，页大小 8192 → 页号 1、偏移 <code>0x1FFF</code>。<br />5) 1,2,3 缺 3 次；4 淘汰 1；1 淘汰 2；2 淘汰 3；5 淘汰 4 → 共 7 次。<br />6) 字号 3、位号 4。<br />7) <code>50→60(10)→40(20)→30(10)→20(10)→10(10)</code>，共 60。<br />8) 先算每个作业的完成时间，再算周转时间（完成-到达），最后除以服务时间取平均。<br />9) FIFO 只看进入时间，不看访问频率，块数变化会改变淘汰顺序，可能出现 Belady 异常。<br />10) 线程共享同一地址空间，切换时无需切换页表与地址空间，只需保存寄存器与栈。</p></blockquote>
 </main>
 <footer class="doc-footer">本文档由同名 Markdown 生成（UTF-8 编码）；内容修改请改 .md 后重新运行 <code>node tools/build-docs.js</code>。</footer>
 </body>

@@ -15,29 +15,67 @@
 </header>
 <main class="doc">
 <h1>10 · 多媒体（2 题）+ 专业英语（5 题）</h1>
-<h2>一、多媒体计算三公式</h2>
+<blockquote><p>多媒体是"公式 + 格式"的小模块，5 分钟能拿分；专业英语是 1 篇短文 5 空，靠术语积累与上下文逻辑，投入产出比最高。两块的共同点是：不需要深入推导，记住规则就能得分。</p></blockquote>
+<h2>一、考点地图</h2>
+<div class="doc-table"><table><thead><tr><th>模块</th><th>考点</th><th>近年题量</th><th>常见问法</th></tr></thead><tbody><tr><td>多媒体</td><td>音频</td><td>0~1</td><td>数据量计算、采样定理、MIDI</td></tr><tr><td>多媒体</td><td>图像</td><td>1</td><td>容量计算、格式特性、位图/矢量图</td></tr><tr><td>多媒体</td><td>视频</td><td>0~1</td><td>帧率、容量、色彩空间</td></tr><tr><td>多媒体</td><td>压缩</td><td>0~1</td><td>冗余类型、有损/无损、JPEG/MPEG</td></tr><tr><td>专业英语</td><td>题材词汇</td><td>5（1 篇 5 空）</td><td>完形填空、词义辨析</td></tr><tr><td>专业英语</td><td>解题方法</td><td>—</td><td>词性、搭配、逻辑连接</td></tr></tbody></table></div>
+<h2>二、多媒体计算</h2>
+<h3>2.1 三个公式</h3>
 <pre><code>音频数据量(字节) = 采样频率 × 量化位数 × 声道数 × 时间(秒) / 8
 图像数据量(字节) = 水平像素 × 垂直像素 × 颜色深度 / 8
 视频数据量(字节) = 帧率 × 每帧数据量 × 时间(秒)</code></pre>
-<p><strong>例题</strong></p>
-<div class="doc-table"><table><thead><tr><th>题目</th><th>计算</th><th>结果</th></tr></thead><tbody><tr><td>44.1kHz、16 位、双声道、1 分钟</td><td>44100×16×2×60/8</td><td>≈ 10.1 MB</td></tr><tr><td>1024×768、24 位真彩色、未压缩</td><td>1024×768×24/8</td><td>≈ 2.25 MB</td></tr><tr><td>25fps、每帧 1MB、10 秒</td><td>25×1MB×10</td><td>250 MB</td></tr></tbody></table></div>
-<p><strong>采样定理</strong>：采样频率 ≥ 2 倍信号最高频率。人耳 20Hz~20kHz，故 CD 用 44.1kHz。</p>
-<h2>二、格式特性</h2>
-<div class="doc-table"><table><thead><tr><th>格式</th><th>类型</th><th>有损/无损</th><th>透明</th><th>动画</th><th>适用</th></tr></thead><tbody><tr><td>BMP</td><td>位图</td><td>无损</td><td>不支持</td><td>否</td><td>原始位图存储</td></tr><tr><td>JPG</td><td>位图</td><td><strong>有损</strong></td><td>不支持</td><td>否</td><td>照片</td></tr><tr><td>GIF</td><td>位图</td><td>无损</td><td>支持（1 位）</td><td><strong>支持</strong></td><td>图标、简单动图（256 色）</td></tr><tr><td>PNG</td><td>位图</td><td>无损</td><td>支持（alpha）</td><td>否</td><td>网页图形、截图</td></tr><tr><td>SVG</td><td><strong>矢量</strong></td><td>无损</td><td>支持</td><td>支持（SMIL）</td><td>图标、图表</td></tr><tr><td>WAV</td><td>音频</td><td>无损</td><td>—</td><td>—</td><td>原始音频</td></tr><tr><td>MP3</td><td>音频</td><td>有损</td><td>—</td><td>—</td><td>音乐分发</td></tr><tr><td>MIDI</td><td>音频</td><td>—</td><td>—</td><td>—</td><td><strong>演奏指令，非波形</strong>，不含人声</td></tr></tbody></table></div>
-<h2>三、压缩与冗余</h2>
-<div class="doc-table"><table><thead><tr><th>冗余类型</th><th>含义</th><th>利用方式</th></tr></thead><tbody><tr><td>空间冗余</td><td>相邻像素相似</td><td>JPEG 的 DCT</td></tr><tr><td>时间冗余</td><td>相邻帧相似</td><td>MPEG 运动补偿</td></tr><tr><td>视觉冗余</td><td>人眼不敏感</td><td>量化表、色度下采样</td></tr><tr><td>编码冗余</td><td>码长分配不合理</td><td>哈夫曼编码</td></tr></tbody></table></div>
-<p>无损：哈夫曼、游程 RLE、LZW、算术编码。<br />有损：JPEG（静态）、MPEG（运动）、MP3。<br />压缩比 = 压缩前 / 压缩后。</p>
-<h2>四、专业英语应试策略</h2>
-<p><strong>题材分布</strong>：软件工程、数据库、网络、操作系统、AI/新技术，各 1 篇左右。</p>
-<p><strong>解题四步</strong></p>
-<ol><li>先通读全文抓主题（30 秒），不要被生词卡住；</li><li>看空格前后判断词性与搭配（冠词/形容词后填名词，助动词后填动词原形/过去分词）；</li><li>抓逻辑连接词：<code>however</code>（转折）、<code>therefore</code>（因果）、<code>in addition</code>（递进）、<code>whereas</code>（对比）；</li><li>排除法 + 专业词优先（与主题强相关的术语正确率更高）。</li></ol>
-<p><strong>高频词表（按题材）</strong></p>
-<div class="doc-table"><table><thead><tr><th>题材</th><th>词汇</th></tr></thead><tbody><tr><td>软件工程</td><td>requirement, architecture, module, coupling, cohesion, iteration, deployment, maintenance, refactor, framework</td></tr><tr><td>数据库</td><td>schema, transaction, commit, rollback, index, normalization, redundancy, primary key, query optimization, concurrency</td></tr><tr><td>网络</td><td>bandwidth, latency, protocol, packet, routing, congestion, throughput, encryption, handshake, topology</td></tr><tr><td>操作系统</td><td>process, thread, scheduling, virtual memory, deadlock, paging, kernel, semaphore</td></tr><tr><td>新技术</td><td>machine learning, neural network, cloud computing, container, microservice, blockchain, edge computing</td></tr></tbody></table></div>
-<p><strong>常见干扰项特征</strong></p>
-<ul><li>词性正确但语义相反（如 improve / impair）</li><li>与主题无关的同领域词（讲数据库却给 network）</li><li>单复数或时态不符</li></ul>
-<h2>五、自检题</h2>
-<ol><li>采样频率 8kHz、8 位、单声道、30 秒的音频数据量是多少？</li><li>一幅 800×600 的 8 位灰度图未压缩占多少 KB？</li><li>为什么说 MIDI 不能用来录歌？</li><li>支持透明通道且无损的位图格式是？</li><li>专业英语中 <code>however</code> 提示什么逻辑关系？</li></ol>
-<blockquote><p>答案速查：1) 8000×8×1×30/8 = 240,000 B ≈ 234 KB；2) 800×600×8/8 = 480,000 B ≈ 469 KB；3) MIDI 记录演奏指令（音高、力度、时长），不含波形采样，无法记录人声；4) PNG；5) 转折。</p></blockquote>
+<h3>2.2 例题</h3>
+<div class="doc-table"><table><thead><tr><th>题目</th><th>计算</th><th>结果</th></tr></thead><tbody><tr><td>CD 音质立体声，44.1kHz、16 位、双声道、1 分钟</td><td><code>44100×16×2×60/8</code></td><td>≈ 10.1 MB</td></tr><tr><td>1024×768、24 位真彩色、未压缩</td><td><code>1024×768×24/8</code></td><td>≈ 2.25 MB</td></tr><tr><td>25fps、每帧 1MB、10 秒</td><td><code>25×1×10</code></td><td>250 MB</td></tr><tr><td>8kHz、8 位、单声道、30 秒</td><td><code>8000×8×1×30/8</code></td><td>240,000 B ≈ 234 KB</td></tr></tbody></table></div>
+<p><strong>单位陷阱</strong>：题目选项常同时给 KB 与 MB、B 与 bit。先统一成字节再换算；<code>1MB = 1024KB = 2<sup>20</sup> B</code>，若题目按 1000 计，选项会体现差异。看到"约"字通常按 1024 估算。</p>
+<h3>2.3 采样定理</h3>
+<p>采样频率必须<strong>大于等于</strong>信号最高频率的 2 倍（奈奎斯特），否则会发生混叠。人耳听觉范围 20Hz~20kHz，所以 CD 采样率取 44.1kHz（略高于 40kHz，留余量）。</p>
+<p>常见采样率：电话 8kHz、CD 44.1kHz、DVD 48kHz。</p>
+<h2>三、图像与视频</h2>
+<h3>3.1 位图与矢量图</h3>
+<div class="doc-table"><table><thead><tr><th>类型</th><th>存储内容</th><th>缩放</th><th>体积</th><th>适用</th></tr></thead><tbody><tr><td>位图</td><td>每个像素的颜色值</td><td>放大会失真、出现锯齿</td><td>大</td><td>照片、复杂图像</td></tr><tr><td>矢量图</td><td>图形指令（线条、曲线、填充）</td><td>缩放不失真</td><td>小</td><td>图标、LOGO、工程图</td></tr></tbody></table></div>
+<h3>3.2 分辨率与颜色深度</h3>
+<ul><li>显示分辨率：屏幕能显示的像素数（1920×1080）；</li><li>图像分辨率：图像本身的像素数；</li><li>打印分辨率：DPI（每英寸点数），影响打印清晰度。</li></ul>
+<p>颜色深度：8 位 = 256 色；16 位 = 65536 色；24 位 = 真彩色（约 1677 万色）；32 位 = 24 位颜色 + 8 位 Alpha 透明通道。</p>
+<h3>3.3 色彩空间</h3>
+<div class="doc-table"><table><thead><tr><th>色彩空间</th><th>用途</th><th>特点</th></tr></thead><tbody><tr><td>RGB</td><td>显示器、屏幕</td><td>加色模式，红绿蓝叠加</td></tr><tr><td>CMYK</td><td>印刷</td><td>减色模式，青品黄黑</td></tr><tr><td>YUV/YCbCr</td><td>视频压缩</td><td>亮度与色度分离，可利用人眼对亮度更敏感的特性压缩色度</td></tr></tbody></table></div>
+<h3>3.4 视频</h3>
+<ul><li>帧率：PAL 25fps、NTSC 30fps、电影 24fps；</li><li>扫描方式：逐行扫描（ progressive）画面稳定，隔行扫描（interlaced）带宽减半但可能有梳状伪影；</li><li>流媒体：边下载边播放，适合网络传输，需缓冲与码率自适应；</li><li>视频容量计算别忘了"每帧数据量"本身可能还要按图像公式算。</li></ul>
+<h2>四、音频</h2>
+<ul><li>数字化三步：采样（时间离散）→ 量化（幅度离散）→ 编码（二进制表示）。</li><li>量化位数越高，动态范围越大、信噪比越高；采样率越高，能还原的频率越高。</li><li><strong>MIDI</strong>：记录音高、力度、时长、音色等演奏指令，文件极小，可编辑、可换音源；但它记录的是"怎么演奏"，不是声音波形，<strong>不能记录人声与自然声</strong>。</li><li>波形音频：WAV（无损、体积大）、MP3（有损、心理声学模型）、AAC（效率高于 MP3）。</li></ul>
+<h2>五、压缩</h2>
+<h3>5.1 冗余类型</h3>
+<div class="doc-table"><table><thead><tr><th>冗余类型</th><th>含义</th><th>利用方式</th></tr></thead><tbody><tr><td>空间冗余</td><td>相邻像素相似</td><td>JPEG 的 DCT</td></tr><tr><td>时间冗余</td><td>相邻帧相似</td><td>MPEG 运动补偿</td></tr><tr><td>视觉冗余</td><td>人眼对某些细节不敏感</td><td>量化表、色度下采样</td></tr><tr><td>编码冗余</td><td>码长分配不合理</td><td>哈夫曼编码、算术编码</td></tr></tbody></table></div>
+<h3>5.2 有损与无损</h3>
+<div class="doc-table"><table><thead><tr><th>类型</th><th>方法</th><th>特点</th></tr></thead><tbody><tr><td>无损</td><td>哈夫曼、游程 RLE、LZW、算术编码</td><td>可完全还原，压缩比有限</td></tr><tr><td>有损</td><td>JPEG、MPEG、MP3</td><td>压缩比高，不可完全还原</td></tr></tbody></table></div>
+<p><strong>JPEG 流程</strong>：RGB → YCbCr → 8×8 分块 → DCT → 量化（有损的关键）→ 熵编码（哈夫曼/算术）。</p>
+<p><strong>MPEG 帧类型</strong>：</p>
+<div class="doc-table"><table><thead><tr><th>帧</th><th>编码方式</th><th>说明</th></tr></thead><tbody><tr><td>I 帧</td><td>帧内编码</td><td>独立解码，作为随机访问点</td></tr><tr><td>P 帧</td><td>前向预测</td><td>参考前面的 I/P 帧</td></tr><tr><td>B 帧</td><td>双向预测</td><td>参考前后帧，压缩率最高</td></tr></tbody></table></div>
+<p>压缩比 = 压缩前大小 / 压缩后大小。</p>
+<h2>六、专业英语</h2>
+<h3>6.1 题材分布</h3>
+<p>真题通常是一篇 200 词左右的短文，挖 5 个空，题材集中在：</p>
+<ol><li>软件工程（过程模型、需求、测试、维护）；</li><li>数据库（事务、索引、规范化、并发）；</li><li>网络（协议、路由、拥塞、安全）；</li><li>操作系统（进程、内存、调度、死锁）；</li><li>新技术（AI、云计算、大数据、区块链）。</li></ol>
+<h3>6.2 解题四步</h3>
+<ol><li>先通读全文抓主题（30 秒），不要被生词卡住；</li><li>看空格前后判断词性：冠词/形容词后填名词，助动词后填动词原形或过去分词，介词后填名词/动名词；</li><li>抓逻辑连接词：<code>however</code>（转折）、<code>therefore</code>（因果）、<code>in addition</code>（递进）、<code>whereas</code>（对比）、<code>for example</code>（举例）；</li><li>排除法 + 专业词优先：与主题强相关的术语正确率更高。</li></ol>
+<h3>6.3 高频词表</h3>
+<div class="doc-table"><table><thead><tr><th>题材</th><th>词汇</th></tr></thead><tbody><tr><td>软件工程</td><td>requirement, architecture, module, coupling, cohesion, iteration, deployment, maintenance, refactor, framework, baseline, verification, validation</td></tr><tr><td>数据库</td><td>schema, transaction, commit, rollback, index, normalization, redundancy, primary key, foreign key, query optimization, concurrency, isolation</td></tr><tr><td>网络</td><td>bandwidth, latency, protocol, packet, routing, congestion, throughput, encryption, handshake, topology, subnet, gateway</td></tr><tr><td>操作系统</td><td>process, thread, scheduling, virtual memory, deadlock, paging, kernel, semaphore, preemption, cache</td></tr><tr><td>新技术</td><td>machine learning, neural network, cloud computing, container, microservice, blockchain, edge computing, distributed ledger</td></tr></tbody></table></div>
+<h3>6.4 常见干扰项</h3>
+<ul><li>词性正确但语义相反（improve / impair、increase / reduce）；</li><li>与主题无关的同领域词（讲数据库却给 network）；</li><li>单复数或时态不符；</li><li>形近词（adapt / adopt、principal / principle）。</li></ul>
+<p><strong>练习建议</strong>：每篇做完后把 5 个空的句子抄下来，遮住答案复述；错题标注是"词不认识"还是"逻辑没读出来"，前者补词汇、后者练连接词。</p>
+<h2>七、速记表</h2>
+<pre><code>音频 = 采样率 × 位数 × 声道 × 时间 / 8
+图像 = 宽 × 高 × 色深 / 8
+视频 = 帧率 × 每帧大小 × 时间
+采样率 ≥ 2 × 最高频率
+8 位 256 色，24 位真彩色，32 位带 Alpha
+PAL 25fps、NTSC 30fps、电影 24fps
+MIDI 是演奏指令，不是波形
+JPEG 有损（DCT + 量化）；MPEG 利用时间冗余
+无损：哈夫曼、RLE、LZW；有损：JPEG、MPEG、MP3</code></pre>
+<h2>八、易错辨析</h2>
+<div class="doc-table"><table><thead><tr><th>错误认知</th><th>正确结论</th><th>原因</th></tr></thead><tbody><tr><td>采样频率等于最高频率即可</td><td>必须 ≥ 2 倍</td><td>奈奎斯特定理</td></tr><tr><td>图像容量不用除以 8</td><td>颜色深度是位，需除以 8 得字节</td><td>单位换算</td></tr><tr><td>MIDI 可以录人声</td><td>不能</td><td>只记录演奏指令，不含波形</td></tr><tr><td>GIF 支持真彩色</td><td>GIF 最多 256 色</td><td>8 位调色板</td></tr><tr><td>PNG 支持动画</td><td>标准 PNG 不支持动画</td><td>APNG 是扩展</td></tr><tr><td>JPEG 是无损压缩</td><td>有损</td><td>量化步骤丢弃高频信息</td></tr><tr><td>矢量图放大会模糊</td><td>矢量图缩放不失真</td><td>记录的是图形指令</td></tr><tr><td>压缩比 = 压缩后/压缩前</td><td>是压缩前/压缩后</td><td>比值大于 1 表示变小</td></tr></tbody></table></div>
+<h2>九、自检题</h2>
+<ol><li>采样频率 8kHz、8 位、单声道、30 秒的音频数据量是多少？</li><li>一幅 800×600 的 8 位灰度图未压缩占多少 KB？</li><li>为什么说 MIDI 不能用来录歌？</li><li>支持透明通道且无损的位图格式是？</li><li>专业英语中 <code>however</code> 提示什么逻辑关系？</li><li>24 位真彩色能表示多少种颜色？</li><li>JPEG 压缩中哪一步是有损的？</li><li>MPEG 的 I、P、B 帧分别如何编码？</li><li>视频容量如何计算？</li><li>RGB 与 CMYK 分别用于什么场景？</li></ol>
+<blockquote><p>答案与解析：<br />1) <code>8000×8×1×30/8 = 240,000 B ≈ 234 KB</code>。<br />2) <code>800×600×8/8 = 480,000 B ≈ 469 KB</code>。<br />3) MIDI 记录演奏指令（音高、力度、时长），不含波形采样，无法记录人声。<br />4) PNG。<br />5) 转折。<br />6) <code>2<sup>24</sup> ≈ 1677 万</code>种。<br />7) 量化（DCT 本身可逆，量化丢弃高频细节）。<br />8) I 帧帧内编码、P 帧前向预测、B 帧双向预测。<br />9) 帧率 × 每帧数据量 × 时间；每帧数据量按图像公式计算。<br />10) RGB 用于显示器等发光设备，CMYK 用于印刷。</p></blockquote>
 </main>
 <footer class="doc-footer">本文档由同名 Markdown 生成（UTF-8 编码）；内容修改请改 .md 后重新运行 <code>node tools/build-docs.js</code>。</footer>
 </body>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="color-scheme" content="light dark" />
+<title>06 · 开发任务清单 · 软件设计师</title>
+<link rel="stylesheet" href="../assets/css/main.css" />
+<link rel="stylesheet" href="../assets/css/doc.css" />
+</head>
+<body class="doc-body">
+<header class="doc-topbar">
+  <a class="doc-back" href="../index.html">← 返回工作台</a>
+  <span class="doc-crumb">docs</span>
+</header>
+<main class="doc">
+<h1>06 · 开发任务清单</h1>
+<blockquote><p>本清单只记录<strong>项目开发与内容建设</strong>任务，不含个人备考打卡（学习任务见 <code>01-学习总计划</code>）。<br />状态取值：<code>已完成</code> / <code>进行中</code> / <code>待开始</code> / <code>阻塞</code>。新增任务请写入对应优先级表，完成后移到「已完成」并补日期。<br />最近更新：2026-11-03</p></blockquote>
+<h2>一、总览</h2>
+<div class="doc-table"><table><thead><tr><th>状态</th><th>数量</th><th>构成</th></tr></thead><tbody><tr><td>已完成</td><td>25 项</td><td>平台 8、内容 11、质量与工具 5、文档同步 1</td></tr><tr><td>待完成</td><td>14 项</td><td>P0 3、P1 4、P2 5、P3 2</td></tr></tbody></table></div>
+<p>当前基线数据（可用 <code>node tools/check-data.js</code> 与 <code>node tools/check-coverage.js</code> 复现）：</p>
+<ul><li>13 个知识模块、57 个知识要点；上午题 160 道；下午案例 15 道</li><li>有题要点 52/57（91.2%）；8 套模考两两平均重合 49.6%</li><li>备考文档 16 篇（11 篇知识精讲 + 5 篇总纲/专项/模板），不含本清单</li><li>学习计划 4 阶段 29 周 118 项任务</li></ul>
+<h2>二、已完成</h2>
+<h3>2.1 平台功能</h3>
+<div class="doc-table"><table><thead><tr><th>任务</th><th>简要说明</th><th>状态</th><th>完成时间</th></tr></thead><tbody><tr><td>单页应用骨架</td><td><code>index.html</code> + hash 路由 + 深浅色主题，零依赖、双击即用</td><td>已完成</td><td>2026-11-02</td></tr><tr><td>本地数据持久化</td><td><code>localStorage</code>（键前缀 <code>rk_sd_</code>）保存打卡、答题、错题与成绩</td><td>已完成</td><td>2026-11-02</td></tr><tr><td>学习计划模块</td><td>四阶段 29 周、118 项任务，支持勾选打卡、进度统计、当前周高亮</td><td>已完成</td><td>2026-11-02</td></tr><tr><td>知识模块页面</td><td>模块要点、学习路径、高频易错点，附精讲文档入口</td><td>已完成</td><td>2026-11-02</td></tr><tr><td>刷题练习</td><td>按模块、随机组卷、错题重做三种模式，答后即时解析</td><td>已完成</td><td>2026-11-02</td></tr><tr><td>错题本</td><td>自动收录、错因分类、一句话结论、已掌握标记、CSV 导出（UTF-8 BOM）</td><td>已完成</td><td>2026-11-02</td></tr><tr><td>考试与成绩分析</td><td>3 套阶段测评、8 套全真模考、3 套下午卷；模块得分表、达标判定、趋势图</td><td>已完成</td><td>2026-11-02</td></tr><tr><td>数据备份</td><td>「成绩分析 → 导出备份」保存 JSON，可导入恢复</td><td>已完成</td><td>2026-11-02</td></tr></tbody></table></div>
+<h3>2.2 内容建设</h3>
+<div class="doc-table"><table><thead><tr><th>任务</th><th>简要说明</th><th>状态</th><th>完成时间</th></tr></thead><tbody><tr><td>考试情报与备考策略</td><td><code>docs/00</code>：考试结构、分值分布、目标分数、失败原因</td><td>已完成</td><td>2026-11-02</td></tr><tr><td>学习总计划</td><td><code>docs/01</code>：四阶段周表、周复盘模板、阶段门槛</td><td>已完成</td><td>2026-11-02</td></tr><tr><td>上午题库</td><td>13 模块共 160 题，含解析、难度与标签</td><td>已完成（持续扩充）</td><td>2026-11-03</td></tr><tr><td>下午案例题库</td><td>15 道，覆盖 DFD / UML / 数据库 / 算法 / Java / C++</td><td>已完成（持续扩充）</td><td>2026-11-02</td></tr><tr><td>下午题专项攻略</td><td><code>docs/03</code>：五类题型答题模板与踩分点</td><td>已完成</td><td>2026-11-02</td></tr><tr><td>答题技巧与错题模板</td><td><code>docs/04</code> 时间分配与避坑清单；<code>docs/05</code> 错题归档模板</td><td>已完成</td><td>2026-11-02</td></tr></tbody></table></div>
+<h3>2.3 质量与工具</h3>
+<div class="doc-table"><table><thead><tr><th>任务</th><th>简要说明</th><th>状态</th><th>完成时间</th></tr></thead><tbody><tr><td>文档构建脚本</td><td><code>tools/build-docs.js</code>：Markdown → UTF-8 HTML，自动生成目录与表格</td><td>已完成</td><td>2026-11-02</td></tr><tr><td>数据自检脚本</td><td><code>tools/check-data.js</code>：id 重复、答案越界、组卷题数、计划完整性</td><td>已完成</td><td>2026-11-02</td></tr><tr><td>渲染自检脚本</td><td><code>tools/check-render.js</code>：在模拟 DOM 中执行各视图渲染，捕获运行时报错</td><td>已完成</td><td>2026-11-02</td></tr><tr><td>覆盖校验脚本</td><td><code>tools/check-coverage.js</code>：要点题量、无题要点、未归类 topic、模考重合率</td><td>已完成</td><td>2026-11-03</td></tr></tbody></table></div>
+<h3>2.4 本次迭代（2026-11-02 ~ 11-03）</h3>
+<div class="doc-table"><table><thead><tr><th>任务</th><th>简要说明</th><th>状态</th><th>完成时间</th></tr></thead><tbody><tr><td>新增「新技术应用」模块</td><td>第 13 模块，权重 2；软件工程 13→12、数据结构 9→8，上午卷仍 75 题</td><td>已完成</td><td>2026-11-02</td></tr><tr><td>同步组卷与计划</td><td><code>data-exams.js</code> 模考与阶段三规则、<code>data-plan.js</code> W24 任务与阶段描述</td><td>已完成</td><td>2026-11-02</td></tr><tr><td>11 篇知识精讲重写</td><td>统一「考点地图 → 概念讲解 → 公式与例题 → 速记表 → 易错辨析 → 自检题」六段式</td><td>已完成</td><td>2026-11-03</td></tr><tr><td>补齐文档缺口章节</td><td>总线/I-O、寻址方式、银行家算法、B/B+ 树、变换/事务分析、备份恢复、传输介质、访问控制、视频、新技术</td><td>已完成</td><td>2026-11-03</td></tr><tr><td>新技术题库</td><td><code>q-12-tech.js</code> 12 题，覆盖云计算、大数据、AI、物联网、区块链、5G</td><td>已完成</td><td>2026-11-03</td></tr><tr><td>修正已知错题</td><td><code>DS-004</code> 哈夫曼 WPL 由 244 改为 173；<code>docs/08</code> CIDR 聚合结论改为可聚合为 /23</td><td>已完成</td><td>2026-11-03</td></tr><tr><td>文档与入口同步</td><td>README、<code>views-docs.js</code>、<code>index.html</code>、<code>docs/00</code>、<code>docs/01</code> 更新到 13 模块 / 11 篇 / 160 题</td><td>已完成</td><td>2026-11-03</td></tr></tbody></table></div>
+<h2>三、待完成</h2>
+<p>优先级定义：<strong>P0</strong> = 影响「全覆盖考核」结论，必须先做；<strong>P1</strong> = 影响使用效果，紧随其后；<strong>P2</strong> = 优化项；<strong>P3</strong> = 可选。</p>
+<h3>3.1 P0（下一批必须完成）</h3>
+<div class="doc-table"><table><thead><tr><th>任务</th><th>简要说明</th><th>状态</th><th>验收标准</th><th>依赖</th></tr></thead><tbody><tr><td>上午题库扩充到 375+ 题</td><td>当前 160 题。按「模块权重 × 5」配置：组成 35、OS 30、数据结构 40、程序语言 25、软件工程 60、面向对象 45、数据库 35、网络 30、信息安全 15、法规 15、多媒体 10、英语 25、新技术 12，合计 377</td><td>待开始</td><td><code>check-coverage.js</code> 各模块达到权重×5；每要点 ≥1 题、高频要点 ≥3 题</td><td>无</td></tr><tr><td>补齐 5 个无题要点</td><td>数据库备份与恢复、网络传输介质与编码、信息安全体系与管理、知识产权侵权与责任、多媒体视频</td><td>待开始</td><td>5 个要点在覆盖报告中不再出现「无题」</td><td>无</td></tr><tr><td>题库全量复核</td><td>逐题核对计算过程与解析；已知 1 处 WPL 错误、1 处 CIDR 结论错误已修，扩充时按同标准复核</td><td>进行中</td><td>计算题抽样 100% 正确；解析与答案一致</td><td>与扩题同步</td></tr></tbody></table></div>
+<h3>3.2 P1（紧随其后）</h3>
+<div class="doc-table"><table><thead><tr><th>任务</th><th>简要说明</th><th>状态</th><th>验收标准</th><th>依赖</th></tr></thead><tbody><tr><td>专业英语扩到 5 篇 25 题</td><td>现为 2 篇短文 8 题，按真题「1 篇 5 空」形式，覆盖软件工程/数据库/网络/OS/AI+安全</td><td>待开始</td><td>5 篇 × 5 空，题材不重复</td><td>无</td></tr><tr><td>下午案例扩到 24 道</td><td>现 15 道，补分治、贪心、回溯、树/字符串各 1 道；C++ 补到 3 道，支撑 4 套下午卷</td><td>待开始</td><td>6 类题型各 4 道（Java/C++ 合计 8 道）</td><td>无</td></tr><tr><td>模考重合率降到 ≤20%</td><td>当前 8 套卷两两平均重合 49.6%，扩题后重新模拟</td><td>待开始</td><td><code>check-coverage.js</code> 输出 ≤20%</td><td>题库扩充</td></tr><tr><td>启用 strict 校验</td><td><code>check-coverage.js --strict</code> 接入日常流程，不达标退出码 1</td><td>待开始</td><td><code>node tools/check-coverage.js --strict</code> 通过</td><td>上述两项</td></tr></tbody></table></div>
+<h3>3.3 P2（优化项）</h3>
+<div class="doc-table"><table><thead><tr><th>任务</th><th>简要说明</th><th>状态</th><th>验收标准</th><th>依赖</th></tr></thead><tbody><tr><td>题型与难度配比</td><td>概念/记忆类当前占 74%，目标 ≤55%；易/中/难目标 30%/50%/20%</td><td>待开始</td><td>统计标签与难度分布达标</td><td>题库扩充</td></tr><tr><td>阶段测评分值复核</td><td>题库变化后复核 3 套测评的题量、时长与达标线（40/40/45 题）</td><td>待开始</td><td>组卷题量与实际一致，覆盖率合理</td><td>题库扩充</td></tr><tr><td>文档自检题与题库互链</td><td>文档自检题标注对应题库题号，看完可直接练</td><td>待开始</td><td>11 篇文档自检题均有题号引用</td><td>题库扩充</td></tr><tr><td>题目级知识点映射</td><td>当前用 <code>POINT_TOPICS</code> 按 topic 映射，细化为题目级 <code>points</code> 字段</td><td>待开始</td><td>每题带要点 id，覆盖统计不再依赖 topic 名称</td><td>无</td></tr><tr><td>真题接入与来源标注</td><td>W27/W28 使用近年真题，题库存放时标注年份与来源</td><td>待开始</td><td>至少 2 套真题入库，来源可查</td><td>版权与资料来源确认</td></tr></tbody></table></div>
+<h3>3.4 P3（可选）</h3>
+<div class="doc-table"><table><thead><tr><th>任务</th><th>简要说明</th><th>状态</th><th>验收标准</th><th>依赖</th></tr></thead><tbody><tr><td>打印与移动端样式</td><td>知识精要打印排版、窄屏适配</td><td>待开始</td><td>A4 打印无截断，手机可读</td><td>无</td></tr><tr><td>学习数据图表增强</td><td>模块雷达图、周学习时长统计</td><td>待开始</td><td>至少新增 1 个可视化</td><td>无</td></tr></tbody></table></div>
+<h2>四、建议推进顺序</h2>
+<ol><li><strong>第一批（P0）</strong>：先补 5 个无题要点 → 再按模块权重扩题到 385 → 同步逐题复核。完成后跑 <code>check-coverage.js</code> 验收。</li><li><strong>第二批（P1）</strong>：英语 5 篇 25 题 → 下午案例 24 道 → 重新模拟模考重合率 → 启用 <code>--strict</code>。</li><li><strong>第三批（P2）</strong>：调题型/难度配比 → 复核阶段测评 → 文档与题库互链 → 题目级知识点映射。</li><li><strong>第四批（P3/真题）</strong>：打印与移动端、图表增强；真题在 W27/W28 前接入。</li></ol>
+<h2>五、维护约定</h2>
+<ul><li>新增任务：在「待完成」对应优先级表追加一行，写清验收标准与依赖；不要只写「优化题库」这类无法验收的描述。</li><li>完成任务：从待完成表删除，移入「已完成」并补完成日期；如产生口径变化，同步更新 <code>README.md</code> 与 <code>docs/00</code>。</li><li>数据基线：每次改题库或模块后运行 <code>node tools/check-data.js</code> 与 <code>node tools/check-coverage.js</code>，把最新数字更新到本文「总览」。</li><li>本文与代码冲突时，以脚本输出为准，并回头修正本文。</li></ul>
+</main>
+<footer class="doc-footer">本文档由同名 Markdown 生成（UTF-8 编码）；内容修改请改 .md 后重新运行 <code>node tools/build-docs.js</code>。</footer>
+</body>
+</html>
