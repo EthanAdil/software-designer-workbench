@@ -33,7 +33,7 @@ python -m http.server 8731
 │   └── js/
 │       ├── core.js                 存储、路由、组卷、统计、图表
 │       ├── data-syllabus.js        考试情报 + 13 模块要点/路径/易错点
-│       ├── data-plan.js            四阶段 29 周计划（118 项任务）
+│       ├── data-plan.js            四阶段 29 周计划（131 项任务）
 │       ├── data-exams.js           3 套阶段测评 + 8 套模考 + 3 套下午卷
 │       ├── bank/                   题库（11 个上午题文件 + 1 个案例文件）
 │       ├── views-*.js              各页面视图
