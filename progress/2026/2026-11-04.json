@@ -1,0 +1,273 @@
+{
+  "exportedAt": "2026-11-04T05:49:07.371Z",
+  "answers": {
+    "CS-003": {
+      "right": 3,
+      "wrong": 0,
+      "last": true,
+      "ts": 1793770745944
+    },
+    "CS-004": {
+      "right": 3,
+      "wrong": 0,
+      "last": true,
+      "ts": 1793770437573
+    },
+    "CS-005": {
+      "right": 3,
+      "wrong": 0,
+      "last": true,
+      "ts": 1793769841365
+    },
+    "CS-008": {
+      "right": 3,
+      "wrong": 0,
+      "last": true,
+      "ts": 1793769728588
+    },
+    "CS-007": {
+      "right": 3,
+      "wrong": 0,
+      "last": true,
+      "ts": 1793769898417
+    },
+    "CS-012": {
+      "right": 3,
+      "wrong": 0,
+      "last": true,
+      "ts": 1793770034637
+    },
+    "CS-002": {
+      "right": 2,
+      "wrong": 1,
+      "last": true,
+      "ts": 1793770393312
+    },
+    "CS-015": {
+      "right": 3,
+      "wrong": 0,
+      "last": true,
+      "ts": 1793770590335
+    },
+    "CS-006": {
+      "right": 3,
+      "wrong": 0,
+      "last": true,
+      "ts": 1793769865087
+    },
+    "CS-001": {
+      "right": 3,
+      "wrong": 0,
+      "last": true,
+      "ts": 1793770235787
+    },
+    "CS-011": {
+      "right": 2,
+      "wrong": 1,
+      "last": true,
+      "ts": 1793769954159
+    },
+    "CS-009": {
+      "right": 3,
+      "wrong": 0,
+      "last": true,
+      "ts": 1793770425869
+    },
+    "CS-010": {
+      "right": 3,
+      "wrong": 0,
+      "last": true,
+      "ts": 1793770739591
+    },
+    "CS-013": {
+      "right": 3,
+      "wrong": 0,
+      "last": true,
+      "ts": 1793770596239
+    },
+    "CS-014": {
+      "right": 3,
+      "wrong": 0,
+      "last": true,
+      "ts": 1793770223838
+    },
+    "CS-028": {
+      "right": 1,
+      "wrong": 0,
+      "last": true,
+      "ts": 1793769655175
+    },
+    "CS-021": {
+      "right": 1,
+      "wrong": 0,
+      "last": true,
+      "ts": 1793769715957
+    },
+    "CS-027": {
+      "right": 1,
+      "wrong": 0,
+      "last": true,
+      "ts": 1793769793827
+    },
+    "CS-032": {
+      "right": 0,
+      "wrong": 1,
+      "last": false,
+      "ts": 1793769818321
+    },
+    "CS-033": {
+      "right": 1,
+      "wrong": 0,
+      "last": true,
+      "ts": 1793769882835
+    },
+    "CS-026": {
+      "right": 1,
+      "wrong": 0,
+      "last": true,
+      "ts": 1793769977072
+    },
+    "CS-018": {
+      "right": 1,
+      "wrong": 0,
+      "last": true,
+      "ts": 1793770214782
+    },
+    "CS-030": {
+      "right": 1,
+      "wrong": 0,
+      "last": true,
+      "ts": 1793770272081
+    },
+    "CS-016": {
+      "right": 1,
+      "wrong": 0,
+      "last": true,
+      "ts": 1793770308873
+    },
+    "CS-022": {
+      "right": 0,
+      "wrong": 1,
+      "last": false,
+      "ts": 1793770324599
+    },
+    "CS-029": {
+      "right": 1,
+      "wrong": 0,
+      "last": true,
+      "ts": 1793770387302
+    },
+    "CS-031": {
+      "right": 1,
+      "wrong": 0,
+      "last": true,
+      "ts": 1793770414153
+    },
+    "CS-020": {
+      "right": 1,
+      "wrong": 0,
+      "last": true,
+      "ts": 1793770448789
+    },
+    "CS-017": {
+      "right": 1,
+      "wrong": 0,
+      "last": true,
+      "ts": 1793770503130
+    },
+    "CS-023": {
+      "right": 1,
+      "wrong": 0,
+      "last": true,
+      "ts": 1793770534041
+    },
+    "CS-035": {
+      "right": 1,
+      "wrong": 0,
+      "last": true,
+      "ts": 1793770585386
+    },
+    "CS-019": {
+      "right": 1,
+      "wrong": 0,
+      "last": true,
+      "ts": 1793770635015
+    },
+    "CS-025": {
+      "right": 1,
+      "wrong": 0,
+      "last": true,
+      "ts": 1793770663773
+    },
+    "CS-024": {
+      "right": 1,
+      "wrong": 0,
+      "last": true,
+      "ts": 1793770754457
+    },
+    "CS-034": {
+      "right": 1,
+      "wrong": 0,
+      "last": true,
+      "ts": 1793770869954
+    }
+  },
+  "wrong": {
+    "CS-002": {
+      "count": 1,
+      "choice": 3,
+      "ts": 1793597059815,
+      "resolved": true,
+      "cause": "知识盲区",
+      "conclusion": "牢记补码特殊数 10000000 对应-128"
+    },
+    "CS-011": {
+      "count": 1,
+      "choice": 3,
+      "ts": 1793597323461,
+      "resolved": true,
+      "cause": "计算失误",
+      "conclusion": "注意未命中路径包含查 Cache 的时间"
+    },
+    "CS-032": {
+      "count": 1,
+      "choice": 2,
+      "order": [
+        1,
+        3,
+        0,
+        2
+      ],
+      "ts": 1793769818321,
+      "resolved": false,
+      "cause": "计算失误",
+      "conclusion": "注意计算小数点精度"
+    },
+    "CS-022": {
+      "count": 1,
+      "choice": 3,
+      "order": [
+        2,
+        0,
+        1,
+        3
+      ],
+      "ts": 1793770324599,
+      "resolved": false,
+      "cause": "知识盲区",
+      "conclusion": "理清概念，排除误导项"
+    }
+  },
+  "exams": [],
+  "tasks": {
+    "w1-t3": true,
+    "w1-t1": true,
+    "w1-t4": true,
+    "w1-t2": true,
+    "w2-t2": true,
+    "w2-t1": true,
+    "w2-t3": true,
+    "w3-t1": true,
+    "w3-t2": true
+  }
+}
