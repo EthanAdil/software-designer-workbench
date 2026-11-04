@@ -48,6 +48,7 @@ python -m http.server 8731
 │   ├── 04-答题技巧与避坑清单.md
 │   ├── 05-个人错题本模板.md        错题归档模板（表格 + 案例卡）
 │   └── 06-开发任务清单.md          已完成/待完成任务、优先级与验收标准
+├── progress/                       学习进度归档（按年分目录，JSON 快照，见其 README）
 └── tools/
     ├── build-docs.js               md → html（UTF-8）生成脚本
     ├── check-data.js               数据自检脚本
@@ -99,6 +100,7 @@ python -m http.server 8731
 所有进度存在浏览器 `localStorage`（键前缀 `rk_sd_`），不上传、不联网。
 
 - 换浏览器或清缓存会丢失，**建议每周在「成绩分析 → 导出备份」保存一次 JSON**。
+- 导出的 JSON 建议按 `progress/YYYY/YYYY-MM-DD.json` 归档并提交，字段含义、采集节奏与恢复方式见 `progress/README.md`。
 - 无痕模式下数据不落盘。
 
 ---
