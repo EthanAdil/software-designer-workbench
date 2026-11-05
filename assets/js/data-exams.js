@@ -1,5 +1,5 @@
 /* ==========================================================================
- * data-exams.js —— 阶段测评卷（3 套）、全真模考卷（8 套）、下午案例卷（3 套）
+ * data-exams.js —— 阶段测评卷（3 套）、全真模考卷（8 套）、下午案例卷（4 套）
  * rules: 按模块抽题；count 为期望题量，题库不足时自动取全部
  * ========================================================================== */
 window.RK_EXAMS = {
@@ -77,14 +77,14 @@ window.RK_EXAMS = {
     { id: 'mock-08', kind: 'mock', name: '全真模考 八', desc: '考前最后一套完整模考，目标是稳定在 60 分以上。', difficulty: '冲刺' }
   ],
 
-  /* ---------------- 下午案例卷 ---------------- */
+  /* ---------------- 下午案例卷（4 套，代码题 Java / C++ 交替） ---------------- */
   cases: [
     {
       id: 'case-01',
       kind: 'case',
       paper: 'afternoon',
       name: '下午卷 全真模考 A',
-      desc: 'DFD + UML + 数据库设计 + 算法设计 + Java/C++ 各一道，共 5 题 75 分，交卷后自评。',
+      desc: 'DFD + UML + 数据库设计 + 算法设计 + Java 代码题各一道，共 5 题 75 分，交卷后自评。',
       duration: 120,
       passScore: 45,
       targetScore: 55,
@@ -93,7 +93,7 @@ window.RK_EXAMS = {
         { type: 'uml', count: 1 },
         { type: 'db', count: 1 },
         { type: 'algo', count: 1 },
-        { type: 'code', count: 1 }
+        { type: 'java', count: 1 }
       ]
     },
     {
@@ -101,7 +101,7 @@ window.RK_EXAMS = {
       kind: 'case',
       paper: 'afternoon',
       name: '下午卷 全真模考 B',
-      desc: '第二套完整下午卷，题目与 A 卷不重复，用于检验答题模板是否真的掌握。',
+      desc: '第二套完整下午卷，题目与 A 卷不重复，代码题为 C++，用于检验答题模板是否真的掌握。',
       duration: 120,
       passScore: 45,
       targetScore: 58,
@@ -110,7 +110,7 @@ window.RK_EXAMS = {
         { type: 'uml', count: 1 },
         { type: 'db', count: 1 },
         { type: 'algo', count: 1 },
-        { type: 'code', count: 1 }
+        { type: 'cpp', count: 1 }
       ]
     },
     {
@@ -127,7 +127,24 @@ window.RK_EXAMS = {
         { type: 'uml', count: 1 },
         { type: 'db', count: 1 },
         { type: 'algo', count: 1 },
-        { type: 'code', count: 1 }
+        { type: 'java', count: 1 }
+      ]
+    },
+    {
+      id: 'case-04',
+      kind: 'case',
+      paper: 'afternoon',
+      name: '下午卷 全真模考 C',
+      desc: '第四套完整下午卷，代码题为 C++，与 A/B 卷题目不重复，用于考前完整计时演练。',
+      duration: 120,
+      passScore: 45,
+      targetScore: 60,
+      rules: [
+        { type: 'dfd', count: 1 },
+        { type: 'uml', count: 1 },
+        { type: 'db', count: 1 },
+        { type: 'algo', count: 1 },
+        { type: 'cpp', count: 1 }
       ]
     }
   ]

@@ -169,6 +169,15 @@ window.RK = window.RK || {};
   };
   RK.KEYS = KEYS;
 
+  /* 按本次展示顺序取出所选选项文本；缺少 order 时按题库原顺序兜底 */
+  RK.pickText = function (qid, choice, order) {
+    var q = RK.qIndex[qid];
+    if (!q || !q.options || choice === undefined || choice === null || choice < 0) return null;
+    var idx = (order && order.length && order[choice] !== undefined) ? order[choice] : choice;
+    var text = q.options[idx];
+    return text === undefined ? null : text;
+  };
+
   RK.record = {
     /* 单题作答累计：{ right, wrong, last, ts }；order 为本次展示的选项顺序 */
     answer: function (qid, isRight, choice, order) {
@@ -187,6 +196,8 @@ window.RK = window.RK || {};
         w.choice = (choice === undefined ? null : choice);
         /* 记录本次选项顺序，错题本按同一顺序回放，避免重排后“你选”标错位置 */
         w.order = (order && order.length ? order.slice() : null);
+        /* 另存所选选项文本：选项重排后旧 order 会失效，文本可让“我的答案”继续正确展示 */
+        w.choiceText = RK.pickText(qid, choice, order);
         w.ts = Date.now();
         w.resolved = false;
         wrong[qid] = w;

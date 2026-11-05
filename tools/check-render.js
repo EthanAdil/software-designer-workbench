@@ -103,7 +103,7 @@ check('exam', {}, 600);
 check('review', {}, 300);
 check('stats', {}, 500);
 
-['stage-1', 'mock-01', 'case-01'].forEach(id => check('exam', { p: id }, 500));
+['stage-1', 'mock-01', 'case-01', 'case-02', 'case-03', 'case-04'].forEach(id => check('exam', { p: id }, 500));
 
 /* 有错题时渲染一次，覆盖错因下拉与结论输入 */
 RK.record.answer('CS-001', false, 3, [2, 0, 3, 1]);

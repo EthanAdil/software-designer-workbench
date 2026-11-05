@@ -23,20 +23,31 @@ progress/
 | --- | --- |
 | `exportedAt` | 导出时间，ISO 8601（UTC，比北京时间早 8 小时） |
 | `answers` | 每题累计作答：`right` / `wrong` / `last`（最近一次是否答对）/ `ts` |
-| `wrong` | 错题记录：`count`、`choice`（当时选项下标）、`order`（当时选项顺序）、`resolved`、`cause`、`conclusion` |
+| `wrong` | 错题记录：`count`、`choice`（当时选项下标）、`choiceText`（所选选项文本）、`order`（当时选项顺序）、`resolved`、`cause`、`conclusion` |
 | `exams` | 阶段测评与模考成绩 |
 | `tasks` | 计划打卡，任务 id → `true` |
 
 ## 三、采集与归档
 
 1. 打开 `index.html` → 「成绩分析」→ 导出备份（JSON）；
-2. 把下载得到的 `ruankao-sd-backup-YYYY-MM-DD.json` 重命名为 `YYYY-MM-DD.json`，放进当年目录；
-3. 提交：
+2. 运行归档脚本，自动按导出日期放入当年目录：
 
 ```bash
-git add progress
-git commit -m "chore(progress): 归档 2026-11-04 学习进度"
+node tools/archive-progress.js ruankao-sd-backup-2026-11-05.json
+node tools/archive-progress.js backup.json stage1    # → 2026-11-05-stage1.json
+node tools/archive-progress.js backup.json --dry-run # 只预览路径与命令，不写文件
 ```
+
+3. 按脚本输出的两条命令提交（脚本不自动提交）：
+
+```bash
+git add "progress/2026/2026-11-05.json"
+git commit -m "chore(progress): 归档 2026-11-05 学习进度"
+```
+
+- 日期取 `exportedAt` 的本地日期；缺失时取文件名里的 `YYYY-MM-DD`。
+- 目标文件已存在时脚本直接报错退出，不覆盖（只增不改）。
+- 归档前校验 `answers` / `wrong` / `exams` / `tasks` 四个字段，坏文件不会落盘。
 
 **节奏**：每周日复盘时导出一次；阶段测评、模考当天各额外导出一次并加后缀。
 
@@ -49,7 +60,9 @@ git commit -m "chore(progress): 归档 2026-11-04 学习进度"
 
 ## 五、恢复说明
 
-当前版本只有导出入口，**界面没有导入按钮**。JSON 与浏览器 `localStorage` 同构（键前缀 `rk_sd_`），换设备或清缓存后可在开发者工具控制台手工回填：
+换设备或清缓存后，打开 `index.html` → 「成绩分析」→ 点「导入备份（JSON）」选择快照文件，确认覆盖后即可恢复打卡、错题本与成绩记录。导入前会校验四个字段，并提示将覆盖本机现有数据。
+
+JSON 与浏览器 `localStorage` 同构（键前缀 `rk_sd_`），若界面不可用，仍可在开发者工具控制台手工回填：
 
 ```js
 const d = /* 粘贴 JSON 内容 */;

@@ -1,5 +1,5 @@
 /* ==========================================================================
- * views-docs.js —— 备考文档：docs/ 下 16 篇 HTML 的汇总入口
+ * views-docs.js —— 备考文档：docs/ 下 17 篇 HTML 的汇总入口
  * ========================================================================== */
 (function (RK) {
   var U = RK.U;
@@ -112,6 +112,18 @@
           path: 'docs/05-个人错题本模板.html'
         }
       ]
+    },
+    {
+      name: '真题来源',
+      hint: 'W27 用，按链接下载',
+      layout: 'list',
+      items: [
+        {
+          title: '07 · 历年真题来源与考点索引',
+          desc: '2 套近年真题的年份、来源链接、许可说明与考点对照',
+          path: 'docs/07-历年真题来源与考点索引.html'
+        }
+      ]
     }
   ];
 
@@ -123,7 +135,7 @@
 
   RK.router.add('docs', {
     title: '备考文档',
-    sub: 'docs 目录下 15 篇文档的 HTML 版本，按主题分组，点击在新标签打开',
+    sub: 'docs 目录下 17 篇文档的 HTML 版本，按主题分组，点击在新标签打开',
     render: function () {
       var total = 0;
       GROUPS.forEach(function (g) { total += g.items.length; });

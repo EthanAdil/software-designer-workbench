@@ -16,7 +16,12 @@
     return '"' + String(v === undefined || v === null ? '' : v).replace(/"/g, '""') + '"';
   }
 
-  function optionText(q, order, idx) {
+  function optionText(q, order, idx, text) {
+    /* 有作答时保存的文本就优先用它，选项重排后仍能显示当时选的内容 */
+    if (text !== undefined && text !== null && text !== '') {
+      var letter = (idx === undefined || idx === null || idx < 0) ? '' : LETTERS[idx] + '. ';
+      return letter + text;
+    }
     if (idx === undefined || idx === null || idx < 0) return '';
     var opt = q.options[order ? order[idx] : idx];
     if (opt === undefined) return '';
@@ -94,7 +99,7 @@
       rows.push([
         q.id,
         q.stem,
-        optionText(q, order, info.choice),
+        optionText(q, order, info.choice, info.choiceText),
         optionText(q, order, answerIdx),
         info.cause || '未归因',
         info.conclusion || '未填写',
@@ -159,6 +164,59 @@
     RK.toast('模板已加载');
   }
 
+  /* 备份导入：结构校验通过后弹窗确认，确认后才覆盖 localStorage */
+  function isPlainObject(v) {
+    return !!v && typeof v === 'object' && !Array.isArray(v);
+  }
+
+  function importBackup(text) {
+    var data;
+    try { data = JSON.parse(text); } catch (e) {
+      RK.toast('导入失败：不是合法的 JSON 文件');
+      return;
+    }
+    if (!isPlainObject(data)) {
+      RK.toast('导入失败：备份根节点应为对象');
+      return;
+    }
+    if (!isPlainObject(data.answers) || !isPlainObject(data.wrong) ||
+        !Array.isArray(data.exams) || !isPlainObject(data.tasks)) {
+      RK.toast('导入失败：缺少 answers / wrong / exams / tasks 字段');
+      return;
+    }
+
+    var counts = {
+      answers: Object.keys(data.answers).length,
+      wrong: Object.keys(data.wrong).length,
+      exams: data.exams.length,
+      tasks: Object.keys(data.tasks).length
+    };
+    var when = '';
+    if (data.exportedAt) {
+      var ts = Date.parse(data.exportedAt);
+      if (!isNaN(ts)) when = U.fmtDateTime(ts);
+    }
+    var html = '<p class="muted">将用备份覆盖本机现有数据，覆盖后无法撤销。</p>' +
+      '<p>作答 ' + counts.answers + ' 题 · 错题 ' + counts.wrong + ' 条 · 成绩 ' +
+      counts.exams + ' 次 · 打卡 ' + counts.tasks + ' 项</p>' +
+      (when ? '<p class="dim" style="font-size:12px">备份导出时间：' + U.esc(when) + '</p>' : '');
+
+    RK.modal({
+      title: '确认导入备份？',
+      html: html,
+      okText: '覆盖导入',
+      onOk: function () {
+        RK.store.set('answers', data.answers);
+        RK.store.set('wrong', data.wrong);
+        RK.store.set('exams', data.exams);
+        RK.store.set('tasks', data.tasks);
+        RK.toast('已导入备份');
+        RK.router.render();
+        return true;
+      }
+    });
+  }
+
   /* ============================ 错题本 ============================ */
   RK.router.add('review', {
     title: '错题本',
@@ -221,6 +279,11 @@
           var opts = order ? order.map(function (i) { return q.options[i]; }) : q.options;
           var answerIdx = order ? order.indexOf(q.answer) : q.answer;
           var pickedIdx = (info.choice === undefined || info.choice === null) ? -1 : info.choice;
+          /* 有文本就按文本定位：旧 order 失效时仍能标在当时所选的那一项上 */
+          if (info.choiceText) {
+            var found = opts.indexOf(info.choiceText);
+            if (found >= 0) pickedIdx = found;
+          }
           h += '<details style="border-bottom:1px solid var(--border);padding:8px 0">' +
             '<summary style="cursor:pointer;font-size:13.5px">' + U.esc(q.stem.slice(0, 58)) + '… ' +
             '<span class="badge badge-bad">错 ' + info.count + ' 次</span>' +
@@ -365,9 +428,11 @@
         '<span class="hint">数据仅存于本机浏览器，换设备需手动备份</span></div>';
       h += '<div class="row-wrap">' +
         '<button class="btn btn-ghost" data-act="export">导出备份（JSON）</button>' +
+        '<button class="btn btn-ghost" data-act="import">导入备份（JSON）</button>' +
         '<button class="btn btn-ghost" data-act="clear">清空全部记录</button>' +
+        '<input type="file" id="import-file" accept=".json,application/json" hidden />' +
         '</div>';
-      h += '<div class="dim mt-8" style="font-size:12px">清空后计划打卡、错题本与成绩记录都会丢失，操作不可撤销。</div>';
+      h += '<div class="dim mt-8" style="font-size:12px">导入会用备份覆盖本机现有数据，覆盖前先确认；清空后计划打卡、错题本与成绩记录都会丢失，操作不可撤销。</div>';
       h += '</div>';
 
       return h;
@@ -386,6 +451,12 @@
         var btn = e.target.closest('[data-act]');
         if (!btn) return;
         var act = btn.getAttribute('data-act');
+
+        if (act === 'import') {
+          var fileInput = el.querySelector('#import-file');
+          if (fileInput) fileInput.click();
+          return;
+        }
 
         if (act === 'export') {
           var payload = {
@@ -419,6 +490,23 @@
           });
         }
       });
+
+      var importInput = el.querySelector('#import-file');
+      if (importInput) {
+        importInput.addEventListener('change', function () {
+          var file = importInput.files && importInput.files[0];
+          importInput.value = '';   /* 允许连续选择同一个文件 */
+          if (!file) return;
+          if (file.size > 5 * 1024 * 1024) {
+            RK.toast('文件过大，备份通常不超过 1MB');
+            return;
+          }
+          var reader = new FileReader();
+          reader.onload = function () { importBackup(String(reader.result || '')); };
+          reader.onerror = function () { RK.toast('读取文件失败'); };
+          reader.readAsText(file, 'utf-8');
+        });
+      }
     }
   });
 })(window.RK);
