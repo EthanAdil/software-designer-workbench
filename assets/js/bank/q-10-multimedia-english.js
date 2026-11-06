@@ -44,7 +44,7 @@
 
   function eng(id, passage, no, options, answer, explanation, difficulty) {
     return {
-      id: id, module: 'english', topic: '专业英语', difficulty: difficulty || 2,
+      id: id, module: 'english', topic: '专业英语', difficulty: difficulty || 2, points: ['english|高频题材', 'english|解题方法'],
       stem: passage + '\n\n第 (' + no + ') 空应填入（ ）。',
       options: options,
       answer: answer || 0,
@@ -55,7 +55,7 @@
 
   RK.registerQuestions([
     {
-      id: 'MM-001', module: 'multimedia', topic: '音频', difficulty: 2,
+      id: 'MM-001', module: 'multimedia', topic: '音频', difficulty: 2, points: ['multimedia|音频'],
       stem: '对 CD 音质的立体声信号（采样频率 44.1kHz、量化位数 16 位、双声道）录制 1 分钟，未压缩的数据量约为（ ）。',
       options: ['20.2 MB', '84.7 MB', '10.1 MB', '5.05 MB'],
       answer: 2,
@@ -63,7 +63,7 @@
       tags: ['计算', '高频']
     },
     {
-      id: 'MM-002', module: 'multimedia', topic: '图像', difficulty: 2,
+      id: 'MM-002', module: 'multimedia', topic: '图像', difficulty: 2, points: ['multimedia|图像'],
       stem: '一幅 1024×768 的 24 位真彩色图像，未压缩时占用的存储空间约为（ ）。',
       options: ['18 MB', '0.75 MB', '2.25 KB', '2.25 MB'],
       answer: 3,
@@ -71,7 +71,7 @@
       tags: ['计算', '高频']
     },
     {
-      id: 'MM-003', module: 'multimedia', topic: '格式', difficulty: 1,
+      id: 'MM-003', module: 'multimedia', topic: '格式', difficulty: 1, points: ['multimedia|压缩'],
       stem: '下列图像格式中，支持动画且最多只能表示 256 种颜色的是（ ）。',
       options: ['GIF', 'JPEG', 'BMP', 'PNG'],
       answer: 0,
@@ -79,7 +79,7 @@
       tags: ['记忆']
     },
     {
-      id: 'MM-004', module: 'multimedia', topic: '压缩', difficulty: 2,
+      id: 'MM-004', module: 'multimedia', topic: '压缩', difficulty: 2, points: ['multimedia|压缩'],
       stem: '下列关于压缩编码的说法，正确的是（ ）。',
       options: ['哈夫曼编码属于有损压缩', 'JPEG 对静态图像采用有损压缩，MPEG 对运动图像利用了时间冗余', 'JPEG 与 MPEG 均为无损压缩', 'MP3 属于无损音频压缩'],
       answer: 1,
@@ -87,7 +87,7 @@
       tags: ['概念']
     },
     {
-      id: 'MM-005', module: 'multimedia', topic: '音频', difficulty: 2,
+      id: 'MM-005', module: 'multimedia', topic: '音频', difficulty: 2, points: ['multimedia|音频'],
       stem: '人耳可听频率上限约为 20kHz，为能不失真地恢复原始信号，采样频率至少应为（ ）。',
       options: ['10kHz', '44.1Hz', '40kHz', '20kHz'],
       answer: 2,
@@ -95,7 +95,7 @@
       tags: ['计算', '必背']
     },
     {
-      id: 'MM-006', module: 'multimedia', topic: '音频', difficulty: 1,
+      id: 'MM-006', module: 'multimedia', topic: '音频', difficulty: 1, points: ['multimedia|音频'],
       stem: '关于 MIDI 音频，下列说法正确的是（ ）。',
       options: ['直接记录声音波形的采样值，音质最好', '属于有损压缩的波形音频格式', '文件体积通常比未压缩的 WAV 更大', '记录音符、力度等演奏指令，文件体积小，不能直接记录人声'],
       answer: 3,
@@ -103,7 +103,7 @@
       tags: ['概念', '易错']
     },
     {
-      id: 'MM-007', module: 'multimedia', topic: '图像', difficulty: 1,
+      id: 'MM-007', module: 'multimedia', topic: '图像', difficulty: 1, points: ['multimedia|图像'],
       stem: '打印机分辨率为 600DPI，其含义是（ ）。',
       options: ['每英寸可打印 600 个点', '每平方英寸有 600 个像素', '每秒打印 600 页', '屏幕每行显示 600 个像素'],
       answer: 0,
@@ -111,7 +111,7 @@
       tags: ['概念']
     },
     {
-      id: 'MM-008', module: 'multimedia', topic: '图像', difficulty: 1,
+      id: 'MM-008', module: 'multimedia', topic: '图像', difficulty: 1, points: ['multimedia|图像'],
       stem: '关于矢量图，下列说法正确的是（ ）。',
       options: ['压缩时必然丢失细节', '用图形指令描述图形，放大后不失真，文件通常较小', '用像素点阵描述图形，放大后出现马赛克', '只能表示黑白两色'],
       answer: 1,
@@ -119,7 +119,7 @@
       tags: ['概念']
     },
     {
-      id: 'MM-009', module: 'multimedia', topic: '视频', difficulty: 3,
+      id: 'MM-009', module: 'multimedia', topic: '视频', difficulty: 3, points: ['multimedia|视频'],
       stem: '一段 640×480 的 24 位真彩色视频，帧率 25fps，时长 10 秒，未压缩时数据量约为（ ）。',
       options: ['约 22 MB', '约 2.2 GB', '约 220 MB', '约 880 MB'],
       answer: 2,
@@ -127,7 +127,7 @@
       tags: ['计算', '高频']
     },
     {
-      id: 'MM-010', module: 'multimedia', topic: '视频', difficulty: 2,
+      id: 'MM-010', module: 'multimedia', topic: '视频', difficulty: 2, points: ['multimedia|视频'],
       stem: '视频压缩常把 RGB 色彩空间转换为 YUV，其主要依据是（ ）。',
       options: ['YUV 的每个像素占用的位数比 RGB 更多', 'YUV 只能表示黑白图像', 'YUV 是无损压缩专用格式', '人眼对亮度变化更敏感、对色度变化不敏感，可对色度分量降采样'],
       answer: 3,

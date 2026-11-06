@@ -132,6 +132,67 @@ RK.MODULES.forEach(m => {
 });
 console.log(`知识模块：${Object.keys(RK.syllabus.modules).length} 个`);
 
+/* 7. 题型与难度分布（对应 docs/06 3.3 目标，只提示不阻断） */
+const morningTotal = RK.bank.morning.length;
+const cmCount = RK.bank.morning.filter(q => (q.tags || []).some(t => t === '概念' || t === '记忆')).length;
+const diffCount = { 1: 0, 2: 0, 3: 0 };
+RK.bank.morning.forEach(q => {
+  if (Object.prototype.hasOwnProperty.call(diffCount, q.difficulty)) diffCount[q.difficulty]++;
+});
+const cmRate = cmCount / morningTotal;
+const diffRate = [1, 2, 3].map(d => diffCount[d] / morningTotal);
+const pct = x => (x * 100).toFixed(1) + '%';
+console.log('题型与难度分布：');
+console.log(`  概念/记忆 ${cmCount}/${morningTotal}（${pct(cmRate)}），目标 ≤55%`);
+console.log(`  难度 1/2/3 ${diffCount[1]}/${diffCount[2]}/${diffCount[3]}（${diffRate.map(pct).join(' / ')}），目标 30% / 50% / 20%`);
+
+/* 告警阈值直接引用 3.3 已确认目标；难度按 ±5 个百分点容差，避免整数题量下永远报差 */
+if (cmRate > 0.55) warnings.push(`概念/记忆题占比 ${pct(cmRate)} 超过 55% 目标`);
+const diffTargets = [0.30, 0.50, 0.20];
+const TOLERANCE = 0.05;
+diffRate.forEach((r, i) => {
+  if (Math.abs(r - diffTargets[i]) > TOLERANCE) {
+    warnings.push(`难度 ${i + 1} 占比 ${pct(r)} 偏离目标 ${pct(diffTargets[i])}（容差 ±5 个百分点）`);
+  }
+});
+
+/* 8. 正确答案位置分布（对应 docs/06 2.14，只提示不阻断）
+ * 统计口径：分母为 vm 加载后的上午题有效题量，只计 4 选项且 answer 为 0~3 整数的题目。
+ * 25 道专业英语题由 eng() 工厂生成、源码无 answer: 字面量；下午题 answer 为字符串参考答案，
+ * 因此不能按文本 grep，也不能扫全库 answer 字段。 */
+const posCount = [0, 0, 0, 0];
+let posSkipped = 0;
+RK.bank.morning.forEach(q => {
+  if (!Array.isArray(q.options) || q.options.length !== 4 ||
+      typeof q.answer !== 'number' || !Number.isInteger(q.answer) ||
+      q.answer < 0 || q.answer > 3) {
+    posSkipped++;
+    return;
+  }
+  posCount[q.answer]++;
+});
+const posTotal = posCount.reduce((a, b) => a + b, 0);
+console.log('答案位置分布：');
+console.log(`  位置 0/1/2/3 ${posCount.join('/')}（${posCount.map(c => posTotal ? pct(c / posTotal) : '—').join(' / ')}），目标 25% ±3 个百分点（22%~28%）`);
+if (posSkipped) console.log(`  排除 ${posSkipped} 题（answer 非数字/越界或选项数不为 4，见第 1 节错误）`);
+if (posTotal < 20) {
+  console.log(`  有效题量 ${posTotal} < 20，样本不足，跳过均衡阈值判断`);
+} else {
+  /* 先乘整数再除，避免 0.22/0.28 × N 的浮点误差把边界算偏（如 0.28×100 得 28.000000000000004） */
+  const posLow = Math.ceil(22 * posTotal / 100);
+  const posHigh = Math.floor(28 * posTotal / 100);
+  const posOver = posCount.reduce((a, c) => a + Math.max(0, c - posHigh), 0);
+  const posUnder = posCount.reduce((a, c) => a + Math.max(0, posLow - c), 0);
+  if (posOver || posUnder) {
+    posCount.forEach((c, i) => {
+      if (c < posLow || c > posHigh) {
+        warnings.push(`答案位置 ${i} ${c} 题（${pct(c / posTotal)}）超出允许 ${posLow}~${posHigh} 题，偏离 25%（容差 ±3 个百分点）`);
+      }
+    });
+    warnings.push(`答案位置需人工重排至少 ${Math.max(posOver, posUnder)} 题（各位置允许 ${posLow}~${posHigh} 题），不自动改写题库`);
+  }
+}
+
 /* 输出 */
 console.log('');
 if (warnings.length) {

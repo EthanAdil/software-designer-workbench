@@ -2,7 +2,7 @@
 (function (RK) {
   RK.registerQuestions([
     {
-      id: 'OS-001', module: 'os', topic: '进程管理', difficulty: 1,
+      id: 'OS-001', module: 'os', topic: '进程管理', difficulty: 1, points: ['os|进程管理'],
       stem: '进程从运行状态转为阻塞状态，通常是由于（ ）。',
       options: ['时间片用完', '被更高优先级进程抢占', '进程调度程序选中了它', '进程请求 I/O 或等待某事件发生'],
       answer: 3,
@@ -10,7 +10,7 @@
       tags: ['概念', '高频']
     },
     {
-      id: 'OS-002', module: 'os', topic: '进程管理', difficulty: 2,
+      id: 'OS-002', module: 'os', topic: '进程管理', difficulty: 2, points: ['os|进程管理'],
       stem: '在进程三态模型中，下列状态转换不可能直接发生的是（ ）。',
       options: ['阻塞 → 运行', '就绪 → 运行', '运行 → 就绪', '运行 → 阻塞'],
       answer: 0,
@@ -18,7 +18,7 @@
       tags: ['概念', '易错']
     },
     {
-      id: 'OS-003', module: 'os', topic: 'PV 操作', difficulty: 2,
+      id: 'OS-003', module: 'os', topic: 'PV 操作', difficulty: 2, points: ['os|进程管理'],
       stem: '生产者-消费者问题中，缓冲区容量为 8。用信号量实现同步与互斥，则 empty、full、mutex 的初值分别为（ ）。',
       options: ['1、0、8', '8、0、1', '8、1、0', '0、8、1'],
       answer: 1,
@@ -26,7 +26,7 @@
       tags: ['计算', '必背']
     },
     {
-      id: 'OS-004', module: 'os', topic: 'PV 操作', difficulty: 2,
+      id: 'OS-004', module: 'os', topic: 'PV 操作', difficulty: 2, points: ['os|进程管理'],
       stem: '若信号量 S 的当前值为 -2，则其含义是（ ）。',
       options: ['该资源已被 2 个进程占用', '有 2 个进程正在使用该资源', '有 2 个进程正在等待该资源', '有 2 个资源可用'],
       answer: 2,
@@ -34,7 +34,7 @@
       tags: ['概念', '易错']
     },
     {
-      id: 'OS-005', module: 'os', topic: '死锁', difficulty: 1,
+      id: 'OS-005', module: 'os', topic: '死锁', difficulty: 1, points: ['os|进程管理'],
       stem: '下列各项中，不属于死锁产生的必要条件的是（ ）。',
       options: ['互斥条件', '请求并保持条件', '环路等待条件', '资源有序分配'],
       answer: 3,
@@ -42,7 +42,7 @@
       tags: ['概念', '高频']
     },
     {
-      id: 'OS-006', module: 'os', topic: '死锁', difficulty: 1,
+      id: 'OS-006', module: 'os', topic: '死锁', difficulty: 1, points: ['os|进程管理'],
       stem: '银行家算法属于死锁处理策略中的（ ）。',
       options: ['死锁避免', '死锁预防', '死锁检测', '死锁解除'],
       answer: 0,
@@ -50,7 +50,7 @@
       tags: ['概念']
     },
     {
-      id: 'OS-007', module: 'os', topic: '存储管理', difficulty: 2,
+      id: 'OS-007', module: 'os', topic: '存储管理', difficulty: 2, points: ['os|存储管理'],
       stem: '某系统页面大小为 4KB，逻辑地址为 0x2A5F，则对应的页号和页内偏移分别是（ ）。',
       options: ['页号 0x2A，偏移 0x5F', '页号 2，偏移 0xA5F', '页号 0xA，偏移 0x25F', '页号 2，偏移 0x5F'],
       answer: 1,
@@ -58,7 +58,7 @@
       tags: ['计算']
     },
     {
-      id: 'OS-008', module: 'os', topic: '页面置换', difficulty: 3,
+      id: 'OS-008', module: 'os', topic: '页面置换', difficulty: 3, points: ['os|存储管理'],
       stem: '系统分配 3 个物理块，页面引用串为 1,2,3,4,1,2,5,1,2,3,4,5，采用 LRU 置换算法，缺页次数为（ ）。',
       options: ['9', '12', '10', '8'],
       answer: 2,
@@ -66,7 +66,7 @@
       tags: ['计算', '难点']
     },
     {
-      id: 'OS-009', module: 'os', topic: '页面置换', difficulty: 2,
+      id: 'OS-009', module: 'os', topic: '页面置换', difficulty: 2, points: ['os|存储管理'],
       stem: '采用 FIFO 页面置换算法时，增加分配给进程的物理块数，缺页次数反而增加的现象称为（ ）。',
       options: ['抖动（颠簸）', '雪崩效应', '缺页中断', 'Belady 异常'],
       answer: 3,
@@ -74,7 +74,7 @@
       tags: ['概念', '高频']
     },
     {
-      id: 'OS-010', module: 'os', topic: '文件管理', difficulty: 3,
+      id: 'OS-010', module: 'os', topic: '文件管理', difficulty: 3, points: ['os|文件与设备管理'],
       stem: '某文件系统磁盘块大小为 1KB，每个索引项占 4B。采用一级索引时，单个文件最大可达（ ）。',
       options: ['256KB', '1MB', '64KB', '256MB'],
       answer: 0,
@@ -82,7 +82,7 @@
       tags: ['计算']
     },
     {
-      id: 'OS-011', module: 'os', topic: '文件管理', difficulty: 3,
+      id: 'OS-011', module: 'os', topic: '文件管理', difficulty: 3, points: ['os|文件与设备管理'],
       stem: '某文件系统用位示图管理磁盘空间，字长为 32 位，位号与字号均从 0 开始。则物理块号 100 对应的字号和位号分别是（ ）。',
       options: ['字号 100，位号 0', '字号 3，位号 4', '字号 4，位号 3', '字号 3，位号 5'],
       answer: 1,
@@ -90,7 +90,7 @@
       tags: ['计算']
     },
     {
-      id: 'OS-012', module: 'os', topic: '设备管理', difficulty: 1,
+      id: 'OS-012', module: 'os', topic: '设备管理', difficulty: 1, points: ['os|文件与设备管理'],
       stem: '下列磁盘调度算法中，可能导致某些请求长期得不到服务（饥饿）的是（ ）。',
       options: ['扫描算法（SCAN）', '循环扫描（CSCAN）', '最短寻道时间优先（SSTF）', '先来先服务（FCFS）'],
       answer: 2,
@@ -98,7 +98,7 @@
       tags: ['概念']
     },
     {
-      id: 'OS-013', module: 'os', topic: '调度算法', difficulty: 3,
+      id: 'OS-013', module: 'os', topic: '调度算法', difficulty: 3, points: ['os|作业与进程调度'],
       stem: '有 4 个作业，到达时间与服务时间分别为 (0,3)、(2,6)、(4,4)、(6,5)。采用 FCFS 调度，平均周转时间为（ ）。',
       options: ['8.00', '7.25', '9.00', '7.75'],
       answer: 3,
@@ -106,7 +106,7 @@
       tags: ['计算', '高频']
     },
     {
-      id: 'OS-014', module: 'os', topic: '设备管理', difficulty: 1,
+      id: 'OS-014', module: 'os', topic: '设备管理', difficulty: 1, points: ['os|文件与设备管理'],
       stem: 'SPOOLing 技术的主要作用是（ ）。',
       options: ['把独占设备改造为可共享的虚拟设备', '提高 CPU 主频', '减少内存碎片', '加快磁盘寻道速度'],
       answer: 0,
@@ -114,7 +114,7 @@
       tags: ['概念']
     },
     {
-      id: 'OS-015', module: 'os', topic: '进程管理', difficulty: 1,
+      id: 'OS-015', module: 'os', topic: '进程管理', difficulty: 1, points: ['os|进程管理'],
       stem: '进程控制块（PCB）的主要作用是（ ）。',
       options: ['记录磁盘空闲块的分配情况', '记录进程的状态、程序计数器与资源清单等全部管理信息，是进程存在的唯一标志', '保存进程运行时的全部用户数据', '存放进程正在执行的指令代码'],
       answer: 1,
@@ -122,7 +122,7 @@
       tags: ['概念', '必背']
     },
     {
-      id: 'OS-016', module: 'os', topic: '进程管理', difficulty: 1,
+      id: 'OS-016', module: 'os', topic: '进程管理', difficulty: 1, points: ['os|进程管理'],
       stem: '关于进程与程序的区别，下列说法正确的是（ ）。',
       options: ['一个程序只能对应一个进程', '进程与程序都常驻内存且不会撤销', '进程是动态的、有生命周期，程序是静态的指令集合', '进程是静态的，程序是动态的'],
       answer: 2,
@@ -130,7 +130,7 @@
       tags: ['概念']
     },
     {
-      id: 'OS-017', module: 'os', topic: '进程管理', difficulty: 2,
+      id: 'OS-017', module: 'os', topic: '进程管理', difficulty: 2, points: ['os|进程管理'],
       stem: '同一进程内的多个线程（ ）。',
       options: ['拥有完全独立的地址空间，互不干扰', '不能并发执行，只能串行运行', '必须由不同进程创建后才能运行', '共享进程的地址空间与已打开文件，但各自拥有独立的栈和程序计数器'],
       answer: 3,
@@ -138,7 +138,7 @@
       tags: ['概念', '高频']
     },
     {
-      id: 'OS-018', module: 'os', topic: 'PV 操作', difficulty: 3,
+      id: 'OS-018', module: 'os', topic: 'PV 操作', difficulty: 3, points: ['os|进程管理'],
       stem: '某信号量初值为 2，先后执行 3 次 P 操作后，信号量的值为（ ），此时有（ ）个进程被阻塞。',
       options: ['-1，1', '1，0', '-1，2', '0，1'],
       answer: 0,
@@ -146,7 +146,7 @@
       tags: ['计算', '易错']
     },
     {
-      id: 'OS-019', module: 'os', topic: '存储管理', difficulty: 2,
+      id: 'OS-019', module: 'os', topic: '存储管理', difficulty: 2, points: ['os|存储管理'],
       stem: '页式存储管理的主要缺点是（ ）。',
       options: ['必须为进程分配连续的物理内存', '存在内部碎片，进程最后一页往往填不满', '存在外部碎片，内存利用率低', '无法支持虚拟存储'],
       answer: 1,
@@ -154,7 +154,7 @@
       tags: ['概念', '易错']
     },
     {
-      id: 'OS-020', module: 'os', topic: '存储管理', difficulty: 2,
+      id: 'OS-020', module: 'os', topic: '存储管理', difficulty: 2, points: ['os|存储管理'],
       stem: '与页式管理相比，段式管理的主要优点是（ ）。',
       options: ['地址转换不需要段表', '内存利用率一定高于页式', '按逻辑单位划分，便于共享与保护，且段长可变', '没有内部碎片且不会产生外部碎片'],
       answer: 2,
@@ -162,7 +162,7 @@
       tags: ['概念']
     },
     {
-      id: 'OS-021', module: 'os', topic: '存储管理', difficulty: 2,
+      id: 'OS-021', module: 'os', topic: '存储管理', difficulty: 2, points: ['os|存储管理'],
       stem: '某系统页面大小为 4KB，逻辑地址为 32 位，则页号占（ ）位。',
       options: ['12', '22', '10', '20'],
       answer: 3,
@@ -170,7 +170,7 @@
       tags: ['计算']
     },
     {
-      id: 'OS-022', module: 'os', topic: '存储管理', difficulty: 2,
+      id: 'OS-022', module: 'os', topic: '存储管理', difficulty: 2, points: ['os|存储管理'],
       stem: '快表（TLB）的作用是（ ）。',
       options: ['缓存最近使用的页表项，减少访问内存中页表的次数', '扩大主存的物理容量', '保存进程的 PCB', '替代页面置换算法'],
       answer: 0,
@@ -178,7 +178,7 @@
       tags: ['概念', '高频']
     },
     {
-      id: 'OS-023', module: 'os', topic: '存储管理', difficulty: 1,
+      id: 'OS-023', module: 'os', topic: '存储管理', difficulty: 1, points: ['os|存储管理'],
       stem: '在请求分页系统中，分配给进程的物理块数过少，最可能导致（ ）。',
       options: ['地址转换速度变快', '抖动（频繁换入换出，CPU 利用率急剧下降）', '缺页率降为零', '页表项数量减少'],
       answer: 1,
@@ -186,7 +186,7 @@
       tags: ['概念']
     },
     {
-      id: 'OS-024', module: 'os', topic: '页面置换', difficulty: 3,
+      id: 'OS-024', module: 'os', topic: '页面置换', difficulty: 3, points: ['os|存储管理'],
       stem: '某进程分得 3 个物理块，页面引用串为 1,2,3,4,1,2,5,1,2,3,4,5。若采用最佳置换算法 OPT，缺页次数为（ ）。',
       options: ['9', '12', '7', '10'],
       answer: 2,
@@ -194,7 +194,7 @@
       tags: ['计算', '难点']
     },
     {
-      id: 'OS-025', module: 'os', topic: '文件管理', difficulty: 2,
+      id: 'OS-025', module: 'os', topic: '文件管理', difficulty: 2, points: ['os|文件与设备管理'],
       stem: '在 UNIX 类文件系统中，索引结点（inode）的作用是（ ）。',
       options: ['保存文件的实际数据内容', '记录磁盘的空闲块位示图', '存放进程的打开文件表', '把文件名与文件属性分离，目录项只保存文件名和 inode 号'],
       answer: 3,
@@ -202,7 +202,7 @@
       tags: ['概念']
     },
     {
-      id: 'OS-026', module: 'os', topic: '文件管理', difficulty: 2,
+      id: 'OS-026', module: 'os', topic: '文件管理', difficulty: 2, points: ['os|文件与设备管理'],
       stem: '文件采用连续（顺序）物理结构的主要特点是（ ）。',
       options: ['支持随机访问、顺序读写速度快，但文件难以动态扩展且易产生外部碎片', '只能顺序访问，不支持随机访问', '便于文件动态增长，无任何碎片', '必须借助索引表才能定位数据块'],
       answer: 0,
@@ -210,7 +210,7 @@
       tags: ['概念']
     },
     {
-      id: 'OS-027', module: 'os', topic: '文件管理', difficulty: 1,
+      id: 'OS-027', module: 'os', topic: '文件管理', difficulty: 1, points: ['os|文件与设备管理'],
       stem: '在树形目录结构中，从根目录出发沿各级目录到达文件的路径称为（ ），从当前目录出发的路径称为（ ）。',
       options: ['逻辑路径，物理路径', '绝对路径，相对路径', '相对路径，绝对路径', '物理路径，逻辑路径'],
       answer: 1,
@@ -218,7 +218,7 @@
       tags: ['概念']
     },
     {
-      id: 'OS-028', module: 'os', topic: '调度算法', difficulty: 1,
+      id: 'OS-028', module: 'os', topic: '调度算法', difficulty: 1, points: ['os|作业与进程调度'],
       stem: '在作业调度算法中，能使平均等待时间最短、但可能导致长作业长期得不到调度的是（ ）。',
       options: ['时间片轮转', '高响应比优先', '短作业优先（SJF）', '先来先服务（FCFS）'],
       answer: 2,
@@ -226,7 +226,7 @@
       tags: ['概念', '高频']
     },
     {
-      id: 'OS-029', module: 'os', topic: '调度算法', difficulty: 2,
+      id: 'OS-029', module: 'os', topic: '调度算法', difficulty: 2, points: ['os|作业与进程调度'],
       stem: '时间片轮转调度中，若时间片设置得过大，算法将退化为（ ）。',
       options: ['短作业优先（SJF）', '优先级调度', '多级反馈队列', '先来先服务（FCFS）'],
       answer: 3,
@@ -234,7 +234,7 @@
       tags: ['概念']
     },
     {
-      id: 'OS-030', module: 'os', topic: '调度算法', difficulty: 3,
+      id: 'OS-030', module: 'os', topic: '调度算法', difficulty: 3, points: ['os|作业与进程调度'],
       stem: '有 3 个作业同时到达，按到达顺序其服务时间分别为 9、6、3。采用短作业优先（SJF）调度，平均周转时间为（ ）。',
       options: ['10', '14', '12', '18'],
       answer: 0,

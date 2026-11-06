@@ -38,7 +38,7 @@
 <pre><code>P(S)：S = S - 1；若 S &lt; 0，则阻塞当前进程
 V(S)：S = S + 1；若 S ≤ 0，则唤醒一个等待进程</code></pre>
 <p>S 的取值含义：</p>
-<div class="doc-table"><table><thead><tr><th>S 值</th><th>含义</th></tr></thead><tbody><tr><td>S &gt; 0</td><td>还有 S 个可用资源</td></tr><tr><td>S = 0</td><td>资源刚好用完，无进程等待</td></tr><tr><td>S &lt; 0</td><td>有 `</td><td class="doc-extra-cell">S</td><td class="doc-extra-cell">` 个进程在等待该资源</td></tr></tbody></table></div>
+<div class="doc-table"><table><thead><tr><th>S 值</th><th>含义</th></tr></thead><tbody><tr><td>S &gt; 0</td><td>还有 S 个可用资源</td></tr><tr><td>S = 0</td><td>资源刚好用完，无进程等待</td></tr><tr><td>S &lt; 0</td><td>有 S 个进程在等待资源，-S个资源被占用</td></tr></tbody></table></div>
 <p>注意 P 是"先减再判断"，V 是"先加再判断"。顺序写反，整道题全错。</p>
 <h3>3.2 生产者-消费者（缓冲区容量 n）</h3>
 <div class="doc-table"><table><thead><tr><th>信号量</th><th>初值</th><th>含义</th></tr></thead><tbody><tr><td>mutex</td><td>1</td><td>互斥访问缓冲区</td></tr><tr><td>empty</td><td>n</td><td>空闲槽位数</td></tr><tr><td>full</td><td>0</td><td>已放产品数</td></tr></tbody></table></div>
@@ -117,7 +117,7 @@ S&lt;0 时 |S| = 等待进程数
 <h2>十、易错辨析</h2>
 <div class="doc-table"><table><thead><tr><th>错误认知</th><th>正确结论</th><th>原因</th></tr></thead><tbody><tr><td>阻塞可以直接转为运行</td><td>必须先转就绪，再被调度</td><td>阻塞结束时 CPU 可能正被占用</td></tr><tr><td>信号量为负表示资源数为负</td><td>负值的绝对值是等待进程数</td><td>资源数最少为 0</td></tr><tr><td>先 P(mutex) 再 P(empty) 更安全</td><td>顺序反了会死锁</td><td>持锁等待资源，消费者进不来</td></tr><tr><td>页式存储有外部碎片</td><td>页式只有内部碎片</td><td>页大小固定，最后一页可能浪费</td></tr><tr><td>增加物理块一定减少缺页</td><td>FIFO 可能出现 Belady 异常</td><td>淘汰策略与访问序列不匹配</td></tr><tr><td>磁盘调度 SSTF 最优</td><td>SSTF 只是每次最近，可能饥饿</td><td>全局最优需 SCAN 类策略</td></tr><tr><td>线程有独立地址空间</td><td>同进程线程共享地址空间</td><td>线程只独占栈和寄存器</td></tr></tbody></table></div>
 <h2>十一、自检题</h2>
-<ol><li>信号量初值 3，当前值 -1，说明什么？</li><li>生产者-消费者中，若把 <code>P(empty)</code> 与 <code>P(mutex)</code> 顺序颠倒，会发生什么？</li><li>死锁的四个必要条件是什么？银行家算法属于哪种策略？</li><li>页面大小 8KB，逻辑地址 <code>0x3FFF</code> 的页号与页内偏移是多少？</li><li>3 个物理块，引用串 <code>1,2,3,4,1,2,5</code>，FIFO 的缺页次数是多少？</li><li>字长 32、块号 100，位示图的字号和位号是多少？</li><li>磁头在 50，请求 <code>10,20,30,40,60</code>，SSTF 的总移道数是多少？</li><li>4 个作业 FCFS，如何计算平均带权周转时间？</li><li>为什么说"增加物理块可能让 FIFO 缺页更多"？</li><li>线程切换为什么比进程切换快？</li></ol>
+<ol><li>信号量初值 3，当前值 -1，说明什么？（对应题库 OS-004）</li><li>生产者-消费者中，若把 <code>P(empty)</code> 与 <code>P(mutex)</code> 顺序颠倒，会发生什么？（对应题库 OS-038）</li><li>死锁的四个必要条件是什么？银行家算法属于哪种策略？（对应题库 OS-005 / OS-006）</li><li>页面大小 8KB，逻辑地址 <code>0x3FFF</code> 的页号与页内偏移是多少？（对应题库 OS-007）</li><li>3 个物理块，引用串 <code>1,2,3,4,1,2,5</code>，FIFO 的缺页次数是多少？（对应题库 OS-008）</li><li>字长 32、块号 100，位示图的字号和位号是多少？（对应题库 OS-011）</li><li>磁头在 50，请求 <code>10,20,30,40,60</code>，SSTF 的总移道数是多少？（对应题库 OS-034）</li><li>4 个作业 FCFS，如何计算平均带权周转时间？（对应题库 OS-013）</li><li>为什么说"增加物理块可能让 FIFO 缺页更多"？（对应题库 OS-009）</li><li>线程切换为什么比进程切换快？（对应题库 OS-017）</li></ol>
 <blockquote><p>答案与解析：<br />1) 3 个资源已全部分配，另有 1 个进程在等待。<br />2) 缓冲区满时生产者持锁等待 empty，消费者无法进入临界区取产品，形成死锁。<br />3) 互斥、请求并保持、不可剥夺、环路等待；银行家算法属于死锁避免。<br />4) <code>0x3FFF = 16383</code>，页大小 8192 → 页号 1、偏移 <code>0x1FFF</code>。<br />5) 1,2,3 缺 3 次；4 淘汰 1；1 淘汰 2；2 淘汰 3；5 淘汰 4 → 共 7 次。<br />6) 字号 3、位号 4。<br />7) <code>50→60(10)→40(20)→30(10)→20(10)→10(10)</code>，共 60。<br />8) 先算每个作业的完成时间，再算周转时间（完成-到达），最后除以服务时间取平均。<br />9) FIFO 只看进入时间，不看访问频率，块数变化会改变淘汰顺序，可能出现 Belady 异常。<br />10) 线程共享同一地址空间，切换时无需切换页表与地址空间，只需保存寄存器与栈。</p></blockquote>
 </main>
 <footer class="doc-footer">本文档由同名 Markdown 生成（UTF-8 编码）；内容修改请改 .md 后重新运行 <code>node tools/build-docs.js</code>。</footer>

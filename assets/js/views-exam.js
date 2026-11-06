@@ -64,14 +64,17 @@
 
     function card(p, tag) {
       var rec = best[p.id];
+      /* 配置的合格/目标分是 75 题制口径，列表页统一折算到卷面；下午卷卷面满分按 75 分 */
+      var n = p.paper === 'afternoon' ? 75 : (p.rules || []).reduce(function (a, r) { return a + r.count; }, 0) || 75;
+      var scaled = function (v, total) { return Math.round(v / 75 * total); };
       var h2 = '<div class="card module-card">';
       h2 += '<div class="mod-top"><span class="mod-name">' + U.esc(p.name) + '</span>' +
-        (rec ? RK.ui.badge('最高 ' + rec.score + ' 分', rec.score >= (p.targetScore || 60) ? 'badge-ok' : 'badge-warn') : RK.ui.badge('未完成', 'badge-plain')) + '</div>';
+        (rec ? RK.ui.badge('最高 ' + rec.score + ' 分', rec.score >= scaled(p.targetScore || 60, rec.total || 75) ? 'badge-ok' : 'badge-warn') : RK.ui.badge('未完成', 'badge-plain')) + '</div>';
       h2 += '<p class="dim" style="font-size:13px;margin:0">' + U.esc(p.desc) + '</p>';
       h2 += '<div class="row-wrap" style="font-size:12px;color:var(--text-3)">' +
         '<span>' + (p.paper === 'afternoon' ? p.duration + ' 分钟' : p.duration + ' 分钟') + '</span>' +
-        '<span>合格 ' + (p.passScore || 45) + ' 分</span>' +
-        (p.targetScore ? '<span>目标 ' + p.targetScore + ' 分</span>' : '') +
+        '<span>合格 ' + scaled(p.passScore || 45, n) + ' 分</span>' +
+        (p.targetScore ? '<span>目标 ' + scaled(p.targetScore, n) + ' 分</span>' : '') +
         (p.difficulty ? '<span>' + p.difficulty + '</span>' : '') +
         '</div>';
       h2 += '<div class="row-wrap"><a class="btn btn-sm" href="#/exam?p=' + p.id + '">开始</a>' +

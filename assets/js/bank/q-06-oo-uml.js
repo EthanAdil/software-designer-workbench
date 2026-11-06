@@ -2,7 +2,7 @@
 (function (RK) {
   RK.registerQuestions([
     {
-      id: 'OO-001', module: 'oo-uml', topic: '面向对象基础', difficulty: 1,
+      id: 'OO-001', module: 'oo-uml', topic: '面向对象基础', difficulty: 1, points: ['oo-uml|面向对象基础'],
       stem: '同一消息被不同对象接收后产生不同的行为，这一特性称为（ ）。',
       options: ['继承', '抽象', '多态', '封装'],
       answer: 2,
@@ -10,7 +10,7 @@
       tags: ['概念', '必背']
     },
     {
-      id: 'OO-002', module: 'oo-uml', topic: '面向对象基础', difficulty: 2,
+      id: 'OO-002', module: 'oo-uml', topic: '面向对象基础', difficulty: 2, points: ['oo-uml|面向对象基础'],
       stem: '关于重载（overload）与重写（override），下列说法正确的是（ ）。',
       options: ['重写是同类中方法名相同、参数不同', '重载发生在父子类之间，重写发生在同类内', '两者都在运行期动态绑定', '重载是同类中方法名相同、参数不同，属编译期绑定'],
       answer: 3,
@@ -18,7 +18,7 @@
       tags: ['概念', '易错']
     },
     {
-      id: 'OO-003', module: 'oo-uml', topic: '类图关系', difficulty: 2,
+      id: 'OO-003', module: 'oo-uml', topic: '类图关系', difficulty: 2, points: ['oo-uml|UML 图'],
       stem: 'UML 类图中，用实心菱形表示的关系是（ ），它表示整体与部分具有相同的生命周期。',
       options: ['组合', '聚合', '泛化', '依赖'],
       answer: 0,
@@ -26,7 +26,7 @@
       tags: ['概念', '高频']
     },
     {
-      id: 'OO-004', module: 'oo-uml', topic: '用例图', difficulty: 2,
+      id: 'OO-004', module: 'oo-uml', topic: '用例图', difficulty: 2, points: ['oo-uml|UML 图'],
       stem: '用例图中，若用例 B 是用例 A 执行过程中必然发生的公共行为，则二者关系应表示为（ ）。',
       options: ['A 与 B 关联', 'A include B', 'A extend B', 'B 泛化 A'],
       answer: 1,
@@ -34,7 +34,7 @@
       tags: ['概念', '易错']
     },
     {
-      id: 'OO-005', module: 'oo-uml', topic: 'UML 图', difficulty: 2,
+      id: 'OO-005', module: 'oo-uml', topic: 'UML 图', difficulty: 2, points: ['oo-uml|UML 图'],
       stem: '强调对象之间消息的时间顺序的 UML 图是（ ）。',
       options: ['状态图', '构件图', '顺序图', '通信图'],
       answer: 2,
@@ -42,7 +42,7 @@
       tags: ['概念']
     },
     {
-      id: 'OO-006', module: 'oo-uml', topic: 'UML 图', difficulty: 2,
+      id: 'OO-006', module: 'oo-uml', topic: 'UML 图', difficulty: 2, points: ['oo-uml|UML 图'],
       stem: '描述一个对象在其生命周期内所经历的状态及引起状态迁移的事件，应使用（ ）。',
       options: ['活动图', '用例图', '类图', '状态图'],
       answer: 3,
@@ -50,7 +50,7 @@
       tags: ['概念', '高频']
     },
     {
-      id: 'OO-007', module: 'oo-uml', topic: 'UML 图', difficulty: 2,
+      id: 'OO-007', module: 'oo-uml', topic: 'UML 图', difficulty: 2, points: ['oo-uml|UML 图'],
       stem: '活动图中用于表示并发分支与汇合的图形元素是（ ）。',
       options: ['同步条（粗黑线）', '菱形判断框', '空心圆', '实心圆'],
       answer: 0,
@@ -58,7 +58,7 @@
       tags: ['概念']
     },
     {
-      id: 'OO-008', module: 'oo-uml', topic: '设计模式', difficulty: 1,
+      id: 'OO-008', module: 'oo-uml', topic: '设计模式', difficulty: 1, points: ['oo-uml|设计模式（按目的分三类）'],
       stem: '保证一个类仅有一个实例，并提供全局访问点的设计模式是（ ）。',
       options: ['享元模式', '单例模式', '工厂方法模式', '原型模式'],
       answer: 1,
@@ -66,7 +66,7 @@
       tags: ['概念', '必背']
     },
     {
-      id: 'OO-009', module: 'oo-uml', topic: '设计模式', difficulty: 2,
+      id: 'OO-009', module: 'oo-uml', topic: '设计模式', difficulty: 2, points: ['oo-uml|设计模式（按目的分三类）'],
       stem: '定义一个用于创建对象的接口，让子类决定实例化哪个类，这种模式是（ ）。',
       options: ['建造者模式', '模板方法模式', '工厂方法模式', '抽象工厂模式'],
       answer: 2,
@@ -74,7 +74,7 @@
       tags: ['概念', '高频']
     },
     {
-      id: 'OO-010', module: 'oo-uml', topic: '设计模式', difficulty: 3,
+      id: 'OO-010', module: 'oo-uml', topic: '设计模式', difficulty: 3, points: ['oo-uml|设计模式（按目的分三类）'],
       stem: '某系统需要创建多个产品族（如 Windows 风格与 Mac 风格）下的一系列相关控件（按钮、文本框），最适合的模式是（ ）。',
       options: ['工厂方法模式', '建造者模式', '原型模式', '抽象工厂模式'],
       answer: 3,
@@ -82,7 +82,7 @@
       tags: ['概念', '难点']
     },
     {
-      id: 'OO-011', module: 'oo-uml', topic: '设计模式', difficulty: 2,
+      id: 'OO-011', module: 'oo-uml', topic: '设计模式', difficulty: 2, points: ['oo-uml|设计模式（按目的分三类）'],
       stem: '将一个类的接口转换成客户希望的另一个接口，使原本不兼容的类可以协同工作，这种模式是（ ）。',
       options: ['适配器模式', '桥接模式', '外观模式', '装饰模式'],
       answer: 0,
@@ -90,7 +90,7 @@
       tags: ['概念', '高频']
     },
     {
-      id: 'OO-012', module: 'oo-uml', topic: '设计模式', difficulty: 3,
+      id: 'OO-012', module: 'oo-uml', topic: '设计模式', difficulty: 3, points: ['oo-uml|设计模式（按目的分三类）'],
       stem: '需要在不改变对象接口的前提下，动态地给对象添加额外职责，应采用（ ）。',
       options: ['享元模式', '装饰模式', '代理模式', '组合模式'],
       answer: 1,
@@ -98,7 +98,7 @@
       tags: ['概念', '易错']
     },
     {
-      id: 'OO-013', module: 'oo-uml', topic: '设计模式', difficulty: 1,
+      id: 'OO-013', module: 'oo-uml', topic: '设计模式', difficulty: 1, points: ['oo-uml|设计模式（按目的分三类）'],
       stem: '定义对象间一对多的依赖关系，当一个对象状态改变时自动通知所有依赖者，这种模式是（ ）。',
       options: ['职责链模式', '命令模式', '观察者模式', '中介者模式'],
       answer: 2,
@@ -106,7 +106,7 @@
       tags: ['概念', '必背']
     },
     {
-      id: 'OO-014', module: 'oo-uml', topic: '设计模式', difficulty: 3,
+      id: 'OO-014', module: 'oo-uml', topic: '设计模式', difficulty: 3, points: ['oo-uml|设计模式（按目的分三类）'],
       stem: '策略模式与状态模式的主要区别是（ ）。',
       options: ['策略模式只能用于排序算法', '状态模式不涉及类的继承', '两者完全等价，可互相替代', '策略模式的算法选择通常由客户端决定，状态模式的状态转换由对象内部驱动'],
       answer: 3,
@@ -114,7 +114,7 @@
       tags: ['概念', '难点']
     },
     {
-      id: 'OO-015', module: 'oo-uml', topic: '设计模式', difficulty: 2,
+      id: 'OO-015', module: 'oo-uml', topic: '设计模式', difficulty: 2, points: ['oo-uml|设计模式（按目的分三类）'],
       stem: '在父类中定义算法骨架，将某些可变步骤延迟到子类实现，这种模式是（ ）。',
       options: ['模板方法模式', '建造者模式', '访问者模式', '解释器模式'],
       answer: 0,
@@ -122,7 +122,7 @@
       tags: ['概念', '必背']
     },
     {
-      id: 'OO-016', module: 'oo-uml', topic: '设计原则', difficulty: 2,
+      id: 'OO-016', module: 'oo-uml', topic: '设计原则', difficulty: 2, points: ['oo-uml|面向对象分析与设计'],
       stem: '"对扩展开放，对修改关闭"描述的是（ ）原则。',
       options: ['接口隔离原则', '开闭原则', '单一职责原则', '里氏替换原则'],
       answer: 1,
@@ -130,7 +130,7 @@
       tags: ['记忆', '必背']
     },
     {
-      id: 'OO-017', module: 'oo-uml', topic: '类图关系', difficulty: 1,
+      id: 'OO-017', module: 'oo-uml', topic: '类图关系', difficulty: 1, points: ['oo-uml|UML 图'],
       stem: 'UML 类图中，表示继承（泛化）关系的符号是（ ）。',
       options: ['实线 + 实心菱形', '虚线 + 箭头', '实线 + 空心三角箭头指向父类', '虚线 + 空心三角箭头'],
       answer: 2,
@@ -138,7 +138,7 @@
       tags: ['概念', '易错']
     },
     {
-      id: 'OO-018', module: 'oo-uml', topic: '面向对象基础', difficulty: 1,
+      id: 'OO-018', module: 'oo-uml', topic: '面向对象基础', difficulty: 1, points: ['oo-uml|面向对象基础'],
       stem: '封装的主要目的是（ ）。',
       options: ['让子类继承父类的全部实现', '使同一消息在不同对象上产生不同响应', '把多个类合并为一个类', '隐藏对象的内部实现细节，只通过公开接口访问，降低模块间耦合'],
       answer: 3,
@@ -146,7 +146,7 @@
       tags: ['概念', '必背']
     },
     {
-      id: 'OO-019', module: 'oo-uml', topic: '面向对象基础', difficulty: 1,
+      id: 'OO-019', module: 'oo-uml', topic: '面向对象基础', difficulty: 1, points: ['oo-uml|面向对象基础'],
       stem: '对象之间进行交互、请求对方执行某项操作的方式是（ ）。',
       options: ['发送消息', '共享全局变量', '直接修改对方的私有属性', '复制对方的代码'],
       answer: 0,
@@ -154,7 +154,7 @@
       tags: ['概念']
     },
     {
-      id: 'OO-020', module: 'oo-uml', topic: '面向对象基础', difficulty: 2,
+      id: 'OO-020', module: 'oo-uml', topic: '面向对象基础', difficulty: 2, points: ['oo-uml|面向对象基础'],
       stem: '关于抽象类，下列说法正确的是（ ）。',
       options: ['一个类最多只能继承一个接口', '不能被直接实例化，可以同时包含抽象方法和已实现的方法', '只能包含抽象方法，不能有方法体', '可以被直接实例化'],
       answer: 1,
@@ -162,7 +162,7 @@
       tags: ['概念']
     },
     {
-      id: 'OO-021', module: 'oo-uml', topic: '面向对象基础', difficulty: 2,
+      id: 'OO-021', module: 'oo-uml', topic: '面向对象基础', difficulty: 2, points: ['oo-uml|面向对象基础'],
       stem: '与抽象类相比，接口的主要特点是（ ）。',
       options: ['一个类只能实现一个接口', '接口不能用于实现多态', '只声明行为契约而不提供状态，一个类可实现多个接口', '可以保存实例字段的初始状态'],
       answer: 2,
@@ -170,7 +170,7 @@
       tags: ['概念', '易错']
     },
     {
-      id: 'OO-022', module: 'oo-uml', topic: '设计原则', difficulty: 2,
+      id: 'OO-022', module: 'oo-uml', topic: '设计原则', difficulty: 2, points: ['oo-uml|面向对象分析与设计'],
       stem: '子类对象能够替换父类对象出现在程序中而不改变程序的正确性，这一原则称为（ ）。',
       options: ['单一职责原则', '接口隔离原则', '开闭原则', '里氏替换原则'],
       answer: 3,
@@ -178,7 +178,7 @@
       tags: ['概念', '高频']
     },
     {
-      id: 'OO-023', module: 'oo-uml', topic: '设计原则', difficulty: 2,
+      id: 'OO-023', module: 'oo-uml', topic: '设计原则', difficulty: 2, points: ['oo-uml|面向对象分析与设计'],
       stem: '"高层模块不应依赖低层模块，二者都应依赖抽象"描述的是（ ）原则。',
       options: ['依赖倒置原则', '单一职责原则', '里氏替换原则', '最少知识原则'],
       answer: 0,
@@ -186,7 +186,7 @@
       tags: ['概念']
     },
     {
-      id: 'OO-024', module: 'oo-uml', topic: '设计原则', difficulty: 2,
+      id: 'OO-024', module: 'oo-uml', topic: '设计原则', difficulty: 2, points: ['oo-uml|面向对象分析与设计'],
       stem: '不应强迫客户依赖它们并不使用的方法，这一原则称为（ ）。',
       options: ['里氏替换原则', '接口隔离原则', '开闭原则', '依赖倒置原则'],
       answer: 1,
@@ -194,7 +194,7 @@
       tags: ['概念']
     },
     {
-      id: 'OO-025', module: 'oo-uml', topic: 'UML 图', difficulty: 1,
+      id: 'OO-025', module: 'oo-uml', topic: 'UML 图', difficulty: 1, points: ['oo-uml|UML 图'],
       stem: '下列 UML 图中，不属于行为图的是（ ）。',
       options: ['状态图', '活动图', '构件图', '用例图'],
       answer: 2,
@@ -202,7 +202,7 @@
       tags: ['记忆', '易错']
     },
     {
-      id: 'OO-026', module: 'oo-uml', topic: 'UML 图', difficulty: 2,
+      id: 'OO-026', module: 'oo-uml', topic: 'UML 图', difficulty: 2, points: ['oo-uml|UML 图'],
       stem: '部署图主要用于描述（ ）。',
       options: ['类的属性与操作', '对象之间的消息顺序', '用例与参与者之间的关系', '运行时的物理节点以及部署在这些节点上的构件'],
       answer: 3,
@@ -210,7 +210,7 @@
       tags: ['概念']
     },
     {
-      id: 'OO-027', module: 'oo-uml', topic: 'UML 图', difficulty: 1,
+      id: 'OO-027', module: 'oo-uml', topic: 'UML 图', difficulty: 1, points: ['oo-uml|UML 图'],
       stem: '包图的主要用途是（ ）。',
       options: ['把模型元素按逻辑分组，并表达包之间的依赖关系', '描述对象的生命周期状态', '表示数据库的表结构', '表示硬件设备的物理连接'],
       answer: 0,
@@ -218,7 +218,7 @@
       tags: ['概念']
     },
     {
-      id: 'OO-028', module: 'oo-uml', topic: 'UML 图', difficulty: 2,
+      id: 'OO-028', module: 'oo-uml', topic: 'UML 图', difficulty: 2, points: ['oo-uml|UML 图'],
       stem: '顺序图中，对象符号下方垂直向下的虚线称为（ ）。',
       options: ['泳道', '生命线', '同步条', '汇合点'],
       answer: 1,
@@ -226,7 +226,7 @@
       tags: ['概念']
     },
     {
-      id: 'OO-029', module: 'oo-uml', topic: 'UML 图', difficulty: 2,
+      id: 'OO-029', module: 'oo-uml', topic: 'UML 图', difficulty: 2, points: ['oo-uml|UML 图'],
       stem: '通信图（协作图）与顺序图的主要区别是（ ）。',
       options: ['通信图只能描述单个对象的状态', '通信图用于描述硬件部署', '通信图强调对象之间的链接关系，用序号表示消息顺序', '通信图不支持表示消息'],
       answer: 2,
@@ -234,7 +234,7 @@
       tags: ['概念']
     },
     {
-      id: 'OO-030', module: 'oo-uml', topic: '用例图', difficulty: 1,
+      id: 'OO-030', module: 'oo-uml', topic: '用例图', difficulty: 1, points: ['oo-uml|UML 图'],
       stem: '用例图中的参与者（Actor）可以是（ ）。',
       options: ['只能是自然人', '只能是本系统内部的类', '只能是数据库表', '人员、外部系统或外部设备'],
       answer: 3,
@@ -242,7 +242,7 @@
       tags: ['概念']
     },
     {
-      id: 'OO-031', module: 'oo-uml', topic: '类图关系', difficulty: 1,
+      id: 'OO-031', module: 'oo-uml', topic: '类图关系', difficulty: 1, points: ['oo-uml|UML 图'],
       stem: '类图中多重度 "1..*" 表示（ ）。',
       options: ['至少一个，可以有多个', '恰好一个', '零个或一个', '任意个，包括零个'],
       answer: 0,
@@ -250,7 +250,7 @@
       tags: ['记忆']
     },
     {
-      id: 'OO-032', module: 'oo-uml', topic: '类图关系', difficulty: 2,
+      id: 'OO-032', module: 'oo-uml', topic: '类图关系', difficulty: 2, points: ['oo-uml|UML 图'],
       stem: '类图中表示"依赖"关系的符号是（ ）。',
       options: ['虚线 + 空心三角箭头', '虚线 + 开口箭头', '实线 + 空心三角箭头', '实线 + 实心菱形'],
       answer: 1,
@@ -258,7 +258,7 @@
       tags: ['概念', '易错']
     },
     {
-      id: 'OO-033', module: 'oo-uml', topic: '设计模式', difficulty: 2,
+      id: 'OO-033', module: 'oo-uml', topic: '设计模式', difficulty: 2, points: ['oo-uml|设计模式（按目的分三类）'],
       stem: '将一个复杂对象的构建过程与其表示分离，使同样的构建过程可以创建不同的表示，这种模式是（ ）。',
       options: ['原型模式', '组合模式', '建造者模式', '工厂方法模式'],
       answer: 2,
@@ -266,7 +266,7 @@
       tags: ['概念']
     },
     {
-      id: 'OO-034', module: 'oo-uml', topic: '设计模式', difficulty: 1,
+      id: 'OO-034', module: 'oo-uml', topic: '设计模式', difficulty: 1, points: ['oo-uml|设计模式（按目的分三类）'],
       stem: '通过复制已有实例来创建新对象，避免重复执行复杂的初始化过程，这种模式是（ ）。',
       options: ['单例模式', '工厂方法模式', '享元模式', '原型模式'],
       answer: 3,
@@ -274,7 +274,7 @@
       tags: ['概念']
     },
     {
-      id: 'OO-035', module: 'oo-uml', topic: '设计模式', difficulty: 2,
+      id: 'OO-035', module: 'oo-uml', topic: '设计模式', difficulty: 2, points: ['oo-uml|设计模式（按目的分三类）'],
       stem: '为子系统中的一组接口提供一个统一的高层接口，使子系统更易使用，这种模式是（ ）。',
       options: ['外观模式', '适配器模式', '装饰模式', '桥接模式'],
       answer: 0,
@@ -282,7 +282,7 @@
       tags: ['概念', '高频']
     },
     {
-      id: 'OO-036', module: 'oo-uml', topic: '设计模式', difficulty: 3,
+      id: 'OO-036', module: 'oo-uml', topic: '设计模式', difficulty: 3, points: ['oo-uml|设计模式（按目的分三类）'],
       stem: '运用共享技术有效地支持大量细粒度对象，从而减少内存占用，这种模式是（ ）。',
       options: ['组合模式', '享元模式', '单例模式', '原型模式'],
       answer: 1,
@@ -290,7 +290,7 @@
       tags: ['概念', '难点']
     },
     {
-      id: 'OO-037', module: 'oo-uml', topic: '设计模式', difficulty: 2,
+      id: 'OO-037', module: 'oo-uml', topic: '设计模式', difficulty: 2, points: ['oo-uml|设计模式（按目的分三类）'],
       stem: '为其他对象提供一种代理以控制对该对象的访问，这种模式是（ ）。',
       options: ['外观模式', '中介者模式', '代理模式', '装饰模式'],
       answer: 2,
@@ -298,7 +298,7 @@
       tags: ['概念', '易错']
     },
     {
-      id: 'OO-038', module: 'oo-uml', topic: '设计模式', difficulty: 2,
+      id: 'OO-038', module: 'oo-uml', topic: '设计模式', difficulty: 2, points: ['oo-uml|设计模式（按目的分三类）'],
       stem: '使多个对象都有机会处理请求，从而避免请求发送者与接收者之间的耦合，这种模式是（ ）。',
       options: ['命令模式', '观察者模式', '策略模式', '职责链模式'],
       answer: 3,
@@ -306,7 +306,7 @@
       tags: ['概念']
     },
     {
-      id: 'OO-039', module: 'oo-uml', topic: '设计模式', difficulty: 2,
+      id: 'OO-039', module: 'oo-uml', topic: '设计模式', difficulty: 2, points: ['oo-uml|设计模式（按目的分三类）'],
       stem: '把一个请求封装成对象，从而可以用不同请求参数化客户、支持请求排队与撤销，这种模式是（ ）。',
       options: ['命令模式', '策略模式', '模板方法模式', '备忘录模式'],
       answer: 0,
@@ -314,7 +314,7 @@
       tags: ['概念']
     },
     {
-      id: 'OO-040', module: 'oo-uml', topic: 'OOA', difficulty: 2,
+      id: 'OO-040', module: 'oo-uml', topic: 'OOA', difficulty: 2, points: ['oo-uml|面向对象分析与设计'],
       stem: '领域模型描述的是（ ）。',
       options: ['系统的部署拓扑', '问题域中的业务概念及其关系，不含实现细节', '数据库的物理存储结构', '程序的类与方法实现'],
       answer: 1, 
@@ -322,7 +322,7 @@
       tags: ['概念']
     },
     {
-      id: 'OO-041', module: 'oo-uml', topic: 'OOA', difficulty: 2,
+      id: 'OO-041', module: 'oo-uml', topic: 'OOA', difficulty: 2, points: ['oo-uml|面向对象分析与设计'],
       stem: '面向对象分析（OOA）的基本步骤是（ ）。',
       options: ['画 DFD → 写数据字典 → 设计模块结构', '估算成本 → 排进度 → 分配人员', '识别对象与类 → 建立类图 → 定义属性与服务 → 确定类间关系', '编码 → 测试 → 部署 → 维护'],
       answer: 2,
@@ -330,7 +330,7 @@
       tags: ['概念']
     },
     {
-      id: 'OO-042', module: 'oo-uml', topic: '设计原则', difficulty: 2,
+      id: 'OO-042', module: 'oo-uml', topic: '设计原则', difficulty: 2, points: ['oo-uml|面向对象分析与设计'],
       stem: '面向对象设计中提倡"面向接口编程"，其主要好处是（ ）。',
       options: ['减少代码行数', '提高程序运行速度', '避免使用继承', '降低调用方与具体实现的耦合，便于替换实现与单元测试'],
       answer: 3,
@@ -338,7 +338,7 @@
       tags: ['概念', '高频']
     },
     {
-      id: 'OO-043', module: 'oo-uml', topic: 'OOA', difficulty: 2,
+      id: 'OO-043', module: 'oo-uml', topic: 'OOA', difficulty: 2, points: ['oo-uml|面向对象分析与设计'],
       stem: '边界类、控制类、实体类这三种分析类的划分，属于（ ）阶段的工作。',
       options: ['面向对象分析', '详细设计', '编码实现', '系统测试'],
       answer: 0,
@@ -346,7 +346,7 @@
       tags: ['概念']
     },
     {
-      id: 'OO-044', module: 'oo-uml', topic: 'OOA', difficulty: 2,
+      id: 'OO-044', module: 'oo-uml', topic: 'OOA', difficulty: 2, points: ['oo-uml|面向对象分析与设计'],
       stem: 'RUP 强调"用例驱动"，其含义是（ ）。',
       options: ['用例的数量决定了项目的人数', '用例贯穿需求、分析、设计、实现与测试各阶段，是各阶段工作的依据', '只在需求阶段使用用例，之后不再使用', '用例只用于描述界面操作'],
       answer: 1,
@@ -354,7 +354,7 @@
       tags: ['概念']
     },
     {
-      id: 'OO-045', module: 'oo-uml', topic: 'OOA', difficulty: 3,
+      id: 'OO-045', module: 'oo-uml', topic: 'OOA', difficulty: 3, points: ['oo-uml|面向对象分析与设计'],
       stem: '设计中提倡"优先使用组合而非继承"，主要原因是（ ）。',
       options: ['继承无法实现代码复用', '组合不需要定义接口', '组合在运行期可替换、耦合更低，可避免继承层次的膨胀与脆弱基类问题', '组合比继承更容易编写代码'],
       answer: 2,

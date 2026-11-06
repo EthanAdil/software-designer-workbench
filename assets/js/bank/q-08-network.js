@@ -2,7 +2,7 @@
 (function (RK) {
   RK.registerQuestions([
     {
-      id: 'NET-001', module: 'network', topic: '分层模型', difficulty: 1,
+      id: 'NET-001', module: 'network', topic: '分层模型', difficulty: 1, points: ['network|分层模型'],
       stem: '路由器工作在 OSI 参考模型的（ ），交换机通常工作在（ ）。',
       options: ['传输层，网络层', '网络层，物理层', '网络层，数据链路层', '数据链路层，网络层'],
       answer: 2,
@@ -10,7 +10,7 @@
       tags: ['概念', '必背']
     },
     {
-      id: 'NET-002', module: 'network', topic: '传输层', difficulty: 1,
+      id: 'NET-002', module: 'network', topic: '传输层', difficulty: 1, points: ['network|分层模型'],
       stem: '下列协议中，工作在传输层且提供可靠传输的是（ ）。',
       options: ['UDP', 'IP', 'ICMP', 'TCP'],
       answer: 3,
@@ -18,7 +18,7 @@
       tags: ['概念']
     },
     {
-      id: 'NET-003', module: 'network', topic: '子网划分', difficulty: 3,
+      id: 'NET-003', module: 'network', topic: '子网划分', difficulty: 3, points: ['network|IP 地址与子网'],
       stem: '将 192.168.1.0/24 划分为 4 个等长子网，则子网掩码为（ ），每个子网可用主机地址数为（ ）。',
       options: ['255.255.255.192，62', '255.255.255.224，30', '255.255.255.128，126', '255.255.255.240，14'],
       answer: 0,
@@ -26,7 +26,7 @@
       tags: ['计算', '高频']
     },
     {
-      id: 'NET-004', module: 'network', topic: '子网划分', difficulty: 2,
+      id: 'NET-004', module: 'network', topic: '子网划分', difficulty: 2, points: ['network|IP 地址与子网'],
       stem: '某子网掩码为 255.255.255.224，该子网中可分配给主机的地址个数是（ ）。',
       options: ['62', '30', '32', '14'],
       answer: 1,
@@ -34,7 +34,7 @@
       tags: ['计算']
     },
     {
-      id: 'NET-005', module: 'network', topic: 'IP 地址', difficulty: 1,
+      id: 'NET-005', module: 'network', topic: 'IP 地址', difficulty: 1, points: ['network|IP 地址与子网'],
       stem: '下列地址中，属于私有地址的是（ ）。',
       options: ['11.0.0.1', '224.0.0.1', '192.168.10.5', '172.32.10.5'],
       answer: 2,
@@ -42,7 +42,7 @@
       tags: ['概念', '易错']
     },
     {
-      id: 'NET-006', module: 'network', topic: 'CIDR', difficulty: 3,
+      id: 'NET-006', module: 'network', topic: 'CIDR', difficulty: 3, points: ['network|IP 地址与子网'],
       stem: '将 192.168.0.0/24 与 192.168.1.0/24 进行路由聚合，结果是（ ）。',
       options: ['192.168.0.0/22', '192.168.1.0/23', '192.168.0.0/25', '192.168.0.0/23'],
       answer: 3,
@@ -50,7 +50,7 @@
       tags: ['计算', '难点']
     },
     {
-      id: 'NET-007', module: 'network', topic: 'TCP', difficulty: 2,
+      id: 'NET-007', module: 'network', topic: 'TCP', difficulty: 2, points: ['network|TCP 与 UDP'],
       stem: 'TCP 建立连接的三次握手过程中，第二次握手的报文段标志位是（ ）。',
       options: ['SYN=1, ACK=1', 'SYN=1, ACK=0', 'FIN=1, ACK=1', 'ACK=1, FIN=0'],
       answer: 0,
@@ -58,7 +58,7 @@
       tags: ['概念', '高频']
     },
     {
-      id: 'NET-008', module: 'network', topic: 'TCP', difficulty: 3,
+      id: 'NET-008', module: 'network', topic: 'TCP', difficulty: 3, points: ['network|TCP 与 UDP'],
       stem: 'TCP 连接释放时，主动关闭方进入 TIME_WAIT 状态并等待 2MSL，其主要目的是（ ）。',
       options: ['防止拥塞窗口过大', '保证最后一个 ACK 能到达对方，并让旧连接的报文在网络中消失', '等待对方重新建立连接', '释放本地端口以便立即重用'],
       answer: 1,
@@ -66,7 +66,7 @@
       tags: ['概念', '易错']
     },
     {
-      id: 'NET-009', module: 'network', topic: 'TCP', difficulty: 2,
+      id: 'NET-009', module: 'network', topic: 'TCP', difficulty: 2, points: ['network|TCP 与 UDP'],
       stem: 'TCP 慢开始阶段，拥塞窗口的增长方式是（ ）。',
       options: ['始终保持 1 个报文段', '随机增长', '每经过一个 RTT 翻倍（指数增长），直到达到慢开始门限', '每个 RTT 加 1（线性增长）'],
       answer: 2,
@@ -74,7 +74,7 @@
       tags: ['概念', '高频']
     },
     {
-      id: 'NET-010', module: 'network', topic: '应用层', difficulty: 1,
+      id: 'NET-010', module: 'network', topic: '应用层', difficulty: 1, points: ['network|应用层与网络管理'],
       stem: 'DNS 查询通常采用的传输层协议是（ ）。',
       options: ['TCP', 'ICMP', 'ARP', 'UDP'],
       answer: 3,
@@ -82,7 +82,7 @@
       tags: ['概念']
     },
     {
-      id: 'NET-011', module: 'network', topic: '应用层', difficulty: 1,
+      id: 'NET-011', module: 'network', topic: '应用层', difficulty: 1, points: ['network|应用层与网络管理'],
       stem: '下列默认端口号对应关系正确的是（ ）。',
       options: ['HTTP-80、HTTPS-443、FTP-21、SMTP-25', 'HTTP-8080、HTTPS-443、FTP-20、SMTP-110', 'HTTP-80、HTTPS-8443、FTP-23、SMTP-25', 'HTTP-80、HTTPS-443、FTP-22、SMTP-110'],
       answer: 0,
@@ -90,7 +90,7 @@
       tags: ['记忆', '必背']
     },
     {
-      id: 'NET-012', module: 'network', topic: '路由协议', difficulty: 2,
+      id: 'NET-012', module: 'network', topic: '路由协议', difficulty: 2, points: ['network|应用层与网络管理'],
       stem: 'RIP 协议规定最大跳数为 15，其采用的算法是（ ）。',
       options: ['路径向量算法', '距离向量算法', '链路状态算法', '最短路径优先算法'],
       answer: 1,
@@ -98,7 +98,7 @@
       tags: ['概念']
     },
     {
-      id: 'NET-013', module: 'network', topic: '分层模型', difficulty: 1,
+      id: 'NET-013', module: 'network', topic: '分层模型', difficulty: 1, points: ['network|分层模型'],
       stem: 'OSI 参考模型自下而上的第二层是（ ）。',
       options: ['传输层', '会话层', '数据链路层', '网络层'],
       answer: 2,
@@ -106,7 +106,7 @@
       tags: ['记忆', '必背']
     },
     {
-      id: 'NET-014', module: 'network', topic: '分层模型', difficulty: 2,
+      id: 'NET-014', module: 'network', topic: '分层模型', difficulty: 2, points: ['network|分层模型'],
       stem: 'TCP/IP 模型中，传输层的数据单元称为（ ）。',
       options: ['帧', '分组（数据报）', '比特流', '报文段（TCP）或用户数据报（UDP）'],
       answer: 3,
@@ -114,7 +114,7 @@
       tags: ['概念']
     },
     {
-      id: 'NET-015', module: 'network', topic: '分层模型', difficulty: 2,
+      id: 'NET-015', module: 'network', topic: '分层模型', difficulty: 2, points: ['network|分层模型'],
       stem: '关于交换机与集线器，下列说法正确的是（ ）。',
       options: ['交换机按 MAC 地址转发，能隔离冲突域但不隔离广播域', '交换机既能隔离冲突域也能隔离广播域', '集线器按 IP 地址转发数据', '交换机工作在网络层'],
       answer: 0,
@@ -122,7 +122,7 @@
       tags: ['概念', '易错']
     },
     {
-      id: 'NET-016', module: 'network', topic: '分层模型', difficulty: 1,
+      id: 'NET-016', module: 'network', topic: '分层模型', difficulty: 1, points: ['network|分层模型'],
       stem: 'ARP 协议的作用是（ ）。',
       options: ['动态分配 IP 地址', '把 IP 地址解析为 MAC 地址', '把 MAC 地址解析为 IP 地址', '把域名解析为 IP 地址'],
       answer: 1,
@@ -130,7 +130,7 @@
       tags: ['概念', '高频']
     },
     {
-      id: 'NET-017', module: 'network', topic: 'IP 地址', difficulty: 1,
+      id: 'NET-017', module: 'network', topic: 'IP 地址', difficulty: 1, points: ['network|IP 地址与子网'],
       stem: 'IP 地址 192.168.1.1 属于（ ）。',
       options: ['B 类地址', 'D 类地址', 'C 类地址', 'A 类地址'],
       answer: 2,
@@ -138,7 +138,7 @@
       tags: ['记忆']
     },
     {
-      id: 'NET-018', module: 'network', topic: '子网划分', difficulty: 3,
+      id: 'NET-018', module: 'network', topic: '子网划分', difficulty: 3, points: ['network|IP 地址与子网'],
       stem: '网段 172.16.0.0/22 中可分配给主机的地址个数是（ ）。',
       options: ['1024', '510', '2046', '1022'],
       answer: 3,
@@ -146,7 +146,7 @@
       tags: ['计算', '高频']
     },
     {
-      id: 'NET-019', module: 'network', topic: 'CIDR', difficulty: 2,
+      id: 'NET-019', module: 'network', topic: 'CIDR', difficulty: 2, points: ['network|IP 地址与子网'],
       stem: '路由器查表时若有多条路由都匹配目的地址，应选择（ ）。',
       options: ['前缀最长的那条路由', '前缀最短的那条路由', '跳数最多的那条路由', '最先配置的那条路由'],
       answer: 0,
@@ -154,7 +154,7 @@
       tags: ['概念', '高频']
     },
     {
-      id: 'NET-020', module: 'network', topic: 'IP 地址', difficulty: 1,
+      id: 'NET-020', module: 'network', topic: 'IP 地址', difficulty: 1, points: ['network|IP 地址与子网'],
       stem: 'IPv6 地址的长度为（ ）。',
       options: ['256 位', '128 位', '32 位', '64 位'],
       answer: 1,
@@ -162,7 +162,7 @@
       tags: ['记忆']
     },
     {
-      id: 'NET-021', module: 'network', topic: 'TCP', difficulty: 2,
+      id: 'NET-021', module: 'network', topic: 'TCP', difficulty: 2, points: ['network|TCP 与 UDP'],
       stem: 'UDP 首部的固定长度是（ ）。',
       options: ['12 字节', '16 字节', '8 字节', '20 字节'],
       answer: 2,
@@ -170,7 +170,7 @@
       tags: ['记忆']
     },
     {
-      id: 'NET-022', module: 'network', topic: 'TCP', difficulty: 2,
+      id: 'NET-022', module: 'network', topic: 'TCP', difficulty: 2, points: ['network|TCP 与 UDP'],
       stem: 'TCP 连接释放需要四次挥手，主要原因是（ ）。',
       options: ['TCP 首部长度不够', '释放时需要重新同步序号', '为了防止拥塞', 'TCP 是全双工的，两个方向需要分别关闭'],
       answer: 3,
@@ -178,7 +178,7 @@
       tags: ['概念', '高频']
     },
     {
-      id: 'NET-023', module: 'network', topic: 'TCP', difficulty: 2,
+      id: 'NET-023', module: 'network', topic: 'TCP', difficulty: 2, points: ['network|TCP 与 UDP'],
       stem: 'TCP 拥塞避免阶段，拥塞窗口的增长方式是（ ）。',
       options: ['每经过一个 RTT 加 1（线性增长）', '每经过一个 RTT 翻倍（指数增长）', '保持不变', '每收到一个 ACK 减半'],
       answer: 0,
@@ -186,7 +186,7 @@
       tags: ['概念']
     },
     {
-      id: 'NET-024', module: 'network', topic: '应用层', difficulty: 2,
+      id: 'NET-024', module: 'network', topic: '应用层', difficulty: 2, points: ['network|应用层与网络管理'],
       stem: 'DNS 中用于指定邮件服务器地址的记录类型是（ ）。',
       options: ['NS', 'MX', 'A', 'CNAME'],
       answer: 1,
@@ -194,7 +194,7 @@
       tags: ['记忆']
     },
     {
-      id: 'NET-025', module: 'network', topic: '应用层', difficulty: 1,
+      id: 'NET-025', module: 'network', topic: '应用层', difficulty: 1, points: ['network|应用层与网络管理'],
       stem: 'DHCP 协议的主要作用是（ ）。',
       options: ['在链路层进行差错检测', '在路由器之间交换路由信息', '为主机动态分配 IP 地址及网关、DNS 等配置信息', '把域名解析为 IP 地址'],
       answer: 2,
@@ -202,7 +202,7 @@
       tags: ['概念']
     },
     {
-      id: 'NET-026', module: 'network', topic: '路由协议', difficulty: 2,
+      id: 'NET-026', module: 'network', topic: '路由协议', difficulty: 2, points: ['network|应用层与网络管理'],
       stem: 'OSPF 属于（ ）路由协议，计算最短路径采用（ ）算法。',
       options: ['距离向量，Bellman-Ford', '路径向量，Dijkstra', '链路状态，Bellman-Ford', '链路状态，Dijkstra'],
       answer: 3,
@@ -210,7 +210,7 @@
       tags: ['概念', '高频']
     },
     {
-      id: 'NET-027', module: 'network', topic: '应用层', difficulty: 1,
+      id: 'NET-027', module: 'network', topic: '应用层', difficulty: 1, points: ['network|应用层与网络管理'],
       stem: 'FTP 工作时使用两条 TCP 连接，其中控制连接的默认端口是（ ）。',
       options: ['21', '20', '22', '23'],
       answer: 0,
@@ -218,7 +218,7 @@
       tags: ['记忆', '易错']
     },
     {
-      id: 'NET-028', module: 'network', topic: '传输介质', difficulty: 1,
+      id: 'NET-028', module: 'network', topic: '传输介质', difficulty: 1, points: ['network|传输介质与编码'],
       stem: '双绞线用于以太网时，其最大传输距离一般约为（ ）。',
       options: ['10 公里', '100 米', '500 米', '2 公里'],
       answer: 1,
@@ -226,7 +226,7 @@
       tags: ['记忆']
     },
     {
-      id: 'NET-029', module: 'network', topic: '传输介质', difficulty: 2,
+      id: 'NET-029', module: 'network', topic: '传输介质', difficulty: 2, points: ['network|传输介质与编码'],
       stem: '曼彻斯特编码的编码效率为（ ），其主要优点是（ ）。',
       options: ['100%，无冗余', '25%，抗干扰强', '50%，自带位同步信息', '80%，编码简单'],
       answer: 2,
@@ -234,7 +234,7 @@
       tags: ['记忆', '高频']
     },
     {
-      id: 'NET-030', module: 'network', topic: '传输介质', difficulty: 2,
+      id: 'NET-030', module: 'network', topic: '传输介质', difficulty: 2, points: ['network|传输介质与编码'],
       stem: '与多模光纤相比，单模光纤的特点是（ ）。',
       options: ['纤芯粗、可传多种模式，适合短距离传输', '传输距离比双绞线还短', '只能用于局域网内部布线', '纤芯细、只传一种模式，传输距离远但光源与接插件成本较高'],
       answer: 3,

@@ -2,7 +2,7 @@
 (function (RK) {
   RK.registerQuestions([
     {
-      id: 'DS-001', module: 'ds-algorithm', topic: '二叉树性质', difficulty: 1,
+      id: 'DS-001', module: 'ds-algorithm', topic: '二叉树性质', difficulty: 1, points: ['ds-algorithm|树与二叉树'],
       stem: '某二叉树中有 10 个度为 2 的结点，则该二叉树的叶子结点数为（ ）。',
       options: ['无法确定', '11', '10', '9'],
       answer: 1,
@@ -10,7 +10,7 @@
       tags: ['计算', '必背']
     },
     {
-      id: 'DS-002', module: 'ds-algorithm', topic: '二叉树性质', difficulty: 2,
+      id: 'DS-002', module: 'ds-algorithm', topic: '二叉树性质', difficulty: 2, points: ['ds-algorithm|树与二叉树'],
       stem: '一棵有 1000 个结点的完全二叉树的高度为（ ）。',
       options: ['11', '12', '10', '9'],
       answer: 2,
@@ -18,7 +18,7 @@
       tags: ['计算']
     },
     {
-      id: 'DS-003', module: 'ds-algorithm', topic: '二叉树遍历', difficulty: 3,
+      id: 'DS-003', module: 'ds-algorithm', topic: '二叉树遍历', difficulty: 3, points: ['ds-algorithm|树与二叉树'],
       stem: '某二叉树先序遍历为 ABDECF，中序遍历为 DBEAFC，则其后序遍历为（ ）。',
       options: ['DEBCFA', 'EDBFCA', 'DBEFCA', 'DEBFCA'],
       answer: 3,
@@ -26,7 +26,7 @@
       tags: ['计算', '高频']
     },
     {
-      id: 'DS-004', module: 'ds-algorithm', topic: '哈夫曼树', difficulty: 3,
+      id: 'DS-004', module: 'ds-algorithm', topic: '哈夫曼树', difficulty: 3, points: ['ds-algorithm|树与二叉树'],
       stem: '对权值集合 {5, 7, 8, 11, 15, 25} 构造哈夫曼树，其带权路径长度 WPL 为（ ）。',
       options: ['173', '160', '183', '244'],
       answer: 0,
@@ -34,7 +34,7 @@
       tags: ['计算', '难点']
     },
     {
-      id: 'DS-005', module: 'ds-algorithm', topic: '二叉排序树', difficulty: 1,
+      id: 'DS-005', module: 'ds-algorithm', topic: '二叉排序树', difficulty: 1, points: ['ds-algorithm|树与二叉树'],
       stem: '对二叉排序树进行（ ）遍历，可以得到按关键字递增排列的序列。',
       options: ['层序', '中序', '先序', '后序'],
       answer: 1,
@@ -42,7 +42,7 @@
       tags: ['概念', '高频']
     },
     {
-      id: 'DS-006', module: 'ds-algorithm', topic: '图', difficulty: 2,
+      id: 'DS-006', module: 'ds-algorithm', topic: '图', difficulty: 2, points: ['ds-algorithm|图'],
       stem: '用邻接矩阵存储无向图，矩阵第 i 行中非零元素的个数等于（ ）。',
       options: ['图的边数', '顶点 i 的出度', '顶点 i 的度', '顶点 i 的入度'],
       answer: 2,
@@ -50,7 +50,7 @@
       tags: ['概念']
     },
     {
-      id: 'DS-007', module: 'ds-algorithm', topic: '最小生成树', difficulty: 2,
+      id: 'DS-007', module: 'ds-algorithm', topic: '最小生成树', difficulty: 2, points: ['ds-algorithm|图'],
       stem: '对于边稠密的图，求最小生成树更适合采用（ ）。',
       options: ['Kruskal 算法', 'Floyd 算法', 'Dijkstra 算法', 'Prim 算法'],
       answer: 3,
@@ -58,7 +58,7 @@
       tags: ['概念', '高频']
     },
     {
-      id: 'DS-008', module: 'ds-algorithm', topic: '最短路径', difficulty: 2,
+      id: 'DS-008', module: 'ds-algorithm', topic: '最短路径', difficulty: 2, points: ['ds-algorithm|图'],
       stem: 'Dijkstra 算法不能正确处理含有（ ）的图。',
       options: ['负权边', '环', '多条边', '孤立顶点'],
       answer: 0,
@@ -66,7 +66,7 @@
       tags: ['概念', '易错']
     },
     {
-      id: 'DS-009', module: 'ds-algorithm', topic: '拓扑排序', difficulty: 2,
+      id: 'DS-009', module: 'ds-algorithm', topic: '拓扑排序', difficulty: 2, points: ['ds-algorithm|图'],
       stem: '对有向图进行拓扑排序，若排序过程结束后仍有顶点未输出，说明该图（ ）。',
       options: ['存在孤立顶点', '存在环', '是连通图', '是稀疏图'],
       answer: 1,
@@ -74,7 +74,7 @@
       tags: ['概念']
     },
     {
-      id: 'DS-010', module: 'ds-algorithm', topic: '关键路径', difficulty: 2,
+      id: 'DS-010', module: 'ds-algorithm', topic: '关键路径', difficulty: 2, points: ['ds-algorithm|图'],
       stem: '在 AOE 网中，完成整个工程的最短时间取决于（ ）。',
       options: ['顶点数最多的路径', '边数最多的路径', '关键路径的长度', '最短路径的长度'],
       answer: 2,
@@ -82,7 +82,7 @@
       tags: ['概念', '高频']
     },
     {
-      id: 'DS-011', module: 'ds-algorithm', topic: '查找', difficulty: 2,
+      id: 'DS-011', module: 'ds-algorithm', topic: '查找', difficulty: 2, points: ['ds-algorithm|查找'],
       stem: '对长度为 1000 的有序表进行二分查找，最多需要比较（ ）次。',
       options: ['9', '11', '500', '10'],
       answer: 3,
@@ -90,7 +90,7 @@
       tags: ['计算']
     },
     {
-      id: 'DS-012', module: 'ds-algorithm', topic: '散列表', difficulty: 2,
+      id: 'DS-012', module: 'ds-algorithm', topic: '散列表', difficulty: 2, points: ['ds-algorithm|查找'],
       stem: '散列表的装填因子 α 定义为（ ），α 越大则（ ）。',
       options: ['表中记录数 / 散列表长度，冲突可能性越大', '散列表长度 / 表中记录数，冲突可能性越大', '表中记录数 / 散列表长度，查找效率越高', '已用空间 / 总空间，查找效率越高'],
       answer: 0,
@@ -98,7 +98,7 @@
       tags: ['概念']
     },
     {
-      id: 'DS-013', module: 'ds-algorithm', topic: '排序', difficulty: 1,
+      id: 'DS-013', module: 'ds-algorithm', topic: '排序', difficulty: 1, points: ['ds-algorithm|排序'],
       stem: '下列排序算法中，属于稳定排序的是（ ）。',
       options: ['希尔排序', '归并排序', '快速排序', '堆排序'],
       answer: 1,
@@ -106,7 +106,7 @@
       tags: ['记忆', '必背']
     },
     {
-      id: 'DS-014', module: 'ds-algorithm', topic: '排序', difficulty: 2,
+      id: 'DS-014', module: 'ds-algorithm', topic: '排序', difficulty: 2, points: ['ds-algorithm|排序'],
       stem: '快速排序在最坏情况下的时间复杂度为（ ），此时待排序列通常（ ）。',
       options: ['O(n²)，完全随机', 'O(n log n)，完全逆序', 'O(n²)，基本有序', 'O(n log n)，基本有序'],
       answer: 2,
@@ -114,7 +114,7 @@
       tags: ['概念', '易错']
     },
     {
-      id: 'DS-015', module: 'ds-algorithm', topic: '排序', difficulty: 2,
+      id: 'DS-015', module: 'ds-algorithm', topic: '排序', difficulty: 2, points: ['ds-algorithm|排序'],
       stem: '对 n 个元素进行堆排序，初始建堆的时间复杂度为（ ）。',
       options: ['O(n log n)', 'O(log n)', 'O(n²)', 'O(n)'],
       answer: 3,
@@ -122,7 +122,7 @@
       tags: ['概念']
     },
     {
-      id: 'DS-016', module: 'ds-algorithm', topic: '队列', difficulty: 2,
+      id: 'DS-016', module: 'ds-algorithm', topic: '队列', difficulty: 2, points: ['ds-algorithm|线性结构'],
       stem: '循环队列容量为 m（数组下标 0~m-1），front 指向队头元素、rear 指向队尾元素的下一个位置，则队列中元素个数为（ ）。',
       options: ['(rear - front + m) % m', '(front - rear + m) % m', 'rear - front', 'rear - front + 1'],
       answer: 0,
@@ -130,7 +130,7 @@
       tags: ['计算', '高频']
     },
     {
-      id: 'DS-017', module: 'ds-algorithm', topic: '串', difficulty: 2,
+      id: 'DS-017', module: 'ds-algorithm', topic: '串', difficulty: 2, points: ['ds-algorithm|线性结构'],
       stem: 'KMP 算法相比朴素的 BF 模式匹配算法，其主要改进是（ ）。',
       options: ['把模式串排序后再匹配', '利用已匹配信息避免主串指针回溯，时间复杂度 O(n+m)', '通过哈希把复杂度降到 O(1)', '要求主串必须有序'],
       answer: 1,
@@ -138,7 +138,7 @@
       tags: ['概念']
     },
     {
-      id: 'DS-018', module: 'ds-algorithm', topic: '复杂度', difficulty: 1,
+      id: 'DS-018', module: 'ds-algorithm', topic: '复杂度', difficulty: 1, points: ['ds-algorithm|算法设计与复杂度'],
       stem: '下列时间复杂度按从低到高排列正确的是（ ）。',
       options: ['O(log n) < O(1) < O(n) < O(n²) < O(n log n) < O(n!)', 'O(1) < O(log n) < O(n log n) < O(n) < O(n²) < O(2ⁿ)', 'O(1) < O(log n) < O(n) < O(n log n) < O(n²) < O(2ⁿ)', 'O(1) < O(n) < O(log n) < O(n²) < O(n log n) < O(2ⁿ)'],
       answer: 2,
@@ -146,7 +146,7 @@
       tags: ['记忆', '必背']
     },
     {
-      id: 'DS-019', module: 'ds-algorithm', topic: '栈', difficulty: 1,
+      id: 'DS-019', module: 'ds-algorithm', topic: '栈', difficulty: 1, points: ['ds-algorithm|线性结构'],
       stem: '下列应用场景中，最适合使用栈的是（ ）。',
       options: ['操作系统的作业等待队列', '图的广度优先遍历', '磁盘读写缓冲区', '表达式求值与括号匹配'],
       answer: 3,
@@ -154,7 +154,7 @@
       tags: ['概念', '必背']
     },
     {
-      id: 'DS-020', module: 'ds-algorithm', topic: '线性表', difficulty: 2,
+      id: 'DS-020', module: 'ds-algorithm', topic: '线性表', difficulty: 2, points: ['ds-algorithm|线性结构'],
       stem: '在长度为 n 的顺序表第 i 个位置（1 ≤ i ≤ n+1）插入一个元素，平均需要移动的元素个数为（ ）。',
       options: ['n/2', 'n', '(n+1)/2', 'n-1'],
       answer: 0,
@@ -162,7 +162,7 @@
       tags: ['计算', '高频']
     },
     {
-      id: 'DS-021', module: 'ds-algorithm', topic: '队列', difficulty: 1,
+      id: 'DS-021', module: 'ds-algorithm', topic: '队列', difficulty: 1, points: ['ds-algorithm|线性结构'],
       stem: '循环队列容量为 m（牺牲一个单元区分队空与队满），front 指向队头元素、rear 指向队尾元素的下一个位置，则队满的条件是（ ）。',
       options: ['rear == m-1', '(rear+1) % m == front', 'rear == front', '(front+1) % m == rear'],
       answer: 1,
@@ -170,7 +170,7 @@
       tags: ['概念', '易错']
     },
     {
-      id: 'DS-022', module: 'ds-algorithm', topic: '二叉树性质', difficulty: 2,
+      id: 'DS-022', module: 'ds-algorithm', topic: '二叉树性质', difficulty: 2, points: ['ds-algorithm|树与二叉树'],
       stem: '一棵有 100 个结点的完全二叉树，其叶子结点数为（ ）。',
       options: ['51', '25', '50', '49'],
       answer: 2,
@@ -178,7 +178,7 @@
       tags: ['计算', '高频']
     },
     {
-      id: 'DS-023', module: 'ds-algorithm', topic: '二叉树性质', difficulty: 1,
+      id: 'DS-023', module: 'ds-algorithm', topic: '二叉树性质', difficulty: 1, points: ['ds-algorithm|树与二叉树'],
       stem: '高度为 5 的二叉树最多有（ ）个结点。',
       options: ['32', '16', '25', '31'],
       answer: 3,
@@ -186,7 +186,7 @@
       tags: ['计算']
     },
     {
-      id: 'DS-024', module: 'ds-algorithm', topic: '二叉树性质', difficulty: 1,
+      id: 'DS-024', module: 'ds-algorithm', topic: '二叉树性质', difficulty: 1, points: ['ds-algorithm|树与二叉树'],
       stem: '对含 n 个结点的完全二叉树从 1 开始按层序编号，则编号为 i 的结点的左孩子编号为（ ）。',
       options: ['2i（当 2i ≤ n 时）', '2i+1（当 2i+1 ≤ n 时）', '⌊i/2⌋', 'i+1'],
       answer: 0,
@@ -194,7 +194,7 @@
       tags: ['记忆', '必背']
     },
     {
-      id: 'DS-025', module: 'ds-algorithm', topic: '二叉树遍历', difficulty: 3,
+      id: 'DS-025', module: 'ds-algorithm', topic: '二叉树遍历', difficulty: 3, points: ['ds-algorithm|树与二叉树'],
       stem: '某二叉树的后序遍历为 DABEC，中序遍历为 DEBAC，则其先序遍历为（ ）。',
       options: ['CEDAB', 'CEDBA', 'CDEAB', 'CABED'],
       answer: 1,
@@ -202,7 +202,7 @@
       tags: ['计算', '难点']
     },
     {
-      id: 'DS-026', module: 'ds-algorithm', topic: 'B树', difficulty: 2,
+      id: 'DS-026', module: 'ds-algorithm', topic: 'B树', difficulty: 2, points: ['ds-algorithm|树与二叉树'],
       stem: '与 B 树相比，B+ 树的主要特点是（ ）。',
       options: ['叶子结点之间没有联系，只能逐层查找', '只支持等值查询，不支持范围查询', '所有数据都存放在叶子结点，叶子结点用链表相连，适合范围查询', '非叶结点也存放数据记录，查询可在任意层结束'],
       answer: 2,
@@ -210,7 +210,7 @@
       tags: ['概念', '高频']
     },
     {
-      id: 'DS-027', module: 'ds-algorithm', topic: '哈夫曼树', difficulty: 3,
+      id: 'DS-027', module: 'ds-algorithm', topic: '哈夫曼树', difficulty: 3, points: ['ds-algorithm|树与二叉树'],
       stem: '对权值集合 {1, 2, 3, 4} 构造哈夫曼树，其带权路径长度 WPL 为（ ）。',
       options: ['20', '18', '21', '19'],
       answer: 3,
@@ -218,7 +218,7 @@
       tags: ['计算', '难点']
     },
     {
-      id: 'DS-028', module: 'ds-algorithm', topic: '图', difficulty: 2,
+      id: 'DS-028', module: 'ds-algorithm', topic: '图', difficulty: 2, points: ['ds-algorithm|图'],
       stem: '采用邻接表存储含 n 个顶点、e 条边的图，深度优先遍历的时间复杂度为（ ）。',
       options: ['O(n+e)', 'O(n²)', 'O(e log e)', 'O(n×e)'],
       answer: 0,
@@ -226,7 +226,7 @@
       tags: ['概念']
     },
     {
-      id: 'DS-029', module: 'ds-algorithm', topic: '拓扑排序', difficulty: 1,
+      id: 'DS-029', module: 'ds-algorithm', topic: '拓扑排序', difficulty: 1, points: ['ds-algorithm|图'],
       stem: '拓扑排序适用于（ ）。',
       options: ['用边表示活动的 AOE 网', '用顶点表示活动、边表示活动先后关系的有向无环图（AOV 网）', '带权无向图', '存在环的有向图'],
       answer: 1,
@@ -234,7 +234,7 @@
       tags: ['概念']
     },
     {
-      id: 'DS-030', module: 'ds-algorithm', topic: '最短路径', difficulty: 2,
+      id: 'DS-030', module: 'ds-algorithm', topic: '最短路径', difficulty: 2, points: ['ds-algorithm|图'],
       stem: '求图中每一对顶点之间的最短路径，最常用的算法及其时间复杂度是（ ）。',
       options: ['Prim 算法，O(n²)', 'Kruskal 算法，O(e log e)', 'Floyd 算法，O(n³)', 'Dijkstra 算法，O(n²)'],
       answer: 2,
@@ -242,7 +242,7 @@
       tags: ['概念', '高频']
     },
     {
-      id: 'DS-031', module: 'ds-algorithm', topic: '查找', difficulty: 1,
+      id: 'DS-031', module: 'ds-algorithm', topic: '查找', difficulty: 1, points: ['ds-algorithm|查找'],
       stem: '二分查找要求线性表（ ）。',
       options: ['采用链式存储且按关键字有序', '只要求按关键字有序，存储结构不限', '采用散列存储', '采用顺序存储且按关键字有序'],
       answer: 3,
@@ -250,7 +250,7 @@
       tags: ['概念', '易错']
     },
     {
-      id: 'DS-032', module: 'ds-algorithm', topic: '散列表', difficulty: 2,
+      id: 'DS-032', module: 'ds-algorithm', topic: '散列表', difficulty: 2, points: ['ds-algorithm|查找'],
       stem: '散列表采用链地址法处理冲突时，散列地址相同的记录（ ）。',
       options: ['链接在同一个单链表中', '按线性探测依次存入相邻单元', '被重新散列到其他地址', '必须删除后重新插入'],
       answer: 0,
@@ -258,7 +258,7 @@
       tags: ['概念']
     },
     {
-      id: 'DS-033', module: 'ds-algorithm', topic: '散列表', difficulty: 2,
+      id: 'DS-033', module: 'ds-algorithm', topic: '散列表', difficulty: 2, points: ['ds-algorithm|查找'],
       stem: '某散列表长度为 100，已存入 75 条记录，则其装填因子为（ ）。',
       options: ['0.25', '0.75', '1.33', '75'],
       answer: 1,
@@ -266,7 +266,7 @@
       tags: ['计算']
     },
     {
-      id: 'DS-034', module: 'ds-algorithm', topic: '查找', difficulty: 3,
+      id: 'DS-034', module: 'ds-algorithm', topic: '查找', difficulty: 3, points: ['ds-algorithm|查找'],
       stem: '对长度为 10 的顺序表进行顺序查找，查找成功时的平均查找长度为（ ）。',
       options: ['10', '6', '5.5', '5'],
       answer: 2,
@@ -274,7 +274,7 @@
       tags: ['计算']
     },
     {
-      id: 'DS-035', module: 'ds-algorithm', topic: '排序', difficulty: 1,
+      id: 'DS-035', module: 'ds-algorithm', topic: '排序', difficulty: 1, points: ['ds-algorithm|排序'],
       stem: '归并排序的空间复杂度为（ ）。',
       options: ['O(1)', 'O(log n)', 'O(n²)', 'O(n)'],
       answer: 3,
@@ -282,7 +282,7 @@
       tags: ['概念']
     },
     {
-      id: 'DS-036', module: 'ds-algorithm', topic: '排序', difficulty: 2,
+      id: 'DS-036', module: 'ds-algorithm', topic: '排序', difficulty: 2, points: ['ds-algorithm|排序'],
       stem: '下列排序算法中，空间复杂度为 O(1) 的是（ ）。',
       options: ['堆排序', '归并排序', '快速排序', '基数排序'],
       answer: 0,
@@ -290,7 +290,7 @@
       tags: ['记忆']
     },
     {
-      id: 'DS-037', module: 'ds-algorithm', topic: '排序', difficulty: 2,
+      id: 'DS-037', module: 'ds-algorithm', topic: '排序', difficulty: 2, points: ['ds-algorithm|排序'],
       stem: '对 10 个元素进行简单选择排序，无论初始序列如何，比较次数都是（ ）。',
       options: ['10', '45', '90', '55'],
       answer: 1,
@@ -298,7 +298,7 @@
       tags: ['计算']
     },
     {
-      id: 'DS-038', module: 'ds-algorithm', topic: '算法设计', difficulty: 1,
+      id: 'DS-038', module: 'ds-algorithm', topic: '算法设计', difficulty: 1, points: ['ds-algorithm|算法设计与复杂度'],
       stem: '下列算法中，采用分治策略的是（ ）。',
       options: ['活动安排的贪心解法', 'N 皇后问题的回溯解法', '归并排序', '0-1 背包的动态规划解法'],
       answer: 2,
@@ -306,7 +306,7 @@
       tags: ['概念', '高频']
     },
     {
-      id: 'DS-039', module: 'ds-algorithm', topic: '算法设计', difficulty: 2,
+      id: 'DS-039', module: 'ds-algorithm', topic: '算法设计', difficulty: 2, points: ['ds-algorithm|算法设计与复杂度'],
       stem: '动态规划算法适用的两个基本要素是（ ）。',
       options: ['贪心选择性质与最优子结构', '随机化与并行性', '有界性与确定性', '最优子结构与重叠子问题'],
       answer: 3,
@@ -314,7 +314,7 @@
       tags: ['概念', '必背']
     },
     {
-      id: 'DS-040', module: 'ds-algorithm', topic: '算法设计', difficulty: 2,
+      id: 'DS-040', module: 'ds-algorithm', topic: '算法设计', difficulty: 2, points: ['ds-algorithm|算法设计与复杂度'],
       stem: '用回溯法求解 N 皇后问题，其搜索方式是（ ）。',
       options: ['按深度优先搜索解空间树，发现不满足约束即回退', '按广度优先逐层扩展所有结点', '每次选择当前最优的列，不再回退', '把所有解存入表格后自底向上递推'],
       answer: 0,

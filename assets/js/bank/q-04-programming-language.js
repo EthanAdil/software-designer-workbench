@@ -2,7 +2,7 @@
 (function (RK) {
   RK.registerQuestions([
     {
-      id: 'PL-001', module: 'programming-language', topic: '语言基础', difficulty: 1,
+      id: 'PL-001', module: 'programming-language', topic: '语言基础', difficulty: 1, points: ['programming-language|语言基础'],
       stem: '与解释方式相比，编译方式执行程序的特点是（ ）。',
       options: ['不需要生成目标代码', '执行效率高，但可移植性较差', '执行效率低，但可移植性好', '边翻译边执行，便于调试'],
       answer: 1,
@@ -10,7 +10,7 @@
       tags: ['概念', '高频']
     },
     {
-      id: 'PL-002', module: 'programming-language', topic: '参数传递', difficulty: 2,
+      id: 'PL-002', module: 'programming-language', topic: '参数传递', difficulty: 2, points: ['programming-language|语言基础'],
       stem: '在 C 语言中定义 void swap(int a, int b)，调用 swap(x, y) 后 x、y 的值（ ）。',
       options: ['不变，因为形参是常量', '互换，因为 C 默认传引用', '不变，因为形参是实参的副本', '互换，因为传递的是地址'],
       answer: 2,
@@ -18,7 +18,7 @@
       tags: ['概念', '易错']
     },
     {
-      id: 'PL-003', module: 'programming-language', topic: '正规式', difficulty: 2,
+      id: 'PL-003', module: 'programming-language', topic: '正规式', difficulty: 2, points: ['programming-language|文法与自动机'],
       stem: '正规式 (a|b)*abb 所描述的语言是（ ）。',
       options: ['由 a、b 组成且以 abb 开头的所有串', '只含 a、b 且长度为 3 的串', '由 a、b 组成且不含 abb 的串', '由 a、b 组成且以 abb 结尾的所有串'],
       answer: 3,
@@ -26,7 +26,7 @@
       tags: ['概念']
     },
     {
-      id: 'PL-004', module: 'programming-language', topic: '有限自动机', difficulty: 2,
+      id: 'PL-004', module: 'programming-language', topic: '有限自动机', difficulty: 2, points: ['programming-language|文法与自动机'],
       stem: '关于确定的有限自动机（DFA），下列说法正确的是（ ）。',
       options: ['对每个状态和每个输入符号，最多有一条转移', '对每个状态和每个输入符号，可以有多条转移', '允许 ε 转移', 'DFA 不能识别正规集'],
       answer: 0,
@@ -34,7 +34,7 @@
       tags: ['概念', '易错']
     },
     {
-      id: 'PL-005', module: 'programming-language', topic: '文法', difficulty: 2,
+      id: 'PL-005', module: 'programming-language', topic: '文法', difficulty: 2, points: ['programming-language|文法与自动机'],
       stem: '按乔姆斯基分类，程序设计语言的语法结构通常用（ ）描述。',
       options: ['短语文法（0 型）', '上下文无关文法（2 型）', '正规文法（3 型）', '上下文有关文法（1 型）'],
       answer: 1,
@@ -42,7 +42,7 @@
       tags: ['概念', '必背']
     },
     {
-      id: 'PL-006', module: 'programming-language', topic: '表达式', difficulty: 2,
+      id: 'PL-006', module: 'programming-language', topic: '表达式', difficulty: 2, points: ['programming-language|表达式与程序结构'],
       stem: '中缀表达式 a+b*(c-d) 对应的后缀表达式是（ ）。',
       options: ['abc-d*+', 'abcd*-+', 'abcd-*+', 'ab+cd-*'],
       answer: 2,
@@ -50,7 +50,7 @@
       tags: ['计算', '高频']
     },
     {
-      id: 'PL-007', module: 'programming-language', topic: '表达式', difficulty: 1,
+      id: 'PL-007', module: 'programming-language', topic: '表达式', difficulty: 1, points: ['programming-language|表达式与程序结构'],
       stem: '后缀表达式 3 4 + 5 * 的值为（ ）。',
       options: ['23', '27', '60', '35'],
       answer: 3,
@@ -58,7 +58,7 @@
       tags: ['计算']
     },
     {
-      id: 'PL-008', module: 'programming-language', topic: '编译过程', difficulty: 2,
+      id: 'PL-008', module: 'programming-language', topic: '编译过程', difficulty: 2, points: ['programming-language|编译过程'],
       stem: '检查"变量是否已声明""运算类型是否匹配"属于编译过程中（ ）阶段的任务。',
       options: ['语义分析', '词法分析', '语法分析', '代码优化'],
       answer: 0,
@@ -66,7 +66,7 @@
       tags: ['概念', '高频']
     },
     {
-      id: 'PL-009', module: 'programming-language', topic: '中间代码', difficulty: 1,
+      id: 'PL-009', module: 'programming-language', topic: '中间代码', difficulty: 1, points: ['programming-language|编译过程'],
       stem: '下列不属于中间代码表示形式的是（ ）。',
       options: ['逆波兰式', '源代码注释', '四元式', '三元式'],
       answer: 1,
@@ -74,7 +74,7 @@
       tags: ['概念']
     },
     {
-      id: 'PL-010', module: 'programming-language', topic: '语言基础', difficulty: 1,
+      id: 'PL-010', module: 'programming-language', topic: '语言基础', difficulty: 1, points: ['programming-language|语言基础'],
       stem: '下列语言中，属于静态类型（编译期进行类型检查）的是（ ）。',
       options: ['JavaScript', 'Ruby', 'Java', 'Python'],
       answer: 2,
@@ -82,7 +82,7 @@
       tags: ['概念']
     },
     {
-      id: 'PL-011', module: 'programming-language', topic: '参数传递', difficulty: 2,
+      id: 'PL-011', module: 'programming-language', topic: '参数传递', difficulty: 2, points: ['programming-language|语言基础'],
       stem: '若函数采用传地址（引用）方式传递参数，则（ ）。',
       options: ['形参是实参的副本，函数内修改不影响实参', '实参在函数调用时被复制两次', '只能在函数返回后同步修改实参', '形参与实参共享同一存储单元，函数内修改会影响实参'],
       answer: 3,
@@ -90,7 +90,7 @@
       tags: ['概念', '高频']
     },
     {
-      id: 'PL-012', module: 'programming-language', topic: '语言基础', difficulty: 1,
+      id: 'PL-012', module: 'programming-language', topic: '语言基础', difficulty: 1, points: ['programming-language|语言基础'],
       stem: '下列程序设计语言中，属于逻辑式语言的是（ ）。',
       options: ['Prolog', 'Lisp', 'Java', 'Pascal'],
       answer: 0,
@@ -98,7 +98,7 @@
       tags: ['记忆']
     },
     {
-      id: 'PL-013', module: 'programming-language', topic: '语言基础', difficulty: 2,
+      id: 'PL-013', module: 'programming-language', topic: '语言基础', difficulty: 2, points: ['programming-language|语言基础'],
       stem: '若变量的作用域由程序文本的嵌套结构决定，与运行时调用顺序无关，则这种作用域规则称为（ ）。',
       options: ['类型推导', '静态作用域（词法作用域）', '动态作用域', '隐式声明'],
       answer: 1,
@@ -106,7 +106,7 @@
       tags: ['概念']
     },
     {
-      id: 'PL-014', module: 'programming-language', topic: '语言基础', difficulty: 1,
+      id: 'PL-014', module: 'programming-language', topic: '语言基础', difficulty: 1, points: ['programming-language|语言基础'],
       stem: '关于编译程序与解释程序，下列说法正确的是（ ）。',
       options: ['解释程序先整体翻译再执行，效率更高', '编译程序逐句翻译，便于跨平台', '编译程序生成目标代码，解释程序不生成目标代码而直接执行', '两者都生成目标代码'],
       answer: 2,
@@ -114,7 +114,7 @@
       tags: ['概念']
     },
     {
-      id: 'PL-015', module: 'programming-language', topic: '正规式', difficulty: 2,
+      id: 'PL-015', module: 'programming-language', topic: '正规式', difficulty: 2, points: ['programming-language|文法与自动机'],
       stem: '正规式 a(a|b)* 所描述的语言是（ ）。',
       options: ['以 a 结尾、由 a 和 b 组成的任意串', '只含一个 a 的所有串', '长度至少为 2 的 a、b 串', '以 a 开头、由 a 和 b 组成的任意串'],
       answer: 3,
@@ -122,7 +122,7 @@
       tags: ['概念']
     },
     {
-      id: 'PL-016', module: 'programming-language', topic: '有限自动机', difficulty: 2,
+      id: 'PL-016', module: 'programming-language', topic: '有限自动机', difficulty: 2, points: ['programming-language|文法与自动机'],
       stem: '将非确定的有限自动机（NFA）转换为确定的有限自动机（DFA），常用的方法是（ ）。',
       options: ['子集构造法', '算符优先分析法', '递归下降分析法', 'LR 分析法'],
       answer: 0,
@@ -130,7 +130,7 @@
       tags: ['概念']
     },
     {
-      id: 'PL-017', module: 'programming-language', topic: '文法', difficulty: 2,
+      id: 'PL-017', module: 'programming-language', topic: '文法', difficulty: 2, points: ['programming-language|文法与自动机'],
       stem: '若一个文法存在某个句子对应两棵不同的语法树，则该文法（ ）。',
       options: ['一定是正规文法', '是二义性的', '是上下文有关的', '无法生成任何句子'],
       answer: 1,
@@ -138,7 +138,7 @@
       tags: ['概念', '易错']
     },
     {
-      id: 'PL-018', module: 'programming-language', topic: '文法', difficulty: 3,
+      id: 'PL-018', module: 'programming-language', topic: '文法', difficulty: 3, points: ['programming-language|文法与自动机'],
       stem: '3 型文法（正规文法）的产生式形式为（ ）。',
       options: ['α → β，α 非空', 'S → ε 之外无限制', 'A → aB 或 A → a（右线性）', 'A → αBβ，α 非空'],
       answer: 2,
@@ -146,7 +146,7 @@
       tags: ['记忆', '难点']
     },
     {
-      id: 'PL-019', module: 'programming-language', topic: '编译过程', difficulty: 1,
+      id: 'PL-019', module: 'programming-language', topic: '编译过程', difficulty: 1, points: ['programming-language|编译过程'],
       stem: '词法分析阶段的输出是（ ）。',
       options: ['语法树', '四元式序列', '目标代码', '单词（token）序列'],
       answer: 3,
@@ -154,7 +154,7 @@
       tags: ['概念', '必背']
     },
     {
-      id: 'PL-020', module: 'programming-language', topic: '编译过程', difficulty: 2,
+      id: 'PL-020', module: 'programming-language', topic: '编译过程', difficulty: 2, points: ['programming-language|编译过程'],
       stem: '编译过程中符号表的主要作用是（ ）。',
       options: ['记录标识符的类型、作用域、地址等信息，供各阶段查询与更新', '保存源程序的全部字符', '存放生成的目标代码', '记录语法树的结点编号'],
       answer: 0,
@@ -162,7 +162,7 @@
       tags: ['概念']
     },
     {
-      id: 'PL-021', module: 'programming-language', topic: '中间代码', difficulty: 2,
+      id: 'PL-021', module: 'programming-language', topic: '中间代码', difficulty: 2, points: ['programming-language|编译过程'],
       stem: '把循环体内不随循环变量变化的表达式移到循环外计算，这种优化称为（ ）。',
       options: ['公共子表达式删除', '循环不变式外提', '强度削弱', '常量合并'],
       answer: 1,
@@ -170,7 +170,7 @@
       tags: ['概念']
     },
     {
-      id: 'PL-022', module: 'programming-language', topic: '编译过程', difficulty: 2,
+      id: 'PL-022', module: 'programming-language', topic: '编译过程', difficulty: 2, points: ['programming-language|编译过程'],
       stem: '编译过程中，与具体硬件体系结构关系最密切的阶段是（ ）。',
       options: ['语法分析', '语义分析', '目标代码生成', '词法分析'],
       answer: 2,
@@ -178,7 +178,7 @@
       tags: ['概念']
     },
     {
-      id: 'PL-023', module: 'programming-language', topic: '表达式', difficulty: 3,
+      id: 'PL-023', module: 'programming-language', topic: '表达式', difficulty: 3, points: ['programming-language|表达式与程序结构'],
       stem: '后缀表达式 3 4 5 * - 的值为（ ）。',
       options: ['17', '-7', '5', '-17'],
       answer: 3,
@@ -186,7 +186,7 @@
       tags: ['计算', '易错']
     },
     {
-      id: 'PL-024', module: 'programming-language', topic: '表达式', difficulty: 3,
+      id: 'PL-024', module: 'programming-language', topic: '表达式', difficulty: 3, points: ['programming-language|表达式与程序结构'],
       stem: '中缀表达式 a+b*(c-d) 对应的前缀（波兰式）表示为（ ）。',
       options: ['+ a * b - c d', 'a + b * c - d', '- + a * b c d', '+ a - b * c d'],
       answer: 0,
@@ -194,7 +194,7 @@
       tags: ['计算', '高频']
     },
     {
-      id: 'PL-025', module: 'programming-language', topic: '表达式', difficulty: 1,
+      id: 'PL-025', module: 'programming-language', topic: '表达式', difficulty: 1, points: ['programming-language|表达式与程序结构'],
       stem: '把中缀表达式转换为后缀表达式时，栈主要用于（ ）。',
       options: ['记录表达式的长度', '暂存运算符与左括号，按优先级决定出栈顺序', '暂存操作数并直接输出', '保存最终结果'],
       answer: 1,

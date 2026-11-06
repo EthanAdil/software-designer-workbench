@@ -2,7 +2,7 @@
 (function (RK) {
   RK.registerQuestions([
     {
-      id: 'CS-001', module: 'computer-system', topic: '数据表示', difficulty: 1,
+      id: 'CS-001', module: 'computer-system', topic: '数据表示', difficulty: 1, points: ['computer-system|数据表示与运算'],
       stem: '某机器字长为 8 位，采用补码表示整数，则其能表示的数值范围是（ ）。',
       options: ['-128 ~ +127', '-127 ~ +127', '-128 ~ +128', '0 ~ 255'],
       answer: 0,
@@ -10,7 +10,7 @@
       tags: ['计算', '必背']
     },
     {
-      id: 'CS-002', module: 'computer-system', topic: '数据表示', difficulty: 2,
+      id: 'CS-002', module: 'computer-system', topic: '数据表示', difficulty: 2, points: ['computer-system|数据表示与运算'],
       stem: '8 位补码 10000000 所表示的真值是（ ）。',
       options: ['+128', '-128', '-127', '0'],
       answer: 1,
@@ -18,7 +18,7 @@
       tags: ['计算']
     },
     {
-      id: 'CS-003', module: 'computer-system', topic: '浮点数', difficulty: 1,
+      id: 'CS-003', module: 'computer-system', topic: '浮点数', difficulty: 1, points: ['computer-system|数据表示与运算'],
       stem: '在浮点数表示中，决定数值表示范围与精度的是（ ）。',
       options: ['阶码与尾数都只决定精度', '阶码与尾数都只决定范围', '阶码位数决定范围，尾数位数决定精度', '阶码位数决定精度，尾数位数决定范围'],
       answer: 2,
@@ -26,7 +26,7 @@
       tags: ['概念', '必背']
     },
     {
-      id: 'CS-004', module: 'computer-system', topic: '浮点数', difficulty: 2,
+      id: 'CS-004', module: 'computer-system', topic: '浮点数', difficulty: 2, points: ['computer-system|数据表示与运算'],
       stem: 'IEEE 754 单精度浮点数的位划分为（ ）。',
       options: ['1 位符号 + 7 位阶码 + 24 位尾数', '1 位符号 + 11 位阶码 + 52 位尾数', '8 位符号 + 8 位阶码 + 16 位尾数', '1 位符号 + 8 位阶码 + 23 位尾数'],
       answer: 3,
@@ -34,7 +34,7 @@
       tags: ['记忆', '必背']
     },
     {
-      id: 'CS-005', module: 'computer-system', topic: '运算方法', difficulty: 2,
+      id: 'CS-005', module: 'computer-system', topic: '运算方法', difficulty: 2, points: ['computer-system|数据表示与运算'],
       stem: '采用双符号位（变形补码）进行加法运算，若运算结果为 01，则表示（ ）。',
       options: ['正溢出', '负溢出', '结果正确', '发生下溢'],
       answer: 0,
@@ -42,7 +42,7 @@
       tags: ['概念']
     },
     {
-      id: 'CS-006', module: 'computer-system', topic: '校验码', difficulty: 2,
+      id: 'CS-006', module: 'computer-system', topic: '校验码', difficulty: 2, points: ['computer-system|数据表示与运算'],
       stem: '对 8 位信息位采用海明码进行检错纠错，至少需要的校验位个数是（ ）。',
       options: ['8', '4', '3', '5'],
       answer: 1,
@@ -50,7 +50,7 @@
       tags: ['计算', '高频']
     },
     {
-      id: 'CS-007', module: 'computer-system', topic: '校验码', difficulty: 2,
+      id: 'CS-007', module: 'computer-system', topic: '校验码', difficulty: 2, points: ['computer-system|数据表示与运算'],
       stem: '用生成多项式 G(x)=x³+x+1 对信息码做 CRC 校验，需在信息码后补（ ）个 0。',
       options: ['4', '1', '3', '2'],
       answer: 2,
@@ -58,7 +58,7 @@
       tags: ['计算']
     },
     {
-      id: 'CS-008', module: 'computer-system', topic: '指令流水线', difficulty: 2,
+      id: 'CS-008', module: 'computer-system', topic: '指令流水线', difficulty: 2, points: ['computer-system|CPU 与体系结构'],
       stem: '某指令流水线分为 5 段，每段耗时 1 个时钟周期。连续执行 100 条指令（无冲突）所需时钟周期数为（ ）。',
       options: ['100', '105', '500', '104'],
       answer: 3,
@@ -66,7 +66,7 @@
       tags: ['计算', '高频']
     },
     {
-      id: 'CS-009', module: 'computer-system', topic: '指令流水线', difficulty: 3,
+      id: 'CS-009', module: 'computer-system', topic: '指令流水线', difficulty: 3, points: ['computer-system|CPU 与体系结构'],
       stem: '接上题，该流水线相对于顺序执行（每条指令均需 5 个周期）的加速比约为（ ）。',
       options: ['约 4.81', '约 5.00', '约 1.04', '约 100'],
       answer: 0,
@@ -74,7 +74,7 @@
       tags: ['计算']
     },
     {
-      id: 'CS-010', module: 'computer-system', topic: 'Cache', difficulty: 3,
+      id: 'CS-010', module: 'computer-system', topic: 'Cache', difficulty: 3, points: ['computer-system|存储系统'],
       stem: '某计算机主存容量 1MB，按字节编址，Cache 容量 4KB，块大小 32B，采用直接映射方式。则主存地址中"标记（tag）"字段的位数为（ ）。',
       options: ['12', '8', '7', '5'],
       answer: 1,
@@ -82,7 +82,7 @@
       tags: ['计算', '难点']
     },
     {
-      id: 'CS-011', module: 'computer-system', topic: 'Cache', difficulty: 3,
+      id: 'CS-011', module: 'computer-system', topic: 'Cache', difficulty: 3, points: ['computer-system|存储系统'],
       stem: '某系统 Cache 存取时间为 2ns，主存存取时间为 20ns，命中率为 95%。若未命中时需先访问 Cache 再访问主存，则平均访问时间约为（ ）。',
       options: ['11 ns', '2.0 ns', '3.0 ns', '2.9 ns'],
       answer: 2,
@@ -90,7 +90,7 @@
       tags: ['计算', '易错']
     },
     {
-      id: 'CS-012', module: 'computer-system', topic: '体系结构', difficulty: 1,
+      id: 'CS-012', module: 'computer-system', topic: '体系结构', difficulty: 1, points: ['computer-system|CPU 与体系结构'],
       stem: '下列特征中，属于 RISC 体系结构的是（ ）。',
       options: ['指令数量多、长度可变、寻址方式丰富', '采用微程序控制、便于实现复杂指令', '指令执行周期长短差异大、大量访问内存', '指令长度固定、寻址方式少、以寄存器操作为主'],
       answer: 3,
@@ -98,7 +98,7 @@
       tags: ['概念', '高频']
     },
     {
-      id: 'CS-013', module: 'computer-system', topic: '体系结构', difficulty: 2,
+      id: 'CS-013', module: 'computer-system', topic: '体系结构', difficulty: 2, points: ['computer-system|CPU 与体系结构'],
       stem: '按 Flynn 分类，多处理机系统（各处理器执行不同指令、处理不同数据）属于（ ）。',
       options: ['MIMD', 'SIMD', 'SISD', 'MISD'],
       answer: 0,
@@ -106,7 +106,7 @@
       tags: ['概念']
     },
     {
-      id: 'CS-014', module: 'computer-system', topic: '可靠性', difficulty: 2,
+      id: 'CS-014', module: 'computer-system', topic: '可靠性', difficulty: 2, points: ['computer-system|总线、I/O 与可靠性'],
       stem: '某系统由 3 个部件串联组成，各部件可靠度均为 0.9，则系统可靠度为（ ）。',
       options: ['0.27', '0.729', '0.9', '0.999'],
       answer: 1,
@@ -114,7 +114,7 @@
       tags: ['计算']
     },
     {
-      id: 'CS-015', module: 'computer-system', topic: '性能指标', difficulty: 2,
+      id: 'CS-015', module: 'computer-system', topic: '性能指标', difficulty: 2, points: ['computer-system|性能指标'],
       stem: '某处理器主频为 2GHz，执行某程序的平均 CPI 为 2，则该处理器的 MIPS 值为（ ）。',
       options: ['4000', '500', '1000', '2000'],
       answer: 2,
@@ -122,7 +122,7 @@
       tags: ['计算']
     },
     {
-      id: 'CS-016', module: 'computer-system', topic: '数据表示', difficulty: 1,
+      id: 'CS-016', module: 'computer-system', topic: '数据表示', difficulty: 1, points: ['computer-system|数据表示与运算'],
       stem: '某机器字长为 8 位，采用原码表示整数，则其能表示的数值范围是（ ）。',
       options: ['-128 ~ +127', '-128 ~ +128', '0 ~ 255', '-127 ~ +127'],
       answer: 3,
@@ -130,7 +130,7 @@
       tags: ['计算', '易错']
     },
     {
-      id: 'CS-017', module: 'computer-system', topic: '数据表示', difficulty: 2,
+      id: 'CS-017', module: 'computer-system', topic: '数据表示', difficulty: 2, points: ['computer-system|数据表示与运算'],
       stem: '8 位补码 00000000 对应的移码是（ ）。',
       options: ['10000000', '00000000', '11111111', '01111111'],
       answer: 0,
@@ -138,7 +138,7 @@
       tags: ['计算', '易错']
     },
     {
-      id: 'CS-018', module: 'computer-system', topic: '校验码', difficulty: 2,
+      id: 'CS-018', module: 'computer-system', topic: '校验码', difficulty: 2, points: ['computer-system|数据表示与运算'],
       stem: 'CRC 校验中，生成多项式 G(x)=x⁴+x+1 对应的二进制位串是（ ）。',
       options: ['10001', '10011', '1011', '11001'],
       answer: 1,
@@ -146,7 +146,7 @@
       tags: ['计算', '易错']
     },
     {
-      id: 'CS-019', module: 'computer-system', topic: '校验码', difficulty: 2,
+      id: 'CS-019', module: 'computer-system', topic: '校验码', difficulty: 2, points: ['computer-system|数据表示与运算'],
       stem: '海明码中，校验位应放置在编号为（ ）的位置上。',
       options: ['所有偶数位（2、4、6、8…）', '整个码字的最后 k 位', '2 的幂次位（1、2、4、8…）', '所有奇数位（1、3、5、7…）'],
       answer: 2,
@@ -154,7 +154,7 @@
       tags: ['记忆', '高频']
     },
     {
-      id: 'CS-020', module: 'computer-system', topic: '体系结构', difficulty: 1,
+      id: 'CS-020', module: 'computer-system', topic: '体系结构', difficulty: 1, points: ['computer-system|CPU 与体系结构'],
       stem: '按 Flynn 分类，阵列处理机中所有处理单元在同一控制器指挥下、对不同数据执行同一条指令，这种结构属于（ ）。',
       options: ['SISD', 'MISD', 'MIMD', 'SIMD'],
       answer: 3,
@@ -162,7 +162,7 @@
       tags: ['概念']
     },
     {
-      id: 'CS-021', module: 'computer-system', topic: 'CPU', difficulty: 1,
+      id: 'CS-021', module: 'computer-system', topic: 'CPU', difficulty: 1, points: ['computer-system|CPU 与体系结构'],
       stem: 'CPU 中用于存放"下一条将要执行的指令地址"的寄存器是（ ）。',
       options: ['程序计数器 PC', '指令寄存器 IR', '累加寄存器 AC', '状态寄存器 PSW'],
       answer: 0,
@@ -170,7 +170,7 @@
       tags: ['概念', '必背']
     },
     {
-      id: 'CS-022', module: 'computer-system', topic: '指令流水线', difficulty: 2,
+      id: 'CS-022', module: 'computer-system', topic: '指令流水线', difficulty: 2, points: ['computer-system|CPU 与体系结构'],
       stem: '关于指令流水线，下列说法正确的是（ ）。',
       options: ['流水段划分越细，性能一定越高', '理想情况下加速比的上限等于流水段数 k', '加速比随指令条数增加而无上限增长', '流水线能缩短单条指令的执行时间'],
       answer: 1,
@@ -178,7 +178,7 @@
       tags: ['概念', '易错']
     },
     {
-      id: 'CS-023', module: 'computer-system', topic: '指令流水线', difficulty: 2,
+      id: 'CS-023', module: 'computer-system', topic: '指令流水线', difficulty: 2, points: ['computer-system|CPU 与体系结构'],
       stem: '指令流水线中，由转移指令改变执行方向、导致已预取的指令作废，这类冲突属于（ ）。',
       options: ['数据冲突', '资源冲突', '控制冲突', '结构冲突'],
       answer: 2,
@@ -186,7 +186,7 @@
       tags: ['概念']
     },
     {
-      id: 'CS-024', module: 'computer-system', topic: 'Cache', difficulty: 2,
+      id: 'CS-024', module: 'computer-system', topic: 'Cache', difficulty: 2, points: ['computer-system|存储系统'],
       stem: '在 Cache 直接映射方式下，主存地址被划分为（ ）三部分。',
       options: ['标记、页号、页内地址', '段号、段内地址、块内地址', '组号、标记、块内地址', '标记、行号（块号）、块内地址'],
       answer: 3,
@@ -194,7 +194,7 @@
       tags: ['概念', '高频']
     },
     {
-      id: 'CS-025', module: 'computer-system', topic: 'Cache', difficulty: 2,
+      id: 'CS-025', module: 'computer-system', topic: 'Cache', difficulty: 2, points: ['computer-system|存储系统'],
       stem: '与直接映射相比，全相联映射的特点是（ ）。',
       options: ['主存任一块可装入 Cache 任一行，冲突少但比较电路复杂、成本高', '主存块只能装入固定行，硬件最简单', '地址中仍保留行号字段用于定位', '命中率最低，只用于大容量 Cache'],
       answer: 0,
@@ -202,7 +202,7 @@
       tags: ['概念']
     },
     {
-      id: 'CS-026', module: 'computer-system', topic: '存储系统', difficulty: 1,
+      id: 'CS-026', module: 'computer-system', topic: '存储系统', difficulty: 1, points: ['computer-system|存储系统'],
       stem: '程序把同一段循环体重复执行多次，主要体现了（ ）。',
       options: ['数据局部性', '时间局部性', '空间局部性', '顺序局部性'],
       answer: 1,
@@ -210,7 +210,7 @@
       tags: ['概念']
     },
     {
-      id: 'CS-027', module: 'computer-system', topic: '存储系统', difficulty: 2,
+      id: 'CS-027', module: 'computer-system', topic: '存储系统', difficulty: 2, points: ['computer-system|存储系统'],
       stem: '某计算机按字节编址，地址线 20 根、数据线 8 根，则其最大寻址空间为（ ）。',
       options: ['2MB', '8MB', '1MB', '1KB'],
       answer: 2,
@@ -218,7 +218,7 @@
       tags: ['计算']
     },
     {
-      id: 'CS-028', module: 'computer-system', topic: 'Cache', difficulty: 3,
+      id: 'CS-028', module: 'computer-system', topic: 'Cache', difficulty: 3, points: ['computer-system|存储系统'],
       stem: '某系统 Cache 存取时间 1ns，主存存取时间 10ns，Cache 命中率 90%。若未命中时需先访问 Cache 再访问主存，则平均访问时间为（ ）。',
       options: ['1.9 ns', '11 ns', '1.1 ns', '2.0 ns'],
       answer: 3,
@@ -226,7 +226,7 @@
       tags: ['计算', '易错']
     },
     {
-      id: 'CS-029', module: 'computer-system', topic: '总线', difficulty: 1,
+      id: 'CS-029', module: 'computer-system', topic: '总线', difficulty: 1, points: ['computer-system|总线、I/O 与可靠性'],
       stem: '计算机总线中，数据总线的宽度决定了（ ）。',
       options: ['一次能并行传输的数据位数', '可直接寻址的存储空间大小', '总线的最大传输距离', '中断源的优先级'],
       answer: 0,
@@ -234,7 +234,7 @@
       tags: ['概念', '必背']
     },
     {
-      id: 'CS-030', module: 'computer-system', topic: '总线', difficulty: 2,
+      id: 'CS-030', module: 'computer-system', topic: '总线', difficulty: 2, points: ['computer-system|总线、I/O 与可靠性'],
       stem: '某计算机地址总线为 24 位，按字节编址，则可直接寻址的最大内存空间为（ ）。',
       options: ['32MB', '16MB', '8MB', '24MB'],
       answer: 1,
@@ -242,7 +242,7 @@
       tags: ['计算']
     },
     {
-      id: 'CS-031', module: 'computer-system', topic: 'I/O 方式', difficulty: 2,
+      id: 'CS-031', module: 'computer-system', topic: 'I/O 方式', difficulty: 2, points: ['computer-system|总线、I/O 与可靠性'],
       stem: '与中断方式相比，DMA 方式的主要特点是（ ）。',
       options: ['CPU 需不断查询设备状态寄存器', '传送过程不占用系统总线', '数据成块传送，CPU 只在传送开始和结束时干预', '每传送一个字节都要中断 CPU 一次'],
       answer: 2,
@@ -250,7 +250,7 @@
       tags: ['概念', '高频']
     },
     {
-      id: 'CS-032', module: 'computer-system', topic: '可靠性', difficulty: 2,
+      id: 'CS-032', module: 'computer-system', topic: '可靠性', difficulty: 2, points: ['computer-system|总线、I/O 与可靠性'],
       stem: '某系统由 2 个部件并联组成，各部件可靠度均为 0.9，则系统可靠度为（ ）。',
       options: ['0.9', '0.81', '0.18', '0.99'],
       answer: 3,
@@ -258,7 +258,7 @@
       tags: ['计算']
     },
     {
-      id: 'CS-033', module: 'computer-system', topic: '可靠性', difficulty: 2,
+      id: 'CS-033', module: 'computer-system', topic: '可靠性', difficulty: 2, points: ['computer-system|总线、I/O 与可靠性'],
       stem: '某部件失效率恒为 0.001/小时，则其平均无故障时间 MTBF 为（ ）。',
       options: ['1000 小时', '100 小时', '0.001 小时', '10000 小时'],
       answer: 0,
@@ -266,7 +266,7 @@
       tags: ['计算']
     },
     {
-      id: 'CS-034', module: 'computer-system', topic: '性能指标', difficulty: 3,
+      id: 'CS-034', module: 'computer-system', topic: '性能指标', difficulty: 3, points: ['computer-system|性能指标'],
       stem: '某程序共包含 10⁷ 条指令，平均 CPI 为 2，处理器主频为 2GHz，则执行该程序所需时间约为（ ）。',
       options: ['2 ms', '10 ms', '5 ms', '20 ms'],
       answer: 1,
@@ -274,7 +274,7 @@
       tags: ['计算']
     },
     {
-      id: 'CS-035', module: 'computer-system', topic: '性能指标', difficulty: 2,
+      id: 'CS-035', module: 'computer-system', topic: '性能指标', difficulty: 2, points: ['computer-system|性能指标'],
       stem: '某处理器主频为 1GHz，程序的平均 CPI 为 4，则该处理器的 MIPS 值为（ ）。',
       options: ['1000', '4000', '250', '500'],
       answer: 2,

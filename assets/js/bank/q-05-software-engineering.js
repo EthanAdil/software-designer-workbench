@@ -2,7 +2,7 @@
 (function (RK) {
   RK.registerQuestions([
     {
-      id: 'SE-001', module: 'software-engineering', topic: '开发模型', difficulty: 1,
+      id: 'SE-001', module: 'software-engineering', topic: '开发模型', difficulty: 1, points: ['software-engineering|开发模型'],
       stem: '适用于需求明确、稳定且开发团队熟悉领域的小型项目，采用严格串行阶段的开发模型是（ ）。',
       options: ['螺旋模型', '喷泉模型', '瀑布模型', '原型模型'],
       answer: 2,
@@ -10,7 +10,7 @@
       tags: ['概念', '必背']
     },
     {
-      id: 'SE-002', module: 'software-engineering', topic: '开发模型', difficulty: 2,
+      id: 'SE-002', module: 'software-engineering', topic: '开发模型', difficulty: 2, points: ['software-engineering|开发模型'],
       stem: '螺旋模型与增量模型相比，最显著的额外特征是（ ）。',
       options: ['强调文档驱动', '采用自顶向下设计', '要求需求完全确定', '引入风险分析'],
       answer: 3,
@@ -18,7 +18,7 @@
       tags: ['概念', '高频']
     },
     {
-      id: 'SE-003', module: 'software-engineering', topic: '开发模型', difficulty: 2,
+      id: 'SE-003', module: 'software-engineering', topic: '开发模型', difficulty: 2, points: ['software-engineering|开发模型'],
       stem: '在 V 模型中，与"概要设计"相对应的测试级别是（ ）。',
       options: ['系统测试', '单元测试', '集成测试', '验收测试'],
       answer: 0,
@@ -26,7 +26,7 @@
       tags: ['概念', '易错']
     },
     {
-      id: 'SE-004', module: 'software-engineering', topic: '敏捷开发', difficulty: 2,
+      id: 'SE-004', module: 'software-engineering', topic: '敏捷开发', difficulty: 2, points: ['software-engineering|开发模型'],
       stem: '在 Scrum 框架中，负责维护产品待办列表（Product Backlog）并确定优先级的是（ ）。',
       options: ['项目经理', 'Product Owner', 'Scrum Master', '开发团队'],
       answer: 1,
@@ -34,7 +34,7 @@
       tags: ['概念']
     },
     {
-      id: 'SE-005', module: 'software-engineering', topic: '开发模型', difficulty: 2,
+      id: 'SE-005', module: 'software-engineering', topic: '开发模型', difficulty: 2, points: ['software-engineering|开发模型'],
       stem: 'RUP（统一过程）的四个阶段依次是（ ）。',
       options: ['需求、设计、实现、测试', '计划、分析、设计、实施', '初始、细化、构建、交付', '初始、构建、细化、交付'],
       answer: 2,
@@ -42,7 +42,7 @@
       tags: ['记忆']
     },
     {
-      id: 'SE-006', module: 'software-engineering', topic: '需求工程', difficulty: 1,
+      id: 'SE-006', module: 'software-engineering', topic: '需求工程', difficulty: 1, points: ['software-engineering|需求工程'],
       stem: '数据流图（DFD）中不包含下列哪种元素（ ）。',
       options: ['外部实体', '加工', '数据存储', '控制流'],
       answer: 3,
@@ -50,7 +50,7 @@
       tags: ['概念', '高频']
     },
     {
-      id: 'SE-007', module: 'software-engineering', topic: '需求工程', difficulty: 2,
+      id: 'SE-007', module: 'software-engineering', topic: '需求工程', difficulty: 2, points: ['software-engineering|需求工程'],
       stem: '数据字典中，符号 "{ }" 表示（ ）。',
       options: ['重复', '可选', '选择', '顺序'],
       answer: 0,
@@ -58,7 +58,7 @@
       tags: ['记忆']
     },
     {
-      id: 'SE-008', module: 'software-engineering', topic: '耦合', difficulty: 2,
+      id: 'SE-008', module: 'software-engineering', topic: '耦合', difficulty: 2, points: ['software-engineering|结构化设计（耦合与内聚）'],
       stem: '两个模块之间仅通过参数传递简单数据值，这种耦合属于（ ）。',
       options: ['公共耦合', '数据耦合', '标记耦合', '控制耦合'],
       answer: 1,
@@ -66,7 +66,7 @@
       tags: ['概念', '高频']
     },
     {
-      id: 'SE-009', module: 'software-engineering', topic: '耦合', difficulty: 1,
+      id: 'SE-009', module: 'software-engineering', topic: '耦合', difficulty: 1, points: ['software-engineering|结构化设计（耦合与内聚）'],
       stem: '一个模块直接访问另一个模块的内部数据或代码，这种耦合是（ ），应尽量避免。',
       options: ['外部耦合', '控制耦合', '内容耦合', '公共耦合'],
       answer: 2,
@@ -74,7 +74,7 @@
       tags: ['概念', '必背']
     },
     {
-      id: 'SE-010', module: 'software-engineering', topic: '内聚', difficulty: 1,
+      id: 'SE-010', module: 'software-engineering', topic: '内聚', difficulty: 1, points: ['software-engineering|结构化设计（耦合与内聚）'],
       stem: '模块内所有处理元素共同完成一个单一功能，且缺一不可，这种内聚是（ ）。',
       options: ['顺序内聚', '通信内聚', '逻辑内聚', '功能内聚'],
       answer: 3,
@@ -82,7 +82,7 @@
       tags: ['概念', '必背']
     },
     {
-      id: 'SE-011', module: 'software-engineering', topic: '模块化', difficulty: 2,
+      id: 'SE-011', module: 'software-engineering', topic: '模块化', difficulty: 2, points: ['software-engineering|结构化设计（耦合与内聚）'],
       stem: '关于模块的扇入与扇出，下列说法正确的是（ ）。',
       options: ['扇入越大越好，说明该模块复用程度高', '扇出越大越好，说明该模块功能强大', '扇入指一个模块调用的下级模块数', '扇出指调用该模块的上级模块数'],
       answer: 0,
@@ -90,7 +90,7 @@
       tags: ['概念', '易错']
     },
     {
-      id: 'SE-012', module: 'software-engineering', topic: '详细设计', difficulty: 2,
+      id: 'SE-012', module: 'software-engineering', topic: '详细设计', difficulty: 2, points: ['software-engineering|详细设计与复杂度'],
       stem: '某程序流程图中有 5 个判定结点，则其 McCabe 环形复杂度为（ ）。',
       options: ['7', '6', '5', '4'],
       answer: 1,
@@ -98,7 +98,7 @@
       tags: ['计算', '高频']
     },
     {
-      id: 'SE-013', module: 'software-engineering', topic: '软件测试', difficulty: 1,
+      id: 'SE-013', module: 'software-engineering', topic: '软件测试', difficulty: 1, points: ['software-engineering|软件测试'],
       stem: '对输入数据的边界及其附近取值设计测试用例，属于（ ）。',
       options: ['因果图法', '错误推测法', '边界值分析', '等价类划分'],
       answer: 2,
@@ -106,7 +106,7 @@
       tags: ['概念', '高频']
     },
     {
-      id: 'SE-014', module: 'software-engineering', topic: '软件测试', difficulty: 2,
+      id: 'SE-014', module: 'software-engineering', topic: '软件测试', difficulty: 2, points: ['software-engineering|软件测试'],
       stem: '下列测试方法中，属于白盒测试的是（ ）。',
       options: ['等价类划分', '边界值分析', '正交试验设计', '语句覆盖'],
       answer: 3,
@@ -114,7 +114,7 @@
       tags: ['概念']
     },
     {
-      id: 'SE-015', module: 'software-engineering', topic: '软件测试', difficulty: 2,
+      id: 'SE-015', module: 'software-engineering', topic: '软件测试', difficulty: 2, points: ['software-engineering|软件测试'],
       stem: '下列覆盖准则中，覆盖强度最高的是（ ）。',
       options: ['路径覆盖', '条件组合覆盖', '判定/条件覆盖', '语句覆盖'],
       answer: 0,
@@ -122,7 +122,7 @@
       tags: ['记忆', '必背']
     },
     {
-      id: 'SE-016', module: 'software-engineering', topic: '软件测试', difficulty: 2,
+      id: 'SE-016', module: 'software-engineering', topic: '软件测试', difficulty: 2, points: ['software-engineering|软件测试'],
       stem: '进行单元测试时，为模拟被测试模块所调用的下层模块而编写的辅助模块称为（ ）。',
       options: ['测试桩件', '桩模块', '驱动模块', '测试用例'],
       answer: 1,
@@ -130,7 +130,7 @@
       tags: ['概念', '易错']
     },
     {
-      id: 'SE-017', module: 'software-engineering', topic: '软件测试', difficulty: 2,
+      id: 'SE-017', module: 'software-engineering', topic: '软件测试', difficulty: 2, points: ['software-engineering|软件测试'],
       stem: '采用自顶向下增量式集成测试时，需要编写的辅助模块是（ ）。',
       options: ['接口模块', '数据模块', '桩模块', '驱动模块'],
       answer: 2,
@@ -138,7 +138,7 @@
       tags: ['概念']
     },
     {
-      id: 'SE-018', module: 'software-engineering', topic: '软件测试', difficulty: 1,
+      id: 'SE-018', module: 'software-engineering', topic: '软件测试', difficulty: 1, points: ['software-engineering|软件测试'],
       stem: '修改软件后重新运行原有测试用例，以确认修改未引入新缺陷，这种测试称为（ ）。',
       options: ['冒烟测试', '验收测试', '负载测试', '回归测试'],
       answer: 3,
@@ -146,7 +146,7 @@
       tags: ['概念']
     },
     {
-      id: 'SE-019', module: 'software-engineering', topic: '软件维护', difficulty: 2,
+      id: 'SE-019', module: 'software-engineering', topic: '软件维护', difficulty: 2, points: ['software-engineering|维护与项目管理'],
       stem: '在软件维护的四种类型中，工作量占比通常最大的是（ ）。',
       options: ['改善性（完善性）维护', '改正性维护', '适应性维护', '预防性维护'],
       answer: 0,
@@ -154,7 +154,7 @@
       tags: ['记忆', '易错']
     },
     {
-      id: 'SE-020', module: 'software-engineering', topic: '项目管理', difficulty: 2,
+      id: 'SE-020', module: 'software-engineering', topic: '项目管理', difficulty: 2, points: ['software-engineering|维护与项目管理'],
       stem: '关于关键路径，下列说法正确的是（ ）。',
       options: ['关键路径上的活动资源占用最少', '关键路径是耗时最长的路径，其上的活动总时差为 0', '关键路径是耗时最短的路径，其上的活动可以延迟', '关键路径只有一条，且一定经过全部活动'],
       answer: 1,
@@ -162,7 +162,7 @@
       tags: ['概念', '高频']
     },
     {
-      id: 'SE-021', module: 'software-engineering', topic: '项目管理', difficulty: 2,
+      id: 'SE-021', module: 'software-engineering', topic: '项目管理', difficulty: 2, points: ['software-engineering|维护与项目管理'],
       stem: '与 PERT 图相比，Gantt 图的主要缺点是（ ）。',
       options: ['不能表示任务的持续时间', '不能用于进度控制', '不能清晰表达任务之间的依赖关系', '不能表示任务的起止时间'],
       answer: 2,
@@ -170,7 +170,7 @@
       tags: ['概念']
     },
     {
-      id: 'SE-022', module: 'software-engineering', topic: '过程改进', difficulty: 2,
+      id: 'SE-022', module: 'software-engineering', topic: '过程改进', difficulty: 2, points: ['software-engineering|维护与项目管理'],
       stem: 'CMMI 模型中，"已定义级"是第（ ）级，其标志是（ ）。',
       options: ['2 级，项目已建立基本管理过程', '4 级，过程已量化管理', '5 级，持续过程优化', '3 级，组织已建立标准过程并据此裁剪项目过程'],
       answer: 3,
@@ -178,7 +178,7 @@
       tags: ['记忆', '易错']
     },
     {
-      id: 'SE-023', module: 'software-engineering', topic: '软件质量', difficulty: 2,
+      id: 'SE-023', module: 'software-engineering', topic: '软件质量', difficulty: 2, points: ['software-engineering|维护与项目管理'],
       stem: '下列不属于软件可维护性子特性的是（ ）。',
       options: ['易用性', '可理解性', '可测试性', '可修改性'],
       answer: 0,
@@ -186,7 +186,7 @@
       tags: ['记忆']
     },
     {
-      id: 'SE-024', module: 'software-engineering', topic: '项目管理', difficulty: 2,
+      id: 'SE-024', module: 'software-engineering', topic: '项目管理', difficulty: 2, points: ['software-engineering|维护与项目管理'],
       stem: 'COCOMO 模型主要用于（ ）。',
       options: ['软件过程能力评估', '软件成本（工作量）估算', '软件可靠性预测', '软件复杂度度量'],
       answer: 1,
@@ -194,7 +194,7 @@
       tags: ['概念']
     },
     {
-      id: 'SE-025', module: 'software-engineering', topic: '开发模型', difficulty: 1,
+      id: 'SE-025', module: 'software-engineering', topic: '开发模型', difficulty: 1, points: ['software-engineering|开发模型'],
       stem: '把软件划分为若干增量、按优先级分批开发并分批交付可用版本的开发模型是（ ）。',
       options: ['V 模型', '净室模型', '增量模型', '瀑布模型'],
       answer: 2,
@@ -202,7 +202,7 @@
       tags: ['概念']
     },
     {
-      id: 'SE-026', module: 'software-engineering', topic: '开发模型', difficulty: 1,
+      id: 'SE-026', module: 'software-engineering', topic: '开发模型', difficulty: 1, points: ['software-engineering|开发模型'],
       stem: '当用户需求模糊、难以一次说清楚时，最适合先采用（ ）。',
       options: ['瀑布模型', 'V 模型', '净室模型', '原型模型'],
       answer: 3,
@@ -210,7 +210,7 @@
       tags: ['概念', '高频']
     },
     {
-      id: 'SE-027', module: 'software-engineering', topic: '开发模型', difficulty: 2,
+      id: 'SE-027', module: 'software-engineering', topic: '开发模型', difficulty: 2, points: ['software-engineering|开发模型'],
       stem: '喷泉模型最突出的特点是（ ）。',
       options: ['面向对象开发，各阶段相互迭代、无缝衔接', '阶段严格串行、以文档驱动', '以风险分析为核心', '开发与测试一一对应'],
       answer: 0,
@@ -218,7 +218,7 @@
       tags: ['概念']
     },
     {
-      id: 'SE-028', module: 'software-engineering', topic: '敏捷开发', difficulty: 2,
+      id: 'SE-028', module: 'software-engineering', topic: '敏捷开发', difficulty: 2, points: ['software-engineering|开发模型'],
       stem: '下列做法属于极限编程（XP）核心实践的是（ ）。',
       options: ['按季度一次性交付全部功能', '结对编程与测试驱动开发', '在项目初期完成全部详细设计文档', '只在项目末期集中进行测试'],
       answer: 1,
@@ -226,7 +226,7 @@
       tags: ['概念', '高频']
     },
     {
-      id: 'SE-029', module: 'software-engineering', topic: '敏捷开发', difficulty: 2,
+      id: 'SE-029', module: 'software-engineering', topic: '敏捷开发', difficulty: 2, points: ['software-engineering|开发模型'],
       stem: '敏捷宣言强调的价值观是（ ）。',
       options: ['详尽的文档高于可工作的软件', '严格的合同谈判高于客户合作', '个体与交互高于流程与工具', '流程与工具高于个体与交互'],
       answer: 2,
@@ -234,7 +234,7 @@
       tags: ['记忆']
     },
     {
-      id: 'SE-030', module: 'software-engineering', topic: '开发模型', difficulty: 2,
+      id: 'SE-030', module: 'software-engineering', topic: '开发模型', difficulty: 2, points: ['software-engineering|开发模型'],
       stem: '螺旋模型的每一轮迭代都包含的四个活动是（ ）。',
       options: ['需求、设计、编码、测试', '初始、细化、构建、交付', '计划、执行、检查、改进', '制定计划、风险分析、实施工程、客户评估'],
       answer: 3,
@@ -242,7 +242,7 @@
       tags: ['记忆']
     },
     {
-      id: 'SE-031', module: 'software-engineering', topic: '需求工程', difficulty: 1,
+      id: 'SE-031', module: 'software-engineering', topic: '需求工程', difficulty: 1, points: ['software-engineering|需求工程'],
       stem: '下列需求中，属于非功能需求的是（ ）。',
       options: ['系统在 95% 请求下的响应时间不超过 2 秒', '系统应支持按订单号查询物流状态', '系统应允许管理员新增用户', '系统应能导出月度销售报表'],
       answer: 0,
@@ -250,7 +250,7 @@
       tags: ['概念', '高频']
     },
     {
-      id: 'SE-032', module: 'software-engineering', topic: '需求工程', difficulty: 2,
+      id: 'SE-032', module: 'software-engineering', topic: '需求工程', difficulty: 2, points: ['software-engineering|需求工程'],
       stem: '分层数据流图中，父图与子图必须保持（ ）。',
       options: ['外部实体完全一致', '输入输出数据流一致（平衡）', '加工个数相同', '数据存储个数相同'],
       answer: 1,
@@ -258,7 +258,7 @@
       tags: ['概念', '高频']
     },
     {
-      id: 'SE-033', module: 'software-engineering', topic: '需求工程', difficulty: 2,
+      id: 'SE-033', module: 'software-engineering', topic: '需求工程', difficulty: 2, points: ['software-engineering|需求工程'],
       stem: '联合应用开发（JAD）主要用于（ ）。',
       options: ['度量软件的环形复杂度', '估算项目的代码行数', '把用户、管理者与开发人员集中起来研讨，快速获取需求', '自动生成程序代码'],
       answer: 2,
@@ -266,7 +266,7 @@
       tags: ['概念']
     },
     {
-      id: 'SE-034', module: 'software-engineering', topic: '需求工程', difficulty: 2,
+      id: 'SE-034', module: 'software-engineering', topic: '需求工程', difficulty: 2, points: ['software-engineering|需求工程'],
       stem: '需求变更申请通常应提交给（ ）审查并决定是否批准。',
       options: ['开发组内的程序员', '最终用户个人', '质量检验部门', '变更控制委员会（CCB）'],
       answer: 3,
@@ -274,7 +274,7 @@
       tags: ['概念']
     },
     {
-      id: 'SE-035', module: 'software-engineering', topic: '需求工程', difficulty: 2,
+      id: 'SE-035', module: 'software-engineering', topic: '需求工程', difficulty: 2, points: ['software-engineering|需求工程'],
       stem: '需求跟踪矩阵的主要作用是（ ）。',
       options: ['建立需求与设计、代码、测试用例之间的可追溯关系', '记录项目成员的每日工时', '统计程序的代码行数', '存放需求文档的电子副本'],
       answer: 0,
@@ -282,7 +282,7 @@
       tags: ['概念']
     },
     {
-      id: 'SE-036', module: 'software-engineering', topic: '需求工程', difficulty: 1,
+      id: 'SE-036', module: 'software-engineering', topic: '需求工程', difficulty: 1, points: ['software-engineering|需求工程'],
       stem: '结构化分析方法的核心模型是（ ）。',
       options: ['判定表 + 判定树', '数据流图 + 数据字典', '类图 + 顺序图', '状态图 + 活动图'],
       answer: 1,
@@ -290,7 +290,7 @@
       tags: ['概念']
     },
     {
-      id: 'SE-037', module: 'software-engineering', topic: '耦合', difficulty: 2,
+      id: 'SE-037', module: 'software-engineering', topic: '耦合', difficulty: 2, points: ['software-engineering|结构化设计（耦合与内聚）'],
       stem: '两个模块之间传递整个记录（数据结构）而不是单个数据项，这种耦合属于（ ）。',
       options: ['控制耦合', '内容耦合', '标记耦合', '数据耦合'],
       answer: 2,
@@ -298,7 +298,7 @@
       tags: ['概念', '易错']
     },
     {
-      id: 'SE-038', module: 'software-engineering', topic: '耦合', difficulty: 2,
+      id: 'SE-038', module: 'software-engineering', topic: '耦合', difficulty: 2, points: ['software-engineering|结构化设计（耦合与内聚）'],
       stem: '一个模块向另一个模块传递"处理标志位"，由后者据此选择不同处理逻辑，这种耦合属于（ ）。',
       options: ['数据耦合', '公共耦合', '非直接耦合', '控制耦合'],
       answer: 3,
@@ -306,7 +306,7 @@
       tags: ['概念', '易错']
     },
     {
-      id: 'SE-039', module: 'software-engineering', topic: '内聚', difficulty: 2,
+      id: 'SE-039', module: 'software-engineering', topic: '内聚', difficulty: 2, points: ['software-engineering|结构化设计（耦合与内聚）'],
       stem: '把系统初始化所需的各项操作集中放在同一个模块中，这种内聚属于（ ）。',
       options: ['时间内聚', '功能内聚', '顺序内聚', '逻辑内聚'],
       answer: 0,
@@ -314,7 +314,7 @@
       tags: ['概念']
     },
     {
-      id: 'SE-040', module: 'software-engineering', topic: '模块化', difficulty: 2,
+      id: 'SE-040', module: 'software-engineering', topic: '模块化', difficulty: 2, points: ['software-engineering|结构化设计（耦合与内聚）'],
       stem: '软件结构的"深度"与"宽度"分别指（ ）。',
       options: ['模块的扇出与扇入', '控制层次的最大层数与同一层中模块数的最大值', '模块的调用数与被调用数', '模块内语句的行数与分支数'],
       answer: 1,
@@ -322,7 +322,7 @@
       tags: ['概念']
     },
     {
-      id: 'SE-041', module: 'software-engineering', topic: '详细设计', difficulty: 2,
+      id: 'SE-041', module: 'software-engineering', topic: '详细设计', difficulty: 2, points: ['software-engineering|详细设计与复杂度'],
       stem: '关于 N-S 图（盒图），下列说法正确的是（ ）。',
       options: ['只能描述数据流，不能描述控制结构', '主要用于数据库的概念设计', '取消了流程线的随意跳转，只能用顺序、选择、循环三种结构组合', '用带箭头的流程线表示控制流向，与流程图完全等价'],
       answer: 2,
@@ -330,7 +330,7 @@
       tags: ['概念']
     },
     {
-      id: 'SE-042', module: 'software-engineering', topic: '详细设计', difficulty: 2,
+      id: 'SE-042', module: 'software-engineering', topic: '详细设计', difficulty: 2, points: ['software-engineering|详细设计与复杂度'],
       stem: 'PAD 图（问题分析图）的主要特点是（ ）。',
       options: ['用椭圆表示加工、用箭头表示数据流', '用横道表示任务的起止时间', '用菱形表示实体之间的联系', '自左向右展开层次，用二维树形结构表示程序逻辑'],
       answer: 3, 
@@ -338,7 +338,7 @@
       tags: ['概念']
     },
     {
-      id: 'SE-043', module: 'software-engineering', topic: '详细设计', difficulty: 3,
+      id: 'SE-043', module: 'software-engineering', topic: '详细设计', difficulty: 3, points: ['software-engineering|详细设计与复杂度'],
       stem: '某程序流图中有 10 个结点、12 条边，则其 McCabe 环形复杂度为（ ）。',
       options: ['4', '3', '5', '6'],
       answer: 0,
@@ -346,7 +346,7 @@
       tags: ['计算', '高频']
     },
     {
-      id: 'SE-044', module: 'software-engineering', topic: '详细设计', difficulty: 2,
+      id: 'SE-044', module: 'software-engineering', topic: '详细设计', difficulty: 2, points: ['software-engineering|详细设计与复杂度'],
       stem: '当程序中存在多个条件、不同条件组合需要执行不同动作时，最适合用（ ）来描述处理逻辑。',
       options: ['状态迁移图', '判定表', '数据流图', 'E-R 图'],
       answer: 1,
@@ -354,7 +354,7 @@
       tags: ['概念']
     },
     {
-      id: 'SE-045', module: 'software-engineering', topic: '软件测试', difficulty: 1,
+      id: 'SE-045', module: 'software-engineering', topic: '软件测试', difficulty: 1, points: ['software-engineering|软件测试'],
       stem: '等价类划分法把程序的输入域划分为（ ）。',
       options: ['正常路径与异常路径', '基本块与判定结点', '有效等价类与无效等价类', '上边界与下边界'],
       answer: 2,
@@ -362,7 +362,7 @@
       tags: ['概念', '高频']
     },
     {
-      id: 'SE-046', module: 'software-engineering', topic: '软件测试', difficulty: 2,
+      id: 'SE-046', module: 'software-engineering', topic: '软件测试', difficulty: 2, points: ['software-engineering|软件测试'],
       stem: '判定覆盖（分支覆盖）要求（ ）。',
       options: ['每个条件的所有可能取值至少各出现一次', '每条语句至少执行一次', '覆盖程序中所有可能的执行路径', '每个判定的"真"与"假"分支至少各执行一次'],
       answer: 3,
@@ -370,7 +370,7 @@
       tags: ['概念', '必背']
     },
     {
-      id: 'SE-047', module: 'software-engineering', topic: '软件测试', difficulty: 3,
+      id: 'SE-047', module: 'software-engineering', topic: '软件测试', difficulty: 3, points: ['software-engineering|软件测试'],
       stem: '关于条件覆盖与判定覆盖的关系，下列说法正确的是（ ）。',
       options: ['条件覆盖不一定满足判定覆盖', '条件覆盖一定能满足判定覆盖', '两者完全等价', '判定覆盖一定能满足条件覆盖'],
       answer: 0,
@@ -378,7 +378,7 @@
       tags: ['概念', '难点']
     },
     {
-      id: 'SE-048', module: 'software-engineering', topic: '软件测试', difficulty: 2,
+      id: 'SE-048', module: 'software-engineering', topic: '软件测试', difficulty: 2, points: ['software-engineering|软件测试'],
       stem: '由用户在真实使用环境中进行、开发者通常不在现场的验收测试称为（ ）。',
       options: ['回归测试', 'β 测试', 'α 测试', '单元测试'],
       answer: 1,
@@ -386,7 +386,7 @@
       tags: ['概念']
     },
     {
-      id: 'SE-049', module: 'software-engineering', topic: '软件测试', difficulty: 1,
+      id: 'SE-049', module: 'software-engineering', topic: '软件测试', difficulty: 1, points: ['software-engineering|软件测试'],
       stem: '下列属于静态测试的是（ ）。',
       options: ['压力测试', '冒烟测试', '代码审查', '边界值分析'],
       answer: 2,
@@ -394,7 +394,7 @@
       tags: ['概念']
     },
     {
-      id: 'SE-050', module: 'software-engineering', topic: '软件测试', difficulty: 2,
+      id: 'SE-050', module: 'software-engineering', topic: '软件测试', difficulty: 2, points: ['software-engineering|软件测试'],
       stem: '让系统在超过额定负载的条件下运行，观察其性能退化与恢复能力的测试是（ ）。',
       options: ['功能测试', '兼容性测试', '安装测试', '压力测试'],
       answer: 3,
@@ -402,7 +402,7 @@
       tags: ['概念']
     },
     {
-      id: 'SE-051', module: 'software-engineering', topic: '软件测试', difficulty: 2,
+      id: 'SE-051', module: 'software-engineering', topic: '软件测试', difficulty: 2, points: ['software-engineering|软件测试'],
       stem: '因果图法主要用于（ ）。',
       options: ['处理输入条件之间的组合关系，并据此导出判定表与测试用例', '统计程序中各模块的调用次数', '度量代码的环形复杂度', '评估项目的开发成本'],
       answer: 0,
@@ -410,7 +410,7 @@
       tags: ['概念']
     },
     {
-      id: 'SE-052', module: 'software-engineering', topic: '软件维护', difficulty: 1,
+      id: 'SE-052', module: 'software-engineering', topic: '软件维护', difficulty: 1, points: ['software-engineering|维护与项目管理'],
       stem: '为修复软件运行中暴露的错误而进行的维护是（ ）。',
       options: ['预防性维护', '改正性维护', '适应性维护', '改善性维护'],
       answer: 1,
@@ -418,7 +418,7 @@
       tags: ['概念']
     },
     {
-      id: 'SE-053', module: 'software-engineering', topic: '软件维护', difficulty: 2,
+      id: 'SE-053', module: 'software-engineering', topic: '软件维护', difficulty: 2, points: ['software-engineering|维护与项目管理'],
       stem: '操作系统由 32 位升级到 64 位后，为让软件在新环境下正常运行而修改代码，属于（ ）。',
       options: ['预防性维护', '改善性维护', '适应性维护', '改正性维护'],
       answer: 2,
@@ -426,7 +426,7 @@
       tags: ['概念', '易错']
     },
     {
-      id: 'SE-054', module: 'software-engineering', topic: '软件维护', difficulty: 2,
+      id: 'SE-054', module: 'software-engineering', topic: '软件维护', difficulty: 2, points: ['software-engineering|维护与项目管理'],
       stem: '为提高软件的可维护性、为将来的改进与调试打基础而进行的维护是（ ）。',
       options: ['改正性维护', '适应性维护', '改善性维护', '预防性维护'],
       answer: 3,
@@ -434,7 +434,7 @@
       tags: ['概念']
     },
     {
-      id: 'SE-055', module: 'software-engineering', topic: '项目管理', difficulty: 2,
+      id: 'SE-055', module: 'software-engineering', topic: '项目管理', difficulty: 2, points: ['software-engineering|维护与项目管理'],
       stem: '某活动的最早开始时间为第 5 天，最迟开始时间为第 8 天，持续时间为 3 天，则其总时差为（ ）。',
       options: ['3 天', '5 天', '8 天', '0 天'],
       answer: 0,
@@ -442,7 +442,7 @@
       tags: ['计算', '高频']
     },
     {
-      id: 'SE-056', module: 'software-engineering', topic: '项目管理', difficulty: 2,
+      id: 'SE-056', module: 'software-engineering', topic: '项目管理', difficulty: 2, points: ['software-engineering|维护与项目管理'],
       stem: '通过购买保险把可能的风险损失转由第三方承担，属于风险应对策略中的（ ）。',
       options: ['风险接受', '风险转移', '风险规避', '风险减轻'],
       answer: 1,
@@ -450,7 +450,7 @@
       tags: ['概念']
     },
     {
-      id: 'SE-057', module: 'software-engineering', topic: '项目管理', difficulty: 2,
+      id: 'SE-057', module: 'software-engineering', topic: '项目管理', difficulty: 2, points: ['software-engineering|维护与项目管理'],
       stem: '软件配置管理中的"基线"指（ ）。',
       options: ['开发人员本地的最新版本', '项目的最终交付版本', '已通过评审、作为后续工作基准的配置项集合，其变更必须走变更控制流程', '项目开始时的初始代码'],
       answer: 2,
@@ -458,7 +458,7 @@
       tags: ['概念']
     },
     {
-      id: 'SE-058', module: 'software-engineering', topic: '过程改进', difficulty: 2,
+      id: 'SE-058', module: 'software-engineering', topic: '过程改进', difficulty: 2, points: ['software-engineering|维护与项目管理'],
       stem: 'CMMI 模型中处于最高级（第 5 级）的是（ ）。',
       options: ['已定义级', '量化管理级', '已管理级', '优化级'],
       answer: 3,
@@ -466,7 +466,7 @@
       tags: ['记忆']
     },
     {
-      id: 'SE-059', module: 'software-engineering', topic: '软件质量', difficulty: 2,
+      id: 'SE-059', module: 'software-engineering', topic: '软件质量', difficulty: 2, points: ['software-engineering|维护与项目管理'],
       stem: '下列各项中，不属于 ISO 9126 软件质量特性的是（ ）。',
       options: ['可扩展性', '功能性', '可靠性', '可移植性'],
       answer: 0,
@@ -474,7 +474,7 @@
       tags: ['记忆', '易错']
     },
     {
-      id: 'SE-060', module: 'software-engineering', topic: '项目管理', difficulty: 2,
+      id: 'SE-060', module: 'software-engineering', topic: '项目管理', difficulty: 2, points: ['software-engineering|维护与项目管理'],
       stem: '在不缩减项目范围的前提下压缩工期，常用的两种方法是（ ）。',
       options: ['降低质量要求与减少人员', '赶工与快速跟进', '削减测试与减少文档', '增加会议与延长评审'],
       answer: 1,

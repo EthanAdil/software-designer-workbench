@@ -2,7 +2,7 @@
 (function (RK) {
   RK.registerQuestions([
     {
-      id: 'SEC-001', module: 'security', topic: '密码学', difficulty: 1,
+      id: 'SEC-001', module: 'security', topic: '密码学', difficulty: 1, points: ['security|密码学基础'],
       stem: '下列属于对称加密算法的是（ ）。',
       options: ['DES', 'RSA', 'ECC', 'DSA'],
       answer: 0,
@@ -10,7 +10,7 @@
       tags: ['记忆', '必背']
     },
     {
-      id: 'SEC-002', module: 'security', topic: '数字签名', difficulty: 2,
+      id: 'SEC-002', module: 'security', topic: '数字签名', difficulty: 2, points: ['security|认证与签名'],
       stem: '数字签名的正确做法是（ ）。',
       options: ['接收方用私钥签名，发送方用公钥验证', '发送方用私钥对消息摘要签名，接收方用发送方公钥验证', '发送方用公钥签名，接收方用私钥验证', '发送方用对称密钥签名，接收方用同一密钥验证'],
       answer: 1,
@@ -18,7 +18,7 @@
       tags: ['概念', '高频']
     },
     {
-      id: 'SEC-003', module: 'security', topic: '哈希', difficulty: 2,
+      id: 'SEC-003', module: 'security', topic: '哈希', difficulty: 2, points: ['security|密码学基础'],
       stem: '关于哈希（散列）函数，下列说法正确的是（ ）。',
       options: ['哈希函数属于对称加密', 'SHA-1 输出 128 位摘要', 'MD5 输出 128 位摘要，SHA-1 输出 160 位，二者均不可逆', '哈希函数可以解密还原原文'],
       answer: 2,
@@ -26,7 +26,7 @@
       tags: ['记忆', '易错']
     },
     {
-      id: 'SEC-004', module: 'security', topic: 'PKI', difficulty: 2,
+      id: 'SEC-004', module: 'security', topic: 'PKI', difficulty: 2, points: ['security|认证与签名'],
       stem: '数字证书的主要作用是（ ）。',
       options: ['对文件内容进行压缩', '提高网络传输带宽', '替代对称加密算法', '证明公钥与持有者身份的绑定关系，防止中间人攻击'],
       answer: 3,
@@ -34,7 +34,7 @@
       tags: ['概念']
     },
     {
-      id: 'SEC-005', module: 'security', topic: '防护技术', difficulty: 2,
+      id: 'SEC-005', module: 'security', topic: '防护技术', difficulty: 2, points: ['security|网络攻击与防护'],
       stem: '工作在应用层、能对具体应用协议内容进行细粒度控制的防火墙是（ ）。',
       options: ['应用代理防火墙', '包过滤防火墙', '状态检测防火墙', '网络地址转换设备'],
       answer: 0,
@@ -42,7 +42,7 @@
       tags: ['概念']
     },
     {
-      id: 'SEC-006', module: 'security', topic: '恶意代码', difficulty: 2,
+      id: 'SEC-006', module: 'security', topic: '恶意代码', difficulty: 2, points: ['security|网络攻击与防护'],
       stem: '不需要宿主程序、能通过网络自主复制传播的恶意代码是（ ）。',
       options: ['逻辑炸弹', '蠕虫', '病毒', '木马'],
       answer: 1,
@@ -51,7 +51,7 @@
     },
 
     {
-      id: 'LAW-001', module: 'standard-law', topic: '著作权', difficulty: 2,
+      id: 'LAW-001', module: 'standard-law', topic: '著作权', difficulty: 2, points: ['standard-law|著作权'],
       stem: '自然人的作品，其发表权与财产权的保护期为（ ）。',
       options: ['首次发表后 20 年', '永久保护', '作者终生及死后 50 年', '作者终生及死后 20 年'],
       answer: 2,
@@ -59,7 +59,7 @@
       tags: ['记忆', '必背']
     },
     {
-      id: 'LAW-002', module: 'standard-law', topic: '专利', difficulty: 2,
+      id: 'LAW-002', module: 'standard-law', topic: '专利', difficulty: 2, points: ['standard-law|专利与商标'],
       stem: '发明专利、实用新型专利、外观设计专利的保护期分别为（ ）。',
       options: ['10 年、20 年、10 年', '20 年、10 年、10 年', '15 年、10 年、20 年', '20 年、10 年、15 年'],
       answer: 3,
@@ -67,7 +67,7 @@
       tags: ['记忆', '易错']
     },
     {
-      id: 'LAW-003', module: 'standard-law', topic: '标准化', difficulty: 1,
+      id: 'LAW-003', module: 'standard-law', topic: '标准化', difficulty: 1, points: ['standard-law|标准化'],
       stem: '我国国家标准代号中，GB/T 表示（ ）。',
       options: ['推荐性国家标准', '强制性国家标准', '国家军用标准', '企业标准'],
       answer: 0,
@@ -75,7 +75,7 @@
       tags: ['记忆']
     },
     {
-      id: 'LAW-004', module: 'standard-law', topic: '著作权', difficulty: 3,
+      id: 'LAW-004', module: 'standard-law', topic: '著作权', difficulty: 3, points: ['standard-law|著作权'],
       stem: '甲委托乙开发一套软件，合同中未约定著作权归属，则著作权归（ ）。',
       options: ['国家所有', '乙（受托方）', '甲（委托方）', '双方共有'],
       answer: 1,
@@ -83,7 +83,7 @@
       tags: ['概念', '易错']
     },
     {
-      id: 'LAW-005', module: 'standard-law', topic: '商标', difficulty: 1,
+      id: 'LAW-005', module: 'standard-law', topic: '商标', difficulty: 1, points: ['standard-law|专利与商标'],
       stem: '注册商标的有效期为 10 年，期满（ ）。',
       options: ['只能续展一次', '续展后有效期缩短为 5 年', '可以续展，每次续展有效期 10 年，且次数不限', '不得续展，需重新申请'],
       answer: 2,
@@ -91,7 +91,7 @@
       tags: ['记忆']
     },
     {
-      id: 'LAW-006', module: 'standard-law', topic: '软件著作权', difficulty: 2,
+      id: 'LAW-006', module: 'standard-law', topic: '软件著作权', difficulty: 2, points: ['standard-law|著作权'],
       stem: '软件著作权保护的对象是（ ）。',
       options: ['软件开发所用的算法和思想', '软件的处理过程与运行方法', '软件所依赖的硬件设计', '计算机程序及其有关文档'],
       answer: 3,
@@ -99,7 +99,7 @@
       tags: ['概念', '高频']
     },
     {
-      id: 'SEC-007', module: 'security', topic: '密码学', difficulty: 1,
+      id: 'SEC-007', module: 'security', topic: '密码学', difficulty: 1, points: ['security|密码学基础'],
       stem: 'AES 算法支持的密钥长度为（ ）。',
       options: ['128/192/256 位', '56 位', '64/128 位', '1024/2048 位'],
       answer: 0,
@@ -107,7 +107,7 @@
       tags: ['记忆', '必背']
     },
     {
-      id: 'SEC-008', module: 'security', topic: '密码学', difficulty: 2,
+      id: 'SEC-008', module: 'security', topic: '密码学', difficulty: 2, points: ['security|密码学基础'],
       stem: 'TLS 采用"非对称加密协商会话密钥、对称加密传输数据"的混合体制，主要原因是（ ）。',
       options: ['非对称加密不需要密钥', '兼顾密钥分发的安全性与大数据量加密的效率', '非对称加密的速度比对称加密更快', '对称加密无法保证数据完整性'],
       answer: 1,
@@ -115,7 +115,7 @@
       tags: ['概念', '高频']
     },
     {
-      id: 'SEC-009', module: 'security', topic: 'MAC', difficulty: 2,
+      id: 'SEC-009', module: 'security', topic: 'MAC', difficulty: 2, points: ['security|认证与签名'],
       stem: '使用共享密钥生成消息认证码（MAC/HMAC）可以保证完整性与认证，但不能提供（ ）。',
       options: ['消息来源认证', '抗篡改能力', '不可否认性', '数据完整性'],
       answer: 2,
@@ -123,7 +123,7 @@
       tags: ['概念', '易错']
     },
     {
-      id: 'SEC-010', module: 'security', topic: '数字签名', difficulty: 2,
+      id: 'SEC-010', module: 'security', topic: '数字签名', difficulty: 2, points: ['security|认证与签名'],
       stem: '数字签名能够提供的安全服务是（ ）。',
       options: ['机密性与完整性，但不提供不可否认性', '只提供机密性', '机密性、完整性、可用性三者兼备', '完整性与不可否认性，但不提供机密性'],
       answer: 3,
@@ -131,7 +131,7 @@
       tags: ['概念', '高频']
     },
     {
-      id: 'SEC-011', module: 'security', topic: '防护技术', difficulty: 1,
+      id: 'SEC-011', module: 'security', topic: '防护技术', difficulty: 1, points: ['security|网络攻击与防护'],
       stem: 'DDoS 攻击的主要特征是（ ）。',
       options: ['利用大量分布的主机同时向目标发起请求，耗尽目标资源', '在目标主机上植入木马长期潜伏', '通过篡改 DNS 记录劫持域名', '伪造源 IP 进行单包探测'],
       answer: 0,
@@ -139,7 +139,7 @@
       tags: ['概念', '高频']
     },
     {
-      id: 'SEC-012', module: 'security', topic: '防护技术', difficulty: 2,
+      id: 'SEC-012', module: 'security', topic: '防护技术', difficulty: 2, points: ['security|网络攻击与防护'],
       stem: '与 IDS 相比，IPS 的主要特点是（ ）。',
       options: ['仅能检测病毒，不能检测入侵', '串接在网络链路中，可对检测到的攻击主动阻断', '只旁路监听，不干扰正常流量', '只能记录日志，不能告警'],
       answer: 1,
@@ -147,7 +147,7 @@
       tags: ['概念', '易错']
     },
     {
-      id: 'SEC-013', module: 'security', topic: '安全体系', difficulty: 1,
+      id: 'SEC-013', module: 'security', topic: '安全体系', difficulty: 1, points: ['security|安全体系与管理'],
       stem: '下列各项中，不属于信息安全基本要素的是（ ）。',
       options: ['完整性', '不可否认性', '可扩展性', '机密性'],
       answer: 2,
@@ -155,7 +155,7 @@
       tags: ['记忆', '必背']
     },
     {
-      id: 'SEC-014', module: 'security', topic: '安全体系', difficulty: 2,
+      id: 'SEC-014', module: 'security', topic: '安全体系', difficulty: 2, points: ['security|安全体系与管理'],
       stem: '我国网络安全等级保护制度将信息系统划分为（ ）个安全保护等级。',
       options: ['3 个', '4 个', '6 个', '5 个'],
       answer: 3,
@@ -163,7 +163,7 @@
       tags: ['记忆', '高频']
     },
     {
-      id: 'SEC-015', module: 'security', topic: '安全体系', difficulty: 2,
+      id: 'SEC-015', module: 'security', topic: '安全体系', difficulty: 2, points: ['security|安全体系与管理'],
       stem: '信息安全风险评估的三个基本要素是（ ）。',
       options: ['资产、威胁、脆弱性', '用户、密码、权限', '硬件、软件、网络', '加密、认证、审计'],
       answer: 0,
@@ -172,7 +172,7 @@
     },
 
     {
-      id: 'LAW-007', module: 'standard-law', topic: '标准化', difficulty: 2,
+      id: 'LAW-007', module: 'standard-law', topic: '标准化', difficulty: 2, points: ['standard-law|标准化'],
       stem: '国家标准实施后，一般每隔（ ）年复审一次。',
       options: ['2', '5', '3', '10'],
       answer: 1,
@@ -180,7 +180,7 @@
       tags: ['记忆']
     },
     {
-      id: 'LAW-008', module: 'standard-law', topic: '标准化', difficulty: 1,
+      id: 'LAW-008', module: 'standard-law', topic: '标准化', difficulty: 1, points: ['standard-law|标准化'],
       stem: '我国地方标准的代号是（ ）。',
       options: ['SJ', 'Q', 'DB', 'GB'],
       answer: 2,
@@ -188,7 +188,7 @@
       tags: ['记忆']
     },
     {
-      id: 'LAW-009', module: 'standard-law', topic: '著作权', difficulty: 3,
+      id: 'LAW-009', module: 'standard-law', topic: '著作权', difficulty: 3, points: ['standard-law|著作权'],
       stem: '一般职务作品的著作权归属是（ ）。',
       options: ['著作权与使用权全部归单位', '著作权归单位，作者仅有署名权', '著作权归国家所有', '著作权归作者，单位在其业务范围内享有两年优先使用权'],
       answer: 3,
@@ -196,7 +196,7 @@
       tags: ['概念', '易错']
     },
     {
-      id: 'LAW-010', module: 'standard-law', topic: '著作权', difficulty: 1,
+      id: 'LAW-010', module: 'standard-law', topic: '著作权', difficulty: 1, points: ['standard-law|著作权'],
       stem: '关于著作权，下列说法正确的是（ ）。',
       options: ['作品创作完成即自动产生，登记不是取得权利的前提', '必须办理登记才能取得著作权', '必须发表后才受著作权保护', '著作权只保护思想，不保护表达'],
       answer: 0,
@@ -204,7 +204,7 @@
       tags: ['概念', '必背']
     },
     {
-      id: 'LAW-011', module: 'standard-law', topic: '专利', difficulty: 1,
+      id: 'LAW-011', module: 'standard-law', topic: '专利', difficulty: 1, points: ['standard-law|专利与商标'],
       stem: '授予发明和实用新型专利的实质性条件是（ ）。',
       options: ['价值性、保密性、实用性', '新颖性、创造性、实用性', '独创性、可复制性、合法性', '新颖性、独创性、美观性'],
       answer: 1,
@@ -212,7 +212,7 @@
       tags: ['记忆', '必背']
     },
     {
-      id: 'LAW-012', module: 'standard-law', topic: '商业秘密', difficulty: 2,
+      id: 'LAW-012', module: 'standard-law', topic: '商业秘密', difficulty: 2, points: ['standard-law|专利与商标'],
       stem: '商业秘密的保护期限是（ ）。',
       options: ['首次发表后 50 年', '固定 10 年，可续展', '无固定期限，只要满足不为公众知悉、有商业价值并采取保密措施即受保护', '申请日起 20 年'],
       answer: 2,
@@ -220,7 +220,7 @@
       tags: ['概念', '易错']
     },
     {
-      id: 'LAW-013', module: 'standard-law', topic: '侵权', difficulty: 2,
+      id: 'LAW-013', module: 'standard-law', topic: '侵权', difficulty: 2, points: ['standard-law|侵权与责任'],
       stem: '下列行为中，属于著作权合理使用的是（ ）。',
       options: ['将他人软件复制后出售给同事', '未经许可把他人小说改编成电影并公映', '超出许可数量在公司的服务器上安装软件', '为个人学习、研究而使用他人已发表的作品'],
       answer: 3,
@@ -228,7 +228,7 @@
       tags: ['概念', '高频']
     },
     {
-      id: 'LAW-014', module: 'standard-law', topic: '侵权', difficulty: 1,
+      id: 'LAW-014', module: 'standard-law', topic: '侵权', difficulty: 1, points: ['standard-law|侵权与责任'],
       stem: '下列行为中，构成软件著作权侵权的是（ ）。',
       options: ['超出许可协议允许的数量安装、使用软件', '为学习目的阅读软件源代码', '购买正版软件后备份一份防止损坏', '在论文中引用软件的设计思想'],
       answer: 0,
@@ -236,7 +236,7 @@
       tags: ['概念']
     },
     {
-      id: 'LAW-015', module: 'standard-law', topic: '侵权', difficulty: 3,
+      id: 'LAW-015', module: 'standard-law', topic: '侵权', difficulty: 3, points: ['standard-law|侵权与责任'],
       stem: '根据《计算机软件保护条例》，软件复制品的发行者不能证明其发行的复制品有合法来源的，应当（ ）。',
       options: ['一律由最终用户承担责任', '承担法律责任', '不承担任何责任', '只承担道义责任'],
       answer: 1,

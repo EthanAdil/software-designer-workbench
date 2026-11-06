@@ -2,7 +2,7 @@
 (function (RK) {
   RK.registerQuestions([
     {
-      id: 'DB-001', module: 'database', topic: '数据库体系结构', difficulty: 1,
+      id: 'DB-001', module: 'database', topic: '数据库体系结构', difficulty: 1, points: ['database|数据库体系结构'],
       stem: '数据库三级模式中，面向具体用户、描述用户所看到的数据视图的是（ ）。',
       options: ['模式', '内模式', '存储模式', '外模式'],
       answer: 3,
@@ -10,7 +10,7 @@
       tags: ['概念', '必背']
     },
     {
-      id: 'DB-002', module: 'database', topic: '数据库体系结构', difficulty: 2,
+      id: 'DB-002', module: 'database', topic: '数据库体系结构', difficulty: 2, points: ['database|数据库体系结构'],
       stem: '当数据库的物理存储结构改变时，只需修改模式/内模式映像，从而保证（ ）。',
       options: ['物理独立性', '逻辑独立性', '并发一致性', '完整性'],
       answer: 0,
@@ -18,7 +18,7 @@
       tags: ['概念', '易错']
     },
     {
-      id: 'DB-003', module: 'database', topic: 'ER 模型', difficulty: 2,
+      id: 'DB-003', module: 'database', topic: 'ER 模型', difficulty: 2, points: ['database|ER 模型与关系转换'],
       stem: 'ER 图中，教师与课程之间为 m:n 的联系"讲授"，转换为关系模式时（ ）。',
       options: ['不需要转换，ER 图可直接实现', '必须单独建立一个关系模式，主键为教师号与课程号的组合', '可合并到教师关系中，加入课程号作为外键', '可合并到课程关系中，加入教师号作为外键'],
       answer: 1,
@@ -26,7 +26,7 @@
       tags: ['概念', '高频']
     },
     {
-      id: 'DB-004', module: 'database', topic: '关系代数', difficulty: 2,
+      id: 'DB-004', module: 'database', topic: '关系代数', difficulty: 2, points: ['database|关系代数与规范化'],
       stem: '关系代数中，从关系中选取满足条件的元组（行）的运算是（ ）。',
       options: ['连接（⋈）', '除（÷）', '选择（σ）', '投影（π）'],
       answer: 2,
@@ -34,7 +34,7 @@
       tags: ['概念', '必背']
     },
     {
-      id: 'DB-005', module: 'database', topic: '规范化', difficulty: 3,
+      id: 'DB-005', module: 'database', topic: '规范化', difficulty: 3, points: ['database|关系代数与规范化'],
       stem: '关系 R(A,B,C)，函数依赖集 F={A→B, B→C}，则 R 的候选键是（ ）。',
       options: ['B', 'C', 'AB', 'A'],
       answer: 3,
@@ -42,7 +42,7 @@
       tags: ['计算', '难点']
     },
     {
-      id: 'DB-006', module: 'database', topic: '规范化', difficulty: 2,
+      id: 'DB-006', module: 'database', topic: '规范化', difficulty: 2, points: ['database|关系代数与规范化'],
       stem: '若关系模式属于 2NF，则它必须（ ）。',
       options: ['消除非主属性对候选键的部分函数依赖', '消除非主属性对候选键的传递函数依赖', '每个属性都不可再分', '所有决定因素都是候选键'],
       answer: 0,
@@ -50,7 +50,7 @@
       tags: ['概念', '必背']
     },
     {
-      id: 'DB-007', module: 'database', topic: '规范化', difficulty: 3,
+      id: 'DB-007', module: 'database', topic: '规范化', difficulty: 3, points: ['database|关系代数与规范化'],
       stem: '某关系模式已满足 3NF 但不满足 BCNF，其可能的原因是（ ）。',
       options: ['存在非主属性对候选键的部分依赖', '存在主属性对候选键的部分或传递依赖', '存在非主属性对候选键的传递依赖', '属性不是原子的'],
       answer: 1,
@@ -58,7 +58,7 @@
       tags: ['概念', '难点']
     },
     {
-      id: 'DB-008', module: 'database', topic: '规范化', difficulty: 3,
+      id: 'DB-008', module: 'database', topic: '规范化', difficulty: 3, points: ['database|关系代数与规范化'],
       stem: '关系 R 分解为 R1 与 R2，判定该分解具有无损连接性的条件是（ ）。',
       options: ['R1 与 R2 没有公共属性', 'R1 与 R2 都满足 3NF', 'R1∩R2 → R1-R2 或 R1∩R2 → R2-R1 成立', 'R1∪R2 = R 即可'],
       answer: 2,
@@ -66,7 +66,7 @@
       tags: ['概念', '难点']
     },
     {
-      id: 'DB-009', module: 'database', topic: 'SQL', difficulty: 2,
+      id: 'DB-009', module: 'database', topic: 'SQL', difficulty: 2, points: ['database|SQL'],
       stem: '在 SQL 中，对分组后的结果进行筛选应使用（ ）子句。',
       options: ['WHERE', 'GROUP BY', 'ORDER BY', 'HAVING'],
       answer: 3,
@@ -74,7 +74,7 @@
       tags: ['概念', '高频']
     },
     {
-      id: 'DB-010', module: 'database', topic: 'SQL', difficulty: 1,
+      id: 'DB-010', module: 'database', topic: 'SQL', difficulty: 1, points: ['database|SQL'],
       stem: '下列关于视图的说法，错误的是（ ）。',
       options: ['视图在数据库中物理存储了完整数据，因此查询更快', '视图可以简化复杂查询', '视图可以提供列级安全性', '视图是虚表，数据仍来自基表'],
       answer: 0,
@@ -82,7 +82,7 @@
       tags: ['概念', '易错']
     },
     {
-      id: 'DB-011', module: 'database', topic: '事务', difficulty: 1,
+      id: 'DB-011', module: 'database', topic: '事务', difficulty: 1, points: ['database|事务与并发'],
       stem: '事务的 ACID 特性中，"事务一旦提交，其结果永久保存"指的是（ ）。',
       options: ['隔离性', '持久性', '原子性', '一致性'],
       answer: 1,
@@ -90,7 +90,7 @@
       tags: ['概念', '必背']
     },
     {
-      id: 'DB-012', module: 'database', topic: '并发控制', difficulty: 3,
+      id: 'DB-012', module: 'database', topic: '并发控制', difficulty: 3, points: ['database|事务与并发'],
       stem: '要避免"读脏数据"，事务隔离级别至少应设置为（ ）。',
       options: ['REPEATABLE READ', 'SERIALIZABLE', 'READ COMMITTED', 'READ UNCOMMITTED'],
       answer: 2,
@@ -98,7 +98,7 @@
       tags: ['概念', '高频']
     },
     {
-      id: 'DB-013', module: 'database', topic: '并发控制', difficulty: 2,
+      id: 'DB-013', module: 'database', topic: '并发控制', difficulty: 2, points: ['database|事务与并发'],
       stem: '两段锁协议（2PL）要求事务的封锁分两个阶段，即（ ）。',
       options: ['扩展阶段只能解锁，收缩阶段只能加锁', '两个阶段都可加锁和解锁', '只在开始时加锁，结束时解锁', '扩展阶段只能加锁，收缩阶段只能解锁'],
       answer: 3,
@@ -106,7 +106,7 @@
       tags: ['概念', '易错']
     },
     {
-      id: 'DB-014', module: 'database', topic: '索引', difficulty: 1,
+      id: 'DB-014', module: 'database', topic: '索引', difficulty: 1, points: ['database|SQL'],
       stem: '在表上建立索引后，通常会出现（ ）。',
       options: ['查询速度提高，插入与更新速度下降', '查询与更新速度都提高', '查询速度下降，更新速度提高', '对查询和更新均无影响'],
       answer: 0,
@@ -114,7 +114,7 @@
       tags: ['概念']
     },
     {
-      id: 'DB-015', module: 'database', topic: '数据库体系结构', difficulty: 1,
+      id: 'DB-015', module: 'database', topic: '数据库体系结构', difficulty: 1, points: ['database|数据库体系结构'],
       stem: '描述数据库物理存储结构与存取方式的模式是（ ）。',
       options: ['用户模式', '内模式', '外模式', '概念模式'],
       answer: 1,
@@ -122,7 +122,7 @@
       tags: ['概念', '必背']
     },
     {
-      id: 'DB-016', module: 'database', topic: '数据库体系结构', difficulty: 2,
+      id: 'DB-016', module: 'database', topic: '数据库体系结构', difficulty: 2, points: ['database|数据库体系结构'],
       stem: '数据模型的三要素是（ ）。',
       options: ['实体、属性、联系', '外模式、模式、内模式', '数据结构、数据操作、完整性约束', '表、视图、索引'],
       answer: 2,
@@ -130,7 +130,7 @@
       tags: ['记忆', '高频']
     },
     {
-      id: 'DB-017', module: 'database', topic: 'ER 模型', difficulty: 2,
+      id: 'DB-017', module: 'database', topic: 'ER 模型', difficulty: 2, points: ['database|ER 模型与关系转换'],
       stem: '若一个班级有多名教师、每名教师只属于一个班级，转换为关系模式时应（ ）。',
       options: ['在班级关系中增加教师号作为外键', '单独建立一个班级-教师关系表', '把教师与班级合并为一个关系', '在教师关系中增加班级号作为外键'],
       answer: 3,
@@ -138,7 +138,7 @@
       tags: ['概念', '高频']
     },
     {
-      id: 'DB-018', module: 'database', topic: 'ER 模型', difficulty: 2,
+      id: 'DB-018', module: 'database', topic: 'ER 模型', difficulty: 2, points: ['database|ER 模型与关系转换'],
       stem: 'ER 图中员工拥有多个电话号码这一多值属性，转换为关系模式时应（ ）。',
       options: ['单独建立一个关系模式，包含员工号与电话号码', '作为员工关系的一个属性直接保留', '拆分为多个员工关系', '删除该属性以保证 1NF'],
       answer: 0,
@@ -146,7 +146,7 @@
       tags: ['概念', '易错']
     },
     {
-      id: 'DB-019', module: 'database', topic: 'ER 模型', difficulty: 3,
+      id: 'DB-019', module: 'database', topic: 'ER 模型', difficulty: 3, points: ['database|ER 模型与关系转换'],
       stem: '关于弱实体，下列说法正确的是（ ）。',
       options: ['弱实体与强实体之间只能是 1:1 联系', '弱实体不能独立存在，其主键必须包含所依赖的强实体主键', '弱实体可以独立存在，主键与强实体无关', '弱实体不能参与任何联系'],
       answer: 1,
@@ -154,7 +154,7 @@
       tags: ['概念', '难点']
     },
     {
-      id: 'DB-020', module: 'database', topic: 'ER 模型', difficulty: 2,
+      id: 'DB-020', module: 'database', topic: 'ER 模型', difficulty: 2, points: ['database|ER 模型与关系转换'],
       stem: '把多个分 ER 图合并时，同一对象在不同分图中使用了不同名称，这类冲突属于（ ）。',
       options: ['结构冲突', '类型冲突', '命名冲突', '属性冲突'],
       answer: 2,
@@ -162,7 +162,7 @@
       tags: ['概念']
     },
     {
-      id: 'DB-021', module: 'database', topic: 'ER 模型', difficulty: 2,
+      id: 'DB-021', module: 'database', topic: 'ER 模型', difficulty: 2, points: ['database|ER 模型与关系转换'],
       stem: '1:1 联系转换为关系模式时，较常见的做法是（ ）。',
       options: ['必须单独建立一个关系模式', '把两端主键都删除', '拆分为两张新表', '合并到任一端的关系模式中，把另一端主键作为外键'],
       answer: 3,
@@ -170,7 +170,7 @@
       tags: ['概念']
     },
     {
-      id: 'DB-022', module: 'database', topic: '关系代数', difficulty: 1,
+      id: 'DB-022', module: 'database', topic: '关系代数', difficulty: 1, points: ['database|关系代数与规范化'],
       stem: '关系代数中投影运算的结果（ ）。',
       options: ['自动去除重复元组', '保留重复元组', '只保留第一行', '一定按主键排序'],
       answer: 0,
@@ -178,7 +178,7 @@
       tags: ['概念']
     },
     {
-      id: 'DB-023', module: 'database', topic: '关系代数', difficulty: 2,
+      id: 'DB-023', module: 'database', topic: '关系代数', difficulty: 2, points: ['database|关系代数与规范化'],
       stem: '关系代数中的除法运算常用于表达（ ）语义。',
       options: ['"两表笛卡儿积"', '"对所有…"（如选修了全部课程的学生）', '"存在某个…"', '"按条件筛选行"'],
       answer: 1,
@@ -186,7 +186,7 @@
       tags: ['概念']
     },
     {
-      id: 'DB-024', module: 'database', topic: '规范化', difficulty: 3,
+      id: 'DB-024', module: 'database', topic: '规范化', difficulty: 3, points: ['database|关系代数与规范化'],
       stem: '关系 R(A,B,C,D)，函数依赖集 F={AB→C, C→D, D→A}，则 R 的候选键是（ ）。',
       options: ['只有 BC', 'AB 与 CD', 'AB 与 BC', '只有 AB'],
       answer: 2,
@@ -194,7 +194,7 @@
       tags: ['计算', '难点']
     },
     {
-      id: 'DB-025', module: 'database', topic: '索引', difficulty: 2,
+      id: 'DB-025', module: 'database', topic: '索引', difficulty: 2, points: ['database|SQL'],
       stem: '关于聚簇索引（聚集索引），下列说法正确的是（ ）。',
       options: ['一个表可以建立任意多个聚簇索引', '它只能建立在非主键列上', '它与数据的物理存储顺序无关', '它决定表中数据行的物理存储顺序，一个表最多只能有一个'],
       answer: 3,
@@ -202,7 +202,7 @@
       tags: ['概念', '易错']
     },
     {
-      id: 'DB-026', module: 'database', topic: 'SQL', difficulty: 2,
+      id: 'DB-026', module: 'database', topic: 'SQL', difficulty: 2, points: ['database|SQL'],
       stem: 'SQL 中 LEFT OUTER JOIN 的结果是（ ）。',
       options: ['保留左表全部行，右表无匹配时对应列补 NULL', '只保留两表都能匹配的行', '保留右表全部行', '返回两表的笛卡儿积'],
       answer: 0,
@@ -210,7 +210,7 @@
       tags: ['概念', '高频']
     },
     {
-      id: 'DB-027', module: 'database', topic: 'SQL', difficulty: 3,
+      id: 'DB-027', module: 'database', topic: 'SQL', difficulty: 3, points: ['database|SQL'],
       stem: '关于 EXISTS 子查询，下列说法正确的是（ ）。',
       options: ['它等价于 NOT IN', '它是相关子查询，对外表的每一行执行一次，只判断是否返回行', '它是非相关子查询，整个查询只执行一次', '它必须返回具体的数据值'],
       answer: 1,
@@ -218,7 +218,7 @@
       tags: ['概念', '难点']
     },
     {
-      id: 'DB-028', module: 'database', topic: 'SQL', difficulty: 1,
+      id: 'DB-028', module: 'database', topic: 'SQL', difficulty: 1, points: ['database|SQL'],
       stem: '语句 SELECT dept, COUNT(*) FROM emp GROUP BY dept 的功能是（ ）。',
       options: ['按部门排序输出全部员工', '删除重复的部门记录', '按部门分组，统计每个部门的员工人数', '统计员工总人数'],
       answer: 2,
@@ -226,7 +226,7 @@
       tags: ['概念']
     },
     {
-      id: 'DB-029', module: 'database', topic: 'SQL', difficulty: 1,
+      id: 'DB-029', module: 'database', topic: 'SQL', difficulty: 1, points: ['database|SQL'],
       stem: 'SQL 中的 GRANT 与 REVOKE 语句属于（ ）。',
       options: ['数据定义（DDL）', '数据操纵（DML）', '事务控制', '数据控制（DCL）'],
       answer: 3,
@@ -234,7 +234,7 @@
       tags: ['概念', '必背']
     },
     {
-      id: 'DB-030', module: 'database', topic: '事务', difficulty: 3,
+      id: 'DB-030', module: 'database', topic: '事务', difficulty: 3, points: ['database|事务与并发'],
       stem: '同一事务内两次执行相同的查询，第二次返回的行数比第一次多，这种现象称为（ ）。',
       options: ['幻读', '脏读', '不可重复读', '丢失更新'],
       answer: 0,
@@ -242,7 +242,7 @@
       tags: ['概念', '难点']
     },
     {
-      id: 'DB-031', module: 'database', topic: '并发控制', difficulty: 2,
+      id: 'DB-031', module: 'database', topic: '并发控制', difficulty: 2, points: ['database|事务与并发'],
       stem: '要避免幻读，事务隔离级别应设置为（ ）。',
       options: ['READ UNCOMMITTED', 'SERIALIZABLE', 'REPEATABLE READ', 'READ COMMITTED'],
       answer: 1,
@@ -250,7 +250,7 @@
       tags: ['概念', '高频']
     },
     {
-      id: 'DB-032', module: 'database', topic: '并发控制', difficulty: 2,
+      id: 'DB-032', module: 'database', topic: '并发控制', difficulty: 2, points: ['database|事务与并发'],
       stem: '关于共享锁 S 与排他锁 X 的兼容性，下列说法正确的是（ ）。',
       options: ['X 锁与 X 锁兼容', '所有锁之间都兼容', 'S 锁与 S 锁兼容，X 锁与任何锁都不兼容', 'S 锁与 X 锁兼容'],
       answer: 2,
@@ -258,7 +258,7 @@
       tags: ['概念', '易错']
     },
     {
-      id: 'DB-033', module: 'database', topic: '备份与恢复', difficulty: 2,
+      id: 'DB-033', module: 'database', topic: '备份与恢复', difficulty: 2, points: ['database|备份与恢复'],
       stem: '动态转储（热备份）在数据库运行状态下进行，为保证恢复的正确性必须配合（ ）。',
       options: ['重新编译数据库', '清空缓冲区', '重建全部索引', '日志文件'],
       answer: 3,
@@ -266,7 +266,7 @@
       tags: ['概念', '高频']
     },
     {
-      id: 'DB-034', module: 'database', topic: '备份与恢复', difficulty: 1,
+      id: 'DB-034', module: 'database', topic: '备份与恢复', difficulty: 1, points: ['database|备份与恢复'],
       stem: '增量转储是指（ ）。',
       options: ['只转储上次转储之后发生变化的数据', '每次转储数据库的全部数据', '只转储索引文件', '只转储日志文件'],
       answer: 0,
@@ -274,7 +274,7 @@
       tags: ['概念']
     },
     {
-      id: 'DB-035', module: 'database', topic: '备份与恢复', difficulty: 2,
+      id: 'DB-035', module: 'database', topic: '备份与恢复', difficulty: 2, points: ['database|备份与恢复'],
       stem: '数据库恢复中引入检查点（Checkpoint）技术的主要目的是（ ）。',
       options: ['替代日志文件的作用', '减少故障恢复时需要扫描日志的范围，缩短恢复时间', '提高查询的并发度', '自动压缩数据文件'],
       answer: 1,

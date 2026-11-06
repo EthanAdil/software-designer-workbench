@@ -81,7 +81,7 @@
         '<div class="kpi"><span class="kpi-value">' + (mastery.rate === null ? '—' : U.pct(mastery.rate)) + '</span>' +
         '<span class="dim" style="font-size:12px">累计作答 ' + mastery.total + ' 次</span></div>' +
         RK.ui.bar(mastery.rate) +
-        '<div class="dim mt-8" style="font-size:12px">低于 70% 建议重看要点并补练 15 题</div></div>';
+        '<div class="dim mt-8" style="font-size:12px">低于 70% 建议重看要点并补练 ' + bankCount + ' 题</div></div>';
 
       html += '<div class="card"><div class="card-head"><h2>精要文档</h2></div>' +
         '<p class="dim" style="font-size:12.5px">完整版知识点梳理，含公式、对比表与答题模板。</p>' +
