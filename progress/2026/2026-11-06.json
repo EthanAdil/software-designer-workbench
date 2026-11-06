@@ -1,0 +1,430 @@
+{
+  "exportedAt": "2026-11-06T08:33:59.999Z",
+  "answers": {
+    "CS-003": {
+      "right": 5,
+      "wrong": 0,
+      "last": true,
+      "ts": 1793930057642
+    },
+    "CS-004": {
+      "right": 5,
+      "wrong": 0,
+      "last": true,
+      "ts": 1793929750943
+    },
+    "CS-005": {
+      "right": 5,
+      "wrong": 0,
+      "last": true,
+      "ts": 1793929264683
+    },
+    "CS-008": {
+      "right": 5,
+      "wrong": 0,
+      "last": true,
+      "ts": 1793930150442
+    },
+    "CS-007": {
+      "right": 5,
+      "wrong": 0,
+      "last": true,
+      "ts": 1793930117617
+    },
+    "CS-012": {
+      "right": 5,
+      "wrong": 0,
+      "last": true,
+      "ts": 1793929189438
+    },
+    "CS-002": {
+      "right": 4,
+      "wrong": 1,
+      "last": true,
+      "ts": 1793930017595
+    },
+    "CS-015": {
+      "right": 5,
+      "wrong": 0,
+      "last": true,
+      "ts": 1793930197833
+    },
+    "CS-006": {
+      "right": 6,
+      "wrong": 0,
+      "last": true,
+      "ts": 1793930025815
+    },
+    "CS-001": {
+      "right": 5,
+      "wrong": 0,
+      "last": true,
+      "ts": 1793930126233
+    },
+    "CS-011": {
+      "right": 4,
+      "wrong": 1,
+      "last": true,
+      "ts": 1793929945487
+    },
+    "CS-009": {
+      "right": 5,
+      "wrong": 0,
+      "last": true,
+      "ts": 1793929480985
+    },
+    "CS-010": {
+      "right": 5,
+      "wrong": 0,
+      "last": true,
+      "ts": 1793929737112
+    },
+    "CS-013": {
+      "right": 5,
+      "wrong": 0,
+      "last": true,
+      "ts": 1793930004956
+    },
+    "CS-014": {
+      "right": 5,
+      "wrong": 0,
+      "last": true,
+      "ts": 1793930332234
+    },
+    "CS-028": {
+      "right": 3,
+      "wrong": 0,
+      "last": true,
+      "ts": 1793929424807
+    },
+    "CS-021": {
+      "right": 3,
+      "wrong": 0,
+      "last": true,
+      "ts": 1793930085172
+    },
+    "CS-027": {
+      "right": 2,
+      "wrong": 1,
+      "last": true,
+      "ts": 1793930189596
+    },
+    "CS-032": {
+      "right": 1,
+      "wrong": 3,
+      "last": true,
+      "ts": 1793929168886
+    },
+    "CS-033": {
+      "right": 3,
+      "wrong": 0,
+      "last": true,
+      "ts": 1793929995614
+    },
+    "CS-026": {
+      "right": 3,
+      "wrong": 0,
+      "last": true,
+      "ts": 1793930167256
+    },
+    "CS-018": {
+      "right": 3,
+      "wrong": 0,
+      "last": true,
+      "ts": 1793929154609
+    },
+    "CS-030": {
+      "right": 3,
+      "wrong": 0,
+      "last": true,
+      "ts": 1793930160031
+    },
+    "CS-016": {
+      "right": 3,
+      "wrong": 0,
+      "last": true,
+      "ts": 1793930325866
+    },
+    "CS-022": {
+      "right": 2,
+      "wrong": 1,
+      "last": true,
+      "ts": 1793930037179
+    },
+    "CS-029": {
+      "right": 3,
+      "wrong": 0,
+      "last": true,
+      "ts": 1793930139164
+    },
+    "CS-031": {
+      "right": 3,
+      "wrong": 0,
+      "last": true,
+      "ts": 1793929303930
+    },
+    "CS-020": {
+      "right": 3,
+      "wrong": 0,
+      "last": true,
+      "ts": 1793929295356
+    },
+    "CS-017": {
+      "right": 3,
+      "wrong": 0,
+      "last": true,
+      "ts": 1793929279638
+    },
+    "CS-023": {
+      "right": 3,
+      "wrong": 0,
+      "last": true,
+      "ts": 1793930109457
+    },
+    "CS-035": {
+      "right": 3,
+      "wrong": 0,
+      "last": true,
+      "ts": 1793929493302
+    },
+    "CS-019": {
+      "right": 3,
+      "wrong": 0,
+      "last": true,
+      "ts": 1793930364689
+    },
+    "CS-025": {
+      "right": 3,
+      "wrong": 0,
+      "last": true,
+      "ts": 1793930356482
+    },
+    "CS-024": {
+      "right": 3,
+      "wrong": 0,
+      "last": true,
+      "ts": 1793930372621
+    },
+    "CS-034": {
+      "right": 2,
+      "wrong": 1,
+      "last": true,
+      "ts": 1793929886298
+    },
+    "CS-043": {
+      "right": 1,
+      "wrong": 0,
+      "last": true,
+      "ts": 1793929214304
+    },
+    "CS-044": {
+      "right": 1,
+      "wrong": 0,
+      "last": true,
+      "ts": 1793929249735
+    },
+    "CS-045": {
+      "right": 1,
+      "wrong": 0,
+      "last": true,
+      "ts": 1793929258285
+    },
+    "CS-047": {
+      "right": 1,
+      "wrong": 0,
+      "last": true,
+      "ts": 1793929274403
+    },
+    "CS-048": {
+      "right": 1,
+      "wrong": 0,
+      "last": true,
+      "ts": 1793929446386
+    },
+    "CS-046": {
+      "right": 0,
+      "wrong": 1,
+      "last": false,
+      "ts": 1793929562346
+    },
+    "CS-039": {
+      "right": 0,
+      "wrong": 1,
+      "last": false,
+      "ts": 1793929816624
+    },
+    "CS-041": {
+      "right": 1,
+      "wrong": 0,
+      "last": true,
+      "ts": 1793929847376
+    },
+    "CS-040": {
+      "right": 1,
+      "wrong": 0,
+      "last": true,
+      "ts": 1793929950709
+    },
+    "CS-038": {
+      "right": 1,
+      "wrong": 0,
+      "last": true,
+      "ts": 1793929972733
+    },
+    "CS-037": {
+      "right": 1,
+      "wrong": 0,
+      "last": true,
+      "ts": 1793930101086
+    },
+    "CS-036": {
+      "right": 1,
+      "wrong": 0,
+      "last": true,
+      "ts": 1793930230914
+    },
+    "CS-049": {
+      "right": 1,
+      "wrong": 0,
+      "last": true,
+      "ts": 1793930252294
+    },
+    "CS-042": {
+      "right": 1,
+      "wrong": 0,
+      "last": true,
+      "ts": 1793930302878
+    }
+  },
+  "wrong": {
+    "CS-002": {
+      "count": 1,
+      "choice": 3,
+      "ts": 1793597059815,
+      "resolved": true,
+      "cause": "知识盲区",
+      "conclusion": "牢记补码特殊数 10000000 对应-128"
+    },
+    "CS-011": {
+      "count": 1,
+      "choice": 3,
+      "ts": 1793597323461,
+      "resolved": true,
+      "cause": "计算失误",
+      "conclusion": "注意未命中路径包含查 Cache 的时间"
+    },
+    "CS-032": {
+      "count": 3,
+      "choice": 3,
+      "order": [
+        2,
+        3,
+        1,
+        0
+      ],
+      "ts": 1793929086250,
+      "resolved": true,
+      "cause": "计算失误",
+      "conclusion": "注意计算小数点精度",
+      "choiceText": "0.9"
+    },
+    "CS-022": {
+      "count": 1,
+      "choice": 3,
+      "order": [
+        2,
+        0,
+        1,
+        3
+      ],
+      "ts": 1793770324599,
+      "resolved": true,
+      "cause": "知识盲区",
+      "conclusion": "理清概念，排除误导项"
+    },
+    "CS-034": {
+      "count": 1,
+      "choice": 3,
+      "order": [
+        1,
+        2,
+        0,
+        3
+      ],
+      "choiceText": "20 ms",
+      "ts": 1793848015269,
+      "resolved": true,
+      "cause": "公式记错",
+      "conclusion": "先整理公式，理清思路，慢慢逐步计算"
+    },
+    "CS-027": {
+      "count": 1,
+      "choice": 1,
+      "order": [
+        3,
+        0,
+        2,
+        1
+      ],
+      "choiceText": "2MB",
+      "ts": 1793848083011,
+      "resolved": true,
+      "cause": "计算失误",
+      "conclusion": "在草稿本上列出，计算无误后再作答"
+    },
+    "CS-046": {
+      "count": 1,
+      "choice": 0,
+      "order": [
+        0,
+        3,
+        2,
+        1
+      ],
+      "choiceText": "1 ms",
+      "ts": 1793929562346,
+      "resolved": false,
+      "cause": "公式记错",
+      "conclusion": "执行时间 = 指令数 × CPI / 时钟频率；根据题目来计算结果"
+    },
+    "CS-039": {
+      "count": 1,
+      "choice": 2,
+      "order": [
+        3,
+        2,
+        1,
+        0
+      ],
+      "choiceText": "程序计数器",
+      "ts": 1793929816624,
+      "resolved": false,
+      "cause": "概念混淆",
+      "conclusion": "理清概念，CPU各模块的作用"
+    }
+  },
+  "exams": [],
+  "tasks": {
+    "w1-t3": true,
+    "w1-t1": true,
+    "w1-t4": true,
+    "w1-t2": true,
+    "w2-t2": true,
+    "w2-t1": true,
+    "w2-t3": true,
+    "w3-t1": true,
+    "w3-t2": true,
+    "w1-t5": true,
+    "w3-t3": true,
+    "w1-t6": true,
+    "w2-t4": true,
+    "w1-t7": true,
+    "w3-t4": true,
+    "w2-t5": true,
+    "w3-t5": true,
+    "w1-t8": true,
+    "w4-t1": true,
+    "w4-t2": true,
+    "w5-t1": true
+  }
+}
