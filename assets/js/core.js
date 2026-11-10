@@ -268,6 +268,36 @@ window.RK = window.RK || {};
     }
   };
 
+  /**
+   * 每周「已完成计划时长」统计。
+   * 口径：打卡记录只有 {任务id: true}、没有时间戳，因此按任务所属计划周汇总，
+   * 只累加已打卡任务的 hours；这是计划投入完成量，不是实测学习用时。
+   * 返回 [{ no, label, hours, checked, total, title }]，按周序升序。
+   */
+  RK.weeklyHours = function () {
+    var plan = window.RK_PLAN;
+    if (!plan || !plan.stages) return [];
+    var done = RK.tasks.all();
+    var out = [];
+    plan.stages.forEach(function (stage) {
+      (stage.weeks || []).forEach(function (week) {
+        var hours = 0, checked = 0;
+        (week.tasks || []).forEach(function (t) {
+          if (done[t.id]) { checked += 1; hours += Number(t.hours) || 0; }
+        });
+        out.push({
+          no: week.no,
+          label: 'W' + week.no,
+          hours: hours,
+          checked: checked,
+          total: (week.tasks || []).length,
+          title: week.title || ''
+        });
+      });
+    });
+    return out.sort(function (a, b) { return a.no - b.no; });
+  };
+
   /* ------------------------------------------------------------------
    * 6. 通用工具
    * ------------------------------------------------------------------ */
@@ -507,6 +537,167 @@ window.RK = window.RK || {};
     });
   };
 
+  /* 通用：按容器宽度和 DPR 准备画布；返回 ctx / cssW / cssH */
+  function chartCanvas(canvas, height) {
+    var dpr = window.devicePixelRatio || 1;
+    var cssW = canvas.clientWidth || 640;
+    var cssH = height || 200;
+    canvas.width = cssW * dpr;
+    canvas.height = cssH * dpr;
+    canvas.style.height = cssH + 'px';
+    var ctx = canvas.getContext('2d');
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, cssW, cssH);
+    return { ctx: ctx, w: cssW, h: cssH };
+  }
+
+  function chartColors() {
+    var styles = getComputedStyle(document.body);
+    return {
+      border: styles.getPropertyValue('--border').trim() || '#e3e8f2',
+      text: styles.getPropertyValue('--text-3').trim() || '#8b95ab',
+      primary: styles.getPropertyValue('--primary').trim() || '#4c66f0'
+    };
+  }
+
+  /**
+   * 模块雷达图：items = [{ label, value(0~1), color }]，每圈网格 25%。
+   * value 为 null / 0 表示该模块未练，落在圆心。
+   */
+  RK.drawRadar = function (canvas, items, opts) {
+    if (!canvas) return;
+    opts = opts || {};
+    items = items || [];
+    var n = items.length;
+    if (n < 3) return;
+
+    var cssW = canvas.clientWidth || 420;
+    var height = opts.height || Math.max(280, Math.min(cssW, 380));
+    var c = chartCanvas(canvas, height);
+    var ctx = c.ctx;
+    var col = chartColors();
+    var cx = c.w / 2;
+    var cy = c.h / 2 + 4;
+    var r = Math.max(40, Math.min(c.w / 2, c.h / 2) - 46);
+    var angle = function (i) { return -Math.PI / 2 + i * 2 * Math.PI / n; };
+    var point = function (i, ratio) {
+      var a = angle(i);
+      return { x: cx + Math.cos(a) * r * ratio, y: cy + Math.sin(a) * r * ratio };
+    };
+    var ratioOf = function (it) { return Math.max(0, Math.min(1, Number(it.value) || 0)); };
+
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = col.border;
+    for (var ring = 1; ring <= 4; ring++) {
+      ctx.beginPath();
+      for (var i = 0; i < n; i++) {
+        var p = point(i, ring / 4);
+        if (i === 0) ctx.moveTo(p.x, p.y); else ctx.lineTo(p.x, p.y);
+      }
+      ctx.closePath();
+      ctx.stroke();
+    }
+    for (var a = 0; a < n; a++) {
+      var end = point(a, 1);
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.lineTo(end.x, end.y);
+      ctx.stroke();
+    }
+
+    ctx.font = '10px -apple-system, "Segoe UI", "PingFang SC", sans-serif';
+    items.forEach(function (it, idx) {
+      var ang = angle(idx);
+      var lp = { x: cx + Math.cos(ang) * (r + 14), y: cy + Math.sin(ang) * (r + 14) };
+      var cos = Math.cos(ang), sin = Math.sin(ang);
+      ctx.textAlign = cos > 0.25 ? 'left' : cos < -0.25 ? 'right' : 'center';
+      ctx.textBaseline = sin > 0.5 ? 'top' : sin < -0.5 ? 'bottom' : 'middle';
+      ctx.fillStyle = it.color || col.text;
+      ctx.fillText(it.label, lp.x, lp.y);
+    });
+
+    ctx.beginPath();
+    items.forEach(function (it, idx) {
+      var p = point(idx, ratioOf(it));
+      if (idx === 0) ctx.moveTo(p.x, p.y); else ctx.lineTo(p.x, p.y);
+    });
+    ctx.closePath();
+    ctx.fillStyle = 'rgba(76,102,240,.16)';
+    ctx.strokeStyle = col.primary;
+    ctx.lineWidth = 2;
+    ctx.fill();
+    ctx.stroke();
+
+    items.forEach(function (it, idx) {
+      var p = point(idx, ratioOf(it));
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, 2.6, 0, Math.PI * 2);
+      ctx.fillStyle = it.color || col.primary;
+      ctx.fill();
+    });
+  };
+
+  /**
+   * 周学习时长柱状图：items = [{ label, value, color? }]。
+   * 柱宽按周数自适应（29 周也能一屏看完），标签按间隔抽稀避免重叠。
+   */
+  RK.drawBars = function (canvas, items, opts) {
+    if (!canvas) return;
+    opts = opts || {};
+    items = items || [];
+    var c = chartCanvas(canvas, opts.height || 200);
+    var ctx = c.ctx;
+    var col = chartColors();
+    var padL = 30, padR = 10, padT = 12, padB = 24;
+    var w = c.w - padL - padR;
+    var h = c.h - padT - padB;
+    var maxV = 0;
+    items.forEach(function (it) { maxV = Math.max(maxV, Number(it.value) || 0); });
+    var maxY = opts.max || Math.max(4, Math.ceil((maxV + 2) / 4) * 4);
+
+    ctx.strokeStyle = col.border;
+    ctx.lineWidth = 1;
+    ctx.fillStyle = col.text;
+    ctx.font = '10px -apple-system, "Segoe UI", sans-serif';
+    ctx.textAlign = 'right';
+    ctx.textBaseline = 'middle';
+    for (var g = 0; g <= 4; g++) {
+      var y = padT + h / 4 * g;
+      ctx.beginPath();
+      ctx.moveTo(padL, y);
+      ctx.lineTo(padL + w, y);
+      ctx.stroke();
+      ctx.fillText(String(Math.round(maxY - maxY / 4 * g)), padL - 6, y);
+    }
+
+    if (!items.length) return;
+    var slot = w / items.length;
+    var bw = Math.max(3, Math.min(opts.barWidth || 26, slot - 3));
+    var labelStep = Math.max(1, Math.ceil(items.length / 8));
+    items.forEach(function (it, idx) {
+      var v = Math.max(0, Number(it.value) || 0);
+      var bh = Math.min(1, v / maxY) * h;
+      var x = padL + slot * idx + (slot - bw) / 2;
+      var y = padT + h - bh;
+      ctx.fillStyle = it.color || col.primary;
+      ctx.fillRect(x, y, bw, bh);
+      if (v > 0 && bw >= 8) {
+        ctx.fillStyle = col.text;
+        ctx.font = '9px -apple-system, "Segoe UI", sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'bottom';
+        ctx.fillText(String(v), x + bw / 2, y - 1);
+      }
+      if (idx % labelStep === 0 || idx === items.length - 1) {
+        ctx.fillStyle = col.text;
+        ctx.font = '10px -apple-system, "Segoe UI", sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'top';
+        ctx.fillText(it.label, padL + slot * idx + slot / 2, padT + h + 5);
+      }
+    });
+  };
+
   /* ------------------------------------------------------------------
    * 10. 路由
    * ------------------------------------------------------------------ */
@@ -535,7 +726,11 @@ window.RK = window.RK || {};
     },
     render: function () {
       var r = this.parse();
-      var view = this.routes[r.name] || this.routes.dashboard;
+      var view = this.routes[r.name];
+      if (!view) {
+        console.warn('[路由] 未注册：' + r.name + '，已回退到总览');
+        view = this.routes.dashboard;
+      }
       if (this._unmount) {
         try { this._unmount(); } catch (e) { console.warn(e); }
         this._unmount = null;

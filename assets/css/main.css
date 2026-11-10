@@ -560,13 +560,74 @@ canvas.chart { display: block; width: 100%; max-width: 100%; }
   .countdown b { font-size: 17px; }
   .countdown .cd-hint { margin-top: 0; }
   .main { padding: 18px 16px 32px; }
-  .kb-layout { grid-template-columns: 1fr; }
+  .kb-layout { grid-template-columns: 1fr !important; }
   .kb-nav { position: static; flex-direction: row; overflow-x: auto; }
-  .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+  /* 部分视图写了内联列宽 / 最小宽度，窄屏需 !important 才能压成单列 */
+  .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr !important; }
+  .grid { min-width: 0 !important; }
   .topbar { flex-direction: column; gap: 10px; }
 }
 
+/* ---------- 手机（≤640px） ---------- */
+@media (max-width: 640px) {
+  .main { padding: 14px 12px 28px; }
+  .topbar { margin-bottom: 16px; }
+  .topbar h1 { font-size: 20px; }
+  .topbar .sub { font-size: 12.5px; }
+  .card { padding: 14px 13px; overflow-x: auto; }
+  .card-head { flex-wrap: wrap; gap: 4px; }
+  .card-head h2 { font-size: 15px; }
+  .grid { gap: 12px; }
+  .row { flex-wrap: wrap; }
+  .kpi .kpi-value { font-size: 21px; }
+  .table { font-size: 12.5px; }
+  .table th, .table td { padding: 7px 6px; }
+  .q-stem { font-size: 14px; }
+  .opt { padding: 9px 10px; font-size: 13.5px; }
+  .q-toolbar { flex-wrap: wrap; }
+  .answer-grid { grid-template-columns: repeat(auto-fill, minmax(32px, 1fr)); gap: 5px; }
+  .answer-cell { height: 32px; font-size: 11.5px; }
+  .timer { font-size: 23px; }
+  .btn { padding: 8px 12px; }
+  .toast { max-width: 90vw; }
+  .chart-wrap { -webkit-overflow-scrolling: touch; }
+}
+
+/* ---------- 打印（A4） ---------- */
 @media print {
-  .sidebar, .topbar-actions, .footer { display: none; }
-  .main { margin: 0; }
+  @page { size: A4; margin: 14mm 12mm; }
+  html, body { background: #fff !important; }
+  body {
+    color: #111 !important;
+    font-size: 10.5pt;
+    line-height: 1.5;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .sidebar, .topbar-actions, .footer, .toast, .modal-mask,
+  .btn, .q-toolbar, .answer-grid, .legend { display: none !important; }
+  .layout, .main { display: block; margin: 0; padding: 0; min-height: 0; }
+  .topbar { margin: 0 0 10px; }
+  .topbar h1 { font-size: 16pt; }
+  .topbar .sub { color: #555 !important; }
+  .card {
+    box-shadow: none;
+    border: 1px solid #ccc;
+    background: #fff !important;
+    color: #111 !important;
+    padding: 10px 12px;
+  }
+  .card + .card { margin-top: 10px; }
+  .grid { gap: 10px; }
+  .table th, .table td { color: #111 !important; border-color: #ccc !important; padding: 5px 6px; }
+  .table th { background: #f2f4f8 !important; }
+  /* 长表格整表跨页，表头重复、行不切断，避免因 break-inside:avoid 被挤出页外 */
+  .card, .table, .week { break-inside: auto; }
+  .card-head, h1, h2, h3, h4 { break-after: avoid; }
+  .table thead { display: table-header-group; }
+  .table tr, .explain, .point-block, .path-step, .task, .opt, .chart-wrap { break-inside: avoid; }
+  .muted, .dim, .card-head .hint { color: #444 !important; }
+  .explain, .path-step, .week, .empty { background: #fff !important; border-color: #ccc !important; }
+  a { color: inherit !important; text-decoration: none; }
+  canvas.chart { max-width: 100%; }
 }

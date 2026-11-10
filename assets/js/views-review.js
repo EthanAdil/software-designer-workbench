@@ -409,6 +409,12 @@
       }
       h += '</div>';
 
+      h += '<div class="card mt-16"><div class="card-head"><h2>模块掌握度雷达</h2>' +
+        '<span class="hint">13 个模块累计正确率，网格每圈 25%；未练模块记 0</span></div>';
+      h += '<div class="chart-wrap"><canvas class="chart" id="radar-chart"></canvas></div>';
+      h += '<div class="dim mt-8" style="font-size:12px">与下方「模块掌握度」表同源：按全部作答记录（练习 + 考试）计算正确率；无作答记录的模块落在圆心。</div>';
+      h += '</div>';
+
       h += '<div class="card mt-16"><div class="card-head"><h2>模块掌握度</h2>' +
         '<span class="hint">基于全部作答记录（练习 + 考试）</span></div>';
       h += '<table class="table"><thead><tr><th>模块</th><th style="width:80px">权重</th><th style="width:80px">作答</th><th style="width:120px">正确率</th><th style="width:90px">评价</th></tr></thead><tbody>';
@@ -423,6 +429,22 @@
               s.rate >= 0.55 ? RK.ui.badge('待巩固', 'badge-warn') : RK.ui.badge('薄弱', 'badge-bad')) + '</td></tr>';
       });
       h += '</tbody></table></div>';
+
+      var weeks = RK.weeklyHours();
+      var doneHours = 0, activeWeeks = 0;
+      weeks.forEach(function (wk) {
+        doneHours += wk.hours;
+        if (wk.hours > 0) activeWeeks += 1;
+      });
+      h += '<div class="card mt-16"><div class="card-head"><h2>每周已完成计划时长</h2>' +
+        '<span class="hint">共 ' + weeks.length + ' 周 · 累计 ' + doneHours + ' 小时 / ' + activeWeeks + ' 周有打卡</span></div>';
+      if (!weeks.length) {
+        h += RK.ui.empty('学习计划数据未加载');
+      } else {
+        h += '<div class="chart-wrap"><canvas class="chart" id="weekly-chart"></canvas></div>';
+      }
+      h += '<div class="dim mt-8" style="font-size:12px">口径：按任务所属计划周汇总「已打卡任务的计划 hours」，未打卡不计。打卡记录没有时间戳，这不是实测学习用时；与「学习计划 → 累计投入」同源。</div>';
+      h += '</div>';
 
       h += '<div class="card mt-16"><div class="card-head"><h2>数据管理</h2>' +
         '<span class="hint">数据仅存于本机浏览器，换设备需手动备份</span></div>';
@@ -445,6 +467,22 @@
         RK.drawLine(canvas, exams.map(function (e) {
           return e.total ? Math.round(e.score / e.total * 75) : e.score;
         }), { max: 75, passLine: 45, height: 220 });
+      }
+
+      var radar = el.querySelector('#radar-chart');
+      if (radar) {
+        var mastery = RK.mastery();
+        RK.drawRadar(radar, RK.MODULES.map(function (m) {
+          var s = mastery[m.key] || { rate: null };
+          return { label: m.short, value: s.rate === null ? 0 : s.rate, color: m.color };
+        }));
+      }
+
+      var weekly = el.querySelector('#weekly-chart');
+      if (weekly) {
+        RK.drawBars(weekly, RK.weeklyHours().map(function (wk) {
+          return { label: wk.label, value: wk.hours };
+        }), { height: 200 });
       }
 
       el.addEventListener('click', function (e) {

@@ -54,7 +54,9 @@
   }
 
   /* ---------------- 列表 ---------------- */
-  function renderList() {
+  /* mode：'all' 全部分组 / 'stages' 只列阶段测评 / 'mocks' 只列模考与下午卷 */
+  function renderList(mode) {
+    mode = mode || 'all';
     var h = '';
     var records = RK.record.examsAll();
     var best = {};
@@ -62,7 +64,7 @@
       if (!best[r.paperId] || r.score > best[r.paperId].score) best[r.paperId] = r;
     });
 
-    function card(p, tag) {
+    function card(p, base) {
       var rec = best[p.id];
       /* 配置的合格/目标分是 75 题制口径，列表页统一折算到卷面；下午卷卷面满分按 75 分 */
       var n = p.paper === 'afternoon' ? 75 : (p.rules || []).reduce(function (a, r) { return a + r.count; }, 0) || 75;
@@ -77,25 +79,29 @@
         (p.targetScore ? '<span>目标 ' + scaled(p.targetScore, n) + ' 分</span>' : '') +
         (p.difficulty ? '<span>' + p.difficulty + '</span>' : '') +
         '</div>';
-      h2 += '<div class="row-wrap"><a class="btn btn-sm" href="#/exam?p=' + p.id + '">开始</a>' +
+      h2 += '<div class="row-wrap"><a class="btn btn-sm" href="' + base + '?p=' + p.id + '">开始</a>' +
         (rec ? '<a class="btn btn-sm btn-ghost" href="#/stats">查看成绩</a>' : '') + '</div>';
       h2 += '</div>';
       return h2;
     }
 
-    h += '<div class="card"><div class="card-head"><h2>阶段测评</h2>' +
-      '<span class="hint">每阶段结束做一次，检验该阶段掌握情况（40~45 题 / 45 分钟）</span></div>';
-    h += '<div class="grid grid-3">' + EXAMS.stages.map(function (p) { return card(p); }).join('') + '</div></div>';
+    if (mode !== 'mocks') {
+      h += '<div class="card"><div class="card-head"><h2>阶段测评</h2>' +
+        '<span class="hint">每阶段结束做一次，检验该阶段掌握情况（40~45 题 / 45~50 分钟）</span></div>';
+      h += '<div class="grid grid-3">' + EXAMS.stages.map(function (p) { return card(p, '#/assessment'); }).join('') + '</div></div>';
+    }
 
-    h += '<div class="card mt-16"><div class="card-head"><h2>全真模考（上午卷）</h2>' +
-      '<span class="hint">75 题 / 120 分钟 / 75 分，两科连考中的第一科</span></div>';
-    h += '<div class="grid grid-3">' + EXAMS.mocks.map(function (p) { return card(p); }).join('') + '</div>';
-    h += '<div class="dim mt-8" style="font-size:12.5px">说明：题库为按考点自编练习题，非官方真题。模考用于固定节奏与查漏，建议在 W27、W28 配合近年真题使用。</div></div>';
+    if (mode !== 'stages') {
+      h += '<div class="card' + (h ? ' mt-16' : '') + '"><div class="card-head"><h2>全真模考（上午卷）</h2>' +
+        '<span class="hint">75 题 / 120 分钟 / 75 分，两科连考中的第一科</span></div>';
+      h += '<div class="grid grid-3">' + EXAMS.mocks.map(function (p) { return card(p, '#/exam'); }).join('') + '</div>';
+      h += '<div class="dim mt-8" style="font-size:12.5px">说明：题库为按考点自编练习题，非官方真题。模考用于固定节奏与查漏，建议在 W27、W28 配合近年真题使用。</div></div>';
 
-    h += '<div class="card mt-16"><div class="card-head"><h2>下午卷（应用技术）</h2>' +
-      '<span class="hint">5 道案例题 / 120 分钟 / 75 分，交卷后对照参考答案自评</span></div>';
-    h += '<div class="grid grid-3">' + EXAMS.cases.map(function (p) { return card(p); }).join('') + '</div>';
-    h += '<div class="dim mt-8" style="font-size:12.5px">下午卷评分靠人工自评：先独立作答，再展开参考答案逐问打分，最后提交自评结果。</div></div>';
+      h += '<div class="card mt-16"><div class="card-head"><h2>下午卷（应用技术）</h2>' +
+        '<span class="hint">5 道案例题 / 120 分钟 / 75 分，交卷后对照参考答案自评</span></div>';
+      h += '<div class="grid grid-3">' + EXAMS.cases.map(function (p) { return card(p, '#/exam'); }).join('') + '</div>';
+      h += '<div class="dim mt-8" style="font-size:12.5px">下午卷评分靠人工自评：先独立作答，再展开参考答案逐问打分，最后提交自评结果。</div></div>';
+    }
 
     return h;
   }
@@ -440,18 +446,18 @@
   }
 
   /* ---------------- 路由 ---------------- */
-  RK.router.add('exam', {
+  var examView = {
     title: '模拟考试',
-    sub: '阶段测评检验掌握度，全真模考固定节奏；两科都需 ≥45 分',
+    sub: '全真模考固定节奏：上午卷 75 题 / 120 分钟，下午卷 5 题自评；两科都需 ≥45 分',
     render: function (params) {
       if (!params.p) {
         sess = null;
-        return renderList();
+        return renderList('mocks');
       }
       var paper = EXAMS.index[params.p];
       if (!paper) {
         sess = null;
-        return RK.ui.empty('未找到试卷：' + params.p) + renderList();
+        return RK.ui.empty('未找到试卷：' + params.p) + renderList('mocks');
       }
       if (!sess || sess.paper.id !== paper.id) {
         startSession(paper);
@@ -545,6 +551,21 @@
         });
       }
     }
+  };
+
+  RK.router.add('exam', examView);
+
+  /* 阶段测评独立页：只列 3 套阶段测评，模考与下午卷归「模拟考试」。
+     #/assessment?p=stage-1 这类历史/深链同样复用考试视图，标题与菜单高亮留在阶段测评。 */
+  RK.router.add('assessment', {
+    title: '阶段测评',
+    sub: '每阶段一次，检验该阶段掌握度；全真模考与下午卷在「模拟考试」',
+    render: function (params) {
+      if (params && params.p) return examView.render(params);
+      sess = null;
+      return renderList('stages');
+    },
+    mount: examView.mount
   });
 
   function sheetInner() {

@@ -100,10 +100,20 @@ check('practice', {}, 600);
 check('practice', { m: 'os' }, 400);
 check('practice', { r: '30' }, 400);
 check('exam', {}, 600);
+check('assessment', {}, 600);
 check('review', {}, 300);
 check('stats', {}, 500);
 
 ['stage-1', 'mock-01', 'case-01', 'case-02', 'case-03', 'case-04'].forEach(id => check('exam', { p: id }, 500));
+check('assessment', { p: 'stage-1' }, 500);
+
+/* 阶段测评与模拟考试必须是两套列表：测评页只出 3 套测评，模考页只出模考与下午卷 */
+const stageHtml = RK.router.routes.assessment.render({});
+const examHtml = RK.router.routes.exam.render({});
+if (!stageHtml.includes('assessment?p=stage-1')) problems.push('assessment 页缺少 stage-1 入口');
+if (stageHtml.includes('全真模考（上午卷）')) problems.push('assessment 页不应列出全真模考');
+if (stageHtml.includes('下午卷（应用技术）')) problems.push('assessment 页不应列出下午卷');
+if (examHtml.includes('阶段一测评') || examHtml.includes('stage-1')) problems.push('exam 页不应再列出阶段测评');
 
 /* 有错题时渲染一次，覆盖错因下拉与结论输入 */
 RK.record.answer('CS-001', false, 3, [2, 0, 3, 1]);

@@ -117,7 +117,7 @@
         html += '<div class="row mt-16"><span class="badge badge-warn">达标线 ' + st.targetScore + ' 分</span>' +
           '<span class="dim" style="font-size:12.5px">' + U.esc(st.targetNote) + '</span>' +
           '<span class="spacer"></span>' +
-          '<a class="btn btn-sm btn-soft" href="#/exam?p=' + st.assessment + '">进入阶段测评</a></div>';
+          '<a class="btn btn-sm btn-soft" href="#/assessment?p=' + st.assessment + '">进入阶段测评</a></div>';
 
         html += '<div class="week-list">';
         st.weeks.forEach(function (wk) {
