@@ -10,7 +10,7 @@
  * 规则：
  * - 日期取 exportedAt 的本地日期；缺失时取文件名里的 YYYY-MM-DD
  * - 目标 progress/YYYY/YYYY-MM-DD[-后缀].json，已存在则不覆盖（只增不改）
- * - 只落盘与打印 git 命令，不自动提交
+ * - 只落盘，不自动提交
  */
 'use strict';
 
@@ -86,9 +86,7 @@ function main() {
 
   console.log((dryRun ? '（预览）' : '√ ') + '已归档：' + rel);
   console.log('');
-  console.log('提交命令：');
-  console.log('  git add "' + rel + '"');
-  console.log('  git commit -m "chore(progress): 归档 ' + date + suffix + ' 学习进度"');
+  console.log('JSON 已被 .gitignore 忽略，只存本地，无需提交。');
 }
 
 main();

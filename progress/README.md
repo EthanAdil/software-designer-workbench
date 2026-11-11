@@ -1,6 +1,6 @@
 # progress/ · 学习进度归档
 
-存放站内「成绩分析 → 导出备份（JSON）」产生的进度快照，一次导出一个文件，纳入 Git 便于回溯、对比与跨设备迁移。
+存放站内「成绩分析 → 导出备份（JSON）」产生的进度快照，一次导出一个文件。JSON 已被 `.gitignore` 忽略，只留本地，用于回溯、对比与跨设备迁移。
 
 ## 一、目录结构
 
@@ -35,15 +35,10 @@ progress/
 ```bash
 node tools/archive-progress.js ruankao-sd-backup-2026-11-05.json
 node tools/archive-progress.js backup.json stage1    # → 2026-11-05-stage1.json
-node tools/archive-progress.js backup.json --dry-run # 只预览路径与命令，不写文件
+node tools/archive-progress.js backup.json --dry-run # 只预览路径，不写文件
 ```
 
-3. 按脚本输出的两条命令提交（脚本不自动提交）：
-
-```bash
-git add "progress/2026/2026-11-05.json"
-git commit -m "chore(progress): 归档 2026-11-05 学习进度"
-```
+3. 归档即完成：`progress/**/*.json` 已被 `.gitignore` 忽略，脚本只写本地、不提示提交，也无需提交。
 
 - 日期取 `exportedAt` 的本地日期；缺失时取文件名里的 `YYYY-MM-DD`。
 - 目标文件已存在时脚本直接报错退出，不覆盖（只增不改）。

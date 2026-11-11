@@ -12,3 +12,7 @@ desktop.ini
 *.log
 *.tmp
 tools/_*
+
+# 学习进度快照（含作答记录，只留本地，不入公开仓库）
+progress/**/*.json
+progress/*.json

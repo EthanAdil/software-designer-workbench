@@ -45,17 +45,17 @@ python -m http.server 8731
 
 Gitee Pages 已于 2024 年下线（官方回复「不可抗原因，暂无恢复计划」），`*.gitee.io` 地址不可用。本项目的 Gitee 仓库只作源码托管，公网访问走 GitHub Pages。
 
-1. 在 GitHub 新建公开仓库，保留现有 `origin`（Gitee），另加一个远端并推送：
+1. 保留现有 `origin`（Gitee），另加 GitHub 远端并首次推送：
 
    ```bash
-   git remote add github git@github.com:<用户名>/<仓库名>.git
+   git remote add github git@github.com:EthanAdil/software-designer-workbench.git
    git push -u github master
    ```
 
-2. GitHub 仓库 → Settings → Pages → Source 选 `Deploy from a branch`，分支选 `master`（与本地一致；本地若改名为 `main` 就选 `main`）、目录 `/(root)` → Save。
-3. 等 1~2 分钟，手机访问 `https://<用户名>.github.io/<仓库名>/`（仓库名不是 `<用户名>.github.io` 时必须带仓库名）。
+2. GitHub 仓库 → Settings → Pages → Source 选 `Deploy from a branch`，分支选 `master`（与本地一致）、目录 `/(root)` → Save。
+3. 等 1~2 分钟，手机访问 `https://ethanadil.github.io/software-designer-workbench/`。
 4. 之后每次改完内容推两个远端：`git push origin master`（Gitee 源码备份）、`git push github master`（触发 Pages 更新）。
-5. 两个仓库都会公开，`progress/` 下的进度归档 JSON 也会上线；介意就先移出仓库。
+5. 两个仓库都会公开；`progress/` 下的进度 JSON 已被 `.gitignore` 忽略，只留本地，不会上线。
 6. GitHub Pages 国内访问偶有波动，打不开时回退方式一（局域网）。
 
 **方式三 · 手机本地文件（不推荐）**
@@ -104,7 +104,7 @@ Gitee Pages 已于 2024 年下线（官方回复「不可抗原因，暂无恢�
 │   ├── 05-个人错题本模板.md        错题归档模板（表格 + 案例卡）
 │   ├── 06-开发任务清单.md          已完成/待完成任务、优先级与验收标准
 │   └── 07-历年真题来源与考点索引.md   2 套真题的年份、来源链接、许可与考点对照
-├── progress/                       学习进度归档（按年分目录，JSON 快照，见其 README）
+├── progress/                       学习进度归档（JSON 快照仅本地、不入库，见其 README）
 └── tools/
     ├── build-docs.js               md → html（UTF-8）生成脚本
     ├── check-data.js               数据自检脚本
@@ -156,7 +156,7 @@ Gitee Pages 已于 2024 年下线（官方回复「不可抗原因，暂无恢�
 所有进度存在浏览器 `localStorage`（键前缀 `rk_sd_`），不上传、不联网。
 
 - 换浏览器或清缓存会丢失，**建议每周在「成绩分析 → 导出备份」保存一次 JSON**。
-- 导出的 JSON 建议按 `progress/YYYY/YYYY-MM-DD.json` 归档并提交，字段含义、采集节奏与恢复方式见 `progress/README.md`。
+- 导出的 JSON 按 `progress/YYYY/YYYY-MM-DD.json` 归档（该目录的 JSON 已被 `.gitignore` 忽略，只存本地），字段含义、采集节奏与恢复方式见 `progress/README.md`。
 - 无痕模式下数据不落盘。
 
 ---
