@@ -55,7 +55,7 @@ Gitee Pages 已于 2024 年下线（官方回复「不可抗原因，暂无恢�
 2. GitHub 仓库 → Settings → Pages → Source 选 `Deploy from a branch`，分支选 `master`（与本地一致）、目录 `/(root)` → Save。
 3. 等 1~2 分钟，手机访问 `https://ethanadil.github.io/software-designer-workbench/`。
 4. 之后每次改完内容推两个远端：`git push origin master`（Gitee 源码备份）、`git push github master`（触发 Pages 更新）。
-5. 两个仓库都会公开；`progress/` 下的进度 JSON 已被 `.gitignore` 忽略，只留本地，不会上线。
+5. 两个仓库都会公开；`progress/` 已移出主仓库，由 Gitee 私有仓库单独托管，不会出现在这里。
 6. GitHub Pages 国内访问偶有波动，打不开时回退方式一（局域网）。
 
 **方式三 · 手机本地文件（不推荐）**
@@ -104,7 +104,7 @@ Gitee Pages 已于 2024 年下线（官方回复「不可抗原因，暂无恢�
 │   ├── 05-个人错题本模板.md        错题归档模板（表格 + 案例卡）
 │   ├── 06-开发任务清单.md          已完成/待完成任务、优先级与验收标准
 │   └── 07-历年真题来源与考点索引.md   2 套真题的年份、来源链接、许可与考点对照
-├── progress/                       学习进度归档（JSON 快照仅本地、不入库，见其 README）
+├── progress/                       学习进度归档（独立 Gitee 私有仓库，不入主仓库）
 └── tools/
     ├── build-docs.js               md → html（UTF-8）生成脚本
     ├── check-data.js               数据自检脚本
@@ -156,7 +156,7 @@ Gitee Pages 已于 2024 年下线（官方回复「不可抗原因，暂无恢�
 所有进度存在浏览器 `localStorage`（键前缀 `rk_sd_`），不上传、不联网。
 
 - 换浏览器或清缓存会丢失，**建议每周在「成绩分析 → 导出备份」保存一次 JSON**。
-- 导出的 JSON 按 `progress/YYYY/YYYY-MM-DD.json` 归档（该目录的 JSON 已被 `.gitignore` 忽略，只存本地），字段含义、采集节奏与恢复方式见 `progress/README.md`。
+- 导出的 JSON 按 `progress/YYYY/YYYY-MM-DD.json` 归档（`progress/` 是独立 Gitee 私有仓库，不入本仓库），字段含义、采集节奏与恢复方式见 `progress/README.md`。
 - 无痕模式下数据不落盘。
 
 ---

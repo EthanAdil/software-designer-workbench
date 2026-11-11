@@ -13,6 +13,5 @@ desktop.ini
 *.tmp
 tools/_*
 
-# 学习进度快照（含作答记录，只留本地，不入公开仓库）
-progress/**/*.json
-progress/*.json
+# 学习进度快照（独立 Gitee 私有仓库托管，不进主仓库与公开站点）
+progress/

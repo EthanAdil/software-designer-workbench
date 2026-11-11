@@ -86,7 +86,10 @@ function main() {
 
   console.log((dryRun ? '（预览）' : '√ ') + '已归档：' + rel);
   console.log('');
-  console.log('JSON 已被 .gitignore 忽略，只存本地，无需提交。');
+  console.log('进度目录是独立私有仓库，请提交并推送：');
+  console.log('  git -C progress add -A');
+  console.log('  git -C progress commit -m "chore: 归档 ' + date + suffix + '"');
+  console.log('  git -C progress push');
 }
 
 main();
