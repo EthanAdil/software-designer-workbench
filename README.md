@@ -43,9 +43,20 @@ python -m http.server 8731
 
 **方式二 · GitHub Pages（长期用，不需电脑常开）**
 
-1. 把整个目录推到 GitHub 仓库 → Settings → Pages → Source 选 `Deploy from a branch`，分支 `main`、目录 `/(root)` → Save。
-2. 部署完成后手机访问 `https://<用户名>.github.io/<仓库名>/`（仓库名不是 `<用户名>.github.io` 时必须带仓库名）。
-3. 仓库会公开，`progress/` 下的进度归档 JSON 也会上线；介意就先移出仓库。
+Gitee Pages 已于 2024 年下线（官方回复「不可抗原因，暂无恢复计划」），`*.gitee.io` 地址不可用。本项目的 Gitee 仓库只作源码托管，公网访问走 GitHub Pages。
+
+1. 在 GitHub 新建公开仓库，保留现有 `origin`（Gitee），另加一个远端并推送：
+
+   ```bash
+   git remote add github git@github.com:<用户名>/<仓库名>.git
+   git push -u github master
+   ```
+
+2. GitHub 仓库 → Settings → Pages → Source 选 `Deploy from a branch`，分支选 `master`（与本地一致；本地若改名为 `main` 就选 `main`）、目录 `/(root)` → Save。
+3. 等 1~2 分钟，手机访问 `https://<用户名>.github.io/<仓库名>/`（仓库名不是 `<用户名>.github.io` 时必须带仓库名）。
+4. 之后每次改完内容推两个远端：`git push origin master`（Gitee 源码备份）、`git push github master`（触发 Pages 更新）。
+5. 两个仓库都会公开，`progress/` 下的进度归档 JSON 也会上线；介意就先移出仓库。
+6. GitHub Pages 国内访问偶有波动，打不开时回退方式一（局域网）。
 
 **方式三 · 手机本地文件（不推荐）**
 
