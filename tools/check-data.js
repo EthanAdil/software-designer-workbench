@@ -193,6 +193,113 @@ if (posTotal < 20) {
   }
 }
 
+/* 9. 模块—要点—文档口径一致性
+ * 单一事实源：core.js（key / 别名 / 权重 / 文档）、data-syllabus.js（要点）、题库（points）、
+ * docs/00 索引表、docs/02 锚点行。任何一处改了另一处没跟上，这里报错。 */
+const DOCS_DIR = path.join(root, 'docs');
+const PRECISE_DIR = path.join(DOCS_DIR, '02-知识点精要');
+const POINT_PREFIX = '> 对应知识模块要点：';
+
+/* 9.1 模块定义：别名、文档存在、权重合计 */
+const aliasOwner = new Map();
+RK.MODULES.forEach(m => {
+  if (!Array.isArray(m.aliases) || !m.aliases.length) errors.push(m.key + ' 缺少 aliases（计划/文档/题库的其它叫法）');
+  if (!fs.existsSync(path.join(root, m.doc))) errors.push(m.key + ' 精要文档不存在: ' + m.doc);
+  [m.name, m.short].concat(m.aliases || []).forEach(a => {
+    if (aliasOwner.has(a) && aliasOwner.get(a) !== m.key) {
+      errors.push('名称/别名冲突：「' + a + '」同时属于 ' + aliasOwner.get(a) + ' 与 ' + m.key);
+    }
+    aliasOwner.set(a, m.key);
+  });
+});
+const weightSum = RK.MODULES.reduce((a, m) => a + m.weight, 0);
+if (weightSum !== 75) errors.push('模块权重合计 ' + weightSum + ' ≠ 75');
+
+/* 9.2 精要文档锚点行（每篇恰好 1 行，要点用「；」分隔） */
+const preciseFiles = fs.readdirSync(PRECISE_DIR).filter(f => /\.md$/i.test(f)).sort();
+const anchorByDoc = new Map();
+preciseFiles.forEach(f => {
+  const hits = fs.readFileSync(path.join(PRECISE_DIR, f), 'utf8')
+    .split(/\r?\n/).filter(l => l.trim().indexOf(POINT_PREFIX) === 0);
+  if (hits.length !== 1) {
+    errors.push(f + ' 的锚点行数 ' + hits.length + '（应为 1 行「' + POINT_PREFIX + '…」）');
+    return;
+  }
+  const list = hits[0].trim().slice(POINT_PREFIX.length).replace(/。\s*$/, '')
+    .split('；').map(s => s.trim()).filter(Boolean);
+  if (!list.length) errors.push(f + ' 锚点行为空');
+  anchorByDoc.set(f, list);
+});
+
+/* 9.3 要点 ↔ 文档双向一一对应（57 个要点各出现且仅出现一次） */
+const moduleOfPoint = new Map();
+Object.keys(RK.syllabus.modules).forEach(k => {
+  (RK.syllabus.modules[k].points || []).forEach(p => {
+    if (moduleOfPoint.has(p.title)) errors.push('要点标题重复: ' + p.title);
+    moduleOfPoint.set(p.title, k);
+  });
+});
+const pointDoc = new Map();
+anchorByDoc.forEach((list, f) => {
+  list.forEach(t => {
+    if (!moduleOfPoint.has(t)) { errors.push(f + ' 锚点含未知要点: ' + t); return; }
+    if (pointDoc.has(t)) errors.push('要点「' + t + '」重复声明于 ' + pointDoc.get(t) + ' 与 ' + f);
+    pointDoc.set(t, f);
+  });
+});
+moduleOfPoint.forEach((k, t) => {
+  if (!pointDoc.has(t)) errors.push('要点无文档锚点: ' + t + '（' + k + '）');
+});
+
+/* 9.4 每个模块的要点必须落在 core.js 给它声明的文档里 */
+RK.MODULES.forEach(m => {
+  const f = path.basename(m.doc, '.html') + '.md';
+  const list = anchorByDoc.get(f) || [];
+  (RK.syllabus.modules[m.key].points || []).forEach(p => {
+    if (list.indexOf(p.title) === -1) errors.push(m.key + ' 的要点「' + p.title + '」未在 ' + f + ' 锚点声明');
+  });
+});
+
+/* 9.5 docs/00「知识模块与精要文档索引」逐列对齐 */
+const doc00 = fs.readFileSync(path.join(DOCS_DIR, '00-考试情报与备考策略.md'), 'utf8').split(/\r?\n/);
+let inIndex = false;
+const indexRows = [];
+doc00.forEach(l => {
+  if (/^##\s/.test(l)) { inIndex = /知识模块与精要文档索引/.test(l); return; }
+  const t = l.trim();
+  if (!inIndex || t.charAt(0) !== '|') return;
+  if (/^\|\s*-{3,}/.test(t)) return;
+  indexRows.push(t);
+});
+indexRows.shift();
+const dataRows = indexRows.filter(r => r.indexOf('合计') === -1);
+const cell = (row, i) => (row.split('|').slice(1, -1).map(c => c.trim().replace(/`/g, ''))[i] || '');
+if (dataRows.length !== RK.MODULES.length) {
+  errors.push('docs/00 索引表数据行 ' + dataRows.length + ' ≠ 模块数 ' + RK.MODULES.length);
+}
+RK.MODULES.forEach(m => {
+  const hit = dataRows.filter(r => cell(r, 1) === m.key);
+  if (hit.length !== 1) { errors.push('docs/00 索引表模块行数异常: ' + m.key + '（' + hit.length + ' 行）'); return; }
+  const r = hit[0];
+  const aliasWant = [m.short].concat(m.aliases || []).sort().join('、');
+  const aliasGot = cell(r, 2).split('、').map(s => s.trim()).filter(Boolean).sort().join('、');
+  if (aliasGot !== aliasWant) errors.push('docs/00 索引表别名不一致: ' + m.key + '（表「' + aliasGot + '」/ 源「' + aliasWant + '」）');
+  if (cell(r, 3) !== String(m.weight)) errors.push('docs/00 索引表权重不一致: ' + m.key + '（表 ' + cell(r, 3) + ' / 源 ' + m.weight + '）');
+  const bankN = (RK.byModule[m.key] || []).length;
+  if (cell(r, 4) !== String(bankN)) errors.push('docs/00 索引表题量不一致: ' + m.key + '（表 ' + cell(r, 4) + ' / 实际 ' + bankN + '）');
+  const pointN = (RK.syllabus.modules[m.key].points || []).length;
+  if (cell(r, 5) !== String(pointN)) errors.push('docs/00 索引表要点数不一致: ' + m.key + '（表 ' + cell(r, 5) + ' / 实际 ' + pointN + '）');
+  if (cell(r, 6) !== path.basename(m.doc, '.html')) errors.push('docs/00 索引表文档名不一致: ' + m.key + '（表 ' + cell(r, 6) + '）');
+});
+
+/* 9.6 每个模块至少在某个阶段的 focus 中出现（计划落点） */
+const focusSet = new Set();
+PLAN.stages.forEach(st => (st.focus || []).forEach(k => { if (k !== 'all') focusSet.add(k); }));
+RK.MODULES.forEach(m => { if (!focusSet.has(m.key)) errors.push(m.key + ' 未出现在任何阶段 focus 中'); });
+focusSet.forEach(k => { if (!RK.MODULE_MAP[k]) errors.push('data-plan 阶段 focus 含未知模块: ' + k); });
+
+console.log(`口径一致性：${RK.MODULES.length} 模块 / ${moduleOfPoint.size} 要点 / ${preciseFiles.length} 篇精要 / docs/00 索引 ${dataRows.length} 行`);
+
 /* 输出 */
 console.log('');
 if (warnings.length) {

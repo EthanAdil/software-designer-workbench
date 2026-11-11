@@ -43,6 +43,12 @@
       html += '<div class="row" style="align-items:flex-start"><div>';
       html += '<h2 style="font-size:19px"><i class="dot" style="background:' + mod.color + ';width:10px;height:10px"></i> ' + U.esc(mod.name) + '</h2>';
       html += '<div class="dim mt-8" style="font-size:12.8px">上午卷典型题量 ' + mod.weight + ' 题 · 题库现有 ' + bankCount + ' 题</div>';
+      var aliasText = (mod.aliases || []).filter(function (a) {
+        return a !== mod.name && a !== mod.short;
+      }).join(' / ');
+      if (aliasText) {
+        html += '<div class="dim mt-8" style="font-size:12.2px">亦作：' + U.esc(aliasText) + '</div>';
+      }
       html += '</div><span class="spacer"></span>' +
         '<a class="btn btn-sm" href="#/practice?m=' + key + '">刷本模块题</a></div>';
 

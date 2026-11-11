@@ -168,7 +168,7 @@
           '<a class="btn mt-8" href="#/practice?w=1"' + (unresolved ? '' : ' style="opacity:.5;pointer-events:none"') + '>开始重做</a></div>';
         h += '<div class="card"><div class="card-head"><h2>当前总量</h2></div>' +
           '<div class="kpi"><span class="kpi-value">' + RK.bank.morning.length + ' <small>题</small></span>' +
-          '<span class="dim" style="font-size:12px">覆盖 12 个模块，按考点权重分布</span></div></div>';
+          '<span class="dim" style="font-size:12px">覆盖 ' + RK.MODULES.length + ' 个模块，按考点权重分布</span></div></div>';
         h += '</div>';
 
         var mastery = RK.mastery();
