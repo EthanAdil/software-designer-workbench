@@ -239,6 +239,10 @@ function page(title, body, prefix, crumb) {
     '<meta name="viewport" content="width=device-width, initial-scale=1" />\n' +
     '<meta name="color-scheme" content="light dark" />\n' +
     '<title>' + esc(title) + '</title>\n' +
+    '<link rel="icon" type="image/svg+xml" href="' + prefix + 'assets/img/favicon.svg" />\n' +
+    '<link rel="icon" type="image/png" sizes="32x32" href="' + prefix + 'assets/img/favicon-32x32.png" />\n' +
+    '<link rel="icon" href="' + prefix + 'favicon.ico" sizes="any" />\n' +
+    '<link rel="apple-touch-icon" sizes="180x180" href="' + prefix + 'assets/img/apple-touch-icon.png" />\n' +
     '<link rel="stylesheet" href="' + prefix + 'assets/css/main.css" />\n' +
     '<link rel="stylesheet" href="' + prefix + 'assets/css/doc.css" />\n' +
     '</head>\n' +
