@@ -132,7 +132,7 @@ RK.MODULES.forEach(m => {
 });
 console.log(`知识模块：${Object.keys(RK.syllabus.modules).length} 个`);
 
-/* 7. 题型与难度分布（对应 docs/06 3.3 目标，只提示不阻断） */
+/* 7. 题型与难度分布（对应 docs/平台开发/开发任务清单.md 3.3 目标，只提示不阻断） */
 const morningTotal = RK.bank.morning.length;
 const cmCount = RK.bank.morning.filter(q => (q.tags || []).some(t => t === '概念' || t === '记忆')).length;
 const diffCount = { 1: 0, 2: 0, 3: 0 };
@@ -156,7 +156,7 @@ diffRate.forEach((r, i) => {
   }
 });
 
-/* 8. 正确答案位置分布（对应 docs/06 2.14，只提示不阻断）
+/* 8. 正确答案位置分布（对应 docs/平台开发/开发任务清单.md 2.14，只提示不阻断）
  * 统计口径：分母为 vm 加载后的上午题有效题量，只计 4 选项且 answer 为 0~3 整数的题目。
  * 25 道专业英语题由 eng() 工厂生成、源码无 answer: 字面量；下午题 answer 为字符串参考答案，
  * 因此不能按文本 grep，也不能扫全库 answer 字段。 */

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="color-scheme" content="light dark" />
+<title>06 · 周复盘 · 软件设计师</title>
+<link rel="icon" type="image/svg+xml" href="../assets/img/favicon.svg" />
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/img/favicon-32x32.png" />
+<link rel="icon" href="../favicon.ico" sizes="any" />
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/img/apple-touch-icon.png" />
+<link rel="stylesheet" href="../assets/css/main.css" />
+<link rel="stylesheet" href="../assets/css/doc.css" />
+</head>
+<body class="doc-body">
+<header class="doc-topbar">
+  <a class="doc-back" href="../index.html">← 返回工作台</a>
+  <span class="doc-crumb">docs</span>
+</header>
+<main class="doc">
+<h1>06 · 周复盘</h1>
+<blockquote><p>模板：<a class="doc-link" href="01-%E5%AD%A6%E4%B9%A0%E6%80%BB%E8%AE%A1%E5%88%92.html"><code>01-学习总计划.md</code></a> 第六节「周复盘模板（每周日 15 分钟）」的 8 项，固定按 1~8 填。<br />数据源：站内「成绩分析 → 导出备份」的 JSON 快照，归档在项目外的 <code>progress/YYYY/</code>。本页数字全部可复现，口径与复算方式见第四节。<br />用法：每周日新增一节 <code>W&lt;n&gt;</code>，编号与「学习计划」周次一致；只写数据、判读和下周动作，不抄题目解析。<br />最近更新：2026-11-17（补齐 W1、W2）</p></blockquote>
+<h2>一、周次索引</h2>
+<div class="doc-table"><table><thead><tr><th>周次</th><th>日期</th><th>主题</th><th>计划任务</th><th>本周新刷题</th><th>本周正确率</th><th>未掌握错题</th><th>自评</th></tr></thead><tbody><tr><td>W1</td><td>11-02 ~ 11-08</td><td>组成原理收口 + 基线自测</td><td>8/8</td><td>49 题 / 151 次</td><td>93.4%</td><td>2</td><td>超前约 4 周</td></tr><tr><td>W2</td><td>11-09 ~ 11-15</td><td>CPU、流水线与存储层次（巩固）</td><td>5/5（W1 已完成）</td><td>42 题 / 315 次</td><td>97.1%</td><td>0</td><td>超前约 6 周</td></tr></tbody></table></div>
+<p>W1、W2 的「计划任务」都是日历周自身的任务；两周实际推进的周次分别到了 W5、W8，明细见各节第 1 项。</p>
+<hr />
+<h2>二、第 1 周复盘（2026-11-02 ~ 11-08）</h2>
+<p>数据源：<code>progress/2026/2026-11-06.json</code>（11-06 16:33 导出，覆盖 W1 前 5 天）。</p>
+<p><strong>1. 本周完成任务：8/8 项</strong></p>
+<ul><li>W1 八项（读情报与计划、数制与码制 20 个转换、组成专项 15 题、错题本模板、组成 49 题限时全刷、二刷 CS-022/CS-032、薄弱点清单、OS 预启动）全部打卡，计划投入 16 小时。</li><li>另提前打卡 13 项：W2 5/5（15h）、W3 5/5（15h）、W4 2/4（7h）、W5 1/4（3h）。累计 21/131 项，计划投入 56 小时。</li></ul>
+<p><strong>2. 本周刷题：49 题，正确率 93.4%（对比上周：首周，无基线）</strong></p>
+<ul><li>去重 49 题（<code>CS-001</code>~<code>CS-049</code>，计算机组成题库 49 题全覆盖），累计作答 151 次、正确 141 次。</li><li>单题作答次数呈阶梯：前 15 题 5~6 次、中段 20 题 3 次（<code>CS-032</code> 4 次）、末段 14 题 1 次，说明是「一轮首刷 + 多轮回炉」的叠加结果，不是一次成型的成绩。</li><li>其余 12 个模块 0 题，全库覆盖 49/531（9.2%）。</li></ul>
+<p><strong>3. 新增错题：8 道（累计错 10 次），100% 集中在计算机组成</strong></p>
+<div class="doc-table"><table><thead><tr><th>题号</th><th>错误次数</th><th>错因</th><th>一句话结论</th><th>11-06 状态</th></tr></thead><tbody><tr><td>CS-002</td><td>1</td><td>知识盲区</td><td>牢记补码特殊数 10000000 对应 -128</td><td>已掌握</td></tr><tr><td>CS-011</td><td>1</td><td>计算失误</td><td>未命中路径要计入查 Cache 的时间</td><td>已掌握</td></tr><tr><td>CS-022</td><td>1</td><td>知识盲区</td><td>理清概念，排除误导项</td><td>已掌握</td></tr><tr><td>CS-027</td><td>1</td><td>计算失误</td><td>草稿本上列式，算完再作答</td><td>已掌握</td></tr><tr><td>CS-032</td><td>3</td><td>计算失误（应改「公式记错」）</td><td>注意计算小数点精度（结论待改）</td><td>已掌握（存疑）</td></tr><tr><td>CS-034</td><td>1</td><td>公式记错</td><td>先整理公式，理清思路，逐步计算</td><td>已掌握</td></tr><tr><td>CS-039</td><td>1</td><td>概念混淆</td><td>理清概念，CPU 各模块的作用</td><td>未掌握</td></tr><tr><td>CS-046</td><td>1</td><td>公式记错</td><td>执行时间 = 指令数 × CPI / 时钟频率</td><td>未掌握</td></tr></tbody></table></div>
+<p>错因分布（按次数）：计算失误 5、知识盲区 2、公式记错 2、概念混淆 1。</p>
+<p><strong>4. 未掌握错题累计：2 道</strong></p>
+<ul><li><code>CS-046</code>（性能指标换算）、<code>CS-039</code>（CPU 各部件职能），距「阶段内 &lt; 15 道」的上限达标。</li></ul>
+<p><strong>5. 本周最大收获（一句话）</strong></p>
+<p>组成原理一轮全覆盖并回炉多轮，93.4% 是这个模块第一个可对比的基线，阶段一有了北极星。</p>
+<p><strong>6. 本周最大问题（一句话）</strong></p>
+<p>10 次错误里 7 次记成「计算失误 / 公式记错」，但 <code>CS-032</code> 的真实原因是并联可靠度公式用错（应为 1-(1-R)ⁿ，不是各分量相乘），归因没落到公式上，二刷还会错。</p>
+<p><strong>7. 下周必须调整的一件事</strong></p>
+<p>把 <code>CS-032</code> 的错因改成「公式记错」、结论改成公式本身；<code>CS-046</code>、<code>CS-039</code> 二刷到能默写公式与部件职能再勾「已掌握」。</p>
+<p><strong>8. 距离阶段测评还有 9 周，当前自评：超前</strong></p>
+<ul><li>阶段一测评在 W10（2027-01-04 ~ 01-10）；内容已推进到 W5，领先日历约 4 周。</li><li>但两次导出 <code>exams</code> 均为空，<strong>0 次测评 / 0 次模考</strong>，没有分数基线——这是 W1 最大的结构性缺口。</li></ul>
+<hr />
+<h2>三、第 2 周复盘（2026-11-09 ~ 11-15）</h2>
+<p>数据源：<code>progress/2026/ruankao-sd-backup-2026-11-13.json</code>（11-13 18:10 导出），与 11-06 快照逐题作差得本周增量。</p>
+<p><strong>1. 本周完成任务：5/5 项（本周新计划已在 W1 完成），实际推进后续周次 17 项</strong></p>
+<ul><li>W2 五项巩固任务在 W1 已全部打卡，本周没有新增的「本周计划」；实际推进的是 W4 ~ W8：W4 补 2 项收口（4/4）、W5 补 3 项（4/4）、W6 全部 5 项（5/5）、W7 3/4、W8 4/5。</li><li>累计 38/131 项（29.0%），计划投入 109 小时，本周新增 53 小时。</li></ul>
+<p><strong>2. 本周刷题：42 题，正确率 97.1%（对比上周 93.4%，+3.7 个百分点）</strong></p>
+<div class="doc-table"><table><thead><tr><th>模块</th><th>题库</th><th>本周作答次数</th><th>本周正确</th><th>本周正确率</th></tr></thead><tbody><tr><td>计算机组成</td><td>49</td><td>147（3 轮复刷）</td><td>144</td><td>98.0%</td></tr><tr><td>操作系统</td><td>42</td><td>168（首轮 42 题）</td><td>162</td><td>96.4%</td></tr><tr><td>合计</td><td>—</td><td>315</td><td>306</td><td>97.1%</td></tr></tbody></table></div>
+<ul><li>去重新增 42 题，全部是操作系统，该模块 42/42 首轮刷完；组成不动题量只复刷。</li><li>全库覆盖 91/531（17.1%），累计作答 466 次、正确 447 次（95.9%）。</li></ul>
+<p><strong>3. 新增错题：8 道新入本 + 1 道复错（CS-034），共 9 次</strong></p>
+<div class="doc-table"><table><thead><tr><th>题号</th><th>模块</th><th>本周错误</th><th>累计次数</th><th>错因</th><th>一句话结论</th><th>11-13 状态</th></tr></thead><tbody><tr><td>CS-029</td><td>组成</td><td>1</td><td>1</td><td>概念混淆</td><td>分清数据总线和地址总线</td><td>已掌握</td></tr><tr><td>CS-034</td><td>组成</td><td>1</td><td>2</td><td>公式记错</td><td>先整理公式，注意看清值大小</td><td>已掌握</td></tr><tr><td>CS-044</td><td>组成</td><td>1</td><td>1</td><td>概念混淆</td><td>32 位 = 4 字节，分清位和字节</td><td>已掌握</td></tr><tr><td>OS-008</td><td>OS</td><td>1</td><td>1</td><td>计算失误</td><td>仔细计算，熟练掌握概念</td><td>已掌握</td></tr><tr><td>OS-013</td><td>OS</td><td>1</td><td>1</td><td>计算失误</td><td>仔细计算</td><td>已掌握</td></tr><tr><td>OS-021</td><td>OS</td><td>1</td><td>1</td><td>知识盲区</td><td>页面大小决定页内地址位数</td><td>已掌握</td></tr><tr><td>OS-039</td><td>OS</td><td>1</td><td>1</td><td>知识盲区</td><td>响应比 =（等待 + 要求服务时间）/ 要求服务时间</td><td>已掌握</td></tr><tr><td>OS-040</td><td>OS</td><td>1</td><td>1</td><td>计算失误</td><td>注意计算过程，仔细核对</td><td>已掌握</td></tr><tr><td>OS-041</td><td>OS</td><td>1</td><td>1</td><td>计算失误</td><td>结合实际情况理解</td><td>已掌握</td></tr></tbody></table></div>
+<ul><li>分布：操作系统 6 次、计算机组成 3 次；<code>OS-041</code> 的结论「结合实际情况理解」不可执行，下周改成具体判据。</li></ul>
+<p><strong>4. 未掌握错题累计：0 道（目标阶段内 &lt; 15 道）</strong></p>
+<ul><li>W1 遗留的 <code>CS-046</code>、<code>CS-039</code> 本周已标记掌握，错题本 16 条全部为「已掌握」。</li><li>这个 0 与「累计 19 次错误」不匹配：<code>CS-034</code> 本周又错一次、<code>OS-039</code>/<code>OS-021</code> 是公式与概念问题，都只错一次就勾了掌握，二刷标准偏松。</li></ul>
+<p><strong>5. 本周最大收获（一句话）</strong></p>
+<p>操作系统 42 题一轮全刷完（阶段一 OS 配额恰好 42/42），组成复刷 3 轮后 98.0%，两个模块都能按计划节奏收口。</p>
+<p><strong>6. 本周最大问题（一句话）</strong></p>
+<p>只刷题不测分：<code>exams</code> 仍是空数组，进度已到 W8 却仍无任何一次阶段测评或模考，「超前」只体现在打卡数上。</p>
+<p><strong>7. 下周必须调整的一件事</strong></p>
+<p>做一次阶段一测评（40 题 / 45 分钟，卷面折算目标 31 分），按模块得分表列出 3 个短板；同时把「已掌握」的判定改成「二刷全对 + 能复述公式」。</p>
+<p><strong>8. 距离阶段测评还有 8 周（原定 W10），当前自评：超前</strong></p>
+<ul><li>11-13 处于日历 W2，任务已推进到 W8，领先约 6 周；测评可提前到 W3 ~ W4 先做一次。</li><li>W7-t4、W8-t5 两项限时刷题任务未打卡，是当前唯一「计划的做题量没做完」的地方。</li></ul>
+<hr />
+<h2>四、口径与复现</h2>
+<div class="doc-table"><table><thead><tr><th>项</th><th>口径</th></tr></thead><tbody><tr><td>已作答题目</td><td><code>answers</code> 的键数，一题多轮只计 1 题</td></tr><tr><td>作答次数</td><td>每题 <code>right + wrong</code> 累加（同一题多刷按次数累计）</td></tr><tr><td>正确率</td><td>累计 <code>right / 作答次数</code>；「本周」用两份快照作差，不是单周独立样本</td></tr><tr><td>新增错题</td><td><code>wrong</code> 新增题号数；「复错」为已有题号 <code>count</code> 增长；括号外按题去重、括号内按次数</td></tr><tr><td>未掌握</td><td><code>wrong[*].resolved === false</code> 的条数</td></tr><tr><td>完成任务</td><td><code>tasks</code> 的键数；小时按 <code>data-plan.js</code> 中该任务的 <code>hours</code> 汇总</td></tr><tr><td>计划投入</td><td>已打卡任务的<strong>计划小时</strong>，不是实测用时（与「学习计划 → 累计投入」同源）</td></tr><tr><td>测评 / 模考</td><td><code>exams</code> 长度，两份快照均为 0</td></tr></tbody></table></div>
+<p><strong>已知局限</strong>：</p>
+<ul><li>备份只存每题累计次数与最后作答时间，没有逐次时间戳，所以「本周」只能靠两次导出的差值推算，无法按天拆分，也无法区分「首轮正确率」与「回炉后正确率」。</li><li>打卡记录只有 <code>{任务id: true}</code>，没有完成时间，任务归属按计划周计，超前完成的会记在所属周次上（例如 W4 ~ W8 的任务实际在 W2 内完成）。</li></ul>
+<p><strong>复算方式</strong>：读两份 JSON，对 <code>answers</code> 逐题作差（题量取键集合差集，作答次数与正确数取差值），<code>wrong</code> 取题号与 <code>count</code> 差异，<code>tasks</code> 取键集合差集，再按 <code>data-plan.js</code> 的 <code>hours</code> 汇总即得上表数字。</p>
+<hr />
+<h2>五、后续周次</h2>
+<ul><li>W3（2026-11-16 ~ 11-22）待周日填写，模板同第二节 1~8 项。</li><li>每周日固定顺序：勾选本周任务 → 错题本补归因与结论 → 导出 JSON 到 <code>progress/2026/</code> → 在本文追加一节 → 回填第一节索引表。</li></ul>
+</main>
+<footer class="doc-footer">本文档由同名 Markdown 生成（UTF-8 编码）；内容修改请改 .md 后重新运行 <code>node tools/build-docs.js</code>。</footer>
+</body>
+</html>

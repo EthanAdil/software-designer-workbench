@@ -1,5 +1,6 @@
 /* ==========================================================================
- * views-docs.js —— 备考文档：docs/ 下 17 篇 HTML 的汇总入口
+ * views-docs.js —— 备考文档：docs/ 下 18 篇备考 HTML 的汇总入口
+ * 平台自身文档（docs/平台开发/）不在此列，只在本页提示位置。
  * ========================================================================== */
 (function (RK) {
   var U = RK.U;
@@ -114,6 +115,18 @@
       ]
     },
     {
+      name: '周复盘',
+      hint: '每周日填一次，数据来自「成绩分析 → 导出备份」',
+      layout: 'list',
+      items: [
+        {
+          title: '06 · 周复盘',
+          desc: '按 01 第六节模板记录的 W1 起每周复盘：任务、刷题、错题、自评与下周动作',
+          path: 'docs/06-周复盘.html'
+        }
+      ]
+    },
+    {
       name: '真题来源',
       hint: 'W27 用，按链接下载',
       layout: 'list',
@@ -135,14 +148,14 @@
 
   RK.router.add('docs', {
     title: '备考文档',
-    sub: 'docs 目录下 17 篇文档的 HTML 版本，按主题分组，点击在新标签打开',
+    sub: 'docs 下 18 篇备考文档的 HTML 版本，按主题分组，点击在新标签打开；平台开发文档在 docs/平台开发/，不在此列',
     render: function () {
       var total = 0;
       GROUPS.forEach(function (g) { total += g.items.length; });
 
       var h = '<div class="card"><div class="card-head"><h2>文档总览</h2>' +
         '<span class="hint">共 ' + total + ' 篇 · UTF-8 HTML</span></div>' +
-        '<p class="dim" style="margin:0;font-size:13px">建议顺序：00 情报 → 01 计划 → 02 精要（随学习进度）→ 03 / 04 专项与技巧 → 05 错题本模板。</p>' +
+        '<p class="dim" style="margin:0;font-size:13px">建议顺序：00 情报 → 01 计划 → 02 精要（随学习进度）→ 03 / 04 专项与技巧 → 05 错题本模板 → 06 周复盘（每周日）→ 07 真题来源（W27）。</p>' +
         '<div class="row-wrap mt-8" style="font-size:12px;color:var(--text-3)">' +
         '<span>Markdown 为源文件</span><span>·</span>' +
         '<span>修改后运行 <span class="mono">node tools/build-docs.js</span> 重新生成 HTML</span>' +
