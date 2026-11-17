@@ -32,7 +32,9 @@ function toSup(html) {
 }
 
 function inlineText(s) {
-  return toSup(esc(s)).replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+  return toSup(esc(s))
+    .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+    .replace(/\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/g, '<a class="doc-link" href="$2" target="_blank" rel="noopener">$1</a>');
 }
 
 function inline(s) {

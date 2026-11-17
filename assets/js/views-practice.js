@@ -1,10 +1,113 @@
 /* ==========================================================================
- * views-practice.js —— 刷题练习：按模块 / 随机 / 错题重做
+ * views-practice.js —— 刷题练习：自选模块组合 / 随机 / 按模块 / 错题重做
  * ========================================================================== */
 (function (RK) {
   var U = RK.U;
   var LETTERS = U.letters;
   var session = null;
+
+  var SCALES = [20, 30, 40, 75];   /* 自选模块练习的总题量档位 */
+  var SEL_KEY = 'practice_sel';    /* 勾选模块与档位记忆，前缀 rk_sd_ 由 RK.store 统一加 */
+
+  /**
+   * 自选模块练习的题量分配：
+   * - 本次题量 = round(档位 × 勾选模块权重和 / 75)，即一份「缩小版上午卷」；全选 13 模块时权重和正好 75，
+   *   各模块题数等于该模块上午卷权重
+   * - 最大余数法取整：先取 floor，余额给小数部分最大的模块，同余数按权重降序
+   * - 档位够分（总题量 ≥ 勾选模块数）时保证每个模块至少 1 题，从「超出理想值最多」的模块挪
+   * - 某模块题库不够时按权重从高到低把余量补给仍有余量的模块，保证总数不缩水
+   * 返回 { total, items: [{ key, count }] }，各模块题数不会超出该模块题库。
+   */
+  function planCombined(mods, scale) {
+    if (!mods || !mods.length) return { total: 0, items: [] };
+    var wsum = 0;
+    mods.forEach(function (m) { wsum += m.weight; });
+    var total = Math.max(1, Math.round(scale * wsum / 75));
+
+    var want = {};
+    var ideal = {};
+    var used = 0;
+    var raw = mods.map(function (m) {
+      var v = total * m.weight / wsum;
+      want[m.key] = Math.floor(v);
+      ideal[m.key] = v;
+      used += want[m.key];
+      return { key: m.key, weight: m.weight, v: v };
+    });
+    raw.slice().sort(function (a, b) {
+      return (b.v - Math.floor(b.v)) - (a.v - Math.floor(a.v)) || b.weight - a.weight;
+    }).forEach(function (r) {
+      if (used < total) { want[r.key] += 1; used += 1; }
+    });
+
+    if (total >= mods.length) {
+      mods.forEach(function (m) {
+        if (want[m.key] > 0) return;
+        var donor = null;
+        mods.forEach(function (d) {
+          if (d.key === m.key || want[d.key] <= 1) return;
+          var surplus = want[d.key] - ideal[d.key];
+          if (!donor || surplus > donor.surplus) donor = { key: d.key, surplus: surplus };
+        });
+        if (donor) { want[donor.key] -= 1; want[m.key] = 1; }
+      });
+    }
+
+    var cap = {};
+    var got = 0;
+    mods.forEach(function (m) {
+      cap[m.key] = Math.min(want[m.key], (RK.byModule[m.key] || []).length);
+      got += cap[m.key];
+    });
+
+    var deficit = total - got;
+    var order = mods.slice().sort(function (a, b) { return b.weight - a.weight; });
+    while (deficit > 0) {
+      var moved = false;
+      for (var i = 0; i < order.length && deficit > 0; i++) {
+        var key = order[i].key;
+        if (cap[key] < (RK.byModule[key] || []).length) {
+          cap[key] += 1; deficit -= 1; moved = true;
+        }
+      }
+      if (!moved) break;
+    }
+
+    var items = [];
+    var sum = 0;
+    mods.forEach(function (m) {
+      if (cap[m.key] > 0) { items.push({ key: m.key, count: cap[m.key] }); sum += cap[m.key]; }
+    });
+    return { total: sum, items: items };
+  }
+
+  function combinedList(keys, scale) {
+    var mods = [];
+    keys.forEach(function (k) { if (RK.MODULE_MAP[k]) mods.push(RK.MODULE_MAP[k]); });
+    var picked = [];
+    planCombined(mods, scale).items.forEach(function (it) {
+      picked = picked.concat(U.sample(RK.byModule[it.key] || [], it.count));
+    });
+    return U.shuffle(picked);
+  }
+
+  function savedSelection() {
+    var saved = RK.store.get(SEL_KEY, null);
+    var keys;
+    var scale = 30;
+    if (saved && Object.prototype.toString.call(saved.c) === '[object Array]') {
+      /* 存过就照存：全不选也保留为空，刷新后不擅自回填全部模块 */
+      keys = saved.c.filter(function (k) { return !!RK.MODULE_MAP[k]; });
+    } else {
+      keys = RK.MODULES.map(function (m) { return m.key; });
+    }
+    if (saved && SCALES.indexOf(Number(saved.n)) >= 0) scale = Number(saved.n);
+    return { keys: keys, scale: scale };
+  }
+
+  function saveSelection(keys, scale) {
+    RK.store.set(SEL_KEY, { c: keys || [], n: Number(scale) || 30 });
+  }
 
   function buildList(params) {
     if (params.w) {
@@ -15,12 +118,15 @@
     if (params.m && RK.byModule[params.m]) {
       return U.shuffle(RK.byModule[params.m]);
     }
+    if (params.c) {
+      return combinedList(params.c.split(','), Number(params.n) || 30);
+    }
     var n = Number(params.r) || 30;
     return U.sample(RK.bank.morning, n);
   }
 
   function signature(params) {
-    return [params.m || '', params.r || '', params.w || ''].join('|');
+    return [params.m || '', params.r || '', params.w || '', params.c || '', params.n || ''].join('|');
   }
 
   function ensureSession(params) {
@@ -28,15 +134,24 @@
     if (session && session.sig === sig) return session;
     /* 本次练习内每题固定一套乱序选项，重绘/回看不会变 */
     var list = buildList(params).map(RK.variant);
+    var mode = params.w ? 'w' : (params.m ? 'm' : (params.c ? 'c' : 'r'));
+    var title = '随机练习';
+    if (mode === 'w') title = '错题重做';
+    else if (mode === 'm') title = RK.moduleName(params.m) + ' · 专项练习';
+    else if (mode === 'c') {
+      var keys = params.c.split(',').filter(function (k) { return !!RK.MODULE_MAP[k]; });
+      title = '自选模块练习 · ' + keys.length + ' 个模块 · ' + (Number(params.n) || 30) + ' 题档';
+    }
     session = {
       sig: sig,
+      mode: mode,
       list: list,
       idx: 0,
       picked: {},
       correct: 0,
       wrong: 0,
       done: false,
-      title: params.w ? '错题重做' : (params.m ? RK.moduleName(params.m) + ' · 专项练习' : '随机练习')
+      title: title
     };
     return session;
   }
@@ -45,8 +160,10 @@
   function renderBox() {
     var s = session;
     if (!s.list.length) {
-      return '<div class="empty">当前没有可练的题目。' +
-        (s.sig.indexOf('w') >= 0 ? '先去刷题积累错题，或错题已全部掌握。' : '') + '</div>';
+      var tip = '';
+      if (s.mode === 'w') tip = '先去刷题积累错题，或错题已全部掌握。';
+      else if (s.mode === 'c') tip = '勾选的模块题库为空，换一组模块试试。';
+      return '<div class="empty">当前没有可练的题目。' + tip + '</div>';
     }
     if (s.done) return renderSummary();
 
@@ -144,15 +261,130 @@
       '<span class="badge badge-plain">正确率 ' + (rate === null ? '—' : U.pct(rate)) + '</span>';
   }
 
+  /* ---------------- 自选模块练习（首页勾选器） ---------------- */
+  function renderComboCard() {
+    var sel = savedSelection();
+    var h = '<div class="card mt-16"><div class="card-head"><h2>自选模块练习</h2>' +
+      '<span class="hint">只练已学完的模块，题量按上午卷权重折算</span></div>';
+    h += '<p class="dim" style="font-size:12.5px;margin-bottom:10px;line-height:1.75">' +
+      '题量 = 档位 × 勾选模块权重合计 ÷ 75，相当于一份「缩小版上午卷」：' +
+      '例如只勾组成原理(7)+操作系统(6)+数据结构(8)，权重合计 21，30 题档出 8 题（3 / 2 / 3）。</p>';
+    h += '<div class="mod-pick">';
+    RK.MODULES.forEach(function (m) {
+      var on = sel.keys.indexOf(m.key) >= 0;
+      var pool = (RK.byModule[m.key] || []).length;
+      h += '<label class="mod-pick-item' + (on ? ' is-on' : '') + '">' +
+        '<input type="checkbox" data-mod="' + m.key + '"' + (on ? ' checked' : '') + '>' +
+        '<i class="dot" style="background:' + m.color + '"></i>' +
+        '<span>' + U.esc(m.short) + '</span>' +
+        '<span class="mod-pick-meta">' + m.weight + '/卷 · 题库 ' + pool + '</span>' +
+        '</label>';
+    });
+    h += '</div>';
+    h += '<div class="row mt-8" style="gap:8px">' +
+      '<span class="dim" style="font-size:12.5px">选择模块</span>' +
+      '<span class="spacer"></span>' +
+      '<button type="button" class="btn btn-sm btn-ghost" data-act="combo-all">全选</button>' +
+      '<button type="button" class="btn btn-sm btn-ghost" data-act="combo-none">全不选</button>' +
+      '</div>';
+    h += '<div class="row mt-16" style="flex-wrap:wrap;gap:12px">' +
+      '<span class="dim" style="font-size:12.5px">题量档</span><div class="seg" id="combo-scale">';
+    SCALES.forEach(function (n) {
+      h += '<button type="button" class="seg-btn' + (sel.scale === n ? ' is-on' : '') + '" data-scale="' + n + '">' + n + ' 题</button>';
+    });
+    h += '</div><span class="spacer"></span>' +
+      '<button type="button" class="btn" data-act="combo-start">开始练习</button></div>';
+    h += '<div class="mt-8" id="combo-preview" style="font-size:12.5px;color:var(--text-2);line-height:1.75"></div>';
+    h += '</div>';
+    return h;
+  }
+
+  function pickedKeys(el) {
+    var out = [];
+    var inputs = el.querySelectorAll('.mod-pick input[data-mod]');
+    for (var i = 0; i < inputs.length; i++) {
+      if (inputs[i].checked) out.push(inputs[i].getAttribute('data-mod'));
+    }
+    return out;
+  }
+
+  function pickedScale(el) {
+    var on = el.querySelector('#combo-scale .seg-btn.is-on');
+    return on ? Number(on.getAttribute('data-scale')) : 30;
+  }
+
+  function previewCombined(el) {
+    var box = el.querySelector('#combo-preview');
+    if (!box) return;
+    var keys = pickedKeys(el);
+    if (!keys.length) {
+      box.innerHTML = '未勾选模块：至少勾选 1 个模块才能开始。';
+      return;
+    }
+    var mods = [];
+    keys.forEach(function (k) { if (RK.MODULE_MAP[k]) mods.push(RK.MODULE_MAP[k]); });
+    var plan = planCombined(mods, pickedScale(el));
+    var parts = plan.items.map(function (it) {
+      return U.esc(RK.MODULE_MAP[it.key].short) + ' ' + it.count;
+    });
+    box.innerHTML = '本次将抽 <strong>' + plan.total + '</strong> 题：' + parts.join(' · ');
+  }
+
+  function mountHome(el) {
+    previewCombined(el);
+
+    el.addEventListener('change', function (e) {
+      var input = e.target.closest ? e.target.closest('.mod-pick input[data-mod]') : null;
+      if (!input) return;
+      if (input.parentNode && input.parentNode.classList) {
+        input.parentNode.classList.toggle('is-on', input.checked);
+      }
+      saveSelection(pickedKeys(el), pickedScale(el));
+      previewCombined(el);
+    });
+
+    el.addEventListener('click', function (e) {
+      var bulk = e.target.closest ? e.target.closest('[data-act="combo-all"],[data-act="combo-none"]') : null;
+      if (bulk) {
+        var check = bulk.getAttribute('data-act') === 'combo-all';
+        var boxes = el.querySelectorAll('.mod-pick input[data-mod]');
+        for (var j = 0; j < boxes.length; j++) {
+          boxes[j].checked = check;
+          if (boxes[j].parentNode && boxes[j].parentNode.classList) {
+            boxes[j].parentNode.classList.toggle('is-on', check);
+          }
+        }
+        saveSelection(pickedKeys(el), pickedScale(el));
+        previewCombined(el);
+        return;
+      }
+
+      var seg = e.target.closest ? e.target.closest('#combo-scale .seg-btn') : null;
+      if (seg) {
+        var btns = el.querySelectorAll('#combo-scale .seg-btn');
+        for (var i = 0; i < btns.length; i++) btns[i].classList.remove('is-on');
+        seg.classList.add('is-on');
+        saveSelection(pickedKeys(el), pickedScale(el));
+        previewCombined(el);
+        return;
+      }
+
+      var start = e.target.closest ? e.target.closest('[data-act="combo-start"]') : null;
+      if (!start) return;
+      var keys = pickedKeys(el);
+      if (!keys.length) { RK.toast('请至少勾选 1 个模块'); return; }
+      var scale = pickedScale(el);
+      saveSelection(keys, scale);
+      RK.router.go('/practice?c=' + keys.join(',') + '&n=' + scale);
+    });
+  }
+
   /* ---------------- 视图 ---------------- */
   RK.router.add('practice', {
-    title: function (params) {
-      var isSession = params.m || params.r || params.w;
-      return isSession ? '刷题练习' : '刷题练习';
-    },
+    title: '刷题练习',
     sub: '点击选项立即判题并显示解析，答错自动进入错题本',
     render: function (params) {
-      var isSession = params.m || params.r || params.w;
+      var isSession = params.m || params.r || params.w || params.c;
 
       if (!isSession) {
         var h = '';
@@ -170,6 +402,8 @@
           '<div class="kpi"><span class="kpi-value">' + RK.bank.morning.length + ' <small>题</small></span>' +
           '<span class="dim" style="font-size:12px">覆盖 ' + RK.MODULES.length + ' 个模块，按考点权重分布</span></div></div>';
         h += '</div>';
+
+        h += renderComboCard();
 
         var mastery = RK.mastery();
         h += '<div class="card mt-16"><div class="card-head"><h2>按模块练习</h2><span class="hint">题目数量与上午卷权重一致</span></div>';
@@ -199,6 +433,11 @@
     },
 
     mount: function (el, params) {
+      /* 首页：绑定勾选器、题量档与开始按钮 */
+      if (!params.c && !params.m && !params.r && !params.w) {
+        mountHome(el);
+        return;
+      }
       if (!session) return;
 
       el.addEventListener('click', function (e) {

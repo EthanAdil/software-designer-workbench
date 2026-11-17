@@ -99,6 +99,21 @@ check('docs', {}, 600);
 check('practice', {}, 600);
 check('practice', { m: 'os' }, 400);
 check('practice', { r: '30' }, 400);
+check('practice', { c: 'computer-system,network,database', n: '30' }, 400);
+
+/* 自选模块练习：题量按上午卷权重折算（7+6+7=20 → 30 × 20 / 75 = 8 题） */
+const pracHomeHtml = RK.router.routes.practice.render({});
+if (!pracHomeHtml.includes('自选模块练习')) {
+  problems.push('练习首页缺少「自选模块练习」入口');
+}
+if (!pracHomeHtml.includes('data-act="combo-all"') || !pracHomeHtml.includes('data-act="combo-none"')) {
+  problems.push('练习首页缺少自选模块的全选 / 全不选按钮');
+}
+const comboHtml = RK.router.routes.practice.render({ c: 'computer-system,network,database', n: '30' });
+const comboCount = comboHtml.match(/第 1 \/ (\d+) 题/);
+if (!comboCount || comboCount[1] !== '8') {
+  problems.push('自选模块练习题量折算不符：期望 8 题，实际 ' + (comboCount ? comboCount[1] : '未渲染'));
+}
 check('exam', {}, 600);
 check('assessment', {}, 600);
 check('review', {}, 300);
