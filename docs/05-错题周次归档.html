@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="color-scheme" content="light dark" />
+<title>05 · 错题周次归档 · 软件设计师</title>
+<link rel="icon" type="image/svg+xml" href="../assets/img/favicon.svg" />
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/img/favicon-32x32.png" />
+<link rel="icon" href="../favicon.ico" sizes="any" />
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/img/apple-touch-icon.png" />
+<link rel="stylesheet" href="../assets/css/main.css" />
+<link rel="stylesheet" href="../assets/css/doc.css" />
+</head>
+<body class="doc-body">
+<header class="doc-topbar">
+  <a class="doc-back" href="../index.html">← 返回工作台</a>
+  <span class="doc-crumb">docs</span>
+</header>
+<main class="doc">
+<h1>05 · 错题周次归档</h1>
+<blockquote><p>数据源：站内「错题本」+ 备份 JSON（<code>progress/2026/</code>），按计划周次归档；字段与站内、CSV 一致（题号 / 我的答案 / 正确答案 / 错因 / 一句话结论）。<br />用法：每周日新增一节（置于最前），依次填「分类记录 → 错误原因分析 → 知识点归纳 → 改进措施」，再回填第一节索引；「已掌握」需连续两次答对。最近更新 2026-11-20（补 W3，数据截至 11-20）。</p></blockquote>
+<h2>一、周次索引</h2>
+<div class="doc-table"><table><thead><tr><th>周次</th><th>日期</th><th>模块分布</th><th>新增错题</th><th>错误次数</th><th>复核主因</th><th>未掌握</th><th>状态</th></tr></thead><tbody><tr><td>W3</td><td>11-16 ~ 11-22</td><td>数据结构 8 + 程序语言 3</td><td>11</td><td>11</td><td>概念 6 / 盲区 3 / 审题 2</td><td>0</td><td>数据截至 11-20</td></tr><tr><td>W2</td><td>11-09 ~ 11-15</td><td>OS 6 + 组成 3</td><td>8 新 + 1 复错</td><td>9</td><td>计算 5 / 公式 2 / 概念 2</td><td>0（判定偏松）</td><td>已归档</td></tr><tr><td>W1</td><td>11-02 ~ 11-08</td><td>计算机组成 8</td><td>8</td><td>10</td><td>公式 5 / 概念 2 / 计算 1</td><td>2</td><td>已归档</td></tr></tbody></table></div>
+<p>数据取 W1 结束（11-06 导出）、W2 结束（11-13 导出）、W3 截至 11-20（11-20 导出）三份快照；「复核主因」是事后重新归因，与站内标签的差异见各节第 2 项。</p>
+<p><strong>排序规则（目标：打开即见最新周，往回翻即历史）</strong>：索引表与各周归档统一以周为单位、按周号 <code>W&lt;n&gt;</code> <strong>逆序</strong>（最新优先），新增周插在索引下第一位，旧周位置不动。</p>
+<ul><li>跨年：周号连续跨年（W10 起进入 2027 年），只按 <code>W&lt;n&gt;</code> 数值排，不按日期字符串。</li><li>空周 / 缺失周：没有新增错题的周不建节、不进索引；数据不全的周在节标题标「数据截至 X」，索引状态列注明。</li><li>适用范围：仅「备考文档」页的 05、06 两篇（含同名 HTML）；节内题目仍按题号升序，站内「错题本」「成绩分析」的筛选、状态排序与 CSV 导出顺序不变。</li></ul>
+<hr />
+<h2>二、第 3 周（2026-11-16 ~ 11-22，数据截至 11-20）</h2>
+<p>数据源：<code>progress/2026/ruankao-sd-backup-2026-11-20.json</code>（归档日期 2026-11-20，11-20 12:59 导出，覆盖 W3 前 5 天；与 11-13 快照逐题作差）。</p>
+<p><strong>1. 分类记录</strong></p>
+<div class="doc-table"><table><thead><tr><th>题号</th><th>考点</th><th>我的答案</th><th>正确答案</th><th>错因（站内 → 复核）</th><th>一句话结论</th></tr></thead><tbody><tr><td>DS-015</td><td>排序 · 建堆复杂度</td><td>O(n log n)</td><td>O(n)</td><td>审题偏差 → 审题（问的是建堆）</td><td>建堆 O(n)，整体堆排序才 O(n log n)</td></tr><tr><td>DS-030</td><td>最短路径 · 全源</td><td>Dijkstra，O(n²)</td><td>Floyd，O(n³)</td><td>概念混淆 → 概念（单源 / 全源）</td><td>全源 Floyd、单源 Dijkstra</td></tr><tr><td>DS-046</td><td>二叉排序树 · ASL</td><td>2.5</td><td>3</td><td>知识盲区 → 概念（ASL 公式套错）</td><td>按插入顺序画树逐层算，别套 (n+1)/2</td></tr><tr><td>DS-022</td><td>二叉树性质 · 叶子数</td><td>25</td><td>50</td><td>知识盲区 → 知识盲区</td><td>n 偶：n0 = n/2；n 奇：n0 = (n+1)/2</td></tr><tr><td>DS-044</td><td>B 树 · 关键字下限</td><td>4</td><td>2</td><td>审题偏差 → 审题（至少 / 至多）</td><td>至少 ⌈m/2⌉−1，至多 m−1</td></tr><tr><td>DS-037</td><td>排序 · 比较次数</td><td>10</td><td>45</td><td>知识盲区 → 知识盲区</td><td>简单选择排序比较次数恒为 n(n−1)/2</td></tr><tr><td>DS-050</td><td>最短路径 · Floyd 复杂度</td><td>O(e log n)</td><td>O(n³)</td><td>概念混淆 → 概念</td><td>Floyd 三重循环，时间 O(n³)、空间 O(n²)</td></tr><tr><td>DS-020</td><td>线性表 · 插入平均移动</td><td>(n+1)/2</td><td>n/2</td><td>概念混淆 → 概念</td><td>插入平均 n/2，删除平均 (n−1)/2</td></tr><tr><td>PL-022</td><td>编译过程 · 与硬件最密切</td><td>词法分析</td><td>目标代码生成</td><td>概念混淆 → 概念</td><td>只有目标代码生成依赖指令集与寄存器</td></tr><tr><td>PL-024</td><td>表达式 · 前缀改写</td><td>- + a * b c d</td><td>+ a * b - c d</td><td>知识盲区 → 知识盲区</td><td>运算符在前，按「括号 → 高优先级 → 低优先级」</td></tr><tr><td>PL-014</td><td>语言基础 · 编译与解释</td><td>两者都生成目标代码</td><td>解释程序不生成目标代码</td><td>术语不熟 → 概念</td><td>编译生成目标代码，解释逐句执行</td></tr></tbody></table></div>
+<p><strong>2. 错误原因分析</strong></p>
+<ul><li>复核后：概念 6、知识盲区 3、审题 2，计算 0、术语 0。没有算错，全部输在「边界条件与适用场景」。</li><li>三类同构：①限定词没圈（DS-015 建堆 vs 整体、DS-044 至少 vs 至多）；②成对概念只记一半（DS-030 单源 / 全源、PL-014 编译 / 解释）；③公式只记主体、不记前提（DS-020 插入 / 删除、DS-046 把顺序查找 ASL 套到 BST、DS-037、DS-022）。</li><li>DS-046 的站内结论本身是错的（「公式应为 (n+1)/2」），不改会照错复习，已列入改进措施第 1 条。</li></ul>
+<p><strong>3. 相关知识点归纳</strong></p>
+<ul><li>排序：建堆 O(n)（自底向上），堆排序整体 O(n log n)；简单选择排序比较次数恒为 n(n−1)/2，移动次数 0 ~ 3(n−1)。</li><li>最短路径：Dijkstra 单源 O(n²)；Floyd 全源 O(n³)、空间 O(n²)，可带负权边（不能有负权回路）。</li><li>二叉排序树：ASL 取决于插入顺序；递增插入退化为单支，n=5 时 ASL=(1+2+3+4+5)/5=3；平衡才有 O(log n)。</li><li>完全二叉树：n0 = n2 + 1；n 偶时 n0 = n/2，n 奇时 n0 = (n+1)/2；100 个结点 → 50 个叶子。</li><li>m 阶 B 树：非根非叶结点关键字 ⌈m/2⌉−1 ~ m−1；5 阶即 2 ~ 4，根至少 1 个。</li><li>线性表：顺序表插入平均移动 n/2，删除 (n−1)/2；链表插入不移动元素。</li><li>编译：目标代码生成与硬件关系最密切；编译 vs 解释 = 是否生成目标代码。</li><li>前缀表达式：a+b*(c−d) → + a * b - c d，方法「括号 → 高优先级 → 低优先级」逐层前置。</li></ul>
+<p><strong>4. 改进措施</strong></p>
+<ul class="task-list"><li class="task"><input type="checkbox" disabled /> <span>改 DS-046 结论：「BST 的 ASL 按插入顺序画树算，不能套顺序查找 (n+1)/2」；改 DS-044 结论：「至少 ⌈m/2⌉−1，至多 m−1」。</span></li><li class="task"><input type="checkbox" disabled /> <span>表达式转换练 10 组（中缀 → 前缀 / 后缀），固定三步法，错一组加练 3 组。</span></li><li class="task"><input type="checkbox" disabled /> <span>阶段一测评按「新题 + 45 分钟」重测一次，验证 40/40 是否真实。</span></li><li class="task"><input type="checkbox" disabled /> <span>做题先圈限定词（至少 / 至多、单源 / 全源、建堆 / 整体），圈完再选。</span></li><li class="task"><input type="checkbox" disabled /> <span>验收：W4 新错题 ≤ 8 道，其中审题类 = 0；W3 错题二刷全对。</span></li></ul>
+<hr />
+<h2>三、第 2 周（2026-11-09 ~ 11-15）</h2>
+<p>数据源：<code>progress/2026/ruankao-sd-backup-2026-11-13.json</code>（91 题累计、16 条错题记录、0 测评），与 11-06 快照逐题作差。</p>
+<p><strong>1. 分类记录</strong></p>
+<div class="doc-table"><table><thead><tr><th>题号</th><th>考点</th><th>我的答案</th><th>正确答案</th><th>错因（站内 → 复核）</th><th>一句话结论</th></tr></thead><tbody><tr><td>CS-029</td><td>总线 · 数据总线宽度</td><td>可直接寻址的存储空间大小</td><td>一次能并行传输的数据位数</td><td>概念混淆 → 概念</td><td>数据线定并行位数，地址线定寻址空间</td></tr><tr><td>CS-034</td><td>性能指标 · 执行时间（复错）</td><td>20 ms</td><td>10 ms</td><td>公式记错 → 公式</td><td>复错说明公式没记死，重写公式卡</td></tr><tr><td>CS-044</td><td>总线 · 带宽换算</td><td>3200 MB/s</td><td>400 MB/s</td><td>概念混淆 → 计算（位 / 字节）</td><td>32 位 = 4B，4B × 100MHz = 400MB/s</td></tr><tr><td>OS-008</td><td>存储管理 · LRU 缺页</td><td>8</td><td>10</td><td>计算失误 → 计算</td><td>手画栈逐次淘汰，别凭感觉数</td></tr><tr><td>OS-013</td><td>调度 · FCFS 平均周转</td><td>7.25</td><td>7.75</td><td>计算失误 → 计算</td><td>周转 = 完成 − 到达，逐作业列完再平均</td></tr><tr><td>OS-021</td><td>存储管理 · 页号位数</td><td>12</td><td>20</td><td>知识盲区 → 概念（地址拆分）</td><td>4KB → 页内 12 位，页号 = 32 − 12 = 20 位</td></tr><tr><td>OS-039</td><td>调度 · 响应比</td><td>服务时间 ÷（等待 + 服务时间）</td><td>（等待 + 服务时间）÷ 服务时间</td><td>知识盲区 → 公式（写反）</td><td>分子是等待 + 服务，响应比越大越优先</td></tr><tr><td>OS-040</td><td>调度 · SJF 平均周转</td><td>9</td><td>8.67</td><td>计算失误 → 计算</td><td>按 3 → 5 → 7 升序累加完成时间</td></tr><tr><td>OS-041</td><td>存储管理 · 页号</td><td>1</td><td>2</td><td>计算失误 → 计算</td><td>页号 = 地址 ÷ 页大小 取整，8196 ÷ 4096 = 2</td></tr></tbody></table></div>
+<p><strong>2. 错误原因分析</strong></p>
+<ul><li>复核后：计算 5（CS-044 位 / 字节、OS-008 / 013 / 040 / 041）、概念 2（CS-029、OS-021）、公式 2（CS-034、OS-039）、审题 0。</li><li>主因迁移：W1 计算 0 → W2 计算 5。公式开始背下来了，倒在代入、取整与单位换算。</li><li>站内标签偏「计算失误」（4 次），复核多认了 CS-044（原标概念混淆，实为位 / 字节）；OS-039 原标知识盲区，实为公式写反。</li><li>0 未掌握与累计 19 次错误不匹配：CS-034 本周又错，OS-039、OS-021 只错一次就勾掌握，二刷标准偏松。</li><li>OS-041 结论「结合实际情况理解」不可执行，等于没写。</li></ul>
+<p><strong>3. 相关知识点归纳</strong></p>
+<ul><li>总线：数据线宽度 → 一次并行传输位数；地址线宽度 → 寻址空间 2<sup>n</sup>；带宽 = 字节宽度 × 频率（4B × 100MHz = 400MB/s）。</li><li>页式存储：页内地址位数 = log2(页大小)，4KB → 12 位；页号位数 = 逻辑地址位数 − 页内位数 = 32 − 12 = 20；页号 = 地址 ÷ 页大小 取整（8196 ÷ 4096 = 2）。</li><li>作业调度：响应比 =（等待时间 + 服务时间）÷ 服务时间；FCFS 周转 = 完成 − 到达；SJF 按服务时间升序累加。</li><li>LRU：3 块物理块、12 次引用 → 缺页 10 次，必须手画栈，不能凭感觉数。</li></ul>
+<p><strong>4. 改进措施</strong></p>
+<ul class="task-list"><li class="task"><input type="checkbox" disabled /> <span>做一次阶段一测评（40 题 / 45 分钟，卷面目标 31 分），按模块得分列出 3 个短板。</span></li><li class="task"><input type="checkbox" disabled /> <span>「已掌握」判定改为「二刷全对 + 能复述公式或判据」，不满足就留「未掌握」。</span></li><li class="task"><input type="checkbox" disabled /> <span>OS-041 结论改「页号 = 地址 ÷ 页大小 取整」；OS-039 抄写响应比公式 3 遍。</span></li><li class="task"><input type="checkbox" disabled /> <span>计算题一律走「写单位 → 代数字 → 取整」三步，草稿留痕。</span></li><li class="task"><input type="checkbox" disabled /> <span>验收：W2 九道二刷全对；W3 计算失误 ≤ 1 次。</span></li></ul>
+<hr />
+<h2>四、第 1 周（2026-11-02 ~ 11-08）</h2>
+<p>数据源：<code>progress/2026/2026-11-06.json</code>（49 题、8 错、0 测评）。</p>
+<p><strong>1. 分类记录</strong></p>
+<div class="doc-table"><table><thead><tr><th>题号</th><th>考点</th><th>我的答案</th><th>正确答案</th><th>错因（站内 → 复核）</th><th>一句话结论</th></tr></thead><tbody><tr><td>CS-002</td><td>数据表示 · 补码端值</td><td>未记录（早期导出未存选项顺序）</td><td>-128</td><td>知识盲区 → 公式（端值）</td><td>牢记 <code>10000000</code> 对应 -128</td></tr><tr><td>CS-011</td><td>存储系统 · Cache 平均访问时间</td><td>2.9 ns</td><td>3.0 ns</td><td>计算失误 → 公式（漏项）</td><td>未命中路径也要计查 Cache 的时间</td></tr><tr><td>CS-022</td><td>CPU · 指令流水线</td><td>D：流水线能缩短单条指令执行时间</td><td>B：加速比上限 = 流水段数 k</td><td>知识盲区 → 概念</td><td>吞吐率提高 ≠ 单条指令变快</td></tr><tr><td>CS-027</td><td>存储系统 · 寻址空间</td><td>2MB</td><td>1MB</td><td>计算失误 → 计算</td><td>寻址空间 = 2<sup>20</sup> × 8 位 = 1MB</td></tr><tr><td>CS-032</td><td>可靠性 · 并联系统</td><td>0.9</td><td>0.99</td><td>计算失误 → 公式（漏指数）</td><td>并联可靠度 = 1-(1-R)<sup>n</sup>，n 次方不能丢</td></tr><tr><td>CS-034</td><td>性能指标 · 执行时间</td><td>20 ms</td><td>10 ms</td><td>公式记错 → 公式</td><td>执行时间 = 指令数 × CPI ÷ 主频</td></tr><tr><td>CS-039</td><td>CPU · 部件职能</td><td>程序计数器</td><td>指令寄存器</td><td>概念混淆 → 概念</td><td>取指后先入 IR，再译码</td></tr><tr><td>CS-046</td><td>性能指标 · 执行时间</td><td>1 ms</td><td>2 ms</td><td>公式记错 → 公式</td><td>100 万条 × CPI 2 ÷ 1GHz = 2 ms</td></tr></tbody></table></div>
+<p><strong>2. 错误原因分析</strong></p>
+<ul><li>复核后：公式 5（CS-002 端值、CS-011 漏项、CS-032 漏指数、CS-034、CS-046）、概念 2（CS-022、CS-039）、计算 1（CS-027）、审题 0。没有一道是纯算错或看错题。</li><li>站内标签把 5 次记成「计算失误」：其中 CS-032 实为并联可靠度公式漏指数（0.9 只可能由丢了 n 次方得到），CS-002 标「知识盲区」实为端值没背。</li><li>三道公式题错误动作同构：都漏一个要素（CS-011 漏一项时间、CS-032 漏一个指数、CS-002 漏一个端值）——默写公式只写主体，没写适用条件、项数与端值。</li><li>全栽在极端取值：补码最小值、并联 n=2、加速比 n→∞；平时只背一般形式，没背过退化样子。</li><li>限定词没触发换公式：「并联 / 串联、未命中、上限、最小」出现时仍按直觉套，缺「限定词 → 换公式」的条件反射。</li></ul>
+<p><strong>3. 相关知识点归纳</strong></p>
+<ul><li>补码（8 位）：<code>-2<sup>(n-1)</sup> ~ 2<sup>(n-1)</sup>-1</code>，即 -128 ~ +127；<code>10000000</code> 是 -128，无对应正数。</li><li>Cache 平均访问时间 = 命中率 × t_Cache + 未命中率 × (t_Cache + t_主存)；95% × 2 + 5% × 22 = 3.0 ns。</li><li>寻址空间 = 2^地址线根数 × 数据线宽度；20 根地址线 + 8 位数据线 = 2<sup>20</sup> B = 1MB。</li><li>并联可靠度 = 1-(1-R₁)(1-R₂)…；n 个同可靠度部件 = 1-(1-R)<sup>n</sup>；两部件 0.9 → 0.99。</li><li>流水线加速比 S = nk/(k+n-1)，n→∞ 时上限为 k；吞吐率提高 ≠ 单条指令变快。</li><li>执行时间 = 指令数 × CPI ÷ 主频：10<sup>7</sup> × 2 ÷ 2GHz = 10 ms；100 万 × 2 ÷ 1GHz = 2 ms。</li><li>CPU：PC 存下一条指令地址，取指后指令先入 IR 再译码。</li></ul>
+<p><strong>4. 改进措施</strong></p>
+<ul class="task-list"><li class="task"><input type="checkbox" disabled /> <span>四张公式卡（补码范围、平均访问时间、并联可靠度、流水线加速比），按「公式 / 适用条件 / n=1 时 / n=2 或极端时 / 我上次错在哪」写满。</span></li><li class="task"><input type="checkbox" disabled /> <span>改归因：CS-032 错因改「公式记错」、结论改公式本身；CS-002 结论改「<code>10000000</code> = -128」。</span></li><li class="task"><input type="checkbox" disabled /> <span>二刷未掌握：CS-046、CS-039（11-06 状态），答对两次再勾「已掌握」。</span></li><li class="task"><input type="checkbox" disabled /> <span>立条件反射清单：见「并联 / 串联、未命中、上限、最小 / 最大、段数」先默写公式再代数字。</span></li><li class="task"><input type="checkbox" disabled /> <span>验收：W1 错题二刷连续两次全对；W2 新错题中「公式漏项」≤ 1 道。</span></li></ul>
+<hr />
+<h2>五、错因标签与复核口径</h2>
+<div class="doc-table"><table><thead><tr><th>标签</th><th>判定标准</th><th>一句话结论怎么写</th></tr></thead><tbody><tr><td>概念混淆</td><td>两个概念都见过，但分不清边界</td><td>写出区分点：A 是……，B 是……，判断看……</td></tr><tr><td>公式记错</td><td>公式本身记错、少项、分子分母颠倒</td><td>写出正确公式 + 一个代入自检</td></tr><tr><td>计算失误</td><td>公式对，算错、进位错或单位错</td><td>写出易错步骤：先换单位，再乘</td></tr><tr><td>审题偏差</td><td>看漏「不正确」「最多」「至少」等限定</td><td>写出圈词动作：先圈否定词再选</td></tr><tr><td>知识盲区</td><td>完全没学过或想不起</td><td>写出补法：回看 X 文档第 N 节 + 做 5 题</td></tr><tr><td>术语不熟</td><td>中文术语与英文 / 缩写对不上</td><td>写出术语对：命中率 = hit rate</td></tr><tr><td>时间不够</td><td>会做但没时间做到</td><td>写出取舍：超过 90 秒先标记跳过</td></tr><tr><td>蒙对未掌握</td><td>选对了，但过程是猜的</td><td>按错题处理，结论标「待验证」</td></tr></tbody></table></div>
+<p>站内标签是当天印象，归档时按「错在哪一步」复核；两者不一致就写「站内 → 复核」，以复核结果计数。</p>
+<h2>六、下午案例记录字段</h2>
+<p>W1 ~ W3 只刷上午选择题，暂无案例题记录；下午卷从 W19 起，按下面字段一题一页记录，周末整页重做。</p>
+<ul><li>来源 / 题号、模块、题型（DFD / UML / 数据库 / 算法 / 代码填空）。</li><li>题目关键词（图形位置、给了什么条件）、我的答案（原样抄）。</li><li>正确答案 / 评分点（按点列，标出漏掉的点）、错因、一句话结论。</li></ul>
+<h2>七、归档与回顾节奏</h2>
+<ol><li>当天：错题进站内错题本，当天选错因、写一句话结论，隔天只剩「好像错过」的印象。</li><li>每周日：导出 JSON 到 <code>progress/2026/</code> → 本文最前新增一节 → 复核归因 → 回填索引，同步在 <code>06-周复盘</code> 记数据。</li><li>阶段末（W10 起）：按索引表看错因迁移，只补增长的那一类。</li><li>回顾优先级：先扫各周「一句话结论」→ 再看「知识点归纳」→ 最后整题重做；已连续两次答对的移出待攻克。</li></ol>
+</main>
+<footer class="doc-footer">本文档由同名 Markdown 生成（UTF-8 编码）；内容修改请改 .md 后重新运行 <code>node tools/build-docs.js</code>。</footer>
+</body>
+</html>

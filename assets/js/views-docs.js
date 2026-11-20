@@ -108,9 +108,9 @@
       layout: 'list',
       items: [
         {
-          title: '05 · 个人错题本模板',
-          desc: '题目 / 我的答案 / 正确答案 / 错因 / 一句话结论，含错因标签与案例卡',
-          path: 'docs/05-个人错题本模板.html'
+          title: '05 · 错题周次归档',
+          desc: 'W1 起按周归档：分类记录、原因分析、知识点归纳、改进措施，含错因标签口径',
+          path: 'docs/05-错题周次归档.html'
         }
       ]
     },
@@ -155,7 +155,7 @@
 
       var h = '<div class="card"><div class="card-head"><h2>文档总览</h2>' +
         '<span class="hint">共 ' + total + ' 篇 · UTF-8 HTML</span></div>' +
-        '<p class="dim" style="margin:0;font-size:13px">建议顺序：00 情报 → 01 计划 → 02 精要（随学习进度）→ 03 / 04 专项与技巧 → 05 错题本模板 → 06 周复盘（每周日）→ 07 真题来源（W27）。</p>' +
+        '<p class="dim" style="margin:0;font-size:13px">建议顺序：00 情报 → 01 计划 → 02 精要（随学习进度）→ 03 / 04 专项与技巧 → 05 错题归档 → 06 周复盘（每周日）→ 07 真题来源（W27）。</p>' +
         '<div class="row-wrap mt-8" style="font-size:12px;color:var(--text-3)">' +
         '<span>Markdown 为源文件</span><span>·</span>' +
         '<span>修改后运行 <span class="mono">node tools/build-docs.js</span> 重新生成 HTML</span>' +

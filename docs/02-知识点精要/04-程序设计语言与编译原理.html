@@ -46,7 +46,7 @@
 <ul><li>推导：从开始符号出发，反复用产生式替换非终结符，得到句子；</li><li>最左推导：每次替换最左边的非终结符；最右推导反之；</li><li>语法树：推导的图形表示，叶子是终结符，内部结点是非终结符；</li><li><strong>二义性</strong>：同一个句子存在两棵不同的语法树（或两个不同的最左推导）。</li></ul>
 <p>二义性文法无法用于编译，需要改写文法或增加优先级/结合性规则来消除。</p>
 <h3>3.3 正规式与有限自动机</h3>
-<div class="doc-table"><table><thead><tr><th>概念</th><th>关键点</th></tr></thead><tbody><tr><td>DFA</td><td>每个状态对每个输入符号<strong>至多一条</strong>转移，无 ε 转移</td></tr><tr><td>NFA</td><td>允许多条转移与 ε 转移</td></tr><tr><td>等价性</td><td>DFA 与 NFA 识别能力相同，都识别正规集</td></tr><tr><td>转换</td><td>NFA 用子集构造法转 DFA；DFA 可最小化</td></tr><tr><td>正规式</td><td>描述词法规则，如 `(a\</td><td class="doc-extra-cell">b)*abb` 表示"以 abb 结尾的 a、b 串"</td></tr></tbody></table></div>
+<div class="doc-table"><table><thead><tr><th>概念</th><th>关键点</th></tr></thead><tbody><tr><td>DFA</td><td>每个状态对每个输入符号<strong>至多一条</strong>转移，无 ε 转移</td></tr><tr><td>NFA</td><td>允许多条转移与 ε 转移</td></tr><tr><td>等价性</td><td>DFA 与 NFA 识别能力相同，都识别正规集</td></tr><tr><td>转换</td><td>NFA 用子集构造法转 DFA；DFA 可最小化</td></tr><tr><td>正规式</td><td>描述词法规则，如"以 abb 结尾的 a、b 串"（具体写法见下段示例）</td></tr></tbody></table></div>
 <p><strong>正规式含义判断</strong>：<code>(a|b)*abb</code> 中 <code>(a|b)*</code> 是任意长度的 a/b 串前缀，整体表示所有以 <code>abb</code> 结尾的串。考试常给几个串问"哪个不被该正规式接受"，逐个对照后缀即可。</p>
 <p><strong>DFA 的"确定性"</strong>：同一状态、同一输入符号，下一状态唯一；与状态数多少、是否有终态无关。</p>
 <h3>3.4 语法分析方法（低频但偶考）</h3>

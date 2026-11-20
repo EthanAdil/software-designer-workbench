@@ -5,7 +5,7 @@
   var U = RK.U;
   var LETTERS = U.letters;
 
-  /* 导出/模板字段：与 docs/05-个人错题本模板 的前五列保持一致，后面是自动附带的元信息 */
+  /* 导出/速记表字段：与 docs/05-错题周次归档 的前五列保持一致，后面是自动附带的元信息 */
   var CSV_COLUMNS = ['题号', '题目', '我的答案', '正确答案', '错因', '一句话结论', '模块', '考点', '错误次数', '状态', '最近错误时间'];
   var TEMPLATE_COLUMNS = ['题号', '题目', '我的答案', '正确答案', '错因', '一句话结论'];
   var TEMPLATE_EXAMPLE = ['CS-001', '8 位补码的表示范围', 'B（-127 ~ +127）', 'A（-128 ~ +127）', '公式记错',
@@ -145,23 +145,23 @@
       '<tbody><tr>' + example + '</tr><tr><td></td><td></td><td></td><td></td><td></td><td></td></tr></tbody></table></div>' +
       '<div class="dim mt-8" style="font-size:12px">导出的 CSV 与上表列一致，另附模块、考点、错误次数、状态、最近错误时间。</div>' +
       '<div class="row-wrap mt-16"><a class="btn btn-sm btn-ghost" href="' +
-      encodeURI('docs/05-个人错题本模板.html') + '" target="_blank" rel="noopener">打开完整模板页</a>' +
+      encodeURI('docs/05-错题周次归档.html') + '" target="_blank" rel="noopener">打开错题周次归档</a>' +
       '<span class="dim" style="font-size:12px">复制后可直接粘贴到 Excel / WPS</span></div>';
     RK.modal({
-      title: '个人错题本模板',
+      title: '错题速记表',
       html: html,
-      okText: '复制模板',
+      okText: '复制表头',
       cancelText: '关闭',
       onMount: function (mask) {
         var box = mask.querySelector('.modal');
         if (box) box.classList.add('modal-wide');
       },
       onOk: function () {
-        copyText(TEMPLATE_COLUMNS.join('\t') + '\n' + TEMPLATE_EXAMPLE.join('\t'), '已复制模板表头与示例');
+        copyText(TEMPLATE_COLUMNS.join('\t') + '\n' + TEMPLATE_EXAMPLE.join('\t'), '已复制表头与示例');
         return false;   /* 保持弹层打开，方便继续粘贴或查看 */
       }
     });
-    RK.toast('模板已加载');
+    RK.toast('速记表已加载');
   }
 
   /* 备份导入：结构校验通过后弹窗确认，确认后才覆盖 localStorage */
@@ -220,7 +220,7 @@
   /* ============================ 错题本 ============================ */
   RK.router.add('review', {
     title: '错题本',
-    sub: '答错自动收录，重做答对后标记为已掌握；支持一键打开错题本模板与导出 CSV',
+    sub: '答错自动收录，重做答对后标记为已掌握；支持一键打开速记表与导出 CSV',
     render: function () {
       var wrong = RK.record.wrongAll();
       var ids = Object.keys(wrong);
@@ -240,7 +240,7 @@
       if (!ids.length) {
         h += '<div class="card mt-16">' + RK.ui.empty('错题本还是空的。先去刷题或做一套模考，答错的题会自动收录。') +
           '<div class="row-wrap center mt-16" style="justify-content:center"><a class="btn" href="#/practice">去刷题</a>' +
-          '<button class="btn btn-ghost" type="button" data-act="template">打开模板</button>' +
+          '<button class="btn btn-ghost" type="button" data-act="template">打开速记表</button>' +
           '<button class="btn btn-ghost" type="button" data-act="export-csv" disabled title="暂无错题可导出">导出 CSV</button>' +
           '</div></div>';
         return h;
@@ -258,7 +258,7 @@
       h += '<div class="card mt-16"><div class="card-head"><h2>待攻克清单</h2>' +
         '<div class="row-wrap" style="justify-content:flex-end">' +
         '<a class="btn btn-sm btn-soft" href="#/practice?w=1">全部重做</a>' +
-        '<button class="btn btn-sm btn-ghost" type="button" data-act="template">打开模板</button>' +
+        '<button class="btn btn-sm btn-ghost" type="button" data-act="template">打开速记表</button>' +
         '<button class="btn btn-sm btn-ghost" type="button" data-act="export-csv" ' +
         'title="导出全部错题为 CSV：题号、题目、我的答案、正确答案、错因、一句话结论、模块、考点、错误次数、状态、最近错误时间">导出 CSV</button>' +
         '</div></div>';
@@ -325,7 +325,7 @@
     },
     mount: function (el) {
       el.addEventListener('click', function (e) {
-        /* 工具栏：打开模板 / 导出 CSV，先进入按钮加载态再做动作 */
+        /* 工具栏：打开速记表 / 导出 CSV，先进入按钮加载态再做动作 */
         var actBtn = e.target.closest('[data-act]');
         if (actBtn) {
           var act = actBtn.getAttribute('data-act');
