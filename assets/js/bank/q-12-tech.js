@@ -97,5 +97,38 @@
       explanation: '边缘计算在数据产生侧就近处理，减少网络往返时延与回传流量，适合工业控制、视频分析等实时场景；它与云计算是协同关系（云边协同），而非替代关系。',
       tags: ['概念', '易错']
     }
+    ,
+    {
+      id: 'TECH-019', module: 'tech', topic: '云计算服务模式', difficulty: 1, points: ['tech|云计算与大数据'],
+      stem: '用户通过浏览器直接使用在线办公软件，无需安装与维护，属于（ ）。',
+      options: ['SaaS', 'IaaS', 'PaaS', 'DaaS'],
+      answer: 0,
+      explanation: 'SaaS 直接交付可用软件；IaaS 提供虚拟机/存储/网络等基础设施，PaaS 提供开发运行平台与中间件。在线办公是典型 SaaS。',
+      tags: ['概念']
+    },
+    {
+      id: 'TECH-020', module: 'tech', topic: '大数据4V', difficulty: 2, points: ['tech|云计算与大数据'],
+      stem: '大数据 4V 中 Value（价值密度低）的含义是（ ）。',
+      options: ['数据本身没有任何价值', '单位数据价值低，需要挖掘提炼', '数据量不够大', '数据处理速度慢'],
+      answer: 1,
+      explanation: '4V 为 Volume 体量大、Velocity 速度快、Variety 类型多、Value 价值密度低；价值密度低指海量数据中有用信息占比小，需要分析挖掘，不是无价值。',
+      tags: ['概念', '易错']
+    },
+    {
+      id: 'TECH-021', module: 'tech', topic: '机器学习分类', difficulty: 2, points: ['tech|人工智能与机器学习'],
+      stem: 'K-means 算法属于（ ）。',
+      options: ['监督学习分类', '强化学习', '无监督聚类', '回归预测'],
+      answer: 2,
+      explanation: 'K-means 在无标签数据上按距离迭代聚类，属无监督学习；监督学习需标签（分类/回归），强化学习靠奖励信号试错。',
+      tags: ['概念']
+    },
+    {
+      id: 'TECH-022', module: 'tech', topic: '5G场景', difficulty: 1, points: ['tech|物联网、区块链与新兴应用'],
+      stem: '5G 三大应用场景中，面向低时延高可靠通信的是（ ）。',
+      options: ['eMBB', 'mMTC', 'NB-IoT', 'uRLLC'],
+      answer: 3,
+      explanation: '5G 三大场景为 eMBB 增强移动宽带、mMTC 海量机器类通信、uRLLC 超可靠低时延通信；NB-IoT 属物联网窄带接入，不是 5G 三大场景之一。',
+      tags: ['概念', '必背']
+    }
   ]);
 })(window.RK);

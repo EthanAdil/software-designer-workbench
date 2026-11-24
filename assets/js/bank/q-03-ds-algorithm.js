@@ -321,5 +321,70 @@
       explanation: '回溯法以深度优先方式搜索解空间树，用约束函数与限界函数剪枝，某结点不可行时回退到上一层，最坏情况为指数级复杂度。N 皇后常用"逐行放置 + 列/对角线冲突检测"实现。',
       tags: ['概念']
     }
+    ,
+    {
+      id: 'DS-057', module: 'ds-algorithm', topic: '树的性质', difficulty: 3, points: ['ds-algorithm|树与二叉树'],
+      stem: '某树度为 4，其中有 5 个度 4、8 个度 3、6 个度 2、10 个度 1 的结点，叶子结点数为（ ）。',
+      options: ['38', '36', '40', '42'],
+      answer: 0,
+      explanation: '任意树满足边数 = 结点数 − 1 = Σ度数。总度数 = 5×4+8×3+6×2+10×1 = 66，故结点数 67；非叶结点 29 个，叶子 = 67−29 = 38。不能套 n0=n2+1（仅二叉树成立）。',
+      tags: ['计算', '易错']
+    },
+    {
+      id: 'DS-058', module: 'ds-algorithm', topic: '树与哈夫曼', difficulty: 2, points: ['ds-algorithm|树与二叉树'],
+      stem: '关于哈夫曼树，下列叙述正确的是（ ）。',
+      options: ['权值相同的叶子一定位于同一层', '权值相同的叶子路径长度可能不同', '叶子结点越多 WPL 一定越大', '哈夫曼编码是唯一的'],
+      answer: 1,
+      explanation: '哈夫曼树只保证 WPL 最小；同权值叶子因合并次序不同可能处于不同深度，编码也不唯一（左右子树可交换）。"权值相同则路径长度相同"是真题常见错误说法。',
+      tags: ['概念', '易错']
+    },
+    {
+      id: 'DS-059', module: 'ds-algorithm', topic: '图存储', difficulty: 1, points: ['ds-algorithm|图'],
+      stem: '对于稀疏图，更节省空间且常采用的存储结构是（ ）。',
+      options: ['邻接矩阵', '十字链表', '邻接表', '顺序数组'],
+      answer: 2,
+      explanation: '邻接表只为实际存在的边分配结点，空间 O(n+e)，适合稀疏图；邻接矩阵固定 O(n²)，适合稠密图且便于快速判断两点是否相邻。',
+      tags: ['理解']
+    },
+    {
+      id: 'DS-060', module: 'ds-algorithm', topic: '图的矩阵表示', difficulty: 2, points: ['ds-algorithm|图'],
+      stem: '无向图的邻接矩阵中，第 i 行非零元素的个数等于（ ）。',
+      options: ['顶点 i 的入度', '顶点 i 的出度', '图的边总数', '顶点 i 的度'],
+      answer: 3,
+      explanation: '无向图邻接矩阵是对称矩阵，第 i 行（或第 i 列）1 的个数就是顶点 i 的度；有向图第 i 行为出度、第 i 列为入度。',
+      tags: ['理解']
+    },
+    {
+      id: 'DS-061', module: 'ds-algorithm', topic: '折半查找', difficulty: 1, points: ['ds-algorithm|查找'],
+      stem: '对 9 个元素的有序表 (1,2,…,9) 做折半查找，首次比较的关键字是（ ）。',
+      options: ['5', '4', '6', '1'],
+      answer: 0,
+      explanation: '取 mid = ⌊(low+high)/2⌋ = ⌊(1+9)/2⌋ = 5，故首次必与第 5 个元素比较。给定比较序列时先核对首元素，可快速排除不可能项。',
+      tags: ['概念', '易错']
+    },
+    {
+      id: 'DS-062', module: 'ds-algorithm', topic: '查找复杂度', difficulty: 2, points: ['ds-algorithm|查找'],
+      stem: '对长度为 1000 的有序顺序表折半查找，最多比较次数约为（ ）。',
+      options: ['9', '10', '11', '100'],
+      answer: 1,
+      explanation: '折半查找最多比较 ⌈log2(n+1)⌉ = ⌈log2(1001)⌉ = 10 次，等于判定树的高度；不是顺序查找的 (n+1)/2。',
+      tags: ['计算']
+    },
+    {
+      id: 'DS-063', module: 'ds-algorithm', topic: '排序复杂度', difficulty: 2, points: ['ds-algorithm|排序'],
+      stem: '对 n 个元素做简单选择排序，总的比较次数为（ ）。',
+      options: ['O(n)', 'O(n log n)', 'n(n−1)/2', 'n'],
+      answer: 2,
+      explanation: '第 i 趟在剩余 n−i+1 个元素中选最小者，需比较 n−i 次，总计 n(n−1)/2，与初始是否有序无关；移动次数才是 0~3(n−1)。',
+      tags: ['计算']
+    },
+    {
+      id: 'DS-064', module: 'ds-algorithm', topic: '算法策略', difficulty: 1, points: ['ds-algorithm|算法设计与复杂度'],
+      stem: '快速排序采用的算法设计策略是（ ）。',
+      options: ['动态规划', '贪心法', '回溯法', '分治法'],
+      answer: 3,
+      explanation: '快排以枢轴把序列分成左右子序列再递归求解，属于分治；归并排序、二分查找也是分治。贪心对应哈夫曼与最小生成树，回溯对应 N 皇后。',
+      tags: ['理解']
+    }
   ]);
 })(window.RK);

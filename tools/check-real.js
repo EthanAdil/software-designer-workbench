@@ -115,11 +115,11 @@ RK.real.papers.forEach(p => {
 });
 
 /* 3. 与自编题库隔离 */
-if (RK.bank.morning.length !== 531) {
-  fail('自编上午题库题量应为 531，实际 ' + RK.bank.morning.length);
+if (RK.bank.morning.length !== 607) {
+  fail('自编上午题库题量应为 607，实际 ' + RK.bank.morning.length);
 }
-if (Object.keys(RK.qIndex).length !== 555) {
-  fail('RK.qIndex 应只含 531 道上午题 + 24 道下午案例，实际 ' + Object.keys(RK.qIndex).length);
+if (Object.keys(RK.qIndex).length !== 631) {
+  fail('RK.qIndex 应只含 607 道上午题 + 24 道下午案例，实际 ' + Object.keys(RK.qIndex).length);
 }
 questions.forEach(q => {
   if (RK.qIndex[q.id]) fail('真题 id 混入自编题库索引：' + q.id);

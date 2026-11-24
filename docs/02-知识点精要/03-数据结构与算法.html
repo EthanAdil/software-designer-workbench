@@ -27,6 +27,7 @@
 <h3>2.1 顺序表与链表</h3>
 <div class="doc-table"><table><thead><tr><th>对比</th><th>顺序表</th><th>链表</th></tr></thead><tbody><tr><td>存储</td><td>连续空间</td><td>离散结点 + 指针</td></tr><tr><td>随机访问</td><td>O(1)</td><td>O(n)</td></tr><tr><td>插入/删除</td><td>O(n)，平均移动 n/2</td><td>O(1)（已知前驱）</td></tr><tr><td>空间</td><td>可能预留浪费</td><td>每结点多一个指针开销</td></tr></tbody></table></div>
 <p>考试常问"频繁插入删除、很少随机访问"选链表；"需要按下标随机访问"选顺序表。</p>
+<p><strong>二维数组地址（真题考点）</strong>：按行优先时 <code>地址 = 首址 + 元素大小×(前面完整行数×列数 + 本行前导元素数)</code>；按列优先时行列互换。例：元素占 2 单元，<code>A[0][0]=100</code>、<code>A[3][3]=220</code>，由 <code>100+2(3c+3)=220</code> 得列数 <code>c=19</code>，<code>A[5][5]=100+2(5×19+5)=300</code>。</p>
 <h3>2.2 栈与队列</h3>
 <ul><li>栈：后进先出。典型应用是表达式求值、递归调用、括号匹配、进制转换、撤销操作。</li><li>队列：先进先出。典型应用是 BFS、缓冲区、打印任务排队。</li></ul>
 <p><strong>循环队列</strong>（容量 m，牺牲一个单元判满）：</p>
@@ -41,6 +42,7 @@
 <h3>3.1 基本性质（必背）</h3>
 <div class="doc-table"><table><thead><tr><th>性质</th><th>公式</th></tr></thead><tbody><tr><td>叶子与二度结点</td><td><code>n0 = n2 + 1</code></td></tr><tr><td>第 i 层最多结点</td><td><code>2<sup>(i-1)</sup></code></td></tr><tr><td>高度 h 的二叉树最多结点</td><td><code>2<sup>h</sup> - 1</code></td></tr><tr><td>n 个结点的完全二叉树高度</td><td><code>⌈log2(n+1)⌉</code></td></tr><tr><td>完全二叉树结点 i 的左/右孩子</td><td><code>2i</code> / <code>2i+1</code>（从 1 编号）</td></tr><tr><td>完全二叉树结点 i 的父结点</td><td><code>⌊i/2⌋</code></td></tr></tbody></table></div>
 <p><code>n0 = n2 + 1</code> 的推导：设结点总数 <code>n = n0 + n1 + n2</code>，边数 <code>n - 1 = n1 + 2n2</code>，两式联立得 <code>n0 = n2 + 1</code>。这个推导只对二叉树成立，不要套到多叉树。</p>
+<p><strong>任意树的通式（真题考点）</strong>：边数 = 结点数 − 1 = Σ各结点度数。例：度为 4 的树有 5 个度 4、8 个度 3、6 个度 2、10 个度 1 的结点，总度数 <code>20+24+12+10=66</code>，结点数 <code>67</code>，非叶 <code>29</code>，叶子 <code>67−29=38</code>。</p>
 <h3>3.2 遍历与还原</h3>
 <pre><code>先序：根 → 左 → 右
 中序：左 → 根 → 右
@@ -48,10 +50,12 @@
 层序：按层从左到右</code></pre>
 <ul><li>先序 + 中序、后序 + 中序、层序 + 中序可以唯一确定二叉树；</li><li>先序 + 后序不能唯一确定（无法区分只有一个孩子时在左还是在右）。</li></ul>
 <p><strong>还原步骤</strong>：先序的第一个是根，在中序中找到根的位置，左边是左子树、右边是右子树，递归处理。</p>
+<p><strong>两结点先后判定（真题考点）</strong>：中序为"左→根→右"，<code>n</code> 排在 <code>m</code> 之前当且仅当：<code>n</code> 在 <code>m</code> 的左子树中、或 <code>m</code> 在 <code>n</code> 的右子树中、或两者最近公共祖先的两分支里 <code>n</code> 位于左支。做题先画相对位置，不要只按编号大小判断。</p>
 <h3>3.3 哈夫曼树</h3>
 <p>构造：每次从森林中取两个权值最小的树合并，新结点权值为两者之和，重复直到只剩一棵树。</p>
 <pre><code>WPL = Σ(叶子权值 × 叶子到根的路径长度)</code></pre>
 <p>哈夫曼编码是最优前缀码，WPL 最小；但编码不唯一（左右子树可交换），只要 WPL 相同即为正确。</p>
+<p><strong>易错（真题考点）</strong>：权值相同的叶子到根的路径长度<strong>不一定</strong>相同——合并次序不同会使同权叶子处在不同深度；"权值相同则路径长度相同"是错误说法。</p>
 <p><strong>例</strong>：权值 <code>{5,7,8,11,15,25}</code>。</p>
 <ul><li>合并 5+7=12 → <code>{8,11,12,15,25}</code>；</li><li>合并 8+11=19 → <code>{12,15,19,25}</code>；</li><li>合并 12+15=27 → <code>{19,25,27}</code>；</li><li>合并 19+25=44 → <code>{27,44}</code>；</li><li>合并 27+44=71。</li></ul>
 <p>叶子深度：5、7、8、11 为 3，15、25 为 2。<br />WPL = <code>(5+7+8+11)×3 + (15+25)×2 = 31×3 + 40×2 = 173</code>。</p>
@@ -89,6 +93,7 @@ vl（最迟发生时间）：从汇点逆推，取所有后继路径的最小值
 <h2>五、查找</h2>
 <div class="doc-table"><table><thead><tr><th>方法</th><th>前提</th><th>平均复杂度</th><th>要点</th></tr></thead><tbody><tr><td>顺序查找</td><td>无</td><td>O(n)</td><td>ASL 成功 = (n+1)/2</td></tr><tr><td>二分查找</td><td>有序 + 顺序存储</td><td>O(log n)</td><td>最多比较 <code>⌈log2(n+1)⌉</code> 次</td></tr><tr><td>二叉排序树</td><td>—</td><td>平均 O(log n)，最坏 O(n)</td><td>中序遍历有序</td></tr><tr><td>散列表</td><td>—</td><td>平均 O(1)</td><td>ASL 与装填因子 α 有关</td></tr></tbody></table></div>
 <p><strong>二分查找</strong>：长度为 1000 的有序表，<code>⌈log2(1001)⌉ = 10</code>，最多比较 10 次。判定树的高度即最多比较次数。</p>
+<p><strong>判定树与 ASL（真题考点）</strong>：按 <code>mid = ⌊(low+high)/2⌋</code> 自顶向下构造判定树，比较序列必须是同一棵树从根到叶的路径；给出一串关键字问"不可能的序列"时，先核对首元素是否为整表中间元素。成功 <code>ASL = Σ(元素所在层号)/n</code>，失败 <code>ASL</code> 按外部结点逐条探测求平均，不能套 <code>(n+1)/2</code>。</p>
 <p><strong>散列表</strong>：装填因子 <code>α = n/m</code>（n 为元素数、m 为表长）。α 越大冲突越多、查找越慢。</p>
 <p>冲突处理：</p>
 <ul><li>开放定址：线性探测（冲突后顺序找下一个空位，易产生堆积）、二次探测、双重散列；</li><li>链地址法：同义词挂链，α 可以大于 1。</li></ul>
@@ -97,6 +102,7 @@ vl（最迟发生时间）：从汇点逆推，取所有后继路径的最小值
 <div class="doc-table"><table><thead><tr><th>算法</th><th>平均</th><th>最坏</th><th>空间</th><th>稳定性</th></tr></thead><tbody><tr><td>直接插入</td><td>O(n²)</td><td>O(n²)</td><td>O(1)</td><td>稳定</td></tr><tr><td>冒泡</td><td>O(n²)</td><td>O(n²)</td><td>O(1)</td><td>稳定</td></tr><tr><td>简单选择</td><td>O(n²)</td><td>O(n²)</td><td>O(1)</td><td>不稳定</td></tr><tr><td>希尔</td><td>O(n<sup>1.3</sup>)</td><td>O(n²)</td><td>O(1)</td><td>不稳定</td></tr><tr><td>快速</td><td>O(n log n)</td><td>O(n²)</td><td>O(log n)</td><td>不稳定</td></tr><tr><td>归并</td><td>O(n log n)</td><td>O(n log n)</td><td>O(n)</td><td>稳定</td></tr><tr><td>堆</td><td>O(n log n)</td><td>O(n log n)</td><td>O(1)</td><td>不稳定</td></tr><tr><td>基数</td><td>O(d(n+r))</td><td>O(d(n+r))</td><td>O(n+r)</td><td>稳定</td></tr></tbody></table></div>
 <p>记忆要点：</p>
 <ul><li><strong>稳定</strong>：插入、冒泡、归并、基数（口诀"插冒归基"）；</li><li>快排最坏 O(n²) 出现在序列基本有序、且以首元素为枢轴时；</li><li>建堆 O(n)，堆排序整体 O(n log n)；取前 k 大用堆最划算；</li><li>归并排序需要 O(n) 辅助空间，是唯一稳定的 O(n log n) 比较排序；</li><li>基数排序不是比较排序，适合整数且位数不多。</li></ul>
+<p><strong>一趟划分（真题考点）</strong>：快排以末元素为基准做双指针/挖坑填数，左右指针共扫描约一遍表，时间 <code>O(n)</code>、辅助空间 <code>O(1)</code>；不要与"快排整体平均 O(nlogn)、递归栈 O(logn)"混答。给定序列问划分结果时，逐位交换并保留基准最终位置。</p>
 <h2>七、算法设计与复杂度</h2>
 <div class="doc-table"><table><thead><tr><th>策略</th><th>核心特征</th><th>典型问题</th><th>是否保证最优</th></tr></thead><tbody><tr><td>分治</td><td>分解 → 递归求解 → 合并</td><td>归并排序、二分查找、大整数乘法</td><td>是</td></tr><tr><td>动态规划</td><td>最优子结构 + 重叠子问题，填表</td><td>0-1 背包、LCS、矩阵连乘、Floyd</td><td>是</td></tr><tr><td>贪心</td><td>局部最优推全局最优</td><td>活动安排、哈夫曼、Prim/Kruskal、分数背包</td><td>不一定</td></tr><tr><td>回溯</td><td>DFS 搜索解空间树，剪枝</td><td>N 皇后、迷宫、子集和</td><td>是（穷举）</td></tr></tbody></table></div>
 <p><strong>易混</strong>：0-1 背包用动态规划（物品不可分割，贪心会错）；分数背包用贪心（按单位价值排序）。</p>
@@ -120,6 +126,9 @@ Dijkstra 单源非负；Floyd 全源 O(n³)
 <h2>十、自检题</h2>
 <ol><li>一棵二叉树有 20 个叶子结点、15 个一度结点，总结点数是多少？（对应题库 DS-001）</li><li>6 个权值 <code>{1,2,3,4,5,6}</code> 构造哈夫曼树，WPL 是多少？（对应题库 DS-004）</li><li>1000 个元素二分查找最多比较几次？（对应题库 DS-011）</li><li>5 个顶点的完全无向图有多少条边？（对应题库 DS-006）</li><li>先序 <code>ABDECF</code>、中序 <code>DBEAFC</code>，求后序。（对应题库 DS-003）</li><li>有向图邻接矩阵第 i 行非零个数表示什么？（对应题库 DS-006）</li><li>关键路径上的活动总时差是多少？（对应题库 DS-054）</li><li>哪些排序算法稳定？哪些空间复杂度为 O(1)？（对应题库 DS-013 / DS-036）</li><li><code>T(n)=2T(n/2)+O(n)</code> 的时间复杂度是多少？（对应题库 DS-055）</li><li>0-1 背包为什么不能用贪心？（对应题库 DS-056）</li></ol>
 <blockquote><p>答案与解析：<br />1) <code>n0=n2+1</code> → n2=19，总数 <code>20+15+19=54</code>。<br />2) 逐次合并最小两个，WPL = 51。<br />3) <code>⌈log2(1001)⌉ = 10</code> 次。<br />4) <code>C(5,2)=10</code> 条。<br />5) 根 A，左子树 DBE、右子树 FC；后序 <code>DEBFC A</code> → <code>DEBFCA</code>。<br />6) 顶点 i 的出度。<br />7) 0。<br />8) 稳定：插入、冒泡、归并、基数；空间 O(1)：插入、冒泡、选择、希尔、堆。<br />9) O(n log n)（归并排序型）。<br />10) 物品不可分割，按单位价值贪心可能剩下空间浪费，得不到最优解。</p></blockquote>
+<h2>十一、真题题库考点对照（25 题）</h2>
+<blockquote><p>以真题题库为唯一准绳：topic 名称照录题库，命名差异按别名归并，25 题的考点均可在下表对应节找到讲解。</p></blockquote>
+<div class="doc-table"><table><thead><tr><th>真题 topic</th><th>对应节</th><th>对齐说明</th></tr></thead><tbody><tr><td>线性表 / 栈</td><td>§二</td><td>顺序表与链表的插入删除代价；栈后进先出，用于表达式求值与括号匹配</td></tr><tr><td>树的性质 / 二叉树性质 / 二叉树遍历 / 树与哈夫曼 / 哈夫曼树 / B- 树</td><td>§三</td><td>任意树 <code>边数=Σ度数=结点数-1</code>；中序先后判定；哈夫曼同权值叶子深度可不同；B- 树即 B 树，关键字数 ⌈m/2⌉−1 ~ m−1</td></tr><tr><td>图 / 图存储 / 图的存储结构 / 图的矩阵表示</td><td>§四</td><td>图存储即邻接矩阵与邻接表；矩阵表示适合稠密图，邻接表适合稀疏图</td></tr><tr><td>查找 / 折半查找 / 查找复杂度</td><td>§五</td><td>折半查找即二分查找；判定树比较序列、成功/失败 ASL 按层号计算</td></tr><tr><td>排序 / 排序复杂度 / 堆排序 / 归并排序</td><td>§六</td><td>七大排序的时间/空间/稳定性；堆排 O(1) 空间、归并 O(n) 空间且稳定</td></tr><tr><td>算法策略</td><td>§七</td><td>分治、动态规划、贪心、回溯的适用特征与典型题</td></tr></tbody></table></div>
 </main>
 <footer class="doc-footer">本文档由同名 Markdown 生成（UTF-8 编码）；内容修改请改 .md 后重新运行 <code>node tools/build-docs.js</code>。</footer>
 </body>

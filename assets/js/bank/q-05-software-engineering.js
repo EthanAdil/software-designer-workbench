@@ -481,5 +481,70 @@
       explanation: '赶工（crashing）通过增加资源、加班来缩短关键活动工期，成本上升；快速跟进（fast tracking）把原本串行的活动改为并行，可能增加返工风险。两者都不能改变范围。',
       tags: ['概念']
     }
+    ,
+    {
+      id: 'SE-085', module: 'software-engineering', topic: '软件过程模型', difficulty: 1, points: ['software-engineering|开发模型'],
+      stem: '需求明确稳定、强调阶段串行与文档驱动的开发模型是（ ）。',
+      options: ['原型模型', '螺旋模型', '敏捷方法', '瀑布模型'],
+      answer: 3,
+      explanation: '瀑布模型阶段严格串行、文档驱动，适合需求明确稳定的项目；原型适合需求不清，螺旋以风险分析为核心，敏捷强调迭代与响应变化。',
+      tags: ['理解']
+    },
+    {
+      id: 'SE-086', module: 'software-engineering', topic: '增量模型', difficulty: 1, points: ['software-engineering|开发模型'],
+      stem: '分批交付可用版本、每个增量都能独立运行与使用的开发模型是（ ）。',
+      options: ['增量模型', '瀑布模型', 'V 模型', '喷泉模型'],
+      answer: 0,
+      explanation: '增量模型把系统拆成多个增量分批交付，每个增量都是可运行的版本；V 模型强调开发与测试一一对应，喷泉模型面向对象、迭代无缝。',
+      tags: ['理解']
+    },
+    {
+      id: 'SE-087', module: 'software-engineering', topic: '敏捷方法', difficulty: 1, points: ['software-engineering|开发模型'],
+      stem: 'Scrum 中每天举行的短时间同步会议是（ ）。',
+      options: ['迭代评审会', '每日站会', '迭代回顾会', '计划会议'],
+      answer: 1,
+      explanation: 'Scrum 的每日站会（Daily Standup）同步进度与障碍；评审会在迭代末演示成果，回顾会总结过程改进，计划会确定本迭代待办。',
+      tags: ['理解']
+    },
+    {
+      id: 'SE-088', module: 'software-engineering', topic: '数据流图', difficulty: 2, points: ['software-engineering|需求工程'],
+      stem: '分层 DFD 中父图与子图保持平衡，是指（ ）。',
+      options: ['加工数量相同', '数据存储数量相同', '输入输出数据流一致', '外部实体名称一致'],
+      answer: 2,
+      explanation: '父子图平衡指被分解加工与其子图之间的输入、输出数据流必须一致；子图内部加工数量可以继续分解，不必与父图相同。',
+      tags: ['概念', '易错']
+    },
+    {
+      id: 'SE-089', module: 'software-engineering', topic: '模块内聚', difficulty: 2, points: ['software-engineering|结构化设计（耦合与内聚）'],
+      stem: '下列内聚类型中，程度最高（最理想）的是（ ）。',
+      options: ['偶然内聚', '逻辑内聚', '时间内聚', '功能内聚'],
+      answer: 3,
+      explanation: '内聚由高到低为功能、顺序、通信、过程、时间、逻辑、偶然。功能内聚指模块只完成单一功能，是设计追求的目标。',
+      tags: ['概念']
+    },
+    {
+      id: 'SE-090', module: 'software-engineering', topic: '白盒测试', difficulty: 2, points: ['software-engineering|软件测试'],
+      stem: '白盒测试中覆盖强度最弱的覆盖标准是（ ）。',
+      options: ['语句覆盖', '判定覆盖', '条件组合覆盖', '路径覆盖'],
+      answer: 0,
+      explanation: '覆盖强度链：语句 < 判定 < 条件 < 判定/条件 < 条件组合 < 路径。语句覆盖只要求每条语句至少执行一次，最弱。',
+      tags: ['概念']
+    },
+    {
+      id: 'SE-091', module: 'software-engineering', topic: '软件风险', difficulty: 2, points: ['software-engineering|维护与项目管理'],
+      stem: '风险管理流程的正确顺序是（ ）。',
+      options: ['监控→识别→应对→预测', '识别→预测→应对→监控', '应对→识别→预测→监控', '预测→监控→识别→应对'],
+      answer: 1,
+      explanation: '风险管理依次为风险识别、风险预测（概率与影响）、风险应对（规避/转移/减轻/接受）、风险监控，属于项目管理高频记忆点。',
+      tags: ['概念']
+    },
+    {
+      id: 'SE-092', module: 'software-engineering', topic: '沟通路径', difficulty: 3, points: ['software-engineering|维护与项目管理'],
+      stem: '5 人项目团队若两两之间均可沟通，沟通路径共有（ ）。',
+      options: ['5 条', '15 条', '10 条', '20 条'],
+      answer: 2,
+      explanation: '沟通路径数 = n(n−1)/2，n=5 时为 10 条。人数增加会使沟通成本非线性上升，这是项目沟通与组织结构的常考计算。',
+      tags: ['计算']
+    }
   ]);
 })(window.RK);

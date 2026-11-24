@@ -281,5 +281,62 @@
       explanation: '检查点把内存中的脏页刷到磁盘并记录当时活跃的事务表，恢复时只需从最近检查点开始处理日志，不必从头扫描。事务故障用 UNDO 回滚，介质故障则需装入副本并用日志 REDO。',
       tags: ['概念']
     }
+    ,
+    {
+      id: 'DB-050', module: 'database', topic: '三级模式', difficulty: 1, points: ['database|数据库体系结构'],
+      stem: '描述数据库全体数据的逻辑结构与特征、不涉及具体存储细节的是（ ）。',
+      options: ['外模式', '模式', '内模式', '子模式'],
+      answer: 1,
+      explanation: '三级模式中模式（概念模式）描述全体数据的逻辑结构；外模式是用户视图，内模式描述物理存储。外模式/模式映像保证逻辑独立性。',
+      tags: ['理解']
+    },
+    {
+      id: 'DB-051', module: 'database', topic: '概念设计', difficulty: 2, points: ['database|ER 模型与关系转换'],
+      stem: 'ER 模型通常产生于数据库设计的哪个阶段？',
+      options: ['需求分析阶段', '物理设计阶段', '概念设计阶段', '运行维护阶段'],
+      answer: 2,
+      explanation: '概念设计阶段产出 ER 模型（实体-联系图），再在逻辑设计阶段把 ER 图转换为关系模式，最后物理设计确定存储与索引。',
+      tags: ['理解']
+    },
+    {
+      id: 'DB-052', module: 'database', topic: '参照完整性', difficulty: 1, points: ['database|ER 模型与关系转换'],
+      stem: '关系数据库中用外键实现的是（ ）。',
+      options: ['实体完整性', '域完整性', '用户自定义完整性', '参照完整性'],
+      answer: 3,
+      explanation: '外键引用另一关系的主键，用于保证参照完整性（引用有效性）；主键非空且唯一是实体完整性，CHECK 约束属用户自定义完整性。',
+      tags: ['概念', '易错']
+    },
+    {
+      id: 'DB-053', module: 'database', topic: '候选码', difficulty: 2, points: ['database|关系代数与规范化'],
+      stem: '能唯一标识元组且不含多余属性的属性组称为（ ）。',
+      options: ['候选码', '主属性', '外键', '域'],
+      answer: 0,
+      explanation: '候选码是能唯一标识元组的最小属性组；从候选码中选定一个为主码，包含在任一候选码中的属性叫主属性，可用闭包法求候选码。',
+      tags: ['概念']
+    },
+    {
+      id: 'DB-054', module: 'database', topic: 'SQL分组', difficulty: 2, points: ['database|SQL'],
+      stem: 'SQL 中对分组后的结果进行条件过滤，应使用（ ）。',
+      options: ['WHERE', 'HAVING', 'GROUP BY', 'ORDER BY'],
+      answer: 1,
+      explanation: '执行顺序为 FROM → WHERE → GROUP BY → HAVING → SELECT → ORDER BY；WHERE 在分组前过滤行，HAVING 在分组后过滤组，聚合条件不能写在 WHERE 中。',
+      tags: ['概念', '易错']
+    },
+    {
+      id: 'DB-055', module: 'database', topic: 'SQL授权', difficulty: 1, points: ['database|SQL'],
+      stem: '授予用户查询某表权限的 SQL 语句是（ ）。',
+      options: ['COMMIT', 'ROLLBACK', 'GRANT SELECT ON 表名 TO 用户', 'REVOKE SELECT ON 表名 FROM 用户'],
+      answer: 2,
+      explanation: 'DCL 中 GRANT 用于授权、REVOKE 用于收回权限；COMMIT/ROLLBACK 属事务控制，不用于权限管理。',
+      tags: ['概念']
+    },
+    {
+      id: 'DB-056', module: 'database', topic: '事务故障', difficulty: 3, points: ['database|事务与并发'],
+      stem: '事务运行中因故障中断且尚未提交，恢复 subsystem 应对该事务执行（ ）。',
+      options: ['REDO', 'CHECKPOINT', '完整备份还原', 'UNDO'],
+      answer: 3,
+      explanation: '事务故障处未提交状态，用日志 UNDO 撤销其已写入的修改；系统故障可能需要 UNDO 未提交事务并 REDO 已提交但未写盘的事务。检查点只缩小恢复扫描范围。',
+      tags: ['概念', '易错']
+    }
   ]);
 })(window.RK);

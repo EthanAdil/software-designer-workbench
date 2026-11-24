@@ -239,5 +239,50 @@
       ['encryption', 'printing', 'storage', 'naming'],
       0,
       'enforce authentication and encryption of the traffic：对外提供 AI 服务时应启用身份认证与流量"加密"（如 TLS），防止数据与模型在传输中被窃听或篡改。', 3)
+    ,
+    {
+      id: 'MM-017', module: 'multimedia', topic: '采样定理', difficulty: 2, points: ['multimedia|音频'],
+      stem: '对最高频率为 20kHz 的声音进行采样，采样频率至少应为（ ）。',
+      options: ['20kHz', '30kHz', '40kHz', '10kHz'],
+      answer: 2,
+      explanation: '奈奎斯特采样定理要求采样频率 ≥ 信号最高频率的 2 倍，即 ≥ 40kHz；直接取 20kHz 会混叠失真。',
+      tags: ['计算', '易错']
+    },
+    {
+      id: 'MM-018', module: 'multimedia', topic: '图像容量', difficulty: 2, points: ['multimedia|图像'],
+      stem: '1024×768 像素、24 位真彩色图像的数据量约为（ ）。',
+      options: ['786432B', '1.5MB', '1MB', '2.25MB'],
+      answer: 3,
+      explanation: '图像容量 = 像素数 × 颜色深度 / 8 = 1024×768×24/8 = 2359296B ≈ 2.25MB。忘记除以 8 会高估 8 倍。',
+      tags: ['计算']
+    },
+    {
+      id: 'MM-019', module: 'multimedia', topic: '视频容量', difficulty: 1, points: ['multimedia|视频'],
+      stem: 'PAL 制 25fps、每帧 1MB，10 秒未压缩视频的数据量约为（ ）。',
+      options: ['250MB', '25MB', '100MB', '1024MB'],
+      answer: 0,
+      explanation: '视频容量 = 帧率 × 每帧容量 × 时间 = 25 × 1MB × 10 = 250MB。PAL 为 25fps、NTSC 为 30fps、电影为 24fps。',
+      tags: ['计算']
+    },
+    {
+      id: 'MM-020', module: 'multimedia', topic: '压缩', difficulty: 2, points: ['multimedia|压缩'],
+      stem: 'JPEG 有损压缩中主要丢弃的信息是（ ）。',
+      options: ['相邻像素完全相同的空间冗余', '人眼不敏感的高频细节', '文件中的全部二进制位', '文件头和格式标记'],
+      answer: 1,
+      explanation: 'JPEG 基于 DCT 变换后量化，丢弃人眼不敏感的高频分量；空间冗余由行程编码/RLE 等无损方法处理，量化本身不可逆。',
+      tags: ['概念', '易错']
+    },
+    eng('ENG-036',
+      'Low-code platforms reduce the amount of hand-written programming by using visual configuration. Business users can assemble applications with drag-and-drop components, while developers still need to (1)______ the underlying logic when the built-in blocks are not sufficient.',
+      1,
+      ['ignore', 'delete', 'customize', 'memorize'],
+      2,
+      'built-in blocks are not sufficient → developers customize the underlying logic：内建模块不够时需要"定制"底层逻辑，故选 customize。', 2),
+    eng('ENG-037',
+      'The first version of the interface was slow; (1)______, the team decided to add an index to the most frequently queried column and measure the result again.',
+      1,
+      ['however', 'although', 'unless', 'therefore'],
+      3,
+      '分号后给出由上句原因导出的动作与结果，应为因果连接词 therefore；however 表转折、although 引导让步、unless 表条件。', 1)
   ]);
 })(window.RK);

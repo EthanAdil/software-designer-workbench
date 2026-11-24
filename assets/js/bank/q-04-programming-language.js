@@ -201,5 +201,62 @@
       explanation: '转换规则：操作数直接输出；运算符入栈前先弹出栈中优先级不低于它的运算符；遇右括号则连续出栈直到左括号。栈中只放运算符与括号，操作数不经过栈。',
       tags: ['概念']
     }
+    ,
+    {
+      id: 'PL-036', module: 'programming-language', topic: 'Python基础', difficulty: 1, points: ['programming-language|语言基础'],
+      stem: 'Python 中能正确定义单元素元组的语句是（ ）。',
+      options: ['x = (1,)', 'x = (1)', 'x = [1]', 'x = {1}'],
+      answer: 0,
+      explanation: '单元素元组必须在元素后加逗号，(1) 只是带括号的整数；1,2 之类无括号的逗号表达式也是元组。',
+      tags: ['概念', '易错']
+    },
+    {
+      id: 'PL-037', module: 'programming-language', topic: 'Python异常', difficulty: 1, points: ['programming-language|语言基础'],
+      stem: 'Python3 中合法的异常处理结构是（ ）。',
+      options: ['try...catch...', 'try...except...finally', 'catch...finally', 'try...catch...finally'],
+      answer: 1,
+      explanation: 'Python 使用 try/except/else/finally，raise 主动抛出异常；catch 是 Java/C++ 的关键字，Python 中没有。',
+      tags: ['概念', '易错']
+    },
+    {
+      id: 'PL-038', module: 'programming-language', topic: 'Python切片', difficulty: 3, points: ['programming-language|表达式与程序结构'],
+      stem: '表达式 list(range(11))[10:0:-2] 的值是（ ）。',
+      options: ['[10,8,6,4,2,0]', '[10,9,8,7,6]', '[10,8,6,4,2]', '[0,2,4,6,8,10]'],
+      answer: 2,
+      explanation: '切片 [start:stop:step] 含头不含尾；step=-2 表示反向、每次减 2，从下标 10 取到下标 1（不含 0），故为 [10,8,6,4,2]。',
+      tags: ['计算', '易错']
+    },
+    {
+      id: 'PL-039', module: 'programming-language', topic: '程序语言成分', difficulty: 2, points: ['programming-language|语言基础'],
+      stem: '程序设计语言的基本成分通常指（ ）。',
+      options: ['变量、常量、函数、类', '编译、解释、汇编、链接', '顺序、选择、循环、GOTO', '数据、运算、控制、传输'],
+      answer: 3,
+      explanation: '语言基本成分分为数据成分、运算成分、控制成分和传输成分（函数调用、参数传递）；变量/函数是其具体实现，编译/解释属于语言处理而非语言成分。',
+      tags: ['理解']
+    },
+    {
+      id: 'PL-040', module: 'programming-language', topic: '编译与解释', difficulty: 1, points: ['programming-language|语言基础'],
+      stem: '关于编译方式与解释方式，正确的是（ ）。',
+      options: ['解释程序不生成独立目标代码，逐句翻译执行', '两者都生成独立目标代码', '编译程序逐句解释执行源程序', '解释方式的执行效率高于编译方式'],
+      answer: 0,
+      explanation: '编译生成可独立运行的目标代码，执行快但跨平台差；解释逐句翻译执行、不落盘，灵活可移植但效率低。真题常问"是否生成目标代码"。',
+      tags: ['概念', '易错']
+    },
+    {
+      id: 'PL-041', module: 'programming-language', topic: '语法分析', difficulty: 2, points: ['programming-language|编译过程'],
+      stem: '编译过程中语法分析阶段主要使用的理论工具是（ ）。',
+      options: ['正规式', '上下文无关文法', '谓词逻辑', '关系代数'],
+      answer: 1,
+      explanation: '词法分析用正规式与有限自动机（3 型文法），语法分析用上下文无关文法（2 型文法）；变量是否声明、类型是否匹配属语义分析。',
+      tags: ['概念', '易错']
+    },
+    {
+      id: 'PL-042', module: 'programming-language', topic: '运行时存储', difficulty: 2, points: ['programming-language|语言基础'],
+      stem: 'C 语言函数调用时，局部变量与返回地址通常存放在（ ）。',
+      options: ['静态存储区', '堆', '栈', '代码段'],
+      answer: 2,
+      explanation: '运行时存储分为静态区（全局/静态变量）、栈（活动记录、局部变量、返回地址）和堆（动态分配）；参数传递与作用域绑定都依赖栈帧展开。',
+      tags: ['理解']
+    }
   ]);
 })(window.RK);

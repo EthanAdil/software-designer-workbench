@@ -62,6 +62,31 @@ window.RK_EXAMS = {
         { module: 'english', count: 1 },
         { module: 'tech', count: 1 }
       ]
+    },
+    {
+      id: 'stage-4',
+      kind: 'stage',
+      paper: 'morning',
+      name: '阶段四测评 · 考前冲刺',
+      desc: '冲刺定位：按上午卷 13 模块真实权重组 75 题，120 分钟与正式考试同量同时长，目标分沿用计划既定 70；用于考前查漏与节奏演练，与 8 套模考互为补充。',
+      duration: 120,
+      passScore: 45,
+      targetScore: 70,
+      rules: [
+        { module: 'computer-system', count: 7 },
+        { module: 'os', count: 6 },
+        { module: 'ds-algorithm', count: 8 },
+        { module: 'programming-language', count: 5 },
+        { module: 'software-engineering', count: 12 },
+        { module: 'oo-uml', count: 9 },
+        { module: 'database', count: 7 },
+        { module: 'network', count: 6 },
+        { module: 'security', count: 3 },
+        { module: 'standard-law', count: 3 },
+        { module: 'multimedia', count: 2 },
+        { module: 'english', count: 5 },
+        { module: 'tech', count: 2 }
+      ]
     }
   ],
 

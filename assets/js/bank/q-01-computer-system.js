@@ -281,5 +281,54 @@
       explanation: 'MIPS = 主频(MHz) / CPI = 1000 / 4 = 250。MIPS 只反映指令执行速率，不同指令集中一条指令完成的功能差异很大，跨体系结构直接比较 MIPS 并无实际意义。',
       tags: ['计算']
     }
+    ,
+    {
+      id: 'CS-050', module: 'computer-system', topic: '中断向量', difficulty: 2, points: ['computer-system|CPU 与体系结构'],
+      stem: 'CPU 响应中断时，用于找到中断服务程序入口地址的是（ ）。',
+      options: ['中断向量表中的对应表项', '程序计数器 PC 的当前值', 'Cache 的标记位', '指令寄存器的操作码'],
+      answer: 0,
+      explanation: '中断向量是中断服务程序的入口地址，CPU 根据中断类型号查中断向量表获得入口，进而转入 ISR；不是 PC 当前值，也与 Cache 标记无关。',
+      tags: ['易错']
+    },
+    {
+      id: 'CS-051', module: 'computer-system', topic: '定点运算', difficulty: 2, points: ['computer-system|数据表示与运算'],
+      stem: '8 位补码定点数运算 01111111 + 00000001 的结果是（ ）。',
+      options: ['+128', '-128（发生正溢出）', '+127', '0'],
+      answer: 1,
+      explanation: '01111111 为 +127，加 1 后符号位变为 1，按补码解释为 -128，即发生正溢出。8 位补码无法表示 +128，这是端值题的典型陷阱。',
+      tags: ['计算', '易错']
+    },
+    {
+      id: 'CS-052', module: 'computer-system', topic: '数组地址计算', difficulty: 3, points: ['computer-system|存储系统'],
+      stem: '二维数组按行优先存储，元素占 2 个单元，A[0][0] 地址 100、A[3][3] 地址 220，则 A[5][5] 的地址是（ ）。',
+      options: ['280', '296', '300', '304'],
+      answer: 2,
+      explanation: '按行优先：地址 = 首址 + 元素大小×(前面完整行数×列数 + 本行前导元素数)。由 100+2×(3c+3)=220 得列数 c=19；A[5][5]=100+2×(5×19+5)=300。',
+      tags: ['计算']
+    },
+    {
+      id: 'CS-053', module: 'computer-system', topic: '流水线计算', difficulty: 3, points: ['computer-system|CPU 与体系结构'],
+      stem: '三段流水线各段耗时 2ns、2ns、1ns，不计级间锁存开销，执行 1000 条指令需要（ ）。',
+      options: ['2000ns', '2001ns', '2004ns', '2003ns'],
+      answer: 3,
+      explanation: '各段耗时不等时 T = Σti + (n−1)×max(ti) = (2+2+1) + 999×2 = 2003ns。直接套 (k+n−1)×2 = 2004ns 等价于把执行段也按 2ns 计，是真题高频错解。',
+      tags: ['计算', '易错']
+    },
+    {
+      id: 'CS-054', module: 'computer-system', topic: '中断与DMA地址', difficulty: 1, points: ['computer-system|总线、I/O 与可靠性'],
+      stem: '在带 Cache 和主存的系统中，DMA 控制器与主存交换数据时使用的地址是（ ）。',
+      options: ['主存物理地址', 'Cache 行地址', '虚地址', 'I/O 端口地址'],
+      answer: 0,
+      explanation: 'DMA 直接在设备与主存之间成块传送，CPU 与 DMA 访问主存使用的都是主存物理地址，不是 Cache 地址，也不是虚地址。',
+      tags: ['理解']
+    },
+    {
+      id: 'CS-055', module: 'computer-system', topic: '性能指标', difficulty: 2, points: ['computer-system|性能指标'],
+      stem: 'CPU 主频 2.8GHz，三类指令占比 35%/45%/20%、CPI 分别为 4/2/6，平均 MIPS 约为（ ）。',
+      options: ['700', '800', '980', '1100'],
+      answer: 1,
+      explanation: '加权平均 CPI = 0.35×4 + 0.45×2 + 0.20×6 = 3.5；MIPS = 主频(MHz)/CPI = 2800/3.5 = 800。不能把 CPI 简单相加或取算术平均。',
+      tags: ['计算']
+    }
   ]);
 })(window.RK);

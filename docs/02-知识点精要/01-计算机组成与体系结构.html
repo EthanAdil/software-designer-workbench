@@ -60,12 +60,18 @@
 <div class="doc-table"><table><thead><tr><th>方式</th><th>操作数位置</th><th>特点</th></tr></thead><tbody><tr><td>立即寻址</td><td>指令中</td><td>最快，操作数是常量</td></tr><tr><td>直接寻址</td><td>主存，指令给地址</td><td>一次访存</td></tr><tr><td>间接寻址</td><td>主存，指令给地址的地址</td><td>两次访存，可扩大寻址范围</td></tr><tr><td>寄存器寻址</td><td>寄存器</td><td>速度快，不访存</td></tr><tr><td>寄存器间接</td><td>主存，地址在寄存器</td><td>一次访存</td></tr><tr><td>变址寻址</td><td>主存，变址寄存器 + 形式地址</td><td>适合数组遍历</td></tr><tr><td>相对寻址</td><td>主存，PC + 偏移</td><td>适合程序浮动、转移指令</td></tr><tr><td>基址寻址</td><td>主存，基址寄存器 + 偏移</td><td>适合多道程序重定位</td></tr></tbody></table></div>
 <p>考法：给出指令和寄存器/存储器状态，问"取到的操作数是多少"。按"先找地址、再取内容"的顺序一步步写。</p>
 <h3>3.5 指令流水线</h3>
-<p>k 段流水线执行 n 条指令：</p>
+<p>k 段流水线执行 n 条指令，<strong>各段等长</strong>（每段 Δt）时：</p>
 <pre><code>所需时钟周期 = k + (n - 1)
-吞吐率 TP = n / 总时间
+T = (k + n - 1) × Δt
+吞吐率 TP = n / T
 加速比 S = 顺序执行时间 / 流水执行时间 = (k × n) / (k + n - 1)</code></pre>
-<p><strong>例</strong>：5 段流水线、每段 1 个时钟周期、执行 100 条指令。</p>
+<p><strong>各段耗时不等</strong>且不计级间锁存开销（近年真题口径）时：</p>
+<pre><code>T = Σti + (n - 1) × max(ti)
+Δt = max(ti)；只有各段等长时才化简为 (k + n - 1) × Δt</code></pre>
+<p><strong>例 1</strong>：5 段流水线、每段 1 个时钟周期、执行 100 条指令。</p>
 <ul><li>周期数 = 5 + 99 = 104；</li><li>顺序执行需 5 × 100 = 500 周期；</li><li>加速比 = 500 / 104 ≈ 4.81，接近段数上限 5。</li></ul>
+<p><strong>例 2（2023 上原题口径）</strong>：取指 2ns、分析 2ns、执行 1ns，执行 1000 条指令。</p>
+<ul><li><code>T = (2+2+1) + 999 × 2 = 2003ns</code>；</li><li>直接套 <code>(3+1000-1) × 2 = 2004ns</code> 是把执行段也当成 2ns，属于典型错解。</li></ul>
 <p><strong>流水线冲突</strong>：结构冲突（硬件资源争用）、数据冲突（后一条依赖前一条结果）、控制冲突（转移指令改变取指方向）。考试若问"影响流水线性能的因素"，答这三类。</p>
 <h2>四、存储系统</h2>
 <h3>4.1 存储层次与局部性</h3>
@@ -81,6 +87,7 @@
 <p><strong>平均访问时间</strong>（未命中时先查 Cache 再访主存）：</p>
 <pre><code>平均访问时间 = 命中率 × Cache 时间 + 未命中率 × (Cache 时间 + 主存时间)</code></pre>
 <p>例：Cache 2ns、主存 20ns、命中率 95% → <code>0.95×2 + 0.05×22 = 3.0ns</code>。注意未命中路径要加上查 Cache 的 2ns，这是最常见的失分点。</p>
+<p><strong>硬件透明性（真题考点）</strong>：主存块与 Cache 行之间的地址映射、命中判断与替换全部由硬件自动完成，操作系统和程序员都看不到，不能用"存储管理软件管理"作答。</p>
 <h3>4.3 主存编址</h3>
 <pre><code>主存容量 = 存储单元个数 × 每个单元位数
 地址线位数 = log2(存储单元个数)
@@ -96,6 +103,7 @@
 <h3>5.2 I/O 四种控制方式</h3>
 <div class="doc-table"><table><thead><tr><th>方式</th><th>CPU 干预程度</th><th>数据单位</th><th>特点</th></tr></thead><tbody><tr><td>程序查询（轮询）</td><td>全程等待</td><td>字/字节</td><td>最简单，CPU 利用率最低</td></tr><tr><td>中断</td><td>每个字/字节中断一次</td><td>字/字节</td><td>CPU 与 I/O 并行，但频繁中断开销大</td></tr><tr><td>DMA</td><td>只在传输开始和结束干预</td><td>数据块</td><td>数据不经过 CPU，适合高速块设备</td></tr><tr><td>通道</td><td>最少</td><td>一组数据块</td><td>专用 I/O 处理器执行通道程序</td></tr></tbody></table></div>
 <p>考法：问"哪种方式 CPU 干预最少"→ 通道；"哪种适合磁盘成块传输"→ DMA；"数据是否经过 CPU"→ DMA 不经过。</p>
+<p><strong>地址口径（真题考点）</strong>：DMA 控制器与主存直接交换数据，CPU 与 DMA 访问主存时给出的都是<strong>主存物理地址</strong>，不是 Cache 地址或虚地址。</p>
 <h3>5.3 可靠性与性能</h3>
 <pre><code>串联：R = R1 × R2 × … × Rn
 并联：R = 1 - (1-R1)(1-R2)…(1-Rn)
@@ -104,8 +112,10 @@ MIPS = 主频(MHz) / CPI
 执行时间 = 指令数 × CPI × 时钟周期</code></pre>
 <p>例：3 个部件串联、可靠度均 0.9 → <code>0.9³ = 0.729</code>；若改为 3 个并联 → <code>1-0.1³ = 0.999</code>。并联冗余是提高可靠性的主要手段。</p>
 <p>例：主频 2GHz、CPI=2 → <code>MIPS = 2000/2 = 1000</code>。</p>
+<p><strong>千小时可靠度（真题考点）</strong>：<code>R(t) = t 时刻仍正常工作的部件数 / 初始总数</code>，2000 台运行 1000 小时后失效 4 台 → <code>R = 1996/2000 = 0.998</code>；失效率 <code>λ ≈ 失效数/(总数×时间)</code>，<code>MTBF = 1/λ</code>，与串并联系统可靠度不是同一问法。</p>
+<p><strong>加权 CPI（真题考点）</strong>：多类指令按占比加权，<code>CPĪ = Σ(比例i × CPIi)</code>，如 35%×4 + 45%×2 + 20%×6 = 3.5，主频 2.8GHz 时 <code>MIPS = 2800/3.5 = 800</code>；不要直接把几个 CPI 相加或取算术平均。</p>
 <h2>六、速记表</h2>
-<div class="doc-table"><table><thead><tr><th>项目</th><th>结论</th></tr></thead><tbody><tr><td>n 位补码范围</td><td><code>-2<sup>(n-1)</sup> ~ 2<sup>(n-1)</sup>-1</code></td></tr><tr><td>n 位原码/反码范围</td><td><code>-(2<sup>(n-1)</sup>-1) ~ 2<sup>(n-1)</sup>-1</code></td></tr><tr><td>8 位补码特殊值</td><td><code>10000000 = -128</code></td></tr><tr><td>IEEE 754 单精度</td><td>1 + 8 + 23 = 32 位，偏置 127</td></tr><tr><td>IEEE 754 双精度</td><td>1 + 11 + 52 = 64 位，偏置 1023</td></tr><tr><td>移码</td><td>补码符号位取反</td></tr><tr><td>海明码</td><td><code>2<sup>k</sup> ≥ n + k + 1</code></td></tr><tr><td>CRC 补零</td><td>等于生成多项式最高次幂</td></tr><tr><td>流水线周期数</td><td><code>k + (n-1)</code></td></tr><tr><td>加速比</td><td><code>(k×n) / (k+n-1)</code></td></tr><tr><td>直接映射标记位</td><td>主存地址位 - 行号位 - 块内地址位</td></tr><tr><td>总线带宽</td><td>宽度（字节）× 频率</td></tr><tr><td>串联/并联可靠度</td><td>乘积 / <code>1-∏(1-Ri)</code></td></tr></tbody></table></div>
+<div class="doc-table"><table><thead><tr><th>项目</th><th>结论</th></tr></thead><tbody><tr><td>n 位补码范围</td><td><code>-2<sup>(n-1)</sup> ~ 2<sup>(n-1)</sup>-1</code></td></tr><tr><td>n 位原码/反码范围</td><td><code>-(2<sup>(n-1)</sup>-1) ~ 2<sup>(n-1)</sup>-1</code></td></tr><tr><td>8 位补码特殊值</td><td><code>10000000 = -128</code></td></tr><tr><td>IEEE 754 单精度</td><td>1 + 8 + 23 = 32 位，偏置 127</td></tr><tr><td>IEEE 754 双精度</td><td>1 + 11 + 52 = 64 位，偏置 1023</td></tr><tr><td>移码</td><td>补码符号位取反</td></tr><tr><td>海明码</td><td><code>2<sup>k</sup> ≥ n + k + 1</code></td></tr><tr><td>CRC 补零</td><td>等于生成多项式最高次幂</td></tr><tr><td>流水线时间</td><td>等长段 <code>k + (n-1)</code> 周期；不等长段 <code>T=Σti+(n-1)×max(ti)</code></td></tr><tr><td>加速比</td><td><code>(k×n) / (k+n-1)</code></td></tr><tr><td>直接映射标记位</td><td>主存地址位 - 行号位 - 块内地址位</td></tr><tr><td>总线带宽</td><td>宽度（字节）× 频率</td></tr><tr><td>串联/并联可靠度</td><td>乘积 / <code>1-∏(1-Ri)</code></td></tr></tbody></table></div>
 <h2>七、易错辨析</h2>
 <div class="doc-table"><table><thead><tr><th>错误认知</th><th>正确结论</th><th>原因</th></tr></thead><tbody><tr><td>补码范围关于 0 对称</td><td>负数端多一个 <code>-2<sup>(n-1)</sup></code></td><td>0 只占一个编码，负数多占一个</td></tr><tr><td>阶码决定精度、尾数决定范围</td><td>说反了：阶码定范围、尾数定精度</td><td>阶码是 2 的指数，尾数是有效数字</td></tr><tr><td>流水线加速比分母是单条指令时间</td><td>分母是流水执行总时间</td><td>加速比比较的是"整批任务"的耗时</td></tr><tr><td>Cache 未命中只算主存时间</td><td>要加上查 Cache 的时间</td><td>未命中时 Cache 已经查过一次</td></tr><tr><td>DMA 传输的数据经过 CPU</td><td>DMA 数据直接在设备与主存间传送</td><td>CPU 只做初始化与结束处理</td></tr><tr><td>地址总线宽度决定数据传送速度</td><td>地址线决定寻址空间，数据线决定一次传输位数</td><td>两者作用不同</td></tr></tbody></table></div>
 <h2>八、自检题（能秒答才算过关）</h2>
@@ -120,8 +130,11 @@ MIPS = 主频(MHz) / CPI
 <h3>9.3 存储层次（7~9）</h3>
 <div class="doc-table"><table><thead><tr><th>#</th><th>公式名称</th><th>表达式</th><th>符号含义</th><th>适用场景 / 备注</th></tr></thead><tbody><tr><td>7</td><td>Cache 平均访问时间</td><td>未命中代价按 Tm 计：<code>T = H × Tc + (1-H) × Tm</code>；未命中时先查 Cache 再访存：<code>T = H × Tc + (1-H) × (Tc + Tm)</code></td><td>H 为命中率，Tc 为 Cache 访问时间，Tm 为主存访问时间</td><td>命中率 <code>H = Nc / (Nc + Nm)</code>；Cache 效率 <code>e = Tc / T</code>。审题关键：未命中时若已查过一次 Cache，用第二式</td></tr><tr><td>8</td><td>Cache 直接映射地址划分</td><td><code>标记位数 = 主存地址位数 - 行号位数 - 块内地址位数</code>；<code>行号位数 = log2(Cache 容量 / 块大小)</code>；<code>块内地址位数 = log2(块大小)</code></td><td>主存地址被切成"标记 + 行号 + 块内地址"三段，行号即 Cache 行（块）的编号</td><td>先统一单位再取对数。组相联映射把"行号"换成"组号"，全相联映射没有行号段</td></tr><tr><td>9</td><td>主存容量与编址</td><td><code>主存容量 = 存储单元个数 × 每个单元位数</code>；<code>地址线位数 = log2(存储单元个数)</code></td><td>地址线位数决定寻址空间，数据线位数等于每个单元的位数</td><td>按字节编址时，存储单元个数 = 容量（以字节计）；32 根地址线可寻址 <code>2<sup>32</sup> B = 4GB</code>。按字编址需先由字长换算单元数</td></tr></tbody></table></div>
 <h3>9.4 指令系统与流水线（10~12）</h3>
-<div class="doc-table"><table><thead><tr><th>#</th><th>公式名称</th><th>表达式</th><th>符号含义</th><th>适用场景 / 备注</th></tr></thead><tbody><tr><td>10</td><td>操作码与指令条数</td><td>等长操作码：<code>指令条数 ≤ 2<sup>k</sup></code>；扩展操作码：本级每留出 1 个编码作扩展标志，下级可多出 <code>2<sup>d</sup></code> 条指令</td><td>k 为操作码位数，d 为每次扩展新增的位数</td><td>指令字长 = 操作码位数 + 各地址码位数之和。扩展编码按"留一扩之"逐级计算，不能直接用 <code>2^总位数</code></td></tr><tr><td>11</td><td>流水线执行时间</td><td><code>所需时钟周期数 = k + (n - 1)</code>；<code>T = (k + n - 1) × Δt</code></td><td>k 为流水段数，n 为指令条数，Δt 为流水线周期，取各段中最长的段时间</td><td>首条指令需 <code>k × Δt</code> 充满流水线，其后每 Δt 完成一条。各段时间不等时，由瓶颈段决定 Δt</td></tr><tr><td>12</td><td>流水线加速比与吞吐率</td><td><code>S = k × n / (k + n - 1)</code>；<code>TP = n / T</code>；<code>TP(max) = 1 / Δt</code></td><td>S 为加速比，等于顺序执行时间与流水执行时间之比；TP 为吞吐率，即单位时间完成的指令条数</td><td>加速比上限趋近段数 k，n 越大越接近；流水线效率 <code>E = n / (k + n - 1)</code></td></tr></tbody></table></div>
+<div class="doc-table"><table><thead><tr><th>#</th><th>公式名称</th><th>表达式</th><th>符号含义</th><th>适用场景 / 备注</th></tr></thead><tbody><tr><td>10</td><td>操作码与指令条数</td><td>等长操作码：<code>指令条数 ≤ 2<sup>k</sup></code>；扩展操作码：本级每留出 1 个编码作扩展标志，下级可多出 <code>2<sup>d</sup></code> 条指令</td><td>k 为操作码位数，d 为每次扩展新增的位数</td><td>指令字长 = 操作码位数 + 各地址码位数之和。扩展编码按"留一扩之"逐级计算，不能直接用 <code>2^总位数</code></td></tr><tr><td>11</td><td>流水线执行时间</td><td>各段等长：<code>周期数 = k + (n - 1)</code>、<code>T = (k + n - 1) × Δt</code>；各段不等长：<code>T = Σti + (n - 1) × max(ti)</code></td><td>k 为流水段数，n 为指令条数，Δt 为流水线周期；不等长时 <code>max(ti)</code> 为最长段耗时</td><td>首条指令顺序流过各段，其后每 Δt 完成一条。<strong>真题易错</strong>：2ns/2ns/1ns 三段跑 1000 条，<code>Σti+999×2=2003ns</code>；套 <code>(k+n-1)×2</code> 会得 2004ns</td></tr><tr><td>12</td><td>流水线加速比与吞吐率</td><td>等长段：<code>S = k × n / (k + n - 1)</code>；<code>TP = n / T</code>；<code>TP(max) = 1 / Δt</code></td><td>S 为加速比，等于顺序执行时间与流水执行时间之比；TP 为吞吐率，即单位时间完成的指令条数</td><td>加速比上限趋近段数 k，n 越大越接近；流水线效率 <code>E = n / (k + n - 1)</code>（等长段口径）</td></tr></tbody></table></div>
 <blockquote><p>配套换算（不计入 12 条）：<code>MIPS = 主频(MHz) / CPI</code>；<code>CPU 执行时间 = 指令数 × CPI × 时钟周期</code>；<code>总线带宽 = 总线宽度(B) × 总线频率</code>。</p></blockquote>
+<h2>十、真题题库考点对照（20 题）</h2>
+<blockquote><p>以真题题库为唯一准绳：topic 名称照录题库，命名差异按别名归并，20 题的考点均可在下表对应节找到讲解。</p></blockquote>
+<div class="doc-table"><table><thead><tr><th>真题 topic</th><th>对应节</th><th>对齐说明</th></tr></thead><tbody><tr><td>码制 / 补码 / 定点运算 / 浮点数表示 / 浮点数运算 / 海明码</td><td>§二</td><td>码制是原码/反码/补码/移码统称；定点运算即补码加减与溢出判断；浮点阶码定范围、尾数定精度；海明码 <code>2<sup>k</sup>≥n+k+1</code></td></tr><tr><td>CPU 组成 / 指令系统</td><td>§三</td><td>CPU 部件职能、寻址方式、CISC/RISC 与 Flynn 分类</td></tr><tr><td>流水线计算</td><td>§3.5、§九</td><td>等长段 <code>(k+n-1)Δt</code>；不等长段 <code>Σti+(n-1)×max(ti)</code>，真题 2ns/2ns/1ns 跑 1000 条为 2003ns</td></tr><tr><td>存储器 / 存储系统</td><td>§四</td><td>Cache 三种映射、主存编址、平均访问时间；映射与替换由硬件自动完成</td></tr><tr><td>总线</td><td>§5.1</td><td>数据总线定并行位数、地址总线定寻址空间，带宽 = 字节宽度×频率</td></tr><tr><td>中断 / 中断向量</td><td>§5.2</td><td>中断方式 CPU 干预逐字/块；中断向量是中断服务程序入口地址表项，CPU 查向量表转入 ISR</td></tr><tr><td>可靠性</td><td>§5.3</td><td>串并联可靠度与千小时 <code>R(t)=正常工作数/初始总数</code></td></tr><tr><td>性能指标</td><td>§5.3、§九</td><td>MIPS、CPI、执行时间与加权 CPI（按指令占比加权）</td></tr><tr><td>数组地址计算</td><td>跨模块见 03 §二</td><td>题库归入 computer-system；按行优先 <code>首址+元素大小×(前行数×列数+本行前导数)</code>，本表给出公式，推导在 03 精要</td></tr></tbody></table></div>
 </main>
 <footer class="doc-footer">本文档由同名 Markdown 生成（UTF-8 编码）；内容修改请改 .md 后重新运行 <code>node tools/build-docs.js</code>。</footer>
 </body>

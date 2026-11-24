@@ -241,5 +241,62 @@
       explanation: '单模光纤纤芯直径小（约 9μm），只允许一种模式传播，色散小、损耗低，配合激光光源可传输数十公里，用于骨干与长途；多模光纤纤芯粗（50/62.5μm），用 LED 光源，适合楼内短距离。',
       tags: ['概念']
     }
+    ,
+    {
+      id: 'NET-043', module: 'network', topic: 'OSI参考模型', difficulty: 1, points: ['network|分层模型'],
+      stem: 'OSI 参考模型中负责端到端可靠传输与流量控制的是（ ）。',
+      options: ['传输层', '网络层', '数据链路层', '会话层'],
+      answer: 0,
+      explanation: '传输层提供端到端的可靠传输、流量控制与差错恢复（TCP）；网络层负责寻址与路由，数据链路层负责相邻结点间的帧传输。',
+      tags: ['概念']
+    },
+    {
+      id: 'NET-044', module: 'network', topic: 'IP与MAC', difficulty: 1, points: ['network|IP 地址与子网'],
+      stem: '将 IP 地址解析为 MAC 地址的协议是（ ）。',
+      options: ['DNS', 'ARP', 'ICMP', 'DHCP'],
+      answer: 1,
+      explanation: 'ARP 在局域网内由 IP 地址求对应 MAC 地址；DNS 解析域名到 IP，DHCP 动态分配 IP，ICMP 用于差错与连通性测试。',
+      tags: ['概念']
+    },
+    {
+      id: 'NET-045', module: 'network', topic: 'VLAN', difficulty: 2, points: ['network|传输介质与编码'],
+      stem: '在交换网络中用于隔离广播域的技术是（ ）。',
+      options: ['链路聚合', 'VLAN', 'STP', 'NAT'],
+      answer: 2,
+      explanation: 'VLAN 把物理局域网按端口或标签划成多个逻辑网，隔离广播域；普通交换机只隔离冲突域、不隔离广播域。STP 防环路，NAT 做地址转换。',
+      tags: ['概念', '易错']
+    },
+    {
+      id: 'NET-046', module: 'network', topic: '端口号', difficulty: 1, points: ['network|应用层与网络管理'],
+      stem: 'HTTPS 默认使用的 TCP 端口号是（ ）。',
+      options: ['80', '21', '25', '443'],
+      answer: 3,
+      explanation: 'HTTP 用 80、HTTPS 用 443（TLS）、FTP 控制连接 21、SMTP 发信 25、DNS 53、DHCP 67/68、SNMP 161/162。',
+      tags: ['概念', '必背']
+    },
+    {
+      id: 'NET-047', module: 'network', topic: 'DNS', difficulty: 1, points: ['network|应用层与网络管理'],
+      stem: '把域名转换为 IP 地址的服务是（ ）。',
+      options: ['DNS', 'DHCP', 'SNMP', 'SMTP'],
+      answer: 0,
+      explanation: 'DNS 完成域名与 IP 的映射，主机到本地服务器为递归查询、本地服务器向根/顶级域为迭代查询；记录类型有 A/AAAA/CNAME/MX/NS。',
+      tags: ['概念']
+    },
+    {
+      id: 'NET-048', module: 'network', topic: '网络命令', difficulty: 2, points: ['network|应用层与网络管理'],
+      stem: '用于测试两台主机之间 IP 连通性的常用命令是（ ）。',
+      options: ['tracert', 'ping', 'ipconfig', 'netstat'],
+      answer: 1,
+      explanation: 'ping 基于 ICMP 回显请求测试连通性；tracert 跟踪路由路径，ipconfig/ifconfig 查看本机网络配置，netstat 查看连接与端口状态。',
+      tags: ['概念']
+    },
+    {
+      id: 'NET-049', module: 'network', topic: '路由协议', difficulty: 2, points: ['network|应用层与网络管理'],
+      stem: '下列属于链路状态路由协议的是（ ）。',
+      options: ['RIP', 'BGP', 'OSPF', 'ARP'],
+      answer: 2,
+      explanation: 'OSPF 基于链路状态并用 Dijkstra 计算最短路径；RIP 是距离向量（跳数 ≤15），BGP 用于自治系统之间，ARP 不是路由协议。',
+      tags: ['概念']
+    }
   ]);
 })(window.RK);

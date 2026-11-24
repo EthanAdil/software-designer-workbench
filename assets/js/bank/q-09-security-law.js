@@ -243,5 +243,94 @@
       explanation: '条例规定：软件复制品的出版者、制作者不能证明其出版、制作有合法授权的，或者复制品的发行者、出租者不能证明其发行、出租的复制品有合法来源的，应当承担法律责任。能证明合法来源的，实践中可免除赔偿责任，但仍须停止销售侵权复制品。',
       tags: ['概念', '难点']
     }
+    ,
+    {
+      id: 'SEC-022', module: 'security', topic: '安全属性', difficulty: 2, points: ['security|安全体系与管理'],
+      stem: '信息安全基本属性中不包括（ ）。',
+      options: ['机密性', '完整性', '不可否认性', '高效性'],
+      answer: 3,
+      explanation: '信息安全五要素为机密性、完整性、可用性、可控性、不可否认性；高效性是性能指标，不属于安全属性。',
+      tags: ['概念']
+    },
+    {
+      id: 'SEC-023', module: 'security', topic: '认证方式', difficulty: 1, points: ['security|认证与签名'],
+      stem: '身份认证三要素中，"用户名 + 口令"属于（ ）。',
+      options: ['用户知道的东西', '用户拥有的东西', '用户具备的特征', '用户所在的位置'],
+      answer: 0,
+      explanation: '认证三要素：所知道的（口令/PIN）、所拥有的（证书/令牌）、所具备的（指纹/虹膜）。单因素口令最弱，多因素组合更安全。',
+      tags: ['概念']
+    },
+    {
+      id: 'SEC-024', module: 'security', topic: '数字证书', difficulty: 2, points: ['security|认证与签名'],
+      stem: '数字证书的主要作用是（ ）。',
+      options: ['加快数据加密速度', '证明公钥持有者的身份', '压缩传输数据', '替代防火墙功能'],
+      answer: 1,
+      explanation: '数字证书由 CA 签发，把公钥与实体身份绑定，解决公钥真实性问题（防中间人）；不提供加密加速或访问阻断。',
+      tags: ['概念']
+    },
+    {
+      id: 'SEC-025', module: 'security', topic: '访问控制', difficulty: 2, points: ['security|认证与签名'],
+      stem: '依据安全标签实施强制授权访问的模型是（ ）。',
+      options: ['DAC', 'RBAC', 'MAC', 'ABAC'],
+      answer: 2,
+      explanation: 'MAC 强制访问控制由系统按安全标签决定访问权限，用户不能自主转让；DAC 由资源所有者自主授权，RBAC 把权限绑定角色。',
+      tags: ['概念', '易错']
+    },
+    {
+      id: 'SEC-026', module: 'security', topic: 'Web安全', difficulty: 2, points: ['security|网络攻击与防护'],
+      stem: '通过在输入中拼接 SQL 语句以操纵后台数据库的攻击是（ ）。',
+      options: ['XSS', 'CSRF', 'DDoS', 'SQL 注入'],
+      answer: 3,
+      explanation: 'SQL 注入把恶意 SQL 拼进输入参数，从而绕过认证或读写数据；XSS 注入脚本到页面，CSRF 冒用用户身份发请求，DDoS 耗尽资源。',
+      tags: ['概念', '易错']
+    },
+    {
+      id: 'SEC-027', module: 'security', topic: '漏洞扫描', difficulty: 1, points: ['security|网络攻击与防护'],
+      stem: '主动探测系统已知漏洞并给出清单的安全工具是（ ）。',
+      options: ['漏洞扫描器', '防火墙', '入侵检测系统', '防病毒软件'],
+      answer: 0,
+      explanation: '漏洞扫描器按规则主动探测主机/应用的已知漏洞；IDS 被动检测告警、IPS 主动阻断，防火墙按策略过滤流量，防病毒针对恶意代码。',
+      tags: ['概念']
+    },
+    {
+      id: 'LAW-022', module: 'standard-law', topic: '标准化', difficulty: 1, points: ['standard-law|标准化'],
+      stem: '标准代号 GB/T 表示（ ）。',
+      options: ['强制性国家标准', '推荐性国家标准', '行业标准', '地方标准'],
+      answer: 1,
+      explanation: 'GB 为强制性国家标准，GB/T 为推荐性国家标准；DB 为地方标准，Q 为企业标准，SJ 为电子行业行业标准。',
+      tags: ['概念']
+    },
+    {
+      id: 'LAW-023', module: 'standard-law', topic: '著作权保护期', difficulty: 2, points: ['standard-law|著作权'],
+      stem: '公民作品的著作权财产权保护期为（ ）。',
+      options: ['作者终身', '作者终身加死后 20 年', '作者终身加死后 50 年', '首次发表后 20 年'],
+      answer: 2,
+      explanation: '署名权、修改权、保护作品完整权永久受保护；发表权与财产权为作者终身加死后 50 年，法人作品为首次发表后 50 年。',
+      tags: ['概念', '必背']
+    },
+    {
+      id: 'LAW-024', module: 'standard-law', topic: '著作权归属', difficulty: 2, points: ['standard-law|著作权'],
+      stem: '委托开发软件且合同未约定著作权归属时，著作权属于（ ）。',
+      options: ['委托方', '双方共有', '国家', '受托方（开发者）'],
+      answer: 3,
+      explanation: '委托开发有约定从约定，无约定归受托方；一般职务作品著作权归作者、单位两年内优先使用，二者不要混淆。',
+      tags: ['概念', '易错']
+    },
+    {
+      id: 'LAW-025', module: 'standard-law', topic: '专利与知识产权', difficulty: 1, points: ['standard-law|专利与商标'],
+      stem: '我国发明专利的保护期为（ ）。',
+      options: ['20 年', '10 年', '15 年', '50 年'],
+      answer: 0,
+      explanation: '发明专利 20 年、实用新型 10 年、外观设计 15 年，均自申请日起算；商标 10 年且可无限续展。',
+      tags: ['概念', '必背']
+    },
+    {
+      id: 'LAW-026', module: 'standard-law', topic: '商标', difficulty: 1, points: ['standard-law|专利与商标'],
+      stem: '注册商标保护期届满后的正确处理是（ ）。',
+      options: ['自动失效且不可恢复', '可以续展，每次 10 年', '自动转为商业秘密', '保护期延长到 50 年'],
+      answer: 1,
+      explanation: '商标保护期 10 年，期满前可申请续展，每次续展 10 年、次数不限；这是与专利保护期最易混的数字。',
+      tags: ['概念']
+    }
   ]);
 })(window.RK);
