@@ -1,5 +1,5 @@
 /* ==========================================================================
- * data-exams.js —— 阶段测评卷（3 套）、全真模考卷（8 套）、下午案例卷（4 套）
+ * data-exams.js —— 阶段测评卷（3 套）、模拟考试卷（8 套）、下午案例卷（4 套）
  * rules: 按模块抽题；count 为期望题量，题库不足时自动取全部
  * ========================================================================== */
 window.RK_EXAMS = {
@@ -65,16 +65,16 @@ window.RK_EXAMS = {
     }
   ],
 
-  /* ---------------- 全真模考（上午卷，75 题 / 120 分钟） ---------------- */
+  /* ---------------- 模拟考试（上午卷，75 题 / 120 分钟） ---------------- */
   mocks: [
-    { id: 'mock-01', kind: 'mock', name: '全真模考 一', desc: '按真实权重组卷，难度偏基础，用于建立答题节奏。', difficulty: '基础' },
-    { id: 'mock-02', kind: 'mock', name: '全真模考 二', desc: '按真实权重组卷，重点观察软件工程与面向对象的得分。', difficulty: '基础' },
-    { id: 'mock-03', kind: 'mock', name: '全真模考 三', desc: '按真实权重组卷，检验前两阶段的综合掌握度。', difficulty: '基础' },
-    { id: 'mock-04', kind: 'mock', name: '全真模考 四', desc: '按真实权重组卷，开始压缩单题用时（目标 90 秒/题）。', difficulty: '进阶' },
-    { id: 'mock-05', kind: 'mock', name: '全真模考 五', desc: '按真实权重组卷，配合真题一起自查盲区。', difficulty: '进阶' },
-    { id: 'mock-06', kind: 'mock', name: '全真模考 六', desc: '按真实权重组卷，关注连续两套都错的同一考点。', difficulty: '进阶' },
-    { id: 'mock-07', kind: 'mock', name: '全真模考 七', desc: '按真实权重组卷，模拟考前两周状态，严格计时。', difficulty: '冲刺' },
-    { id: 'mock-08', kind: 'mock', name: '全真模考 八', desc: '考前最后一套完整模考，目标是稳定在 60 分以上。', difficulty: '冲刺' }
+    { id: 'mock-01', kind: 'mock', name: '模拟考试 一', desc: '按真实权重组卷，难度偏基础，用于建立答题节奏。', difficulty: '基础' },
+    { id: 'mock-02', kind: 'mock', name: '模拟考试 二', desc: '按真实权重组卷，重点观察软件工程与面向对象的得分。', difficulty: '基础' },
+    { id: 'mock-03', kind: 'mock', name: '模拟考试 三', desc: '按真实权重组卷，检验前两阶段的综合掌握度。', difficulty: '基础' },
+    { id: 'mock-04', kind: 'mock', name: '模拟考试 四', desc: '按真实权重组卷，开始压缩单题用时（目标 90 秒/题）。', difficulty: '进阶' },
+    { id: 'mock-05', kind: 'mock', name: '模拟考试 五', desc: '按真实权重组卷，配合真题一起自查盲区。', difficulty: '进阶' },
+    { id: 'mock-06', kind: 'mock', name: '模拟考试 六', desc: '按真实权重组卷，关注连续两套都错的同一考点。', difficulty: '进阶' },
+    { id: 'mock-07', kind: 'mock', name: '模拟考试 七', desc: '按真实权重组卷，模拟考前两周状态，严格计时。', difficulty: '冲刺' },
+    { id: 'mock-08', kind: 'mock', name: '模拟考试 八', desc: '考前最后一套完整模拟考试，目标是稳定在 60 分以上。', difficulty: '冲刺' }
   ],
 
   /* ---------------- 下午案例卷（4 套，代码题 Java / C++ 交替） ---------------- */
@@ -83,7 +83,7 @@ window.RK_EXAMS = {
       id: 'case-01',
       kind: 'case',
       paper: 'afternoon',
-      name: '下午卷 全真模考 A',
+      name: '下午卷 模拟考试 A',
       desc: 'DFD + UML + 数据库设计 + 算法设计 + Java 代码题各一道，共 5 题 75 分，交卷后自评。',
       duration: 120,
       passScore: 45,
@@ -100,7 +100,7 @@ window.RK_EXAMS = {
       id: 'case-02',
       kind: 'case',
       paper: 'afternoon',
-      name: '下午卷 全真模考 B',
+      name: '下午卷 模拟考试 B',
       desc: '第二套完整下午卷，题目与 A 卷不重复，代码题为 C++，用于检验答题模板是否真的掌握。',
       duration: 120,
       passScore: 45,
@@ -134,7 +134,7 @@ window.RK_EXAMS = {
       id: 'case-04',
       kind: 'case',
       paper: 'afternoon',
-      name: '下午卷 全真模考 C',
+      name: '下午卷 模拟考试 C',
       desc: '第四套完整下午卷，代码题为 C++，与 A/B 卷题目不重复，用于考前完整计时演练。',
       duration: 120,
       passScore: 45,

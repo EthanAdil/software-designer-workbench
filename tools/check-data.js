@@ -113,7 +113,7 @@ PLAN.stages.forEach(st => {
       taskIds.add(t.id);
       hours += t.hours || 0;
     });
-    if (hours < 8 || hours > 18) warnings.push('W' + wk.no + ' 任务时长 ' + hours + 'h 偏离 10~15h 区间');
+    if (hours < 8 || hours > 18) warnings.push('W' + wk.no + ' 任务时长 ' + hours + 'h 偏离 10~17h 区间');
   });
 });
 weekNos.sort((a, b) => a - b);

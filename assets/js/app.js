@@ -24,7 +24,7 @@
       if (n < m.weight) problems.push(m.name + ' 仅 ' + n + ' 题（建议 ≥ ' + m.weight + '）');
     });
     if (problems.length) {
-      console.warn('[题库自检] 部分模块题量不足以组一套 75 题模考：\n' + problems.join('\n'));
+      console.warn('[题库自检] 部分模块题量不足以组一套 75 题模拟考试：\n' + problems.join('\n'));
     }
     console.log('%c软件设计师备考工作台', 'font-weight:700;font-size:13px');
     console.log('上午题库 ' + total + ' 题 / 下午案例 ' + RK.bank.afternoon.length + ' 道 / 模块 ' + RK.MODULES.length + ' 个');

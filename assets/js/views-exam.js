@@ -1,5 +1,5 @@
 /* ==========================================================================
- * views-exam.js —— 阶段测评 / 全真模考（上午卷自动判分 + 下午卷自评）
+ * views-exam.js —— 阶段测评 / 模拟考试（上午卷自动判分 + 下午卷自评）
  * ========================================================================== */
 (function (RK) {
   var U = RK.U;
@@ -54,7 +54,7 @@
   }
 
   /* ---------------- 列表 ---------------- */
-  /* mode：'all' 全部分组 / 'stages' 只列阶段测评 / 'mocks' 只列模考与下午卷 */
+  /* mode：'all' 全部分组 / 'stages' 只列阶段测评 / 'mocks' 只列模拟考试与下午卷 */
   function renderList(mode) {
     mode = mode || 'all';
     var h = '';
@@ -92,10 +92,10 @@
     }
 
     if (mode !== 'stages') {
-      h += '<div class="card' + (h ? ' mt-16' : '') + '"><div class="card-head"><h2>全真模考（上午卷）</h2>' +
+      h += '<div class="card' + (h ? ' mt-16' : '') + '"><div class="card-head"><h2>模拟考试（上午卷）</h2>' +
         '<span class="hint">75 题 / 120 分钟 / 75 分，两科连考中的第一科</span></div>';
       h += '<div class="grid grid-3">' + EXAMS.mocks.map(function (p) { return card(p, '#/exam'); }).join('') + '</div>';
-      h += '<div class="dim mt-8" style="font-size:12.5px">说明：题库为按考点自编练习题，非官方真题。模考用于固定节奏与查漏，建议在 W27、W28 配合近年真题使用。</div></div>';
+      h += '<div class="dim mt-8" style="font-size:12.5px">说明：题库为按考点自编练习题，非官方真题。模拟考试用于固定节奏与查漏，建议在 W27、W28 配合历年真题使用。</div></div>';
 
       h += '<div class="card mt-16"><div class="card-head"><h2>下午卷（应用技术）</h2>' +
         '<span class="hint">5 道案例题 / 120 分钟 / 75 分，交卷后对照参考答案自评</span></div>';
@@ -333,7 +333,7 @@
       if (!moduleMap[q.module]) moduleMap[q.module] = { key: q.module, total: 0, right: 0 };
       moduleMap[q.module].total += 1;
       if (ok) moduleMap[q.module].right += 1;
-      /* 未作答的题只计入成绩，不写入错题本与掌握度统计，避免一次模考灌入几十道未答题 */
+      /* 未作答的题只计入成绩，不写入错题本与掌握度统计，避免一次模拟考试灌入几十道未答题 */
       if (pick !== undefined) RK.record.answer(q.id, ok, pick, q.order);
     });
 
@@ -448,7 +448,7 @@
   /* ---------------- 路由 ---------------- */
   var examView = {
     title: '模拟考试',
-    sub: '全真模考固定节奏：上午卷 75 题 / 120 分钟，下午卷 5 题自评；两科都需 ≥45 分',
+    sub: '模拟考试固定节奏：上午卷 75 题 / 120 分钟，下午卷 5 题自评；两科都需 ≥45 分',
     render: function (params) {
       if (!params.p) {
         sess = null;
@@ -555,11 +555,11 @@
 
   RK.router.add('exam', examView);
 
-  /* 阶段测评独立页：只列 3 套阶段测评，模考与下午卷归「模拟考试」。
+  /* 阶段测评独立页：只列 3 套阶段测评，模拟考试与下午卷在「模拟考试」页。
      #/assessment?p=stage-1 这类历史/深链同样复用考试视图，标题与菜单高亮留在阶段测评。 */
   RK.router.add('assessment', {
     title: '阶段测评',
-    sub: '每阶段一次，检验该阶段掌握度；全真模考与下午卷在「模拟考试」',
+    sub: '每阶段一次，检验该阶段掌握度；模拟考试与下午卷在「模拟考试」页',
     render: function (params) {
       if (params && params.p) return examView.render(params);
       sess = null;

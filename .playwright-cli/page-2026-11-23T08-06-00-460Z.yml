@@ -1,0 +1,138 @@
+- generic [ref=e1]:
+  - generic [ref=e2]:
+    - complementary [ref=e3]:
+      - generic [ref=e4]:
+        - generic [ref=e5]: SD
+        - generic [ref=e6]:
+          - strong [ref=e7]: 软件设计师
+          - generic [ref=e8]: 2027 上半年 · 备考工作台
+      - navigation [ref=e9]:
+        - link "总览" [ref=e10] [cursor=pointer]:
+          - /url: "#/dashboard"
+        - link "学习计划" [ref=e17] [cursor=pointer]:
+          - /url: "#/plan"
+        - link "知识模块" [ref=e22] [cursor=pointer]:
+          - /url: "#/knowledge"
+        - link "备考文档" [ref=e27] [cursor=pointer]:
+          - /url: "#/docs"
+        - link "刷题练习" [ref=e32] [cursor=pointer]:
+          - /url: "#/practice"
+        - link "真题题库" [ref=e36] [cursor=pointer]:
+          - /url: "#/real"
+        - link "阶段测评" [ref=e41] [cursor=pointer]:
+          - /url: "#/assessment"
+        - link "模拟考试" [ref=e46] [cursor=pointer]:
+          - /url: "#/exam"
+        - link "错题本" [ref=e51] [cursor=pointer]:
+          - /url: "#/review"
+        - link "成绩分析" [ref=e55] [cursor=pointer]:
+          - /url: "#/stats"
+      - generic [ref=e60]:
+        - generic [ref=e61]: 180天
+        - generic [ref=e62]: 距离 2027-05-22 考试
+    - main [ref=e63]:
+      - generic [ref=e64]:
+        - generic [ref=e65]:
+          - heading "错题本" [level=1] [ref=e249]
+          - paragraph [ref=e67]: 真题错题置顶重点管理（归因 + 建议 + 三态复习）；自编错题沿用原流程
+        - button "切换主题" [ref=e69] [cursor=pointer]
+      - generic [ref=e250]:
+        - generic [ref=e251]:
+          - generic [ref=e252]:
+            - heading "真题错题 · 重点管理" [level=2] [ref=e253]
+            - generic [ref=e254]:
+              - link "重做待复习真题" [ref=e255] [cursor=pointer]:
+                - /url: "#/real?w=1"
+              - link "回真题题库" [ref=e256] [cursor=pointer]:
+                - /url: "#/real"
+          - paragraph [ref=e257]: "真题优先级高于自编模拟题，故置顶展示。作答仍独立存 `rk_sd_real_wrong`，不进备份四字段；错因、结论建议与复习状态随真题记录保存，两组错题互不混算。"
+          - generic [ref=e258]:
+            - generic [ref=e259]:
+              - generic [ref=e260]: 待复习
+              - generic [ref=e261]: 1 题
+            - generic [ref=e262]:
+              - generic [ref=e263]: 复习中
+              - generic [ref=e264]: 0 题
+            - generic [ref=e265]:
+              - generic [ref=e266]: 已掌握
+              - generic [ref=e267]: 0 题
+            - generic [ref=e268]:
+              - generic [ref=e269]: 真题合计
+              - generic [ref=e270]: 1 题
+          - generic [ref=e271]:
+            - generic [ref=e272]: 筛选
+            - generic [ref=e273]:
+              - button "全部" [ref=e274] [cursor=pointer]
+              - button "待复习" [ref=e275] [cursor=pointer]
+              - button "复习中" [ref=e276] [cursor=pointer]
+              - button "已掌握" [ref=e277] [cursor=pointer]
+            - generic [ref=e278]:
+              - button "全部错因" [expanded] [active] [ref=e279] [cursor=pointer]
+              - listbox "错因筛选" [ref=e339]:
+                - option "全部错因" [selected] [ref=e340] [cursor=pointer]
+                - option "概念混淆" [ref=e341] [cursor=pointer]
+                - option "公式记错" [ref=e342] [cursor=pointer]
+                - option "计算失误" [ref=e343] [cursor=pointer]
+                - option "审题偏差" [ref=e344] [cursor=pointer]
+                - option "知识盲区" [ref=e345] [cursor=pointer]
+                - option "术语不熟" [ref=e346] [cursor=pointer]
+                - option "时间不够" [ref=e347] [cursor=pointer]
+                - option "蒙对未掌握" [ref=e348] [cursor=pointer]
+          - generic [ref=e282]:
+            - heading "计算机组成与体系结构（1）" [level=4] [ref=e283]
+            - group [ref=e285]:
+              - generic "在程序执行过程中，高速缓存(Cache)与主存间的地址映射由（）。… 真题 · 原题 1 错 2 次 待复习 知识盲区" [ref=e286] [cursor=pointer]:
+                - text: 在程序执行过程中，高速缓存(Cache)与主存间的地址映射由（）。…
+                - generic [ref=e287]: 真题 · 原题 1
+                - generic [ref=e288]: 错 2 次
+                - generic [ref=e289]: 待复习
+                - generic [ref=e290]: 知识盲区
+              - option "未归因"
+              - option "概念混淆"
+              - option "公式记错"
+              - option "计算失误"
+              - option "审题偏差"
+              - option "知识盲区" [selected]
+              - option "术语不熟"
+              - option "时间不够"
+              - option "蒙对未掌握"
+        - generic [ref=e291]:
+          - generic [ref=e292]:
+            - heading "归因统计" [level=2] [ref=e293]
+            - generic [ref=e294]: 真题单独一组置顶；两组互不混算，真题不进自编备份
+          - generic [ref=e295]:
+            - generic [ref=e296]:
+              - heading "真题错题（1）" [level=3] [ref=e297]
+              - generic [ref=e298]: 按错因
+              - generic [ref=e300]:
+                - generic [ref=e301]: 知识盲区
+                - generic [ref=e305]: "1"
+              - generic [ref=e306]: 按模块
+              - generic [ref=e308]:
+                - generic [ref=e309]: 计算机组成与体系结构
+                - generic [ref=e313]: "1"
+            - generic [ref=e314]:
+              - heading "自编错题（0）" [level=3] [ref=e315]
+              - generic [ref=e316]: 按错因
+              - generic [ref=e317]: 暂无自编错题
+              - generic [ref=e318]: 按模块
+              - generic [ref=e319]: 暂无自编错题
+        - generic [ref=e320]:
+          - generic [ref=e322]:
+            - generic [ref=e323]: 自编待攻克
+            - generic [ref=e324]: 0 题
+          - generic [ref=e326]:
+            - generic [ref=e327]: 自编已掌握
+            - generic [ref=e328]: 0 题
+          - generic [ref=e330]:
+            - generic [ref=e331]: 自编收录
+            - generic [ref=e332]: 0 题
+        - generic [ref=e333]:
+          - generic [ref=e334]: 自编错题本还是空的。先去刷题或做一套模考，答错的题会自动收录。
+          - generic [ref=e335]:
+            - link "去刷题" [ref=e336] [cursor=pointer]:
+              - /url: "#/practice"
+            - button "打开速记表" [ref=e337] [cursor=pointer]
+            - button "导出 CSV" [disabled] [ref=e338]
+      - generic [ref=e248]: 刷题练习与模考为按考点自编的练习题；真题题库为历年上午卷整理，仅供本地个人备考。考试日期以准考证为准，数据保存在本机浏览器 localStorage。
+  - status

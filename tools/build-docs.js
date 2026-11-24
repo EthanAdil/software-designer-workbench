@@ -261,10 +261,15 @@ function page(title, body, prefix, crumb) {
 
 /* ------------------------------ 构建 + 自检 ------------------------------ */
 
+const SKIP_DIRS = new Set(['平台开发']);
+
 function walk(dir, acc) {
   fs.readdirSync(dir, { withFileTypes: true }).forEach(function (e) {
     const p = path.join(dir, e.name);
-    if (e.isDirectory()) walk(p, acc);
+    if (e.isDirectory()) {
+      if (SKIP_DIRS.has(e.name)) return;
+      walk(p, acc);
+    }
     else if (/\.md$/i.test(e.name)) acc.push(p);
   });
   return acc;

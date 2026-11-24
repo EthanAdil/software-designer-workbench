@@ -89,9 +89,9 @@
       html += '</div>';
 
       /* 最近成绩 */
-      html += '<div class="card"><div class="card-head"><h2>最近成绩</h2><span class="hint">模考 / 阶段测评</span></div>';
+      html += '<div class="card"><div class="card-head"><h2>最近成绩</h2><span class="hint">模拟考试 / 阶段测评</span></div>';
       if (!exams.length) {
-        html += RK.ui.empty('还没有考试成绩，先完成一次阶段测评或模考');
+        html += RK.ui.empty('还没有考试成绩，先完成一次阶段测评或模拟考试');
       } else {
         html += '<table class="table"><thead><tr><th>时间</th><th>试卷</th><th>得分</th><th>结果</th></tr></thead><tbody>';
         exams.slice(-6).reverse().forEach(function (e) {
@@ -102,7 +102,7 @@
         });
         html += '</tbody></table>';
         if (lastMock) {
-          html += '<div class="dim mt-8" style="font-size:12.5px">最近一次模考：' + U.esc(lastMock.name) + ' ' + lastMock.score + ' 分（' + U.fmtDate(lastMock.ts) + '）</div>';
+          html += '<div class="dim mt-8" style="font-size:12.5px">最近一次模拟考试：' + U.esc(lastMock.name) + ' ' + lastMock.score + ' 分（' + U.fmtDate(lastMock.ts) + '）</div>';
         }
       }
       html += '<div class="divider"></div>';

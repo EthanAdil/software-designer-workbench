@@ -1,0 +1,179 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - complementary [ref=e3]:
+      - generic [ref=e4]:
+        - generic [ref=e5]: SD
+        - generic [ref=e6]:
+          - strong [ref=e7]: 软件设计师
+          - generic [ref=e8]: 2027 上半年 · 备考工作台
+      - navigation [ref=e9]:
+        - link "总览" [ref=e10] [cursor=pointer]:
+          - /url: "#/dashboard"
+        - link "学习计划" [ref=e17] [cursor=pointer]:
+          - /url: "#/plan"
+        - link "知识模块" [ref=e22] [cursor=pointer]:
+          - /url: "#/knowledge"
+        - link "备考文档" [ref=e27] [cursor=pointer]:
+          - /url: "#/docs"
+        - link "刷题练习" [ref=e32] [cursor=pointer]:
+          - /url: "#/practice"
+        - link "真题题库" [ref=e36] [cursor=pointer]:
+          - /url: "#/real"
+        - link "阶段测评" [ref=e41] [cursor=pointer]:
+          - /url: "#/assessment"
+        - link "模拟考试" [ref=e46] [cursor=pointer]:
+          - /url: "#/exam"
+        - link "错题本" [ref=e51] [cursor=pointer]:
+          - /url: "#/review"
+        - link "成绩分析" [ref=e55] [cursor=pointer]:
+          - /url: "#/stats"
+      - generic [ref=e60]:
+        - generic [ref=e61]: 180天
+        - generic [ref=e62]: 距离 2027-05-22 考试
+    - main [ref=e63]:
+      - generic [ref=e64]:
+        - generic [ref=e65]:
+          - heading "总览" [level=1] [ref=e66]
+          - paragraph [ref=e67]: 距离考试还有多久、本周该做什么、哪块最薄弱
+        - button "切换主题" [ref=e69] [cursor=pointer]
+      - generic [ref=e70]:
+        - generic [ref=e71]:
+          - generic [ref=e73]:
+            - generic [ref=e74]: 距离考试
+            - generic [ref=e75]: 180 天
+            - generic [ref=e76]: 2027-05-22（按往年 5 月下旬推算，实际以准考证为准）
+          - generic [ref=e78]:
+            - generic [ref=e79]: 计划完成度
+            - generic [ref=e80]: 0%
+            - generic [ref=e82]: 0 / 131 项任务
+          - generic [ref=e84]:
+            - generic [ref=e85]: 累计答题
+            - generic [ref=e86]: 0 题
+            - generic [ref=e87]: 答对 0 题
+          - generic [ref=e89]:
+            - generic [ref=e90]: 平均正确率
+            - generic [ref=e91]: —
+            - generic [ref=e92]: 还没有做题记录
+        - generic [ref=e93]:
+          - generic [ref=e94]:
+            - heading "本周任务" [level=2] [ref=e95]
+            - generic [ref=e96]: W4 · 操作系统：进程与 PV 操作 · 0/4
+          - generic [ref=e97]: 2026-11-23 ~ 11-29 · 本周建议投入 10~15 小时
+          - generic [ref=e98]:
+            - checkbox "进程/线程、三态与五态转换、PCB 作用、调度算法（FCFS/SJF/优先级/时间片轮转/多级反馈队列） 3h" [ref=e99] [cursor=pointer]
+            - generic [ref=e100]: 进程/线程、三态与五态转换、PCB 作用、调度算法（FCFS/SJF/优先级/时间片轮转/多级反馈队列）
+            - generic [ref=e101]: 3h
+          - generic [ref=e102]:
+            - checkbox "PV 操作与信号量初值（互斥为 1、同步为 0）+ 生产者消费者（mutex/empty/full 三个信号量）+ 读者写者，两种模型各手写两遍伪代码 4h" [ref=e103] [cursor=pointer]
+            - generic [ref=e104]: PV 操作与信号量初值（互斥为 1、同步为 0）+ 生产者消费者（mutex/empty/full 三个信号量）+ 读者写者，两种模型各手写两遍伪代码
+            - generic [ref=e105]: 4h
+          - generic [ref=e106]:
+            - checkbox "死锁四条件、破坏方式辨析、银行家算法手算安全序列 2 题 3h" [ref=e107] [cursor=pointer]
+            - generic [ref=e108]: 死锁四条件、破坏方式辨析、银行家算法手算安全序列 2 题
+            - generic [ref=e109]: 3h
+          - generic [ref=e110]:
+            - checkbox "OS 进程管理 17 题（35 分钟限时），PV 相关题必须全对 4h" [ref=e111] [cursor=pointer]
+            - generic [ref=e112]: OS 进程管理 17 题（35 分钟限时），PV 相关题必须全对
+            - generic [ref=e113]: 4h
+          - generic [ref=e114]:
+            - link "查看完整计划" [ref=e115] [cursor=pointer]:
+              - /url: "#/plan"
+            - link "开始刷题" [ref=e116] [cursor=pointer]:
+              - /url: "#/practice"
+        - generic [ref=e117]:
+          - generic [ref=e118]:
+            - generic [ref=e119]:
+              - heading "模块掌握度" [level=2] [ref=e120]
+              - generic [ref=e121]: 按累计作答正确率
+            - generic [ref=e123]:
+              - generic [ref=e124]: 组成原理
+              - generic [ref=e126]: 未练
+            - generic [ref=e129]:
+              - generic [ref=e130]: 操作系统
+              - generic [ref=e132]: 未练
+            - generic [ref=e135]:
+              - generic [ref=e136]: 数据结构
+              - generic [ref=e138]: 未练
+            - generic [ref=e141]:
+              - generic [ref=e142]: 程序语言
+              - generic [ref=e144]: 未练
+            - generic [ref=e147]:
+              - generic [ref=e148]: 软件工程
+              - generic [ref=e150]: 未练
+            - generic [ref=e153]:
+              - generic [ref=e154]: 面向对象
+              - generic [ref=e156]: 未练
+            - generic [ref=e159]:
+              - generic [ref=e160]: 数据库
+              - generic [ref=e162]: 未练
+            - generic [ref=e165]:
+              - generic [ref=e166]: 网络
+              - generic [ref=e168]: 未练
+            - generic [ref=e171]:
+              - generic [ref=e172]: 信息安全
+              - generic [ref=e174]: 未练
+            - generic [ref=e177]:
+              - generic [ref=e178]: 标准法规
+              - generic [ref=e180]: 未练
+            - generic [ref=e183]:
+              - generic [ref=e184]: 多媒体
+              - generic [ref=e186]: 未练
+            - generic [ref=e189]:
+              - generic [ref=e190]: 专业英语
+              - generic [ref=e192]: 未练
+            - generic [ref=e195]:
+              - generic [ref=e196]: 新技术
+              - generic [ref=e198]: 未练
+          - generic [ref=e200]:
+            - generic [ref=e201]:
+              - heading "最近成绩" [level=2] [ref=e202]
+              - generic [ref=e203]: 模考 / 阶段测评
+            - generic [ref=e204]: 还没有考试成绩，先完成一次阶段测评或模考
+            - generic [ref=e206]:
+              - link "进入模拟考试" [ref=e207] [cursor=pointer]:
+                - /url: "#/exam"
+              - link "阶段测评" [ref=e208] [cursor=pointer]:
+                - /url: "#/assessment"
+              - link "错题本" [ref=e209] [cursor=pointer]:
+                - /url: "#/review"
+              - link "知识模块" [ref=e210] [cursor=pointer]:
+                - /url: "#/knowledge"
+        - generic [ref=e211]:
+          - generic [ref=e212]:
+            - heading "考试情报" [level=2] [ref=e213]
+            - generic [ref=e214]: 2027 年上半年 · 软件设计师（中级）
+          - table [ref=e215]:
+            - rowgroup [ref=e216]:
+              - row [ref=e217]:
+                - cell "考试性质" [ref=e218]
+                - cell "全国计算机技术与软件专业技术资格（水平）考试 · 中级 以考代评，通过即具备中级工程师资格" [ref=e219]:
+                  - strong [ref=e220]: 全国计算机技术与软件专业技术资格（水平）考试 · 中级
+                  - generic [ref=e221]: 以考代评，通过即具备中级工程师资格
+              - row [ref=e222]:
+                - cell "科目一" [ref=e223]
+                - cell "基础知识（综合知识）· 75 道单选 75 分满分，45 分合格，最短 90 分钟、最长 120 分钟" [ref=e224]:
+                  - strong [ref=e225]: 基础知识（综合知识）· 75 道单选
+                  - generic [ref=e226]: 75 分满分，45 分合格，最短 90 分钟、最长 120 分钟
+              - row [ref=e227]:
+                - cell "科目二" [ref=e228]
+                - cell "应用技术（案例分析）· 5 道主观题 6 题中完成 5 题（4 必答 + Java/C++ 二选一），75 分满分，45 分合格" [ref=e229]:
+                  - strong [ref=e230]: 应用技术（案例分析）· 5 道主观题
+                  - generic [ref=e231]: 6 题中完成 5 题（4 必答 + Java/C++ 二选一），75 分满分，45 分合格
+              - row [ref=e232]:
+                - cell "考试形式" [ref=e233]
+                - cell "机考、闭卷、两科连考 240 分钟 中途不休息，考试结束前 60 分钟可交卷离场" [ref=e234]:
+                  - strong [ref=e235]: 机考、闭卷、两科连考 240 分钟
+                  - generic [ref=e236]: 中途不休息，考试结束前 60 分钟可交卷离场
+              - row [ref=e237]:
+                - cell "通过规则" [ref=e238]
+                - cell "两科同一次考试均 ≥ 45 分 单科成绩不保留，一科不过次年两科重考" [ref=e239]:
+                  - strong [ref=e240]: 两科同一次考试均 ≥ 45 分
+                  - generic [ref=e241]: 单科成绩不保留，一科不过次年两科重考
+              - row [ref=e242]:
+                - cell "报名与考期" [ref=e243]
+                - cell "预计 2027-03 报名，2027-05 下旬考试 每年上下半年各一次，上半年通常在 5 月下旬" [ref=e244]:
+                  - strong [ref=e245]: 预计 2027-03 报名，2027-05 下旬考试
+                  - generic [ref=e246]: 每年上下半年各一次，上半年通常在 5 月下旬
+          - generic [ref=e247]: 报名提醒：预计 2027-03 上旬开启报名，需关注中国计算机技术职业资格网
+      - generic [ref=e248]: 刷题练习与模考为按考点自编的练习题；真题题库为历年上午卷整理，仅供本地个人备考。考试日期以准考证为准，数据保存在本机浏览器 localStorage。
+  - status
