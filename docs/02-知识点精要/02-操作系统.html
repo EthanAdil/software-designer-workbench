@@ -127,9 +127,16 @@ S&lt;0 时 |S| = 等待进程数
 <h2>十一、自检题</h2>
 <ol><li>信号量初值 3，当前值 -1，说明什么？（对应题库 OS-004）</li><li>生产者-消费者中，若把 <code>P(empty)</code> 与 <code>P(mutex)</code> 顺序颠倒，会发生什么？（对应题库 OS-038）</li><li>死锁的四个必要条件是什么？银行家算法属于哪种策略？（对应题库 OS-005 / OS-006）</li><li>页面大小 8KB，逻辑地址 <code>0x3FFF</code> 的页号与页内偏移是多少？（对应题库 OS-007）</li><li>3 个物理块，引用串 <code>1,2,3,4,1,2,5</code>，FIFO 的缺页次数是多少？（对应题库 OS-008）</li><li>字长 32、块号 100，位示图的字号和位号是多少？（对应题库 OS-011）</li><li>磁头在 50，请求 <code>10,20,30,40,60</code>，SSTF 的总移道数是多少？（对应题库 OS-034）</li><li>4 个作业 FCFS，如何计算平均带权周转时间？（对应题库 OS-013）</li><li>为什么说"增加物理块可能让 FIFO 缺页更多"？（对应题库 OS-009）</li><li>线程切换为什么比进程切换快？（对应题库 OS-017）</li></ol>
 <blockquote><p>答案与解析：<br />1) 3 个资源已全部分配，另有 1 个进程在等待。<br />2) 缓冲区满时生产者持锁等待 empty，消费者无法进入临界区取产品，形成死锁。<br />3) 互斥、请求并保持、不可剥夺、环路等待；银行家算法属于死锁避免。<br />4) <code>0x3FFF = 16383</code>，页大小 8192 → 页号 1、偏移 <code>0x1FFF</code>。<br />5) 1,2,3 缺 3 次；4 淘汰 1；1 淘汰 2；2 淘汰 3；5 淘汰 4 → 共 7 次。<br />6) 字号 3、位号 4。<br />7) <code>50→60(10)→40(20)→30(10)→20(10)→10(10)</code>，共 60。<br />8) 先算每个作业的完成时间，再算周转时间（完成-到达），最后除以服务时间取平均。<br />9) FIFO 只看进入时间，不看访问频率，块数变化会改变淘汰顺序，可能出现 Belady 异常。<br />10) 线程共享同一地址空间，切换时无需切换页表与地址空间，只需保存寄存器与栈。</p></blockquote>
-<h2>十二、真题题库考点对照（11 题）</h2>
-<blockquote><p>以真题题库为唯一准绳：topic 名称照录题库，命名差异按别名归并，11 题的考点均可在下表对应节找到讲解。</p></blockquote>
+<h2>十二、真题题库考点对照（14 题）</h2>
+<blockquote><p>以真题题库为唯一准绳：topic 名称照录题库，命名差异按别名归并，14 题的考点均可在下表对应节找到讲解。</p></blockquote>
 <div class="doc-table"><table><thead><tr><th>真题 topic</th><th>对应节</th><th>对齐说明</th></tr></thead><tbody><tr><td>线程</td><td>§2.3</td><td>线程共享地址空间、独立拥有栈/寄存器/PC；用户级与内核级区别</td></tr><tr><td>进程同步</td><td>§三</td><td>PV 操作、信号量初值与生产者-消费者/读者-写者经典模型</td></tr><tr><td>文件系统 / 系统目录</td><td>§6.1、§6.2</td><td>文件物理结构（连续/链接/索引）、inode 与目录项；绝对路径与相对路径</td></tr><tr><td>位示图</td><td>§6.3</td><td>位数=物理块数，<code>字数=⌈物理块数/字长⌉</code>，字号/位号换算</td></tr><tr><td>磁盘管理 / 磁盘调度</td><td>§七</td><td>磁盘容量与块号换算；FCFS、SSTF、SCAN、CSCAN 的移动道数计算</td></tr><tr><td>进程调度</td><td>§八</td><td>周转时间、响应比、FCFS/SJF；可剥夺与不可剥夺的区分</td></tr></tbody></table></div>
+<h3>模拟题覆盖对照（2026-11-25）</h3>
+<blockquote><p>按「模块 → 知识要点 → topic」三层核对真题题库与模拟题题库；本批只做审计与对照，不新增题目、不改变 607 题基准。</p></blockquote>
+<div class="doc-table"><table><thead><tr><th>层</th><th>本精要对应</th><th>覆盖结论</th></tr></thead><tbody><tr><td>模块</td><td><code>os</code></td><td>真题 14 题 / 模拟题 48 题</td></tr><tr><td>要点</td><td>4 个</td><td>4/4 有模拟题</td></tr><tr><td>topic</td><td>真题 9 个 / 模拟题 14 个</td><td>同名 6 个，未同名 3 个</td></tr></tbody></table></div>
+<p><strong>要点清单</strong>：进程管理、存储管理、文件与设备管理、作业与进程调度。</p>
+<p><strong>同名 topic（6 个）</strong>：位示图、文件系统、系统目录、线程、进程同步、进程调度。</p>
+<p><strong>真题 topic 未在模拟题中以同名出现（3 个）</strong>：SPOOLing 技术、磁盘管理、磁盘调度。</p>
+<blockquote><p>topic 命名差异不等于知识点缺失：要点层已全部有题，上列未同名项按要点归入本精要对应节；后续为模拟题补注 topic 时逐项确认。本批未改动题库数据。</p></blockquote>
 </main>
 <footer class="doc-footer">本文档由同名 Markdown 生成（UTF-8 编码）；内容修改请改 .md 后重新运行 <code>node tools/build-docs.js</code>。</footer>
 </body>

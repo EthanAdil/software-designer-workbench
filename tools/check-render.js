@@ -150,9 +150,9 @@ const realCustomCount = realCustom.match(/第 1 \/ (\d+) 题/);
 if (!realCustomCount || realCustomCount[1] !== '20') {
   problems.push('自选真题题量不符：期望 20 题（2023+2024 匹配池已超 20，按 20 题档截断），实际 ' + (realCustomCount ? realCustomCount[1] : '未渲染'));
 }
-const realPending = RK.router.routes.real.render({ p: '2025-05', browse: '1' });
-if (!realPending.includes('暂未入库')) {
-  problems.push('2025 待补套卷浏览页未显示暂未入库');
+const real2025 = RK.router.routes.real.render({ p: '2025-05', browse: '1' });
+if (!real2025.includes('#/real?q=ZR-2025-05-') || !real2025.includes('原题')) {
+  problems.push('2025 上已入库套卷浏览页缺少题号链接或原题号提示');
 }
 
 /* 自选模块练习：题量按上午卷权重折算（7+6+7=20 → 30 × 20 / 75 = 8 题） */

@@ -138,9 +138,16 @@ UNDO 撤未提交；REDO 重做已提交</code></pre>
 <h2>十、自检题</h2>
 <ol><li>逻辑独立性由哪个映像保证？（对应题库 DB-002）</li><li><code>R(A,B,C)</code>，<code>F={A→B, B→C}</code>，候选键是什么？属于第几范式？（对应题库 DB-005）</li><li>m:n 联系转关系模式时主键怎么定？（对应题库 DB-048）</li><li>哪种隔离级别能避免幻读？（对应题库 DB-031）</li><li>两段锁协议能保证什么，不能避免什么？（对应题库 DB-013）</li><li>无损连接分解的判定条件是什么？（对应题库 DB-008）</li><li><code>选课(学号,课程号) ÷ 课程(课程号)</code> 的语义是什么？（对应题库 DB-023）</li><li>查询"平均分大于 80 的课程号及平均分"怎么写？（对应题库 DB-028）</li><li>UNDO 与 REDO 分别恢复什么？（对应题库 DB-044）</li><li>静态转储与动态转储的区别？（对应题库 DB-033）</li></ol>
 <blockquote><p>答案与解析：<br />1) 外模式/模式映像。<br />2) 候选键 A；满足 2NF，不满足 3NF（存在 A→B→C 传递依赖）。<br />3) 两端主键的组合，联系属性一并放入。<br />4) SERIALIZABLE。<br />5) 保证调度可串行化；不能避免死锁。<br />6) <code>R1∩R2 → R1-R2</code> 或 <code>R1∩R2 → R2-R1</code> 成立。<br />7) 选修了全部课程的学生。<br />8) <code>SELECT 课程号, AVG(成绩) FROM 选课 GROUP BY 课程号 HAVING AVG(成绩) &gt; 80;</code><br />9) UNDO 撤销未提交事务；REDO 重做已提交但未写盘的事务。<br />10) 静态转储需停机、一致性好；动态转储不停机、需日志配合。</p></blockquote>
-<h2>十一、真题题库考点对照（18 题）</h2>
-<blockquote><p>以真题题库为唯一准绳：topic 名称照录题库，命名差异按别名归并，18 题的考点均可在下表对应节找到讲解。</p></blockquote>
+<h2>十一、真题题库考点对照（30 题）</h2>
+<blockquote><p>以真题题库为唯一准绳：topic 名称照录题库，命名差异按别名归并，30 题的考点均可在下表对应节找到讲解。</p></blockquote>
 <div class="doc-table"><table><thead><tr><th>真题 topic</th><th>对应节</th><th>对齐说明</th></tr></thead><tbody><tr><td>三级模式</td><td>§2.1</td><td>外模式 / 模式 / 内模式与两级映像</td></tr><tr><td>概念设计</td><td>§3</td><td>ER 三要素与 ER → 关系模式转换（概念设计阶段的产出即 ER 模型）</td></tr><tr><td>关系模式 / 属性 / 参照完整性</td><td>§4.1、§3.2</td><td>关系模式即二维表结构；属性为列；外键实现参照完整性</td></tr><tr><td>候选码 / 规范化 / ArmStrong公理 / Armstrong 公理</td><td>§4.2~4.4</td><td>闭包法求候选键；Armstrong 公理含自反、增广、传递三条推理规则</td></tr><tr><td>SQL 分组 / SQL 授权 / SQL 权限 / SQL授权</td><td>§5</td><td>GROUP BY / HAVING 分组过滤；GRANT / REVOKE 授权与收权</td></tr><tr><td>事务故障</td><td>§6.1、§七</td><td>事务故障用日志 UNDO 撤销未提交事务；系统故障需 UNDO + REDO</td></tr><tr><td>分布式数据库</td><td>§2.3</td><td>数据分布在网络各节点、逻辑上统一；与集中式相对，属数据库新技术方向</td></tr></tbody></table></div>
+<h3>模拟题覆盖对照（2026-11-25）</h3>
+<blockquote><p>按「模块 → 知识要点 → topic」三层核对真题题库与模拟题题库；本批只做审计与对照，不新增题目、不改变 607 题基准。</p></blockquote>
+<div class="doc-table"><table><thead><tr><th>层</th><th>本精要对应</th><th>覆盖结论</th></tr></thead><tbody><tr><td>模块</td><td><code>database</code></td><td>真题 30 题 / 模拟题 56 题</td></tr><tr><td>要点</td><td>6 个</td><td>6/6 有模拟题</td></tr><tr><td>topic</td><td>真题 23 个 / 模拟题 16 个</td><td>同名 9 个，未同名 14 个</td></tr></tbody></table></div>
+<p><strong>要点清单</strong>：数据库体系结构、ER 模型与关系转换、关系代数与规范化、SQL、事务与并发、备份与恢复。</p>
+<p><strong>同名 topic（9 个）</strong>：SQL授权、三级模式、事务、事务故障、候选码、关系代数、参照完整性、概念设计、规范化。</p>
+<p><strong>真题 topic 未在模拟题中以同名出现（14 个）</strong>：ArmStrong公理、Armstrong 公理、E-R 图转关系模式、SQL HAVING 子句、SQL 分组、SQL 授权、SQL 权限、关系代数等价、关系模式、函数依赖、分布式数据库、属性、数据字典与视图、自然连接。</p>
+<blockquote><p>topic 命名差异不等于知识点缺失：要点层已全部有题，上列未同名项按要点归入本精要对应节；后续为模拟题补注 topic 时逐项确认。本批未改动题库数据。</p></blockquote>
 </main>
 <footer class="doc-footer">本文档由同名 Markdown 生成（UTF-8 编码）；内容修改请改 .md 后重新运行 <code>node tools/build-docs.js</code>。</footer>
 </body>

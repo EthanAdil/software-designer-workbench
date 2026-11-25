@@ -132,9 +132,16 @@ MIPS = 主频(MHz) / CPI
 <h3>9.4 指令系统与流水线（10~12）</h3>
 <div class="doc-table"><table><thead><tr><th>#</th><th>公式名称</th><th>表达式</th><th>符号含义</th><th>适用场景 / 备注</th></tr></thead><tbody><tr><td>10</td><td>操作码与指令条数</td><td>等长操作码：<code>指令条数 ≤ 2<sup>k</sup></code>；扩展操作码：本级每留出 1 个编码作扩展标志，下级可多出 <code>2<sup>d</sup></code> 条指令</td><td>k 为操作码位数，d 为每次扩展新增的位数</td><td>指令字长 = 操作码位数 + 各地址码位数之和。扩展编码按"留一扩之"逐级计算，不能直接用 <code>2^总位数</code></td></tr><tr><td>11</td><td>流水线执行时间</td><td>各段等长：<code>周期数 = k + (n - 1)</code>、<code>T = (k + n - 1) × Δt</code>；各段不等长：<code>T = Σti + (n - 1) × max(ti)</code></td><td>k 为流水段数，n 为指令条数，Δt 为流水线周期；不等长时 <code>max(ti)</code> 为最长段耗时</td><td>首条指令顺序流过各段，其后每 Δt 完成一条。<strong>真题易错</strong>：2ns/2ns/1ns 三段跑 1000 条，<code>Σti+999×2=2003ns</code>；套 <code>(k+n-1)×2</code> 会得 2004ns</td></tr><tr><td>12</td><td>流水线加速比与吞吐率</td><td>等长段：<code>S = k × n / (k + n - 1)</code>；<code>TP = n / T</code>；<code>TP(max) = 1 / Δt</code></td><td>S 为加速比，等于顺序执行时间与流水执行时间之比；TP 为吞吐率，即单位时间完成的指令条数</td><td>加速比上限趋近段数 k，n 越大越接近；流水线效率 <code>E = n / (k + n - 1)</code>（等长段口径）</td></tr></tbody></table></div>
 <blockquote><p>配套换算（不计入 12 条）：<code>MIPS = 主频(MHz) / CPI</code>；<code>CPU 执行时间 = 指令数 × CPI × 时钟周期</code>；<code>总线带宽 = 总线宽度(B) × 总线频率</code>。</p></blockquote>
-<h2>十、真题题库考点对照（20 题）</h2>
-<blockquote><p>以真题题库为唯一准绳：topic 名称照录题库，命名差异按别名归并，20 题的考点均可在下表对应节找到讲解。</p></blockquote>
+<h2>十、真题题库考点对照（34 题）</h2>
+<blockquote><p>以真题题库为唯一准绳：topic 名称照录题库，命名差异按别名归并，34 题的考点均可在下表对应节找到讲解。</p></blockquote>
 <div class="doc-table"><table><thead><tr><th>真题 topic</th><th>对应节</th><th>对齐说明</th></tr></thead><tbody><tr><td>码制 / 补码 / 定点运算 / 浮点数表示 / 浮点数运算 / 海明码</td><td>§二</td><td>码制是原码/反码/补码/移码统称；定点运算即补码加减与溢出判断；浮点阶码定范围、尾数定精度；海明码 <code>2<sup>k</sup>≥n+k+1</code></td></tr><tr><td>CPU 组成 / 指令系统</td><td>§三</td><td>CPU 部件职能、寻址方式、CISC/RISC 与 Flynn 分类</td></tr><tr><td>流水线计算</td><td>§3.5、§九</td><td>等长段 <code>(k+n-1)Δt</code>；不等长段 <code>Σti+(n-1)×max(ti)</code>，真题 2ns/2ns/1ns 跑 1000 条为 2003ns</td></tr><tr><td>存储器 / 存储系统</td><td>§四</td><td>Cache 三种映射、主存编址、平均访问时间；映射与替换由硬件自动完成</td></tr><tr><td>总线</td><td>§5.1</td><td>数据总线定并行位数、地址总线定寻址空间，带宽 = 字节宽度×频率</td></tr><tr><td>中断 / 中断向量</td><td>§5.2</td><td>中断方式 CPU 干预逐字/块；中断向量是中断服务程序入口地址表项，CPU 查向量表转入 ISR</td></tr><tr><td>可靠性</td><td>§5.3</td><td>串并联可靠度与千小时 <code>R(t)=正常工作数/初始总数</code></td></tr><tr><td>性能指标</td><td>§5.3、§九</td><td>MIPS、CPI、执行时间与加权 CPI（按指令占比加权）</td></tr><tr><td>数组地址计算</td><td>跨模块见 03 §二</td><td>题库归入 computer-system；按行优先 <code>首址+元素大小×(前行数×列数+本行前导数)</code>，本表给出公式，推导在 03 精要</td></tr></tbody></table></div>
+<h3>模拟题覆盖对照（2026-11-25）</h3>
+<blockquote><p>按「模块 → 知识要点 → topic」三层核对真题题库与模拟题题库；本批只做审计与对照，不新增题目、不改变 607 题基准。</p></blockquote>
+<div class="doc-table"><table><thead><tr><th>层</th><th>本精要对应</th><th>覆盖结论</th></tr></thead><tbody><tr><td>模块</td><td><code>computer-system</code></td><td>真题 34 题 / 模拟题 55 题</td></tr><tr><td>要点</td><td>5 个</td><td>5/5 有模拟题</td></tr><tr><td>topic</td><td>真题 30 个 / 模拟题 18 个</td><td>同名 8 个，未同名 22 个</td></tr></tbody></table></div>
+<p><strong>要点清单</strong>：数据表示与运算、CPU 与体系结构、存储系统、总线、I/O 与可靠性、性能指标。</p>
+<p><strong>同名 topic（8 个）</strong>：中断向量、可靠性、存储系统、定点运算、性能指标、总线、数组地址计算、流水线计算。</p>
+<p><strong>真题 topic 未在模拟题中以同名出现（22 个）</strong>：CPU 组成、I/O 控制方式、RISC 与 CISC、SRAM 与 DRAM、中断、中断与异常、中断现场保护、冯诺依曼结构、多核处理器、存储器、异步传输、指令系统、浮点数表示、浮点数运算、浮点数运算·溢出、浮点运算、海明码、码制、磁盘性能、程序计数器、补码、闪存。</p>
+<blockquote><p>topic 命名差异不等于知识点缺失：要点层已全部有题，上列未同名项按要点归入本精要对应节；后续为模拟题补注 topic 时逐项确认。本批未改动题库数据。</p></blockquote>
 </main>
 <footer class="doc-footer">本文档由同名 Markdown 生成（UTF-8 编码）；内容修改请改 .md 后重新运行 <code>node tools/build-docs.js</code>。</footer>
 </body>

@@ -22,7 +22,7 @@
   "explanationSource": "原卷解析",
   "verified": "crosschecked",
   "pending": false,
-  "sourceNote": "来源：xiaomabenten/software_designer（MIT）；真题原文与解析权利归原命题/出版/整理方，本库仅本地个人备考使用。"
+  "sourceNote": "来源：xiaomabenten/software_designer（MIT），文件路径 `02. 真题及解析（2020年-2024年）/2020年11月软件设计师上午真题及答案解析.pdf`；chenxuhl/medium-software-designer 的 `历年真题/2020年11月软件设计师上午真题及答案解析.pdf` 与之哈希一致，为同源副本。真题原文与解析权利归原命题/出版/整理方，本库仅本地个人备考使用。"
 });
 
   RK.real.register([

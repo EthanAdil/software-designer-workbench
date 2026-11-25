@@ -383,7 +383,7 @@
       '<span class="hint">年份 / 卷型 / 模块自由组合，生成一组真题</span></div>';
     h += '<p class="dim" style="font-size:12.5px;line-height:1.75;margin-bottom:10px">' +
       '年份与模块至少各选 1 个；题量档只设上限，匹配题不足时按实际题量出题。' +
-      '2025 / 2026 暂未入库，年份框显示「待补」且不可勾选。</p>';
+      '2025 / 2026 已收少量考生回忆题（9/10/5/2 题，单源·待核对），不能当完整套卷计时。</p>';
 
     h += '<div class="real-filter-row"><span class="real-filter-label">年份</span><div class="mod-pick real-year">';
     RK.real.years().forEach(function (y) {
@@ -448,9 +448,9 @@
     h += '<div class="card"><div class="card-head"><h2>历年真题 · 上午卷</h2>' +
       '<span class="hint">' + loaded.length + ' 套已入库 / ' + pending.length + ' 套待补 · ' + total + ' 题</span></div>' +
       '<p class="dim" style="font-size:13px;line-height:1.8;margin-bottom:10px">' +
-      '已入库 ' + U.esc(loadedLabels) + '；2025 / 2026 仅有公开答案速对或零散回忆题，暂时只登记来源。' +
+      '已入库 ' + U.esc(loadedLabels) + '；2025 / 2026 只收公开的少量考生回忆题（单源·待核对），不是完整套卷。' +
       '真题按原卷题号与答案整理，按现有 13 个知识模块归类。练习流程与「刷题练习」一致：点击选项立即判题并显示解析，' +
-      '答错进入独立的真题错题清单。真题作答不进入现有 531 题自编题库的掌握度、错题本与成绩统计。' +
+      '答错进入独立的真题错题清单。真题作答不进入现有 607 题自编题库的掌握度、错题本与成绩统计。' +
       '</p>' +
       '<div class="grid grid-3">' +
       '<div class="kpi"><span class="kpi-label">真题总量</span><span class="kpi-value">' + total + ' <small>题</small></span></div>' +
@@ -512,7 +512,7 @@
 
     h += '<div class="card mt-16"><div class="card-head"><h2>数据与来源说明</h2></div>' +
       '<p class="dim" style="font-size:12.5px;line-height:1.8">' +
-      '已入库套卷：' + U.esc(loadedLabels) + '。2025 / 2026 只有公开答案速对或零散回忆题，未录入题目，只登记来源。' +
+      '已入库套卷：' + U.esc(loadedLabels) + '。2025 / 2026 按单源口径收录少量考生回忆题，出处逐题标注、核对状态为「单源」，来源说明中标「待核对」。' +
       '每题判题后会显示题面来源、答案来源与核对状态（已核对 / 单源 / 回忆版 / 待补）。' +
       '真题原文与解析的权利归原命题、出版或整理方，本库仅本地个人备考使用。' +
       '依赖原卷配图、表格、程序或 OCR 残缺的题目未录入，题号已写在各套卷卡片上。' +
@@ -679,7 +679,7 @@
   /* ---------------- 路由 ---------------- */
   RK.router.add('real', {
     title: '真题题库',
-    sub: '2020 下 / 2022 下 / 2023 上 / 2024 上 · 2025-2026 来源登记 · 按年份 / 卷型 / 模块自选',
+    sub: '2020 下 / 2022 下 / 2023 上 / 2024 上 · 2025-2026 少量回忆题（待核对） · 按年份 / 卷型 / 模块自选',
     render: function (params) {
       if (params.browse) return renderBrowse(params);
       if (!isSession(params)) return renderHome();
