@@ -1,52 +1,15 @@
 /* 真题题库自检：node tools/check-real.js */
-const fs = require('fs');
-const vm = require('vm');
-const path = require('path');
+const { createSandbox, load, jsFiles, report } = require('./vm-sandbox');
 
-const root = path.resolve(__dirname, '..');
-const memory = {};
-const sandbox = {
-  console,
-  Math,
-  Date,
-  JSON,
-  setTimeout,
-  clearTimeout,
-  localStorage: {
-    getItem(k) { return Object.prototype.hasOwnProperty.call(memory, k) ? memory[k] : null; },
-    setItem(k, v) { memory[k] = String(v); },
-    removeItem(k) { delete memory[k]; }
-  },
-  document: {
-    body: { setAttribute() {}, getAttribute() { return 'light'; } },
-    getElementById() { return null; },
-    querySelectorAll() { return []; }
-  }
-};
-sandbox.window = sandbox;
-sandbox.window.matchMedia = () => ({ matches: false });
-sandbox.window.addEventListener = () => {};
-sandbox.window.location = { hash: '' };
-sandbox.window.scrollTo = () => {};
-vm.createContext(sandbox);
-
+const sandbox = createSandbox(false);
 const files = [
   'assets/js/core.js',
   'assets/js/data-syllabus.js',
   'assets/js/data-plan.js',
   'assets/js/data-exams.js',
   'assets/js/data-real.js'
-];
-const bankDir = path.join(root, 'assets/js/bank');
-fs.readdirSync(bankDir).filter(f => f.endsWith('.js')).sort()
-  .forEach(f => files.push('assets/js/bank/' + f));
-const realDir = path.join(root, 'assets/js/real');
-fs.readdirSync(realDir).filter(f => f.endsWith('.js')).sort()
-  .forEach(f => files.push('assets/js/real/' + f));
-
-files.forEach(rel => {
-  vm.runInContext(fs.readFileSync(path.join(root, rel), 'utf8'), sandbox, { filename: rel });
-});
+].concat(jsFiles('assets/js/bank'), jsFiles('assets/js/real'));
+load(sandbox, files);
 
 const RK = sandbox.window.RK;
 const errors = [];
@@ -175,14 +138,6 @@ modRows.forEach(r => {
 console.log('\n答案位置：' + dist.join(' / ') + '（0/1/2/3）');
 console.log('自编题库：' + RK.bank.morning.length + ' 题；真题题库：' + questions.length + ' 题');
 
-if (warnings.length) {
-  console.log('\n提示：');
-  warnings.forEach(w => console.log('  - ' + w));
-}
-if (errors.length) {
-  console.log('\n错误：');
-  errors.forEach(e => console.log('  × ' + e));
-  process.exitCode = 1;
-} else {
-  console.log('\n真题题库自检通过');
-}
+report(errors, warnings, '\n真题题库自检通过', {
+  warnTitle: '\n提示：', warnMark: '  - ', errTitle: '\n错误：'
+});

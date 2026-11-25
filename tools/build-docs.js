@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * docs/**\/*.md -> 同目录同名 .html（UTF-8，零依赖）
+ * docs/**\/*.md -> 同目录同名 .html（UTF-8，零依赖；跳过 docs/平台开发/）
  *
  * 目的：浏览器直接打开 .md 时，部分环境会按系统 GBK 猜测编码，导致中文乱码。
  * 这里生成带 <meta charset="utf-8"> 的静态 HTML，复用站点样式（assets/css/main.css）。

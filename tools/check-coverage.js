@@ -14,42 +14,12 @@
  *       新增/改名要点后必须同步题目 points，否则脚本报「points 无法解析」。
  *       专业英语 2 个要点共用同一批题目，属预期的重复计数。
  * ========================================================================== */
-const fs = require('fs');
-const vm = require('vm');
-const path = require('path');
+const { createSandbox, load, jsFiles, report } = require('./vm-sandbox');
 
-const root = path.resolve(__dirname, '..');
-const memory = {};
-const sandbox = {
-  console,
-  Math,
-  Date,
-  JSON,
-  setTimeout,
-  clearTimeout,
-  localStorage: {
-    getItem(k) { return Object.prototype.hasOwnProperty.call(memory, k) ? memory[k] : null; },
-    setItem(k, v) { memory[k] = String(v); },
-    removeItem(k) { delete memory[k]; }
-  },
-  document: {
-    getElementById() { return null; },
-    querySelectorAll() { return []; },
-    addEventListener() {},
-    body: { setAttribute() {}, getAttribute() { return 'light'; } },
-    readyState: 'loading'
-  }
-};
-sandbox.window = sandbox;
-sandbox.window.matchMedia = () => ({ matches: false });
-sandbox.window.addEventListener = () => {};
-sandbox.window.location = { hash: '' };
-vm.createContext(sandbox);
-
-const files = ['assets/js/core.js', 'assets/js/data-syllabus.js', 'assets/js/data-exams.js'];
-fs.readdirSync(path.join(root, 'assets/js/bank')).filter(f => f.endsWith('.js')).sort()
-  .forEach(f => files.push('assets/js/bank/' + f));
-files.forEach(rel => vm.runInContext(fs.readFileSync(path.join(root, rel), 'utf8'), sandbox, { filename: rel }));
+const sandbox = createSandbox(false);
+const files = ['assets/js/core.js', 'assets/js/data-syllabus.js', 'assets/js/data-exams.js']
+  .concat(jsFiles('assets/js/bank'));
+load(sandbox, files);
 
 const RK = sandbox.window.RK;
 const EX = sandbox.window.RK_EXAMS;
@@ -161,13 +131,6 @@ if (process.argv.indexOf('--strict') >= 0) {
     if (n < m.weight * 3) fails.push(`${m.name} 题量 ${n} < 权重×3 ${m.weight * 3}`);
   });
   if (overlapRate > 0.4) fails.push(`模考两两重合 ${(overlapRate * 100).toFixed(1)}% > 40%`);
-  if (fails.length) {
-    console.log('');
-    console.log('未达标：');
-    fails.forEach(f => console.log('  × ' + f));
-    process.exitCode = 1;
-  } else {
-    console.log('');
-    console.log('覆盖校验达标');
-  }
+  console.log('');
+  report(fails, [], '覆盖校验达标', { errTitle: '未达标：' });
 }

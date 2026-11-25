@@ -1,51 +1,16 @@
 /* 题库与数据自检：node tools/check-data.js */
 const fs = require('fs');
-const vm = require('vm');
 const path = require('path');
+const { root, createSandbox, load, jsFiles, report } = require('./vm-sandbox');
 
-const root = path.resolve(__dirname, '..');
-const memory = {};
-
-const sandbox = {
-  console,
-  Math,
-  Date,
-  JSON,
-  setTimeout,
-  clearTimeout,
-  localStorage: {
-    getItem(k) { return Object.prototype.hasOwnProperty.call(memory, k) ? memory[k] : null; },
-    setItem(k, v) { memory[k] = String(v); },
-    removeItem(k) { delete memory[k]; }
-  },
-  document: {
-    getElementById() { return null; },
-    querySelectorAll() { return []; },
-    addEventListener() {},
-    body: { setAttribute() {}, getAttribute() { return 'light'; } },
-    readyState: 'loading'
-  }
-};
-sandbox.window = sandbox;
-sandbox.window.matchMedia = () => ({ matches: false });
-sandbox.window.addEventListener = () => {};
-sandbox.window.location = { hash: '' };
-vm.createContext(sandbox);
-
+const sandbox = createSandbox(false);
 const files = [
   'assets/js/core.js',
   'assets/js/data-syllabus.js',
   'assets/js/data-plan.js',
   'assets/js/data-exams.js'
-];
-const bankDir = path.join(root, 'assets/js/bank');
-fs.readdirSync(bankDir).filter(f => f.endsWith('.js')).sort()
-  .forEach(f => files.push('assets/js/bank/' + f));
-
-files.forEach(rel => {
-  const code = fs.readFileSync(path.join(root, rel), 'utf8');
-  vm.runInContext(code, sandbox, { filename: rel });
-});
+].concat(jsFiles('assets/js/bank'));
+load(sandbox, files);
 
 const RK = sandbox.window.RK;
 const errors = [];
@@ -313,14 +278,4 @@ console.log(`口径一致性：${RK.MODULES.length} 模块 / ${moduleOfPoint.siz
 
 /* 输出 */
 console.log('');
-if (warnings.length) {
-  console.log('提示：');
-  warnings.forEach(w => console.log('  ! ' + w));
-}
-if (errors.length) {
-  console.log('错误：');
-  errors.forEach(e => console.log('  × ' + e));
-  process.exitCode = 1;
-} else {
-  console.log('全部数据校验通过');
-}
+report(errors, warnings, '全部数据校验通过');

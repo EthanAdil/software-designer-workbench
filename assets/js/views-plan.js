@@ -11,10 +11,6 @@
   function weekStart(no) {
     return new Date(startDate.getTime() + (no - 1) * 7 * 86400000);
   }
-  function fmt(d) {
-    return d.getFullYear() + '-' + U.pad(d.getMonth() + 1) + '-' + U.pad(d.getDate());
-  }
-
   var allTasks = [];
   PLAN.stages.forEach(function (st) {
     st.weeks.forEach(function (wk) {
@@ -26,11 +22,6 @@
 
   RK.planUtil = {
     weekStart: weekStart,
-    weekRangeText: function (no) {
-      var s = weekStart(no);
-      var e = new Date(s.getTime() + 6 * 86400000);
-      return fmt(s) + ' ~ ' + fmt(e).slice(5);
-    },
     currentWeekNo: function () {
       var today = new Date();
       today.setHours(0, 0, 0, 0);

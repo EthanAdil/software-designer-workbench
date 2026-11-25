@@ -1,74 +1,19 @@
 /* 视图渲染冒烟测试：node tools/check-render.js */
-const fs = require('fs');
-const vm = require('vm');
-const path = require('path');
+const { createSandbox, load, jsFiles, report } = require('./vm-sandbox');
 
-const root = path.resolve(__dirname, '..');
-const memory = {};
-
-const fakeEl = () => ({
-  innerHTML: '',
-  textContent: '',
-  classList: { add() {}, remove() {}, toggle() {}, contains() { return false; } },
-  style: {},
-  setAttribute() {}, getAttribute() { return null; },
-  appendChild() {}, removeChild() {}, addEventListener() {},
-  querySelector() { return null; },
-  querySelectorAll() { return []; },
-  closest() { return null; }
-});
-
-const sandbox = {
-  console,
-  Math,
-  Date,
-  JSON,
-  setTimeout,
-  clearTimeout,
-  URL: { createObjectURL() { return 'blob:'; } },
-  Blob: function () {},
-  localStorage: {
-    getItem(k) { return Object.prototype.hasOwnProperty.call(memory, k) ? memory[k] : null; },
-    setItem(k, v) { memory[k] = String(v); },
-    removeItem(k) { delete memory[k]; }
-  },
-  document: {
-    body: { setAttribute() {}, getAttribute() { return 'light'; }, appendChild() {}, removeChild() {} },
-    getElementById() { return fakeEl(); },
-    querySelectorAll() { return []; },
-    querySelector() { return null; },
-    createElement() { return fakeEl(); },
-    addEventListener() {},
-    readyState: 'loading'
-  }
-};
-sandbox.window = sandbox;
-sandbox.window.matchMedia = () => ({ matches: false });
-sandbox.window.addEventListener = () => {};
-sandbox.window.location = { hash: '' };
-sandbox.window.scrollTo = () => {};
-sandbox.window.getComputedStyle = () => ({ getPropertyValue: () => '#fff' });
-vm.createContext(sandbox);
-
+const sandbox = createSandbox(true);
 const files = [
   'assets/js/core.js',
+  'assets/js/exercise-engine.js',
   'assets/js/data-syllabus.js',
   'assets/js/data-plan.js',
   'assets/js/data-exams.js',
   'assets/js/data-real.js'
-];
-const bankDir = path.join(root, 'assets/js/bank');
-fs.readdirSync(bankDir).filter(f => f.endsWith('.js')).sort()
-  .forEach(f => files.push('assets/js/bank/' + f));
-const realDir = path.join(root, 'assets/js/real');
-fs.readdirSync(realDir).filter(f => f.endsWith('.js')).sort()
-  .forEach(f => files.push('assets/js/real/' + f));
-['views-plan.js', 'views-dashboard.js', 'views-knowledge.js', 'views-docs.js', 'views-practice.js', 'views-real.js', 'views-exam.js', 'views-review.js']
-  .forEach(f => files.push('assets/js/' + f));
-
-files.forEach(rel => {
-  vm.runInContext(fs.readFileSync(path.join(root, rel), 'utf8'), sandbox, { filename: rel });
-});
+].concat(jsFiles('assets/js/bank'), jsFiles('assets/js/real'),
+  ['views-plan.js', 'views-dashboard.js', 'views-knowledge.js', 'views-docs.js',
+    'views-practice.js', 'views-real.js', 'views-exam.js', 'views-review.js']
+    .map(f => 'assets/js/' + f));
+load(sandbox, files);
 
 const RK = sandbox.window.RK;
 const problems = [];
@@ -199,7 +144,7 @@ if (rst.total !== 1 || rst.stages.doing !== 1 || rst.causes['知识盲区'] !== 
   problems.push('真题错因统计计数不符：' + JSON.stringify(rst));
 }
 if (!RK.causeAdvice('知识盲区').includes('精讲')) problems.push('错因自动建议缺失');
-if (JSON.stringify(memory['rk_sd_wrong'] || '{}').includes('ZR-2020-11-001')) {
+if (JSON.stringify(sandbox.__memory['rk_sd_wrong'] || '{}').includes('ZR-2020-11-001')) {
   problems.push('真题错题误入自编备份字段 rk_sd_wrong');
 }
 const realReviewHtml = RK.router.routes.review.render({});
@@ -227,9 +172,4 @@ if (causeOptCount < RK.CAUSES.length + 1) {
 }
 
 console.log('');
-if (problems.length) {
-  problems.forEach(p => console.log('  × ' + p));
-  process.exitCode = 1;
-} else {
-  console.log('全部视图渲染通过');
-}
+report(problems, [], '全部视图渲染通过', { errTitle: '' });

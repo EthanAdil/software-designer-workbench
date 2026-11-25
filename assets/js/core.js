@@ -192,35 +192,48 @@ window.RK = window.RK || {};
     return text === undefined ? null : text;
   };
 
-  RK.record = {
-    /* 单题作答累计：{ right, wrong, last, ts }；order 为本次展示的选项顺序 */
-    answer: function (qid, isRight, choice, order) {
-      var all = RK.store.get(KEYS.answers, {});
-      var item = all[qid] || { right: 0, wrong: 0 };
+  /* 自编与真题共用作答累计；真题通过 cfg 指定 id、选项文本与复习三态的额外字段 */
+  RK.createAnswerRecorder = function (keys, cfg) {
+    return function (q, isRight, choice, order) {
+      if (cfg.validate && !cfg.validate(q)) return;
+      var id = cfg.id(q);
+      var all = RK.store.get(keys.answers, {});
+      var item = all[id] || { right: 0, wrong: 0 };
       if (isRight) item.right += 1; else item.wrong += 1;
       item.last = !!isRight;
       item.ts = Date.now();
-      all[qid] = item;
-      RK.store.set(KEYS.answers, all);
+      all[id] = item;
+      RK.store.set(keys.answers, all);
 
-      var wrong = RK.store.get(KEYS.wrong, {});
+      var wrong = RK.store.get(keys.wrong, {});
       if (!isRight) {
-        var w = wrong[qid] || { count: 0 };
+        var w = wrong[id] || { count: 0 };
         w.count += 1;
         w.choice = (choice === undefined ? null : choice);
         /* 记录本次选项顺序，错题本按同一顺序回放，避免重排后“你选”标错位置 */
         w.order = (order && order.length ? order.slice() : null);
         /* 另存所选选项文本：选项重排后旧 order 会失效，文本可让“我的答案”继续正确展示 */
-        w.choiceText = RK.pickText(qid, choice, order);
+        w.choiceText = cfg.choiceText(q, choice, order);
         w.ts = Date.now();
+        if (cfg.onWrong) cfg.onWrong(w);
         w.resolved = false;
-        wrong[qid] = w;
-        RK.store.set(KEYS.wrong, wrong);
-      } else if (wrong[qid]) {
-        wrong[qid].resolved = true;
-        RK.store.set(KEYS.wrong, wrong);
+        wrong[id] = w;
+        RK.store.set(keys.wrong, wrong);
+      } else if (wrong[id]) {
+        var w2 = wrong[id];
+        if (cfg.onRight) cfg.onRight(w2);
+        else w2.resolved = true;
+        RK.store.set(keys.wrong, wrong);
       }
-    },
+    };
+  };
+
+  RK.record = {
+    /* 单题作答累计：{ right, wrong, last, ts }；order 为本次展示的选项顺序 */
+    answer: RK.createAnswerRecorder(KEYS, {
+      id: function (qid) { return qid; },
+      choiceText: function (qid, choice, order) { return RK.pickText(qid, choice, order); }
+    }),
     answersAll: function () { return RK.store.get(KEYS.answers, {}); },
     wrongAll: function () { return RK.store.get(KEYS.wrong, {}); },
     removeWrong: function (qid) {
@@ -395,8 +408,6 @@ window.RK = window.RK || {};
     return 'bad';
   };
 
-  U.deep = function (o) { return JSON.parse(JSON.stringify(o)); };
-
   RK.U = U;
 
   /* ------------------------------------------------------------------
@@ -415,11 +426,6 @@ window.RK = window.RK || {};
       take.forEach(function (q) { used[q.id] = true; picked.push(q); });
     });
     return U.shuffle(picked);
-  };
-
-  /* 默认上午卷组卷规则（合计 75 题） */
-  RK.defaultMorningRules = function () {
-    return RK.MODULES.map(function (m) { return { module: m.key, count: m.weight }; });
   };
 
   /* ------------------------------------------------------------------
@@ -470,15 +476,10 @@ window.RK = window.RK || {};
   RK.drawLine = function (canvas, series, opts) {
     if (!canvas) return;
     opts = opts || {};
-    var dpr = window.devicePixelRatio || 1;
-    var cssW = canvas.clientWidth || 640;
-    var cssH = opts.height || 200;
-    canvas.width = cssW * dpr;
-    canvas.height = cssH * dpr;
-    canvas.style.height = cssH + 'px';
-    var ctx = canvas.getContext('2d');
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    ctx.clearRect(0, 0, cssW, cssH);
+    var c = chartCanvas(canvas, opts.height || 200);
+    var ctx = c.ctx;
+    var cssW = c.w;
+    var cssH = c.h;
 
     var padL = 34, padR = 14, padT = 14, padB = 24;
     var w = cssW - padL - padR;

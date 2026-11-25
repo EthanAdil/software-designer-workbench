@@ -11,7 +11,6 @@ desktop.ini
 # 日志与临时脚本
 *.log
 *.tmp
-tools/_*
 
 # 学习进度快照（独立 Gitee 私有仓库托管，不进主仓库与公开站点）
 progress/

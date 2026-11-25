@@ -307,6 +307,24 @@
   }
 
   /* ---------------- 交卷 ---------------- */
+  /* 上午卷与下午卷共用：写结果、落成绩、切到结果页 */
+  function finishExam(result) {
+    sess.result = result;
+    RK.record.addExam({
+      paperId: result.paperId,
+      name: result.name,
+      kind: result.kind,
+      paper: result.paper,
+      score: result.score,
+      total: result.total,
+      passScore: result.passScore,
+      ts: Date.now(),
+      usedSec: result.usedSec
+    });
+    sess.phase = 'result';
+    RK.router.render();
+  }
+
   function submitExam(el) {
     if (!sess || sess.phase !== 'running') return;
     var paper = sess.paper;
@@ -341,7 +359,7 @@
     var passScore = Math.round((paper.passScore || 45) / 75 * total);
     var usedSec = Math.round((Date.now() - sess.startTs) / 1000);
 
-    sess.result = {
+    finishExam({
       paperId: paper.id,
       name: paper.name,
       kind: paper.kind,
@@ -353,20 +371,7 @@
       usedSec: usedSec,
       moduleStats: Object.keys(moduleMap).map(function (k) { return moduleMap[k]; }),
       detail: detail
-    };
-    RK.record.addExam({
-      paperId: paper.id,
-      name: paper.name,
-      kind: paper.kind,
-      paper: paper.paper,
-      score: score,
-      total: total,
-      passScore: passScore,
-      ts: Date.now(),
-      usedSec: usedSec
     });
-    sess.phase = 'result';
-    RK.router.render();
   }
 
   function commitCase(el) {
@@ -388,7 +393,7 @@
     });
     var paper = sess.paper;
     var passScore = Math.round((paper.passScore || 45) / 75 * maxTotal);
-    sess.result = {
+    finishExam({
       paperId: paper.id,
       name: paper.name,
       kind: paper.kind,
@@ -398,20 +403,7 @@
       passScore: passScore,
       usedSec: sess.usedSec || 0,
       detail: detail
-    };
-    RK.record.addExam({
-      paperId: paper.id,
-      name: paper.name,
-      kind: paper.kind,
-      paper: 'afternoon',
-      score: sess.result.score,
-      total: maxTotal,
-      passScore: passScore,
-      ts: Date.now(),
-      usedSec: sess.usedSec || 0
     });
-    sess.phase = 'result';
-    RK.router.render();
   }
 
   /* ---------------- 计时器 ---------------- */
@@ -555,7 +547,7 @@
 
   RK.router.add('exam', examView);
 
-  /* 阶段测评独立页：只列 3 套阶段测评，模拟考试与下午卷在「模拟考试」页。
+  /* 阶段测评独立页：只列 4 套阶段测评，模拟考试与下午卷在「模拟考试」页。
      #/assessment?p=stage-1 这类历史/深链同样复用考试视图，标题与菜单高亮留在阶段测评。 */
   RK.router.add('assessment', {
     title: '阶段测评',

@@ -160,7 +160,6 @@
    * 真题作答与错题：键前缀 rk_sd_ 仍由 RK.store 统一加，但用独立键名
    * ------------------------------------------------------------------ */
   var KEYS = { answers: 'real_answers', wrong: 'real_wrong' };
-  R.KEYS = KEYS;
 
   /* 真题错题复习三态：待复习 / 复习中 / 已掌握。
      stage 为新增字段；旧记录只有 resolved 布尔，读取时按 resolved 推导，写操作时同步两者兼容旧视图。 */
@@ -178,36 +177,15 @@
 
   RK.realRecord = {
     /* choice 为本次展示选项下标，order 为乱序映射；choiceText 直接存展示文本 */
-    answer: function (q, isRight, choice, order) {
-      if (!q || !q.id) return;
-      var all = RK.store.get(KEYS.answers, {});
-      var item = all[q.id] || { right: 0, wrong: 0 };
-      if (isRight) item.right += 1; else item.wrong += 1;
-      item.last = !!isRight;
-      item.ts = Date.now();
-      all[q.id] = item;
-      RK.store.set(KEYS.answers, all);
-
-      var wrong = RK.store.get(KEYS.wrong, {});
-      if (!isRight) {
-        var w = wrong[q.id] || { count: 0 };
-        w.count += 1;
-        w.choice = (choice === undefined ? null : choice);
-        w.order = (order && order.length ? order.slice() : null);
-        w.choiceText = (q.options && q.options[choice] !== undefined) ? q.options[choice] : null;
-        w.ts = Date.now();
-        w.stage = 'todo';            /* 再次答错回到待复习，但保留已写的错因与结论 */
-        w.resolved = false;
-        wrong[q.id] = w;
-        RK.store.set(KEYS.wrong, wrong);
-      } else if (wrong[q.id]) {
-        var w2 = wrong[q.id];
-        w2.stage = 'done';
-        w2.resolved = true;
-        w2.reviewTs = Date.now();
-        RK.store.set(KEYS.wrong, wrong);
-      }
-    },
+    answer: RK.createAnswerRecorder(KEYS, {
+      validate: function (q) { return !!q && !!q.id; },
+      id: function (q) { return q.id; },
+      choiceText: function (q, choice) {
+        return (q.options && q.options[choice] !== undefined) ? q.options[choice] : null;
+      },
+      onWrong: function (w) { w.stage = 'todo'; },  /* 再次答错回到待复习，但保留已写的错因与结论 */
+      onRight: function (w) { w.stage = 'done'; w.resolved = true; w.reviewTs = Date.now(); }
+    }),
     /* 错因、结论与复习状态落库；真题错题专用，字段随 real_wrong 一起存，随 v2 备份的 realWrong 类别单独导出 */
     setNote: function (id, patch) {
       var wrong = RK.store.get(KEYS.wrong, {});
@@ -255,10 +233,6 @@
       var wrong = RK.store.get(KEYS.wrong, {});
       delete wrong[id];
       RK.store.set(KEYS.wrong, wrong);
-    },
-    clearAll: function () {
-      RK.store.del(KEYS.answers);
-      RK.store.del(KEYS.wrong);
     }
   };
 })(window.RK);

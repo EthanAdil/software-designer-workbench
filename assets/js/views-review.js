@@ -16,6 +16,32 @@
     return '"' + String(v === undefined || v === null ? '' : v).replace(/"/g, '""') + '"';
   }
 
+  /* 导出文件统一走 Blob → 临时链接 → 自动回收 */
+  function downloadBlob(text, mime, filename) {
+    var blob = new Blob([text], { type: mime });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+  }
+
+  /* 选项乱序后对齐正确答案与当时所选，两组错题详情共用 */
+  function choiceDisplay(q, info) {
+    var order = (info.order && info.order.length === q.options.length) ? info.order : null;
+    var opts = order ? order.map(function (i) { return q.options[i]; }) : q.options;
+    var answerIdx = order ? order.indexOf(q.answer) : q.answer;
+    var pickedIdx = (info.choice === undefined || info.choice === null) ? -1 : info.choice;
+    if (info.choiceText) {
+      var found = opts.indexOf(info.choiceText);
+      if (found >= 0) pickedIdx = found;
+    }
+    return { opts: opts, answerIdx: answerIdx, pickedIdx: pickedIdx };
+  }
+
   function optionText(q, order, idx, text) {
     /* 有作答时保存的文本就优先用它，选项重排后仍能显示当时选的内容 */
     if (text !== undefined && text !== null && text !== '') {
@@ -235,15 +261,7 @@
     var lines = [CSV_COLUMNS.map(csvCell).join(',')];
     rows.forEach(function (r) { lines.push(r.map(csvCell).join(',')); });
     var content = '\uFEFF' + lines.join('\r\n');   /* BOM：Excel 直接识别 UTF-8 中文 */
-    var blob = new Blob([content], { type: 'text/csv;charset=utf-8' });
-    var url = URL.createObjectURL(blob);
-    var a = document.createElement('a');
-    a.href = url;
-    a.download = '错题本-' + U.today() + '.csv';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+    downloadBlob(content, 'text/csv;charset=utf-8', '错题本-' + U.today() + '.csv');
     RK.toast('已导出 ' + rows.length + ' 题（CSV，UTF-8）');
   }
 
@@ -388,15 +406,7 @@
       setTimeout(function () {
         try {
           var text = JSON.stringify(payload, null, 2);
-          var blob = new Blob([text], { type: 'application/json;charset=utf-8' });
-          var url = URL.createObjectURL(blob);
-          var a = document.createElement('a');
-          a.href = url;
-          a.download = 'ruankao-sd-backup-' + U.today() + '.json';
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
-          setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+          downloadBlob(text, 'application/json;charset=utf-8', 'ruankao-sd-backup-' + U.today() + '.json');
           setBackupProgress(el, '3/3 导出完成：' + keys.length + ' 类数据 · ' +
             (text.length / 1024).toFixed(1) + ' KB');
           RK.toast('已导出' + (payload._meta.mode === 'full' ? '完整' : '选择性') +
@@ -561,14 +571,10 @@
           list.forEach(function (item) {
             var q = item.q;
             var info = item.info;
-            var order = (info.order && info.order.length === q.options.length) ? info.order : null;
-            var opts = order ? order.map(function (i) { return q.options[i]; }) : q.options;
-            var answerIdx = order ? order.indexOf(q.answer) : q.answer;
-            var pickedIdx = (info.choice === undefined || info.choice === null) ? -1 : info.choice;
-            if (info.choiceText) {
-              var found = opts.indexOf(info.choiceText);
-              if (found >= 0) pickedIdx = found;
-            }
+            var d = choiceDisplay(q, info);
+            var opts = d.opts;
+            var answerIdx = d.answerIdx;
+            var pickedIdx = d.pickedIdx;
             var ex = RK.real.explanationFor(q);
             h += '<details style="border-bottom:1px solid var(--border);padding:8px 0">' +
               '<summary style="cursor:pointer;font-size:13.5px">' + U.esc(q.stem.slice(0, 58)) + '… ' +
@@ -658,14 +664,10 @@
         list.forEach(function (item) {
           var q = item.q;
           var info = item.info;
-          var order = (info.order && info.order.length === q.options.length) ? info.order : null;
-          var opts = order ? order.map(function (i) { return q.options[i]; }) : q.options;
-          var answerIdx = order ? order.indexOf(q.answer) : q.answer;
-          var pickedIdx = (info.choice === undefined || info.choice === null) ? -1 : info.choice;
-          if (info.choiceText) {
-            var found = opts.indexOf(info.choiceText);
-            if (found >= 0) pickedIdx = found;
-          }
+          var d = choiceDisplay(q, info);
+          var opts = d.opts;
+          var answerIdx = d.answerIdx;
+          var pickedIdx = d.pickedIdx;
           h += '<details style="border-bottom:1px solid var(--border);padding:8px 0">' +
             '<summary style="cursor:pointer;font-size:13.5px">' + U.esc(q.stem.slice(0, 58)) + '… ' +
             '<span class="badge badge-bad">错 ' + info.count + ' 次</span>' +

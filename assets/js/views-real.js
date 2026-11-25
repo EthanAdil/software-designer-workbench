@@ -5,6 +5,7 @@
 (function (RK) {
   var U = RK.U;
   var LETTERS = U.letters;
+  var EX = RK.exercise;
   var session = null;
   /* 题干填空占位：历史数据里的（数字）在注册时已转为横线；此处兼容旧的全/半角空括号 */
   var BLANK_RE = /_{2,}|（\s*\d*\s*）|\(\s*\)/g;
@@ -191,17 +192,9 @@
     var sig = signature(params);
     if (session && session.sig === sig) return session;
     var list = buildList(params).map(RK.variant);
-    session = {
-      sig: sig,
-      mode: params.w ? 'w' : (params.q ? 'q' : (params.s ? 's' : (params.p && params.m ? 'pm' : (params.p ? 'p' : (params.m ? 'm' : 'all'))))),
-      list: list,
-      idx: 0,
-      picked: {},
-      correct: 0,
-      wrong: 0,
-      done: false,
-      title: titleOf(params)
-    };
+    session = EX.createSession(sig, list,
+      params.w ? 'w' : (params.q ? 'q' : (params.s ? 's' : (params.p && params.m ? 'pm' : (params.p ? 'p' : (params.m ? 'm' : 'all'))))),
+      titleOf(params));
     return session;
   }
 
@@ -265,36 +258,14 @@
         '</div></div>';
     }
 
-    h += '<div class="q-toolbar">';
-    h += '<button class="btn btn-ghost" data-act="prev"' + (s.idx === 0 ? ' disabled' : '') + '>上一题</button>';
-    if (answered) {
-      if (s.idx === s.list.length - 1) {
-        h += '<button class="btn" data-act="finish">完成练习，查看小结</button>';
-      } else {
-        h += '<button class="btn" data-act="next">下一题</button>';
-      }
-    } else {
-      h += '<span class="dim" style="font-size:12.5px">选择一个答案后立即判题</span>';
-    }
-    h += '<span class="spacer"></span>';
-    h += '<button class="btn btn-sm btn-ghost" data-act="reset">重新开始</button>';
-    h += '</div>';
+    h += EX.toolbar(s);
 
     return h;
   }
 
   function renderSummary() {
     var s = session;
-    var total = s.list.length;
-    var answeredCount = Object.keys(s.picked).length;
-    var rate = answeredCount ? s.correct / answeredCount : 0;
-    var h = '<div class="card-head"><h2>练习小结</h2><span class="hint">' + U.esc(s.title) + '</span></div>';
-    h += '<div class="grid grid-3">' +
-      '<div class="kpi"><span class="kpi-label">已答</span><span class="kpi-value">' + answeredCount + ' <small>/ ' + total + '</small></span></div>' +
-      '<div class="kpi"><span class="kpi-label">正确率</span><span class="kpi-value">' + U.pct(rate) + '</span></div>' +
-      '<div class="kpi"><span class="kpi-label">错题</span><span class="kpi-value">' + s.wrong + ' <small>题</small></span></div>' +
-      '</div>';
-    h += '<div class="mt-16">' + RK.ui.bar(rate) + '</div>';
+    var h = EX.summaryHead(s);
 
     /* 按模块拆本次正确率，便于查漏补缺 */
     var byMod = {};
@@ -318,18 +289,10 @@
       h += '</tbody></table>';
     }
 
-    var wrongList = [];
-    Object.keys(s.picked).forEach(function (i) {
-      var q = s.list[Number(i)];
-      if (q && s.picked[i] !== q.answer) wrongList.push(q);
+    h += EX.wrongList(s, '本次错题（已自动进入真题错题，不影响现有错题本）', function (q) {
+      return '<div class="task"><span class="task-text">' + U.esc(q.stem.slice(0, 46)) + '… ' +
+        '<span class="dim">（' + U.esc(paperShort(q.paper)) + ' 原题 ' + q.no + '）</span></span></div>';
     });
-    if (wrongList.length) {
-      h += '<div class="divider"></div><div class="dim" style="font-size:12.5px;margin-bottom:6px">本次错题（已自动进入真题错题，不影响现有错题本）</div>';
-      wrongList.forEach(function (q) {
-        h += '<div class="task"><span class="task-text">' + U.esc(q.stem.slice(0, 46)) + '… ' +
-          '<span class="dim">（' + U.esc(paperShort(q.paper)) + ' 原题 ' + q.no + '）</span></span></div>';
-      });
-    }
     h += '<div class="row mt-16">' +
       '<button class="btn" data-act="reset">再练一遍</button>' +
       '<a class="btn btn-ghost" href="#/real">返回真题首页</a>' +
@@ -339,14 +302,7 @@
   }
 
   function renderCounters() {
-    var s = session;
-    var answered = Object.keys(s.picked).length;
-    var rate = answered ? s.correct / answered : null;
-    return '<span class="mono">第 ' + Math.min(s.idx + 1, s.list.length) + ' / ' + s.list.length + ' 题</span>' +
-      '<span class="spacer"></span>' +
-      '<span class="badge badge-ok">正确 ' + s.correct + '</span>' +
-      '<span class="badge badge-bad">错误 ' + s.wrong + '</span>' +
-      '<span class="badge badge-plain">正确率 ' + (rate === null ? '—' : U.pct(rate)) + '</span>';
+    return EX.counters(session);
   }
 
   /* ---------------- 首页 ---------------- */
@@ -710,45 +666,14 @@
         return;
       }
       if (!session) return;
-      el.addEventListener('click', function (e) {
-        var s = session;
-        if (!s) return;
-
-        var opt = e.target.closest('[data-opt]');
-        if (opt && !s.done) {
-          var i = Number(opt.getAttribute('data-opt'));
-          if (s.picked[s.idx] !== undefined) return;
-          var q = s.list[s.idx];
-          s.picked[s.idx] = i;
-          var ok = i === q.answer;
-          if (ok) s.correct += 1; else s.wrong += 1;
-          RK.realRecord.answer(q, ok, i, q.order);
-          el.querySelector('#real-qbox').innerHTML = renderBox();
-          var counters = el.querySelector('#real-counters');
-          if (counters) counters.innerHTML = renderCounters();
-          return;
-        }
-
-        var actEl = e.target.closest('[data-act]');
-        if (!actEl) return;
-        var act = actEl.getAttribute('data-act');
-
-        if (act === 'next') {
-          if (s.idx < s.list.length - 1) s.idx += 1;
-          el.querySelector('#real-qbox').innerHTML = renderBox();
-        } else if (act === 'prev') {
-          if (s.idx > 0) s.idx -= 1;
-          el.querySelector('#real-qbox').innerHTML = renderBox();
-        } else if (act === 'finish') {
-          s.done = true;
-          el.querySelector('#real-qbox').innerHTML = renderBox();
-        } else if (act === 'reset') {
-          session = null;
-          RK.router.render();
-          return;
-        }
-        var row = el.querySelector('#real-counters');
-        if (row) row.innerHTML = renderCounters();
+      EX.mount(el, {
+        getSession: function () { return session; },
+        setSession: function (s) { session = s; },
+        answer: function (q, ok, i, order) { RK.realRecord.answer(q, ok, i, order); },
+        renderBox: renderBox,
+        renderCounters: renderCounters,
+        qbox: '#real-qbox',
+        counters: '#real-counters'
       });
     }
   });
