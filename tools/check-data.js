@@ -130,7 +130,18 @@ Object.keys(RK.syllabus.modules).forEach(k => {
 RK.MODULES.forEach(m => {
   if (!RK.syllabus.modules[m.key]) errors.push('模块缺少知识数据: ' + m.key);
 });
-console.log(`知识模块：${Object.keys(RK.syllabus.modules).length} 个`);
+/* 6.1 学习引导四字段：13 模块均需非空字符串数组 */
+const GUIDE_KEYS = ['goals', 'core', 'focus', 'hard'];
+RK.MODULES.forEach(m => {
+  const d = RK.syllabus.modules[m.key] || {};
+  GUIDE_KEYS.forEach(k => {
+    const v = d[k];
+    if (!Array.isArray(v) || !v.length || v.some(s => typeof s !== 'string' || !s.trim())) {
+      errors.push(m.key + ' 学习引导字段缺失或为空: ' + k);
+    }
+  });
+});
+console.log(`知识模块：${Object.keys(RK.syllabus.modules).length} 个 / 学习引导四字段齐全`);
 
 /* 7. 题型与难度分布（对应 docs/平台开发/开发任务清单.md 3.3 目标，只提示不阻断） */
 const morningTotal = RK.bank.morning.length;

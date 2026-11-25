@@ -6,6 +6,37 @@
   var U = RK.U;
   var LETTERS = U.letters;
   var session = null;
+  /* 题干填空占位：历史数据里的（数字）在注册时已转为横线；此处兼容旧的全/半角空括号 */
+  var BLANK_RE = /_{2,}|（\s*\d*\s*）|\(\s*\)/g;
+
+  function blankLabel(q) {
+    if (!q || !(q.group > 1) || !(q.blank >= 1)) return '';
+    return '第 ' + q.blank + ' / ' + q.group + ' 空';
+  }
+
+  function renderStem(q) {
+    var stem = String(q.stem || '');
+    if (!blankLabel(q)) return U.esc(stem);
+    var out = '';
+    var last = 0;
+    var n = 0;
+    var m;
+    BLANK_RE.lastIndex = 0;
+    while ((m = BLANK_RE.exec(stem)) !== null) {
+      n += 1;
+      out += U.esc(stem.slice(last, m.index));
+      out += '<span class="blank-mark' + (n === q.blank ? ' is-current' : '') + '">' +
+        '第 ' + n + ' 空' + (n === q.blank ? '（当前）' : '') + '</span>';
+      last = m.index + m[0].length;
+    }
+    return out + U.esc(stem.slice(last));
+  }
+
+  function optionsHint(q) {
+    var label = blankLabel(q);
+    if (!label) return '';
+    return '<div class="opts-hint">以下选项仅对应题干' + label + '；其余横线请在同一原题的其他题目中作答。</div>';
+  }
   var SEL_KEY = 'real_sel';
   var SCALES = [0, 20, 30, 50];
 
@@ -197,11 +228,13 @@
     if (q.topic) h += '<span class="badge badge-plain">' + U.esc(q.topic) + '</span>';
     h += '<span class="badge badge-plain">' + U.esc(paperShort(q.paper)) + '</span>';
     h += verifiedBadge(q.verified);
-    if (q.group > 1) h += '<span class="badge badge-plain">第 ' + q.blank + ' / ' + q.group + ' 空</span>';
+    var blank = blankLabel(q);
+    if (blank) h += '<span class="badge badge-plain">' + blank + '</span>';
     h += '<span class="spacer"></span><span class="q-index">原题 ' + q.no + '</span>';
     h += '</div>';
 
-    h += '<div class="q-stem">' + U.esc(q.stem) + '</div>';
+    h += '<div class="q-stem">' + renderStem(q) + '</div>';
+    h += optionsHint(q);
     h += '<div class="opts">';
     q.options.forEach(function (opt, i) {
       var cls = 'opt';
@@ -550,7 +583,7 @@
         '<span class="real-no">' + q.no + '</span>' +
         '<span class="real-main">' +
         '<span class="real-title">' + U.esc(q.topic || '真题') +
-        (q.group > 1 ? ' <span class="dim">（第 ' + q.blank + ' / ' + q.group + ' 空）</span>' : '') + '</span>' +
+        (blankLabel(q) ? ' <span class="dim">（题干' + blankLabel(q) + '）</span>' : '') + '</span>' +
         '<span class="real-stem">' + U.esc(q.stem.slice(0, 88)) + (q.stem.length > 88 ? '…' : '') + '</span>' +
         '</span>' +
         '<span class="badge badge-plain">' + U.esc(paperShort(q.paper)) + '</span>' +

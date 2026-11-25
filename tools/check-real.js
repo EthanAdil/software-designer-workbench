@@ -52,6 +52,8 @@ const RK = sandbox.window.RK;
 const errors = [];
 const warnings = [];
 const questions = RK.real.questions;
+const BLANK_RE = /_{2,}|（\s*\d*\s*）|\(\s*\)/g;
+const blankGroups = {};
 
 function fail(msg) { errors.push(msg); }
 function warn(msg) { warnings.push(msg); }
@@ -96,12 +98,33 @@ questions.forEach(q => {
   if (['crosschecked', 'single-source', 'recalled', 'pending'].indexOf(q.verified) < 0) {
     fail(q.id + ' 的 verified 值不合法：' + q.verified);
   }
-  if (q.group > 1 && (!q.blank || q.blank < 1 || q.blank > q.group)) {
-    fail(q.id + ' 多空题的 blank 不合法：' + q.blank + '/' + q.group);
+  if (q.group > 1) {
+    if (!Number.isInteger(q.blank) || q.blank < 1 || q.blank > q.group) {
+      fail(q.id + ' 多空题的 blank 不合法：' + q.blank + '/' + q.group);
+    } else {
+      const stem = String(q.stem || '');
+      const found = (stem.match(BLANK_RE) || []).length;
+      if (found < q.group) fail(q.id + ' 多空题题干横线不足：需要 ' + q.group + ' 处，实际 ' + found);
+      const groupKey = q.paper + '#' + q.group + '#' + stem;
+      const slot = blankGroups[groupKey] || (blankGroups[groupKey] = { ids: {}, count: 0 });
+      if (slot.ids[q.blank]) fail(q.id + ' 多空题 blank 重复：' + q.blank + '/' + q.group);
+      slot.ids[q.blank] = q.id;
+      slot.count += 1;
+    }
+  } else if (q.blank) {
+    warn(q.id + ' 单空题 blank 应为 0，实际 ' + q.blank);
   }
   const key = q.paper + '#' + q.no;
   if (paperNos[key]) fail('同一套卷题号重复：' + key);
   paperNos[key] = true;
+});
+
+Object.keys(blankGroups).forEach(key => {
+  const g = blankGroups[key];
+  const total = Number(key.split('#')[1]);
+  for (let i = 1; i <= total; i += 1) {
+    if (!g.ids[i]) fail('多空题缺少 blank ' + i + '：' + key + '（已有 ' + g.count + ' 条）');
+  }
 });
 
 /* 2. 套卷计数 */

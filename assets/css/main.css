@@ -387,6 +387,20 @@ h1, h2, h3, h4 { margin: 0; font-weight: 650; letter-spacing: -.01em; }
 .q-index { font-family: var(--mono); font-size: 12px; color: var(--text-3); }
 .q-stem { font-size: 15px; line-height: 1.75; margin: 4px 0 14px; white-space: pre-wrap; }
 .q-stem code { background: var(--surface-2); border: 1px solid var(--border); padding: 1px 5px; border-radius: 5px; font-family: var(--mono); font-size: .92em; }
+.blank-mark {
+  display: inline-block; padding: 0 5px; margin: 0 2px;
+  border: 1px solid var(--border-strong); border-radius: 5px;
+  background: var(--surface-2); color: var(--text-2);
+  font-size: .84em; line-height: 1.6; white-space: nowrap;
+}
+.blank-mark.is-current {
+  border-color: var(--primary); background: var(--primary-weak);
+  color: var(--primary); font-weight: 600;
+}
+.opts-hint {
+  margin: -4px 0 10px; font-size: 12.5px;
+  line-height: 1.6; color: var(--primary);
+}
 
 .opts { display: flex; flex-direction: column; gap: 9px; }
 .opt {

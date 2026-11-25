@@ -573,6 +573,7 @@
             h += '<details style="border-bottom:1px solid var(--border);padding:8px 0">' +
               '<summary style="cursor:pointer;font-size:13.5px">' + U.esc(q.stem.slice(0, 58)) + '… ' +
               '<span class="badge badge-plain">真题 · 原题 ' + U.esc(q.no) + '</span>' +
+              (q.group > 1 ? '<span class="badge badge-plain">第 ' + q.blank + ' / ' + q.group + ' 空</span>' : '') +
               '<span class="badge badge-bad">错 ' + U.esc(info.count || 0) + ' 次</span>' +
               '<span class="badge badge-ok" data-stage-badge>' + U.esc(RK.real.STAGE_LABELS[item.stage]) + '</span>' +
               '<span class="badge ' + (info.cause ? 'badge-warn' : 'badge-plain') + '" data-cause-badge>' +
@@ -582,7 +583,9 @@
               '<span class="badge badge-plain">' + U.esc(RK.moduleName(q.module)) + '</span>' +
               '<span class="badge badge-plain">' + U.esc(q.year || '未知') + ' 年</span>' +
               (q.paper && RK.real.paperMap[q.paper] ? '<span class="badge badge-plain">' + U.esc(RK.real.paperMap[q.paper].label) + '</span>' : '') +
-              '</div><div class="opts">';
+              '</div>' +
+              (q.group > 1 ? '<div class="opts-hint">以下选项仅对应题干第 ' + q.blank + ' / ' + q.group + ' 空</div>' : '') +
+              '<div class="opts">';
             opts.forEach(function (opt, i) {
               var cls = 'opt is-dim';
               if (i === answerIdx) cls = 'opt is-correct';

@@ -99,6 +99,10 @@ check('dashboard', {}, 800);
 check('plan', {}, 800);
 check('knowledge', {}, 800);
 check('knowledge', { m: 'database' }, 800);
+const knowledgeHtml = RK.router.routes.knowledge.render({ m: 'computer-system' });
+['学习引导', '学习目标', '核心知识点', '重点', '难点', '要点速览'].forEach(k => {
+  if (!knowledgeHtml.includes(k)) problems.push('知识模块页缺少区块: ' + k);
+});
 check('docs', {}, 600);
 check('practice', {}, 600);
 check('practice', { m: 'os' }, 400);

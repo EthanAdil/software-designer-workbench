@@ -1,5 +1,5 @@
 /* ==========================================================================
- * views-knowledge.js —— 知识模块：要点速览、学习路径、易错点
+ * views-knowledge.js —— 知识模块：学习引导（目标/核心点/重点/难点）、要点速览、学习路径、易错点
  * ========================================================================== */
 (function (RK) {
   var U = RK.U;
@@ -55,6 +55,23 @@
       html += '<p class="muted mt-16" style="font-size:14px;line-height:1.8">' + U.esc(data.summary) + '</p>';
       html += '<div class="explain mt-16" style="border-left-color:' + mod.color + '"><div class="ex-title">考试定位</div>' + U.esc(data.examHint) + '</div>';
 
+      html += '<div class="divider"></div>';
+      html += '<h3 style="font-size:14.5px;margin-bottom:8px">学习引导</h3>';
+      [
+        { label: '学习目标', key: 'goals', color: mod.color },
+        { label: '核心知识点', key: 'core', color: mod.color },
+        { label: '重点', key: 'focus', color: 'var(--primary)' },
+        { label: '难点', key: 'hard', color: 'var(--danger)' }
+      ].forEach(function (g) {
+        var items = data[g.key] || [];
+        if (!items.length) return;
+        html += '<div class="point-block"><h4 style="color:' + g.color + '">' + g.label + '</h4><ul>';
+        items.forEach(function (it) { html += '<li>' + U.esc(it) + '</li>'; });
+        html += '</ul></div>';
+      });
+
+      html += '<div class="divider"></div>';
+      html += '<h3 style="font-size:14.5px;margin-bottom:8px">要点速览</h3>';
       (data.points || []).forEach(function (blk) {
         html += '<div class="point-block"><h4>' + U.esc(blk.title) + '</h4><ul>';
         blk.items.forEach(function (it) {
