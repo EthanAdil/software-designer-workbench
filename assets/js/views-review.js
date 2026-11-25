@@ -297,8 +297,9 @@
 
   /* ---------------- 导出备份：版本、分类与结构说明 ----------------
    * v1（旧备份）：仅 exportedAt + answers / wrong / exams / tasks，继续兼容导入。
-   * v2：新增 _meta（format / version / mode / categories / schema），根字段按需包含 8 类；
+   * v2：新增 _meta（format / version / mode / categories / schema），根字段按需包含 9 类；
    *     _meta.categories 决定恢复时覆盖哪些类别，未包含的类别保持本机不变。
+   *     真题成绩记录（realScores）在 v2 内扩展，旧备份缺此类时导入跳过。
    */
   var BACKUP_FORMAT = 'ruankao-sd-backup';
   var BACKUP_VERSION = 2;
@@ -321,6 +322,9 @@
     { key: 'realWrong', label: '真题错题（含复习状态）', store: 'real_wrong', type: 'object',
       desc: '真题 id → { count, choice, choiceText, order, resolved, stage, cause, conclusion, reviewTs, ts }；stage 为 todo / doing / done',
       read: function () { return RK.realRecord.wrongAll(); } },
+    { key: 'realScores', label: '真题成绩记录', store: 'real_scores', type: 'array',
+      desc: '数组，每次真题练习一条：{ id, ts, mode, paperKey, filter, total, answered, correct, rate, score, usedSec, byModule }；usedSec 为会话创建到完成的秒数',
+      read: function () { return RK.realRecord.scoresAll(); } },
     { key: 'realSel', label: '真题筛选记忆', store: 'real_sel', type: 'object',
       desc: '{ y, t, m, n }：年份、上下午、模块与题量',
       read: function () { return RK.store.get('real_sel', {}); } },
@@ -854,10 +858,356 @@
     }
   });
 
+  /* ---------------- 真题成绩分析：独立统计，不混入 exams ----------------
+   * 一条记录 = 一次完成的真题练习；筛选只在内存，不落盘。
+   */
+  var rsFilter = { years: [], types: [], modules: [], mode: '', range: 'all' };
+
+  function rsYears() {
+    var out = [];
+    (RK.real.papers || []).forEach(function (p) {
+      if (p.count && out.indexOf(p.year) < 0) out.push(p.year);
+    });
+    return out.sort(function (a, b) { return b - a; });
+  }
+
+  function rsPaperTypes() {
+    var out = [];
+    (RK.real.papers || []).forEach(function (p) {
+      if (p.count && out.indexOf(p.paperType) < 0) out.push(p.paperType);
+    });
+    return out;
+  }
+
+  function rsFiltered() {
+    var span = rsFilter.range === '7d' ? 7 * 86400000 : rsFilter.range === '30d' ? 30 * 86400000 : 0;
+    var now = Date.now();
+    return RK.realRecord.scoresAll().filter(function (r) {
+      if (span && !(r.ts && r.ts >= now - span)) return false;
+      if (rsFilter.mode && r.mode !== rsFilter.mode) return false;
+      var f = r.filter || {};
+      if (rsFilter.years.length && !(f.years || []).some(function (y) { return rsFilter.years.indexOf(y) >= 0; })) return false;
+      if (rsFilter.types.length && !(f.paperTypes || []).some(function (t) { return rsFilter.types.indexOf(t) >= 0; })) return false;
+      if (rsFilter.modules.length) {
+        var mods = (r.byModule || []).map(function (m) { return m.key; });
+        if (!mods.some(function (k) { return rsFilter.modules.indexOf(k) >= 0; })) return false;
+      }
+      return true;
+    }).sort(function (a, b) { return a.ts - b.ts; });
+  }
+
+  /* 当前阶段目标分：按计划阶段日期取 58 / 62 / 66 / 70，考后取最后阶段 */
+  function rsCurrentTarget() {
+    var stages = (window.RK_PLAN && window.RK_PLAN.stages) || [];
+    if (!stages.length) return 70;
+    var now = Date.now();
+    for (var i = 0; i < stages.length; i++) {
+      var parts = String(stages[i].range || '').split('~');
+      var start = Date.parse(parts[0] ? parts[0].trim() : '');
+      var end = Date.parse(parts[1] ? parts[1].trim() : '');
+      if (!isNaN(start) && !isNaN(end) && now >= start && now <= end) return stages[i].targetScore;
+    }
+    return stages[stages.length - 1].targetScore;
+  }
+
+  function rsAdvice() {
+    var mastery = RK.real.mastery();
+    var wrong = RK.realRecord.wrongAll();
+    var pending = {};
+    var causeCount = {};
+    Object.keys(wrong).forEach(function (id) {
+      var q = RK.real.qIndex[id];
+      if (!q || !q.module) return;
+      if (RK.real.stageOf(wrong[id]) !== 'done') pending[q.module] = (pending[q.module] || 0) + 1;
+      var k = q.module + '|' + (wrong[id].cause || '未归因');
+      causeCount[k] = (causeCount[k] || 0) + 1;
+    });
+
+    var weak = RK.MODULES.map(function (m) {
+      var s = mastery[m.key] || { rate: null, total: 0 };
+      return { key: m.key, name: m.name, weight: m.weight, rate: s.rate, total: s.total, pending: pending[m.key] || 0 };
+    }).filter(function (x) {
+      return x.rate !== null && x.rate < 0.60 && x.total >= 3;
+    }).sort(function (a, b) { return a.rate - b.rate; });
+
+    weak.forEach(function (x) {
+      var cause = '未归因', best = 0;
+      Object.keys(causeCount).forEach(function (k) {
+        if (k.indexOf(x.key + '|') !== 0 || causeCount[k] <= best) return;
+        best = causeCount[k];
+        cause = k.slice(x.key.length + 1);
+      });
+      x.cause = cause;
+    });
+
+    var ranked = weak.slice().map(function (x) {
+      return { key: x.key, name: x.name, score: x.weight * (1 - x.rate) + 0.5 * Math.min(x.pending, 5) };
+    }).sort(function (a, b) { return b.score - a.score; }).slice(0, 3);
+
+    var all = RK.realRecord.scoresAll();
+    var last = all.length ? all[all.length - 1] : null;
+    return {
+      weak: weak.slice(0, 3),
+      ranked: ranked,
+      target: last ? Math.min(last.score + (last.score < 45 ? 5 : 3), rsCurrentTarget()) : null,
+      modTargets: weak.slice(0, 3).map(function (x) {
+        return { name: x.name, from: x.rate, to: Math.min(x.rate + 0.10, 0.80) };
+      }),
+      hasScores: !!last
+    };
+  }
+
+  /* 下钻状态只在内存；按真题题目自带 topic 聚合累计正确率，与精要考点对照同源 */
+  var rsDrill = null;
+
+  function rsTopicDrill(moduleKey) {
+    var answers = RK.realRecord.answersAll();
+    var byTopic = {};
+    Object.keys(answers).forEach(function (id) {
+      var q = RK.real.qIndex[id];
+      if (!q || q.module !== moduleKey) return;
+      var a = answers[id] || {};
+      var t = q.topic || '未标注考点';
+      var row = byTopic[t] || (byTopic[t] = { topic: t, total: 0, correct: 0 });
+      row.total += (a.right || 0) + (a.wrong || 0);
+      row.correct += (a.right || 0);
+    });
+    return Object.keys(byTopic).map(function (k) {
+      var r = byTopic[k];
+      r.rate = r.total ? r.correct / r.total : null;
+      return r;
+    }).sort(function (a, b) { return (a.rate || 0) - (b.rate || 0); });
+  }
+
+  function rsSelect(label, attr, options) {
+    var h = '<label>' + label + ' <select data-rs="' + attr + '"><option value="">全部</option>';
+    options.forEach(function (o) {
+      h += '<option value="' + U.esc(o.value) + '">' + U.esc(o.label) + '</option>';
+    });
+    return h + '</select></label>';
+  }
+
+  function renderRealStats() {
+    var scores = RK.realRecord.scoresAll();
+    var list = rsFiltered();
+    var adv = rsAdvice();
+    var h = '<div class="card mt-16" id="real-stats">';
+    h += '<div class="card-head"><h2>真题成绩分析</h2>' +
+      '<span class="hint">每次完成练习记一条 · 与测评/模考成绩分开统计</span></div>';
+
+    h += '<div class="rs-advice"><div class="rs-advice-title">复习建议 · 基于真题练习</div>';
+    if (!adv.hasScores) {
+      h += RK.ui.empty('完成一次真题练习后生成复习建议');
+    } else if (!adv.weak.length) {
+      h += '<div class="dim" style="font-size:12.5px">当前没有正确率低于 60%（且样本 ≥ 3 题）的薄弱模块，保持节奏。</div>';
+    } else {
+      h += '<div class="rs-advice-grid">';
+      h += '<div><div class="rs-advice-sub">薄弱知识点</div>';
+      adv.weak.forEach(function (x) {
+        h += '<div class="rs-advice-row"><a href="#/real?m=' + encodeURIComponent(x.key) + '">' + U.esc(x.name) + '</a>' +
+          '<span class="dim mono">' + U.pct(x.rate) + ' · ' + x.total + ' 题 · 主错因 ' + U.esc(x.cause) + '</span>' +
+          '<button type="button" class="btn btn-sm btn-ghost" data-drill="' + U.esc(x.key) + '">考点下钻</button></div>';
+      });
+      h += '</div><div><div class="rs-advice-sub">复习优先级</div>';
+      adv.ranked.forEach(function (x, i) {
+        h += '<div class="rs-advice-row"><span class="badge ' +
+          (i === 0 ? 'badge-bad' : i === 1 ? 'badge-warn' : 'badge-plain') + '">' + (i + 1) + '</span>' +
+          U.esc(x.name) + '<span class="dim mono">' + x.score.toFixed(1) + '</span></div>';
+      });
+      h += '</div><div><div class="rs-advice-sub">下次提升目标</div>';
+      h += '<div class="rs-advice-row">折算分 <strong class="mono">' + adv.target + '</strong> / 75</div>';
+      adv.modTargets.forEach(function (x) {
+        h += '<div class="rs-advice-row">' + U.esc(x.name) +
+          '<span class="mono">' + U.pct(x.from) + ' → ' + U.pct(x.to) + '</span></div>';
+      });
+      h += '</div></div>';
+    }
+    h += '</div>';
+
+    if (rsDrill && RK.MODULE_MAP[rsDrill]) {
+      var drillRows = rsTopicDrill(rsDrill);
+      h += '<div class="rs-drill mt-8">';
+      h += '<div class="row" style="justify-content:space-between">' +
+        '<div class="rs-advice-sub">考点下钻 · ' + U.esc(RK.moduleName(rsDrill)) + '（按真题 topic 聚合）</div>' +
+        '<button type="button" class="btn btn-sm btn-ghost" data-drill="">收起</button></div>';
+      if (!drillRows.length) {
+        h += RK.ui.empty('该模块暂无真题作答记录');
+      } else {
+        h += '<table class="table"><thead><tr><th>考点（topic）</th><th>作答</th><th>正确率</th><th>评价</th></tr></thead><tbody>';
+        drillRows.forEach(function (x) {
+          var rate = x.rate || 0;
+          h += '<tr><td>' + U.esc(x.topic) + '</td>' +
+            '<td class="mono">' + x.correct + ' / ' + x.total + '</td>' +
+            '<td>' + RK.ui.bar(rate) + '<span class="dim" style="font-size:12px">' + U.pct(rate) + '</span></td>' +
+            '<td>' + (rate < 0.6 ? RK.ui.badge('薄弱', 'badge-bad') :
+              rate < 0.8 ? RK.ui.badge('待巩固', 'badge-warn') : RK.ui.badge('扎实', 'badge-ok')) + '</td></tr>';
+        });
+        h += '</tbody></table>';
+      }
+      h += '</div>';
+    }
+
+    var avg = scores.length ? scores.reduce(function (n, r) { return n + (r.rate || 0); }, 0) / scores.length : null;
+    var best = scores.length ? Math.max.apply(null, scores.map(function (r) { return r.score || 0; })) : null;
+    var latest = scores.length ? scores[scores.length - 1] : null;
+    h += '<div class="grid grid-4 mt-16">' +
+      '<div class="kpi"><span class="kpi-label">真题练习</span><span class="kpi-value">' + scores.length + ' <small>次</small></span></div>' +
+      '<div class="kpi"><span class="kpi-label">平均得分率</span><span class="kpi-value">' + (avg === null ? '—' : U.pct(avg)) + '</span></div>' +
+      '<div class="kpi"><span class="kpi-label">最近折算分</span><span class="kpi-value">' + (latest ? latest.score : '—') + ' <small>/ 75</small></span></div>' +
+      '<div class="kpi"><span class="kpi-label">最高折算分</span><span class="kpi-value">' + (best === null ? '—' : best) + ' <small>/ 75</small></span></div>' +
+      '</div>';
+
+    h += '<div class="rs-filter mt-16" id="rs-filter">' +
+      rsSelect('年份', 'year', rsYears().map(function (y) { return { value: y, label: y + ' 年' }; })) +
+      rsSelect('卷型', 'type', rsPaperTypes().map(function (t) {
+        return { value: t, label: RK.real.paperTypeLabel(t) };
+      })) +
+      rsSelect('模块', 'module', RK.MODULES.map(function (m) { return { value: m.key, label: m.short }; })) +
+      rsSelect('模式', 'mode', [{ value: 'paper', label: '整卷' }, { value: 'custom', label: '自选' }]) +
+      rsSelect('时间', 'range', [
+        { value: '7d', label: '近 7 天' }, { value: '30d', label: '近 30 天' }
+      ]) + '</div>';
+    h += '<div class="dim mt-8" style="font-size:12px">筛选同时作用于趋势图、分布图与记录表；模块雷达与模块柱状按全部真题作答累计，不受筛选影响。筛选仅本次会话有效。</div>';
+
+    var examSeries = RK.record.examsAll().map(function (e) {
+      return e.total ? Math.round(e.score / e.total * 75) : e.score;
+    });
+    var legend = '<div class="rs-legend">' +
+      (list.length >= 2 ? '<span><i style="background:#4c66f0"></i>真题（' + list.length + ' 次）</span>' : '') +
+      (examSeries.length >= 2 ? '<span><i style="background:#e0554b"></i>模考 / 测评（' + examSeries.length + ' 次）</span>' : '') +
+      '</div>';
+    var trendReady = list.length >= 2 || examSeries.length >= 2;
+
+    h += '<div class="grid grid-2 mt-16">';
+    h += '<div class="card" style="box-shadow:none;background:var(--surface-2)">' +
+      '<div class="card-head"><h2>真题 vs 模考趋势</h2><span class="hint">折算 75 分 · 虚线 45 分</span></div>' +
+      (trendReady ? legend + '<div class="chart-wrap"><canvas class="chart" id="rs-line"></canvas></div>' :
+        RK.ui.empty('至少完成两次真题练习或模考后显示趋势')) +
+      '<div class="dim mt-8" style="font-size:12px">两条线各按时间升序、等距铺开，横轴为「第 N 次」而非同一日期，仅用于水平对照。</div></div>';
+    h += '<div class="card" style="box-shadow:none;background:var(--surface-2)">' +
+      '<div class="card-head"><h2>模块掌握度雷达</h2><span class="hint">真题累计正确率 · 每圈 25%</span></div>' +
+      '<div class="chart-wrap"><canvas class="chart" id="rs-radar"></canvas></div>' +
+      '<div class="dim mt-8" style="font-size:12px">只读真题作答，与上方自编模块掌握度分开统计。</div></div>';
+    h += '</div>';
+
+    h += '<div class="grid grid-2 mt-16">';
+    h += '<div class="card" style="box-shadow:none;background:var(--surface-2)">' +
+      '<div class="card-head"><h2>模块得分率</h2><span class="hint">按正确率排序，便于精确比较</span></div>' +
+      '<div class="chart-wrap"><canvas class="chart" id="rs-mod-bars"></canvas></div></div>';
+    h += '<div class="card" style="box-shadow:none;background:var(--surface-2)">' +
+      '<div class="card-head"><h2>得分率分布</h2><span class="hint">按筛选后的练习次数分档</span></div>' +
+      '<div class="chart-wrap"><canvas class="chart" id="rs-dist"></canvas></div></div>';
+    h += '</div>';
+
+    h += '<div class="divider"></div><h3 style="font-size:14px;margin-bottom:8px">真题成绩记录 <span class="dim mono">' +
+      list.length + ' / ' + scores.length + '</span></h3>';
+    if (!list.length) {
+      h += RK.ui.empty(scores.length ? '当前筛选条件下没有记录' : '还没有真题成绩记录，完成一次真题练习后自动生成');
+    } else {
+      h += '<table class="table"><thead><tr><th>日期</th><th>模式</th><th>年份 / 卷型</th><th>题量</th>' +
+        '<th>答对</th><th>得分率</th><th>折算分</th><th>用时</th></tr></thead><tbody>';
+      list.slice().reverse().forEach(function (r) {
+        var f = r.filter || {};
+        var src = r.paperKey ? paperLabelOf(r.paperKey) :
+          ((f.years && f.years.length ? f.years.join('/') + ' 年' : '自选'));
+        h += '<tr><td class="dim nowrap">' + U.fmtDateTime(r.ts) + '</td>' +
+          '<td class="dim">' + (r.mode === 'paper' ? '整卷' : '自选') + '</td>' +
+          '<td>' + U.esc(src) + '</td>' +
+          '<td class="mono">' + r.correct + ' / ' + r.answered + ' <span class="dim">(' + r.total + ')</span></td>' +
+          '<td class="mono">' + r.correct + '</td>' +
+          '<td>' + RK.ui.bar(r.rate) + '<span class="dim" style="font-size:12px">' + U.pct(r.rate) + '</span></td>' +
+          '<td class="mono"><strong>' + r.score + '</strong></td>' +
+          '<td class="dim">' + (r.usedSec === undefined || r.usedSec === null ? '—' : U.fmtDuration(r.usedSec)) + '</td></tr>';
+      });
+      h += '</tbody></table>';
+    }
+    h += '</div>';
+    return h;
+  }
+
+  function paperLabelOf(key) {
+    var p = RK.real.paperMap[key];
+    return p ? p.label : key;
+  }
+
+  function mountRealStats(el) {
+    var list = rsFiltered();
+    var line = el.querySelector('#rs-line');
+    if (line) {
+      var examLine = RK.record.examsAll().map(function (e) {
+        return e.total ? Math.round(e.score / e.total * 75) : e.score;
+      });
+      var series = [];
+      if (list.length >= 2) series.push(list.map(function (r) { return r.score; }));
+      if (examLine.length >= 2) series.push(examLine);
+      if (series.length) {
+        RK.drawLine(line, series, {
+          max: 75, passLine: 45, height: 220, colors: ['#4c66f0', '#e0554b']
+        });
+      }
+    }
+
+    var radar = el.querySelector('#rs-radar');
+    if (radar) {
+      var mastery = RK.real.mastery();
+      RK.drawRadar(radar, RK.MODULES.map(function (m) {
+        var s = mastery[m.key] || { rate: null };
+        return { label: m.short, value: s.rate === null ? 0 : s.rate, color: m.color };
+      }));
+    }
+
+    var modBars = el.querySelector('#rs-mod-bars');
+    if (modBars) {
+      var m2 = RK.real.mastery();
+      var items = RK.MODULES.map(function (m) {
+        return { label: m.short, value: m2[m.key].rate === null ? 0 : m2[m.key].rate, color: m.color };
+      }).sort(function (a, b) { return b.value - a.value; });
+      RK.drawBars(modBars, items, { max: 1, height: 200 });
+    }
+
+    var dist = el.querySelector('#rs-dist');
+    if (dist) {
+      var buckets = [0, 0, 0, 0];
+      list.forEach(function (r) {
+        var p = (r.rate || 0) * 100;
+        buckets[p < 45 ? 0 : p < 60 ? 1 : p < 75 ? 2 : 3] += 1;
+      });
+      RK.drawBars(dist, [
+        { label: '<45%', value: buckets[0] }, { label: '45~59%', value: buckets[1] },
+        { label: '60~74%', value: buckets[2] }, { label: '≥75%', value: buckets[3] }
+      ], { height: 200 });
+    }
+
+    var box = el.querySelector('#rs-filter');
+    if (box) {
+      Array.prototype.forEach.call(box.querySelectorAll('[data-rs]'), function (input) {
+        input.addEventListener('change', function () {
+          var key = input.getAttribute('data-rs');
+          var val = input.value;
+          if (key === 'range') rsFilter.range = val || 'all';
+          else if (key === 'mode') rsFilter.mode = val;
+          else {
+            /* 控件名为单数（year/type/module），状态字段为复数 */
+            var field = key === 'year' ? 'years' : key === 'type' ? 'types' : 'modules';
+            rsFilter[field] = val ? [field === 'years' ? Number(val) : val] : [];
+          }
+          RK.router.render();
+        });
+      });
+    }
+
+    Array.prototype.forEach.call(el.querySelectorAll('[data-drill]'), function (btn) {
+      btn.addEventListener('click', function () {
+        rsDrill = btn.getAttribute('data-drill') || null;
+        RK.router.render();
+      });
+    });
+  }
+
   /* ============================ 成绩分析 ============================ */
   RK.router.add('stats', {
     title: '成绩分析',
-    sub: '历次测评与模拟考试成绩趋势、模块掌握度、数据备份',
+    sub: '测评 / 模考与真题成绩趋势、模块掌握度、复习建议、数据备份',
     render: function () {
       var exams = RK.record.examsAll();
       var mastery = RK.mastery();
@@ -890,6 +1240,8 @@
         h += '</tbody></table>';
       }
       h += '</div>';
+
+      h += renderRealStats();
 
       h += '<div class="card mt-16"><div class="card-head"><h2>模块掌握度雷达</h2>' +
         '<span class="hint">13 个模块累计正确率，网格每圈 25%；未练模块记 0</span></div>';
@@ -956,6 +1308,8 @@
     },
 
     mount: function (el) {
+      mountRealStats(el);
+
       var exams = RK.record.examsAll();
       var canvas = el.querySelector('#score-chart');
       if (canvas && exams.length >= 2) {

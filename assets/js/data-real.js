@@ -175,6 +175,65 @@
   }
   R.stageOf = stageOf;
 
+  /* 13 模块真题累计正确率：与自编 RK.mastery() 同粒度，但只读真题作答 */
+  R.mastery = function () {
+    var answers = RK.realRecord.answersAll();
+    var out = {};
+    RK.MODULES.forEach(function (m) { out[m.key] = { total: 0, correct: 0, rate: null }; });
+    Object.keys(answers).forEach(function (id) {
+      var q = R.qIndex[id];
+      if (!q || !out[q.module]) return;
+      var a = answers[id] || {};
+      out[q.module].total += (a.right || 0) + (a.wrong || 0);
+      out[q.module].correct += (a.right || 0);
+    });
+    Object.keys(out).forEach(function (k) {
+      out[k].rate = out[k].total ? out[k].correct / out[k].total : null;
+    });
+    return out;
+  };
+
+  var SCORE_KEY = 'real_scores';
+
+  /* 一次练习小结 → 一条成绩记录；分母只算已作答题，未答不进分母 */
+  function buildScore(meta, s) {
+    var byMod = {};
+    var correct = 0;
+    Object.keys(s.picked).forEach(function (i) {
+      var q = s.list[Number(i)];
+      if (!q) return;
+      var ok = s.picked[i] === q.answer;
+      if (ok) correct += 1;
+      var m = byMod[q.module] || (byMod[q.module] = { key: q.module, total: 0, correct: 0, rate: 0 });
+      m.total += 1;
+      if (ok) m.correct += 1;
+    });
+    var byModule = Object.keys(byMod).map(function (k) {
+      var m = byMod[k];
+      m.rate = m.total ? m.correct / m.total : 0;
+      return m;
+    });
+    var answered = Object.keys(s.picked).length;
+    var rate = answered ? correct / answered : 0;
+    var ts = Date.now();
+    var list = RK.store.get(SCORE_KEY, []);
+    var seq = list.filter(function (r) { return r.ts === ts; }).length + 1;
+    return {
+      id: 'RS-' + ts + '-' + seq,
+      ts: ts,
+      mode: meta.mode || 'custom',
+      paperKey: meta.paperKey || null,
+      filter: meta.filter || { years: [], paperTypes: [], modules: [], n: 0 },
+      total: s.list.length,
+      answered: answered,
+      correct: correct,
+      rate: rate,
+      score: Math.round(rate * 75),
+      usedSec: (s.startedAt && s.finishedAt) ? Math.max(0, Math.round((s.finishedAt - s.startedAt) / 1000)) : null,
+      byModule: byModule
+    };
+  }
+
   RK.realRecord = {
     /* choice 为本次展示选项下标，order 为乱序映射；choiceText 直接存展示文本 */
     answer: RK.createAnswerRecorder(KEYS, {
@@ -225,6 +284,13 @@
     },
     answersAll: function () { return RK.store.get(KEYS.answers, {}); },
     wrongAll: function () { return RK.store.get(KEYS.wrong, {}); },
+    /* 成绩记录：每次练习完成一条，与 rk_sd_exams 分开 */
+    scoresAll: function () { return RK.store.get(SCORE_KEY, []); },
+    finishScore: function (meta, s) {
+      var row = buildScore(meta, s);
+      RK.record.addRealScore(row);
+      return row;
+    },
     unresolvedIds: function () {
       var wrong = RK.realRecord.wrongAll();
       return Object.keys(wrong).filter(function (id) { return stageOf(wrong[id]) !== 'done'; });

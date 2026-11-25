@@ -188,6 +188,21 @@
       params.s || '', params.y || '', params.t || '', params.n || ''].join('|');
   }
 
+  /* 成绩记录的来源快照：整卷记套卷 key，其余记自选条件（单题/错题重做条件为空） */
+  function scoreMetaOf(params) {
+    if (params.p) return { mode: 'paper', paperKey: params.p, filter: null };
+    return {
+      mode: 'custom',
+      paperKey: null,
+      filter: {
+        years: splitParam(params.y).map(Number),
+        paperTypes: splitParam(params.t),
+        modules: splitParam(params.m),
+        n: Number(params.n) || 0
+      }
+    };
+  }
+
   function ensureSession(params) {
     var sig = signature(params);
     if (session && session.sig === sig) return session;
@@ -195,6 +210,7 @@
     session = EX.createSession(sig, list,
       params.w ? 'w' : (params.q ? 'q' : (params.s ? 's' : (params.p && params.m ? 'pm' : (params.p ? 'p' : (params.m ? 'm' : 'all'))))),
       titleOf(params));
+    session.scoreMeta = scoreMetaOf(params);
     return session;
   }
 
@@ -418,6 +434,7 @@
         return '<a class="btn' + (i === 0 ? '' : ' btn-ghost') + '" href="#/real?p=' + encodeURIComponent(p.key) + '">练 ' + U.esc(p.label) + ' 整套</a>';
       }).join('') +
       '<a class="btn btn-ghost" href="#/real?w=1"' + (unresolved.length ? '' : ' style="opacity:.5;pointer-events:none"') + '>重做真题错题</a>' +
+      '<a class="btn btn-ghost" href="#/stats">真题成绩分析</a>' +
       '</div></div>';
 
     h += renderBuilder();
@@ -670,6 +687,7 @@
         getSession: function () { return session; },
         setSession: function (s) { session = s; },
         answer: function (q, ok, i, order) { RK.realRecord.answer(q, ok, i, order); },
+        onFinish: function (s) { RK.realRecord.finishScore(s.scoreMeta, s); },
         renderBox: renderBox,
         renderCounters: renderCounters,
         qbox: '#real-qbox',

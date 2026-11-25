@@ -179,6 +179,7 @@ window.RK = window.RK || {};
     wrong: 'wrong',
     exams: 'exams',
     tasks: 'tasks',
+    realScores: 'real_scores',
     theme: 'theme'
   };
   RK.KEYS = KEYS;
@@ -256,6 +257,14 @@ window.RK = window.RK || {};
       var list = RK.store.get(KEYS.exams, []);
       list.push(row);
       RK.store.set(KEYS.exams, list);
+    },
+    /* 真题成绩：与 exams 分开存，每次真题练习完成一条 */
+    realScoresAll: function () { return RK.store.get(KEYS.realScores, []); },
+    addRealScore: function (row) {
+      var list = RK.store.get(KEYS.realScores, []);
+      list.push(row);
+      RK.store.set(KEYS.realScores, list);
+      return row;
     },
     clearAll: function () {
       Object.keys(KEYS).forEach(function (k) {
@@ -472,6 +481,7 @@ window.RK = window.RK || {};
 
   /* ------------------------------------------------------------------
    * 9. 折线图（原生 canvas，无依赖）
+   * series 为数值数组（单线）或数组的数组（多线对照，opts.colors 指定颜色）
    * ------------------------------------------------------------------ */
   RK.drawLine = function (canvas, series, opts) {
     if (!canvas) return;
@@ -521,34 +531,46 @@ window.RK = window.RK || {};
     series = series || [];
     if (!series.length) return;
 
-    var stepX = series.length > 1 ? w / (series.length - 1) : 0;
-    var pts = series.map(function (v, idx) {
-      return {
-        x: padL + stepX * idx,
-        y: padT + h - (Math.max(minY, Math.min(maxY, v)) - minY) / (maxY - minY) * h,
-        v: v
-      };
-    });
+    var multi = Array.isArray(series[0]);
+    var lines = multi ? series : [series];
+    var palette = opts.colors || ['#4c66f0', '#e0554b', '#0ea5a4', '#8b5cf6'];
 
-    ctx.beginPath();
-    pts.forEach(function (p, idx) {
-      if (idx === 0) ctx.moveTo(p.x, p.y); else ctx.lineTo(p.x, p.y);
-    });
-    ctx.strokeStyle = '#4c66f0';
-    ctx.lineWidth = 2;
-    ctx.stroke();
+    lines.forEach(function (line, li) {
+      if (!line || !line.length) return;
+      var color = palette[li % palette.length];
+      var stepX = line.length > 1 ? w / (line.length - 1) : 0;
+      var pts = line.map(function (v, idx) {
+        var val = Number(v) || 0;
+        return {
+          x: padL + stepX * idx,
+          y: padT + h - (Math.max(minY, Math.min(maxY, val)) - minY) / (maxY - minY) * h,
+          v: v
+        };
+      });
 
-    ctx.lineTo(pts[pts.length - 1].x, padT + h);
-    ctx.lineTo(pts[0].x, padT + h);
-    ctx.closePath();
-    ctx.fillStyle = 'rgba(76,102,240,.10)';
-    ctx.fill();
-
-    ctx.fillStyle = '#4c66f0';
-    pts.forEach(function (p) {
       ctx.beginPath();
-      ctx.arc(p.x, p.y, 3, 0, Math.PI * 2);
-      ctx.fill();
+      pts.forEach(function (p, idx) {
+        if (idx === 0) ctx.moveTo(p.x, p.y); else ctx.lineTo(p.x, p.y);
+      });
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      /* 单序列保留原面积填充；多序列不填充，避免叠色误读 */
+      if (!multi) {
+        ctx.lineTo(pts[pts.length - 1].x, padT + h);
+        ctx.lineTo(pts[0].x, padT + h);
+        ctx.closePath();
+        ctx.fillStyle = 'rgba(76,102,240,.10)';
+        ctx.fill();
+      }
+
+      ctx.fillStyle = color;
+      pts.forEach(function (p) {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, 3, 0, Math.PI * 2);
+        ctx.fill();
+      });
     });
   };
 

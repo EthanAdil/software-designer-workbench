@@ -9,7 +9,8 @@
     createSession: function (sig, list, mode, title) {
       return {
         sig: sig, mode: mode, list: list, idx: 0,
-        picked: {}, correct: 0, wrong: 0, done: false, title: title
+        picked: {}, correct: 0, wrong: 0, done: false, title: title,
+        startedAt: Date.now()
       };
     },
 
@@ -94,6 +95,12 @@
           el.querySelector(cfg.qbox).innerHTML = cfg.renderBox();
         } else if (act === 'finish') {
           s.done = true;
+          if (!s.finishedAt) s.finishedAt = Date.now();
+          /* 成绩落盘只做一次：重复点「完成」或重渲染不会重复计数 */
+          if (cfg.onFinish && !s.scoreRecorded) {
+            s.scoreRecorded = true;
+            cfg.onFinish(s);
+          }
           el.querySelector(cfg.qbox).innerHTML = cfg.renderBox();
         } else if (act === 'reset') {
           cfg.setSession(null);

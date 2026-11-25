@@ -171,5 +171,45 @@ if (causeOptCount < RK.CAUSES.length + 1) {
   problems.push('错因下拉选项不足：期望至少 ' + (RK.CAUSES.length + 1) + ' 项，实际 ' + causeOptCount);
 }
 
+/* 真题成绩分析：成绩落盘、折算分、模块拆分、建议与备份类别（2026-11-25） */
+const scoreMeta = { mode: 'custom', paperKey: null,
+  filter: { years: [2023], paperTypes: ['morning'], modules: ['os'], n: 0 } };
+const scoreSession = {
+  picked: { 0: 1, 1: 1, 2: 1 },
+  list: [
+    { id: 'V-1', module: 'os', answer: 1 },
+    { id: 'V-2', module: 'os', answer: 0 },
+    { id: 'V-3', module: 'network', answer: 1 }
+  ]
+};
+const beforeAnswers = sandbox.__memory['rk_sd_answers'];
+const beforeExams = sandbox.__memory['rk_sd_exams'];
+const scoreRow = RK.realRecord.finishScore(scoreMeta, scoreSession);
+if (scoreRow.score !== 50 || scoreRow.byModule.length !== 2) {
+  problems.push('真题成绩折算分/模块拆分不符：' + JSON.stringify(scoreRow));
+}
+if (JSON.parse(sandbox.__memory['rk_sd_real_scores'] || '[]').length !== 1) {
+  problems.push('真题成绩未落盘到 rk_sd_real_scores');
+}
+if (sandbox.__memory['rk_sd_answers'] !== beforeAnswers || sandbox.__memory['rk_sd_exams'] !== beforeExams) {
+  problems.push('真题成绩写入改变了自编作答或成绩键');
+}
+/* 两次练习后才出现趋势图 */
+RK.realRecord.finishScore(scoreMeta, scoreSession);
+const osRealIds = RK.real.questions.filter(q => q.module === 'os').slice(0, 5).map(q => q.id);
+const osAnswers = {};
+osRealIds.forEach((id, i) => {
+  osAnswers[id] = { right: i === 0 ? 1 : 0, wrong: i === 0 ? 0 : 4, last: false, ts: Date.now() };
+});
+sandbox.localStorage.setItem('rk_sd_real_answers', JSON.stringify(osAnswers));
+const scoreHtml = RK.router.routes.stats.render({});
+['真题成绩分析', '复习建议', '薄弱知识点', '复习优先级', '下次提升目标',
+  'data-backup-key="realScores"', 'id="rs-line"', '真题 vs 模考趋势',
+  'rs-legend', 'data-drill=', '<th>用时</th>'].forEach(k => {
+  if (!scoreHtml.includes(k)) problems.push('成绩分析页缺少真题分区内容: ' + k);
+});
+if (scoreRow.usedSec !== null) problems.push('无时间戳的成绩记录 usedSec 应为 null');
+if (/undefined|NaN/.test(scoreHtml)) problems.push('真题成绩分析渲染出现 undefined/NaN');
+
 console.log('');
 report(problems, [], '全部视图渲染通过', { errTitle: '' });
