@@ -12,9 +12,9 @@
   "exam": "软件设计师（中级）· 上午卷（综合知识）",
   "paperType": "morning",
   "total": 75,
-  "included": 53,
+  "included": 54,
   "absent": "原卷 PDF 缺第 41~47 题。",
-  "excluded": "第 17、18、20、23、24、35、36、48、49、50、54、55、60、61、65 题依赖原卷配图、表格、代码或 OCR 残缺，未录入。",
+  "excluded": "第 17、18、20、23、24、35、36、48、49、50、54、55、60、61 题依赖原卷配图、表格、代码或 OCR 残缺，未录入。",
   "source": "https://github.com/xiaomabenten/software_designer/tree/main/02.%20%E7%9C%9F%E9%A2%98%E5%8F%8A%E8%A7%A3%E6%9E%90%EF%BC%882020%E5%B9%B4-2024%E5%B9%B4%EF%BC%89",
   "sourceLabel": "xiaomabenten/software_designer",
   "answerSource": "原卷答案",
@@ -22,7 +22,7 @@
   "explanationSource": "原卷解析",
   "verified": "crosschecked",
   "pending": false,
-  "sourceNote": "来源：xiaomabenten/software_designer（MIT），文件路径 `02. 真题及解析（2020年-2024年）/2020年11月软件设计师上午真题及答案解析.pdf`；chenxuhl/medium-software-designer 的 `历年真题/2020年11月软件设计师上午真题及答案解析.pdf` 与之哈希一致，为同源副本。真题原文与解析权利归原命题/出版/整理方，本库仅本地个人备考使用。"
+  "sourceNote": "来源：xiaomabenten/software_designer（MIT），文件路径 `02. 真题及解析（2020年-2024年）/2020年11月软件设计师上午真题及答案解析.pdf`；chenxuhl/medium-software-designer 的 `历年真题/2020年11月软件设计师上午真题及答案解析.pdf` 与之哈希一致，为同源副本。2026-11-26 按本地 PDF `docs/真题/2009-2023真题答案解析/2020年11月软件设计师上午真题及答案解析.pdf` 补入第 65 题（题面、答案、解析齐全，选项上标按数学含义还原）。真题原文与解析权利归原命题/出版/整理方，本库仅本地个人备考使用。"
 });
 
   RK.real.register([
@@ -797,6 +797,28 @@
     ],
     "answer": 1,
     "explanation": "一个无向图 G=(V,E) 是连通的，那么边的数目大于等于顶点的数目减一：|E|>=|V|-1，而反之不成立。如果 G=(V,E) 是有向图，那么它是强连通图的必要条件是边的数目大于等于顶点的数目：|E|>=|V|，而反之不成立。没有回路的无向图是连通的当且仅当它是树，即等价于：|E|=|V|-1。有向完全图:n个顶点的有向图有n(n-1)条边。无向完全图:n个顶点的无向图有n(n-1)/2条边。",
+    "group": 1,
+    "blank": 0
+  },
+  {
+    "id": "ZR-2020-11-065",
+    "paper": "2020-11",
+    "no": 65,
+    "module": "ds-algorithm",
+    "topic": "渐进复杂度比较",
+    "stem": "根据渐进分析，下列各组表达式按增长率从低到高排列正确的是（ ）。",
+    "options": [
+      "lg n、1000n、n^(2/3)、n^4、n!、2^n",
+      "n^(2/3)、1000n、lg n、n^4、n!、2^n",
+      "lg n、1000n、n^(2/3)、2^n、n^4、n!",
+      "lg n、n^(2/3)、1000n、n^4、2^n、n!"
+    ],
+    "answer": 3,
+    "explanation": "按增长率从低到高为：lg n、n^(2/3)、1000n、n^4、2^n、n!。常数系数不改变渐进阶；n! 的增长快于指数函数。",
+    "source": "docs/真题/2009-2023真题答案解析/2020年11月软件设计师上午真题及答案解析.pdf",
+    "answerSource": "docs/真题/2009-2023真题答案解析/2020年11月软件设计师上午真题及答案解析.pdf",
+    "explanationSource": "docs/真题/2009-2023真题答案解析/2020年11月软件设计师上午真题及答案解析.pdf",
+    "verified": "crosschecked",
     "group": 1,
     "blank": 0
   },

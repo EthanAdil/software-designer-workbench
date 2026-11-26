@@ -7,16 +7,16 @@
   RK.real.registerPaper({
     key: '2022-05', year: 2022, half: '上半年', label: '2022 年上半年',
     exam: '软件设计师（中级）· 上午卷（综合知识）', paperType: 'morning',
-    total: 75, included: 26,
-    absent: '第 31—75 题来源页不可见，公开检索未找到完整可校对题面/答案。',
-    excluded: '第 5 题依赖系统结构图；第 11 题来源答案与解析矛盾（防御 SQL 注入应为部署 IDS 而非 WAF）；第 28 题答案与按题干数据推导结果不符；第 30 题答案未显示。共 4 题未录入（第 31—75 见 absent）。',
+    total: 75, included: 30,
+    absent: '第 35—75 题来源页不可见，公开检索未找到完整可校对题面/答案。',
+    excluded: '第 5 题依赖系统结构图；第 11 题来源答案与解析矛盾（防御 SQL 注入应为部署 IDS 而非 WAF）；第 28 题答案与按题干数据推导结果不符；第 31 题来源无解析。共 4 题未录入（第 35—75 见 absent）。',
     source: 'https://m.renrendoc.com/paper/395586433.html',
     sourceLabel: '人人文库（全文版）',
     answerSource: '人人文库（全文版）',
     answerSourceUrl: 'https://m.renrendoc.com/paper/395586433.html',
     explanationSource: '人人文库解析 + CSDN/希赛交叉校订（自编推导）',
     verified: 'single-source', pending: false,
-    sourceNote: '题面/答案/解析主要来自人人文库 DOCX 文字版，题号 1-30 连续，与希赛分段题面交叉核对一致；第 2、5 题选项按希赛/CSDN 原文修正转写错误。单源标注；第 31-75 无完整来源，不录入。'
+    sourceNote: '题面/答案/解析主要来自人人文库 DOCX 文字版，题号 1-30 连续，与希赛分段题面交叉核对一致；第 2、5 题选项按希赛/CSDN 原文修正转写错误。2026-11-26 按本地 PDF `docs/真题/2009-2023真题答案解析/2022年05月软件设计师上午真题及答案解析.pdf` 补入第 30、32、33、34 题（题面、答案、解析齐全）；第 31 题该 PDF 无解析故不录入。单源标注；第 35-75 无完整来源，不录入。'
   });
 
   var S = 'https://m.renrendoc.com/paper/395586433.html';
@@ -46,7 +46,11 @@
     { id:'ZR-2022-05-025', paper:'2022-05', no:25, module:'database', topic:'关系代数等价', stem:'关系代数表达式 σR.B>S.F(R⋈S) 与（25）等价。', options:['σ2>8(R×S)','Π1,2,3,4,7,8(σ1=5∧2>8∧4=6(R×S))','σ"2">"8"(R×S)','Π1,2,3,4,7,8(σ1=5∧"2">"8"∧4=6(R×S))'], answer:1, explanation:'参考答案 B：需在笛卡尔积上附加同名列相等条件并投影出去重后的 6 列。', group:1, blank:0 },
     { id:'ZR-2022-05-026', paper:'2022-05', no:26, module:'ds-algorithm', topic:'散列表', stem:'以下关于散列表（哈希表）及其查找特点的叙述中，正确的是（26）。', options:['在散列表中进行查找时，只需要与待查找关键字及其同义词进行比较','只要散列表的装填因子不大于 1/2，就能避免冲突','用线性探测法解决冲突容易产生聚集问题','用链地址法解决冲突可确保平均查找长度为 1'], answer:2, explanation:'参考答案 C：线性探测会使冲突元素聚集，降低查找效率。', group:1, blank:0 },
     { id:'ZR-2022-05-027', paper:'2022-05', no:27, module:'ds-algorithm', topic:'折半查找判定树', stem:'对长度为 n 的有序顺序表进行折半查找的过程可用一棵判定树表示，该判定树的形态符合（27）的特点。', options:['最优二叉树（即哈夫曼树）','平衡二叉树','完全二叉树','最小生成树'], answer:1, explanation:'参考答案 B：每次取中间元素划分，判定树左右子树高度接近，是平衡二叉树。', group:1, blank:0 },
-    { id:'ZR-2022-05-029', paper:'2022-05', no:29, module:'ds-algorithm', topic:'排序稳定性', stem:'排序算法的稳定性是指将待排序列排序后，能确保排序码中的相对位置保持不变。（29）是稳定的排序算法。', options:['冒泡排序','快速排序','堆排序','简单选择排序'], answer:0, explanation:'参考答案 A：冒泡排序稳定；快速、堆、简单选择排序均不稳定。', group:1, blank:0 }
+    { id:'ZR-2022-05-029', paper:'2022-05', no:29, module:'ds-algorithm', topic:'排序稳定性', stem:'排序算法的稳定性是指将待排序列排序后，能确保排序码中的相对位置保持不变。（29）是稳定的排序算法。', options:['冒泡排序','快速排序','堆排序','简单选择排序'], answer:0, explanation:'参考答案 A：冒泡排序稳定；快速、堆、简单选择排序均不稳定。', group:1, blank:0 },
+    { id:'ZR-2022-05-030', paper:'2022-05', no:30, module:'ds-algorithm', topic:'邻接表与有向图', stem:'某图 G 的邻接表中共有奇数个表示边的表结点，则图 G（30）。', options:['有奇数个顶点','有偶数个顶点','是无向图','是有向图'], answer:3, explanation:'无向图中每条边在两个端点的邻接表中各出现一次，边表结点数为偶数；有奇数个边表结点只能是有向图。顶点数奇偶无法由边数确定。', source:'docs/真题/2009-2023真题答案解析/2022年05月软件设计师上午真题及答案解析.pdf', answerSource:'docs/真题/2009-2023真题答案解析/2022年05月软件设计师上午真题及答案解析.pdf', explanationSource:'docs/真题/2009-2023真题答案解析/2022年05月软件设计师上午真题及答案解析.pdf', verified:'single-source', group:1, blank:0 },
+    { id:'ZR-2022-05-032', paper:'2022-05', no:32, module:'network', topic:'远程登录协议', stem:'在 TCP/IP 协议栈中，远程登录采用的协议为（32）。', options:['HTTP','TELNET','SMTP','FTP'], answer:1, explanation:'TELNET 是远程登录服务的标准协议；HTTP 用于网页传输，SMTP 用于邮件发送，FTP 用于文件传输。', source:'docs/真题/2009-2023真题答案解析/2022年05月软件设计师上午真题及答案解析.pdf', answerSource:'docs/真题/2009-2023真题答案解析/2022年05月软件设计师上午真题及答案解析.pdf', explanationSource:'docs/真题/2009-2023真题答案解析/2022年05月软件设计师上午真题及答案解析.pdf', verified:'single-source', group:1, blank:0 },
+    { id:'ZR-2022-05-033', paper:'2022-05', no:33, module:'network', topic:'无痕浏览', stem:'浏览器开启无痕浏览模式时，（33）仍然会被保存。', options:['浏览历史','搜索历史','下载的文件','临时文件'], answer:2, explanation:'无痕模式不保存浏览历史、搜索历史与临时文件；用户主动下载的文件会保留在磁盘上。', source:'docs/真题/2009-2023真题答案解析/2022年05月软件设计师上午真题及答案解析.pdf', answerSource:'docs/真题/2009-2023真题答案解析/2022年05月软件设计师上午真题及答案解析.pdf', explanationSource:'docs/真题/2009-2023真题答案解析/2022年05月软件设计师上午真题及答案解析.pdf', verified:'single-source', group:1, blank:0 },
+    { id:'ZR-2022-05-034', paper:'2022-05', no:34, module:'network', topic:'电子邮件协议', stem:'下列不属于电子邮件收发协议的是（34）。', options:['SMTP','POP3','IMAP','FTP'], answer:3, explanation:'SMTP 用于发送邮件，POP3 与 IMAP 用于接收和访问邮件；FTP 是文件传输协议，不属于电子邮件收发协议。', source:'docs/真题/2009-2023真题答案解析/2022年05月软件设计师上午真题及答案解析.pdf', answerSource:'docs/真题/2009-2023真题答案解析/2022年05月软件设计师上午真题及答案解析.pdf', explanationSource:'docs/真题/2009-2023真题答案解析/2022年05月软件设计师上午真题及答案解析.pdf', verified:'single-source', group:1, blank:0 }
   ].map(function (q) {
     q.source = q.source || '人人文库（全文版）';
     q.sourceUrl = q.sourceUrl || S;
