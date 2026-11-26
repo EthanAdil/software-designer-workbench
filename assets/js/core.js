@@ -179,7 +179,10 @@ window.RK = window.RK || {};
     wrong: 'wrong',
     exams: 'exams',
     tasks: 'tasks',
+    realAnswers: 'real_answers',
+    realWrong: 'real_wrong',
     realScores: 'real_scores',
+    realSel: 'real_sel',
     theme: 'theme'
   };
   RK.KEYS = KEYS;
@@ -266,6 +269,7 @@ window.RK = window.RK || {};
       RK.store.set(KEYS.realScores, list);
       return row;
     },
+    /* 统一清理：除主题外，KEYS 中全部键（含 real_answers / real_wrong / real_scores / real_sel）一并删除 */
     clearAll: function () {
       Object.keys(KEYS).forEach(function (k) {
         if (k !== 'theme') RK.store.del(KEYS[k]);

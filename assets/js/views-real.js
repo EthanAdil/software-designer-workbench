@@ -205,7 +205,8 @@
 
   function ensureSession(params) {
     var sig = signature(params);
-    if (session && session.sig === sig) return session;
+    /* 已完成的会话不再复用：再次点同一组自选条件时开新局，否则只会看到旧小结且不落新成绩 */
+    if (session && session.sig === sig && !session.done) return session;
     var list = buildList(params).map(RK.variant);
     session = EX.createSession(sig, list,
       params.w ? 'w' : (params.q ? 'q' : (params.s ? 's' : (params.p && params.m ? 'pm' : (params.p ? 'p' : (params.m ? 'm' : 'all'))))),

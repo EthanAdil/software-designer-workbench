@@ -33,6 +33,11 @@
   function boot() {
     RK.theme.init();
 
+    if (RK.realRecord && RK.realRecord.removeBackfilledScores) {
+      var removed = RK.realRecord.removeBackfilledScores();
+      if (removed) console.info('[真题成绩] 已移除历史回填记录 ' + removed + ' 条');
+    }
+
     var toggle = document.getElementById('theme-toggle');
     if (toggle) {
       toggle.addEventListener('click', function () { RK.theme.toggle(); });

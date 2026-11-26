@@ -291,6 +291,13 @@
       RK.record.addRealScore(row);
       return row;
     },
+    /* 历史回填已撤销：启动时移除此前生成的带 backfill 标记记录，不触碰真实练习成绩 */
+    removeBackfilledScores: function () {
+      var list = RK.store.get(SCORE_KEY, []);
+      var kept = list.filter(function (r) { return !(r && r.backfill); });
+      if (kept.length !== list.length) RK.store.set(SCORE_KEY, kept);
+      return list.length - kept.length;
+    },
     unresolvedIds: function () {
       var wrong = RK.realRecord.wrongAll();
       return Object.keys(wrong).filter(function (id) { return stageOf(wrong[id]) !== 'done'; });

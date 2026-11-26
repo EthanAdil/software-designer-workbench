@@ -910,6 +910,23 @@
     return stages[stages.length - 1].targetScore;
   }
 
+  /* 历史累计：只读 real_answers，展示成绩功能上线前 / 未完成会话的逐题作答，不写 real_scores */
+  function rsHistoryCumulative() {
+    var answers = RK.realRecord.answersAll();
+    var total = 0, correct = 0, covered = 0, lastTs = 0;
+    Object.keys(answers).forEach(function (id) {
+      var a = answers[id] || {};
+      var right = a.right || 0;
+      var wrong = a.wrong || 0;
+      if (right + wrong <= 0) return;
+      covered += 1;
+      total += right + wrong;
+      correct += right;
+      if (a.ts && a.ts > lastTs) lastTs = a.ts;
+    });
+    return { total: total, correct: correct, covered: covered, rate: total ? correct / total : null, lastTs: lastTs };
+  }
+
   function rsAdvice() {
     var mastery = RK.real.mastery();
     var wrong = RK.realRecord.wrongAll();
@@ -980,10 +997,24 @@
   }
 
   function rsSelect(label, attr, options) {
-    var h = '<label>' + label + ' <select data-rs="' + attr + '"><option value="">全部</option>';
+    /* 控件名为单数（year/type/module），状态字段为复数（years/types/modules） */
+    var field = attr === 'year' ? 'years' : attr === 'type' ? 'types' : attr === 'module' ? 'modules' : attr;
+    var current = attr === 'range' ? rsFilter.range : attr === 'mode' ? rsFilter.mode :
+      (rsFilter[field] && rsFilter[field].length ? rsFilter[field][0] : '');
+    var allOn = current === '' || current === 'all';
+    var found = allOn;
+    var h = '<label>' + label + ' <select data-rs="' + attr + '">' +
+      '<option value=""' + (allOn ? ' selected' : '') + '>全部</option>';
     options.forEach(function (o) {
-      h += '<option value="' + U.esc(o.value) + '">' + U.esc(o.label) + '</option>';
+      var on = !allOn && String(o.value) === String(current);
+      if (on) found = true;
+      h += '<option value="' + U.esc(o.value) + '"' +
+        (on ? ' selected' : '') + '>' + U.esc(o.label) + '</option>';
     });
+    /* 当前筛选值不在可选列表中时补一项，避免筛选生效却看不到 */
+    if (!found) {
+      h += '<option value="' + U.esc(current) + '" selected>' + U.esc(current) + '</option>';
+    }
     return h + '</select></label>';
   }
 
@@ -1023,6 +1054,20 @@
       h += '</div></div>';
     }
     h += '</div>';
+
+    var hist = rsHistoryCumulative();
+    h += '<div class="card mt-16" style="box-shadow:none;background:var(--surface-2)">' +
+      '<div class="card-head"><h2>历史累计（真题作答）</h2><span class="hint">逐题累计 · 不计入成绩与趋势</span></div>' +
+      (hist.total ?
+        '<div class="grid grid-4">' +
+        '<div class="kpi"><span class="kpi-label">累计作答</span><span class="kpi-value">' + hist.total + ' <small>题次</small></span></div>' +
+        '<div class="kpi"><span class="kpi-label">累计答对</span><span class="kpi-value">' + hist.correct + ' <small>题次</small></span></div>' +
+        '<div class="kpi"><span class="kpi-label">累计正确率</span><span class="kpi-value">' + U.pct(hist.rate) + '</span></div>' +
+        '<div class="kpi"><span class="kpi-label">最近作答</span><span class="kpi-value" style="font-size:16px">' +
+          U.fmtDateTime(hist.lastTs) + '</span></div>' +
+        '</div>' : RK.ui.empty('暂无真题作答记录')) +
+      '<div class="dim mt-8" style="font-size:12px">只读 rk_sd_real_answers（含成绩功能上线前与未完成会话的逐题累计），不生成成绩记录、不进 KPI / 趋势；下方成绩统计仍只统计点过「完成练习，查看小结」的会话。</div>' +
+      '</div>';
 
     if (rsDrill && RK.MODULE_MAP[rsDrill]) {
       var drillRows = rsTopicDrill(rsDrill);
@@ -1066,8 +1111,11 @@
       rsSelect('模式', 'mode', [{ value: 'paper', label: '整卷' }, { value: 'custom', label: '自选' }]) +
       rsSelect('时间', 'range', [
         { value: '7d', label: '近 7 天' }, { value: '30d', label: '近 30 天' }
-      ]) + '</div>';
-    h += '<div class="dim mt-8" style="font-size:12px">筛选同时作用于趋势图、分布图与记录表；模块雷达与模块柱状按全部真题作答累计，不受筛选影响。筛选仅本次会话有效。</div>';
+      ]) +
+      '<button type="button" class="btn btn-sm btn-ghost" data-act="rs-clear">清空筛选</button></div>';
+    var customCount = scores.filter(function (r) { return r.mode === 'custom'; }).length;
+    h += '<div class="dim mt-8" style="font-size:12px">共 ' + scores.length + ' 条成绩：自选 ' + customCount +
+      ' · 整卷 ' + (scores.length - customCount) + '。筛选同时作用于趋势图、分布图与记录表；模块雷达与模块柱状按全部真题作答累计，不受筛选影响。筛选不落盘，在当前页面会话内保留，刷新后重置。</div>';
 
     var examSeries = RK.record.examsAll().map(function (e) {
       return e.total ? Math.round(e.score / e.total * 75) : e.score;
@@ -1108,8 +1156,23 @@
         '<th>答对</th><th>得分率</th><th>折算分</th><th>用时</th></tr></thead><tbody>';
       list.slice().reverse().forEach(function (r) {
         var f = r.filter || {};
-        var src = r.paperKey ? paperLabelOf(r.paperKey) :
-          ((f.years && f.years.length ? f.years.join('/') + ' 年' : '自选'));
+        var src;
+        if (r.paperKey) {
+          src = paperLabelOf(r.paperKey);
+        } else {
+          var bits = [];
+          if (f.years && f.years.length) bits.push(f.years.join('/') + ' 年');
+          if (f.paperTypes && f.paperTypes.length) {
+            bits.push(f.paperTypes.map(function (t) { return RK.real.paperTypeLabel(t); }).join('/'));
+          }
+          var mods = f.modules || [];
+          if (mods.length) {
+            var names = mods.map(function (k) { return RK.moduleName(k); });
+            bits.push(names.length > 3 ? names.slice(0, 3).join('/') + ' 等 ' + names.length + ' 个模块' : names.join('/'));
+          }
+          if (f.n) bits.push(f.n + ' 题档');
+          src = bits.length ? bits.join(' · ') : '自选';
+        }
         h += '<tr><td class="dim nowrap">' + U.fmtDateTime(r.ts) + '</td>' +
           '<td class="dim">' + (r.mode === 'paper' ? '整卷' : '自选') + '</td>' +
           '<td>' + U.esc(src) + '</td>' +
@@ -1194,6 +1257,13 @@
           RK.router.render();
         });
       });
+      var clearBtn = box.querySelector('[data-act="rs-clear"]');
+      if (clearBtn) {
+        clearBtn.addEventListener('click', function () {
+          rsFilter = { years: [], types: [], modules: [], mode: '', range: 'all' };
+          RK.router.render();
+        });
+      }
     }
 
     Array.prototype.forEach.call(el.querySelectorAll('[data-drill]'), function (btn) {
