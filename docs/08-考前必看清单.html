@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="color-scheme" content="light dark" />
+<title>08 · 考前必看清单（初版） · 软件设计师</title>
+<link rel="icon" type="image/svg+xml" href="../assets/img/favicon.svg" />
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/img/favicon-32x32.png" />
+<link rel="icon" href="../favicon.ico" sizes="any" />
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/img/apple-touch-icon.png" />
+<link rel="stylesheet" href="../assets/css/main.css" />
+<link rel="stylesheet" href="../assets/css/doc.css" />
+</head>
+<body class="doc-body">
+<header class="doc-topbar">
+  <a class="doc-back" href="../index.html">← 返回工作台</a>
+  <span class="doc-crumb">docs</span>
+</header>
+<main class="doc">
+<h1>08 · 考前必看清单（初版）</h1>
+<blockquote><p>初版 2026-11-27（W4），只收已刷五模块：组成、OS、数据结构、程序语言、软件工程；网络、数据库、面向对象待后续阶段补入。公式给适用条件，易混概念给一句区分点；每周模考后增补，考前只翻本文。</p></blockquote>
+<h2>一、计算机组成与体系结构</h2>
+<div class="doc-table"><table><thead><tr><th>公式 / 结论</th><th>适用条件与易错</th></tr></thead><tbody><tr><td>补码范围 −2<sup>(n−1)</sup> ~ 2<sup>(n−1)</sup>−1</td><td>n 位；<code>1000…0</code> = −2<sup>(n−1)</sup>，无对应正数</td></tr><tr><td>海明码：2<sup>k</sup> ≥ n + k + 1</td><td>n 数据位、k 校验位；纠 1 位、检 2 位</td></tr><tr><td>IEEE 754：阶码定范围，尾数定精度</td><td>float 1+8+23，double 1+11+52；偏移量 2<sup>(e−1)</sup>−1</td></tr><tr><td>主存容量 = 存储单元数 × 单元位数</td><td>地址线位数 = log2(单元数)；按字节编址时单元数 = 容量</td></tr><tr><td>执行时间 = 指令数 × CPI ÷ 主频</td><td>主频先统一为 Hz；MIPS = 主频 ÷ CPI</td></tr><tr><td>Cache 平均访问时间 = h × t_C + (1−h) × (t_C + t_M)</td><td>未命中路径也要先查 Cache，别漏 t_C</td></tr><tr><td>流水线总时间 = 首条各段之和 + (n−1) × 最长段</td><td>各段等长时 = (k+n−1)T；加速比上限 = k</td></tr><tr><td>并联可靠度 = 1 − (1−R)<sup>n</sup>；串联 = ∏R_i</td><td>并联先取反再乘，串联直接乘；n 个同可靠度才用幂</td></tr><tr><td>总线带宽 = 数据线位数 ÷ 8 × 频率</td><td>32 位 = 4B；位与字节先换算</td></tr><tr><td>寻址空间 = 2^地址线根数 × 数据线位数 ÷ 8</td><td>地址线定范围，数据线定字长；结果按字节</td></tr></tbody></table></div>
+<div class="doc-table"><table><thead><tr><th>A</th><th>B</th><th>区分点</th></tr></thead><tbody><tr><td>数据总线</td><td>地址总线</td><td>一次并行传输位数 vs 可寻址单元数 2<sup>n</sup></td></tr><tr><td>SRAM</td><td>DRAM</td><td>触发器、不刷新、集成度低 vs 电容、需刷新、集成度高</td></tr><tr><td>RISC</td><td>CISC</td><td>指令精简、硬布线、适合流水线 vs 指令复杂、微程序</td></tr><tr><td>中断</td><td>DMA</td><td>慢速随机设备、CPU 逐次处理 vs 高速块设备、直接访存</td></tr></tbody></table></div>
+<h2>二、操作系统</h2>
+<div class="doc-table"><table><thead><tr><th>公式 / 结论</th><th>适用条件与易错</th></tr></thead><tbody><tr><td>页内位数 = log2(页大小)；页号位数 = 逻辑地址位数 − 页内位数</td><td>4KB → 12 位；页号 = 地址 ÷ 页大小 取整</td></tr><tr><td>一级索引最大文件 = (块大小 ÷ 索引项) × 块大小</td><td>1KB/4B = 256 项 → 256KB；二级再乘 256</td></tr><tr><td>响应比 = (等待 + 服务) ÷ 服务</td><td>越大越优先；分子是等待+服务，不是服务时间</td></tr><tr><td>周转 = 完成 − 到达；带权周转 = 周转 ÷ 服务</td><td>先逐作业列完再平均；别忘减到达时间</td></tr><tr><td>位示图：字号 = 块号 ÷ 字长；位号 = 块号 mod 字长</td><td>位号/字号从 0 起；32 位字长即 mod 32</td></tr><tr><td>缺页率 = 缺页次数 ÷ 访问次数</td><td>LRU 手画物理块栈，逐次更新最近使用顺序</td></tr><tr><td>PV：互斥初值 1、同步初值 0；P 减 1、V 加 1</td><td>生产者消费者：mutex=1、empty=N、full=0</td></tr></tbody></table></div>
+<div class="doc-table"><table><thead><tr><th>A</th><th>B</th><th>区分点</th></tr></thead><tbody><tr><td>页号</td><td>页内地址</td><td>地址高位 vs 低位；页大小决定页内位数</td></tr><tr><td>响应比</td><td>周转时间</td><td>调度优先级 vs 完成−到达</td></tr><tr><td>进程</td><td>线程</td><td>资源分配单位 vs CPU 调度单位</td></tr><tr><td>一级索引</td><td>二级索引</td><td>256KB vs 64MB（1KB 块、4B 项）</td></tr></tbody></table></div>
+<h2>三、数据结构与算法</h2>
+<div class="doc-table"><table><thead><tr><th>公式 / 结论</th><th>适用条件与易错</th></tr></thead><tbody><tr><td>二叉树：n0 = n2 + 1；完全二叉树 n 偶 n0 = n/2，n 奇 n0 = (n+1)/2</td><td>只对二叉树；多叉树不适用</td></tr><tr><td>m 阶 B 树：非根非叶关键字 ⌈m/2⌉−1 ~ m−1</td><td>根至少 1 个；5 阶即 2~4</td></tr><tr><td>建堆 O(n)；堆排序整体 O(n log n)</td><td>建堆自底向上；别把两者混为一个</td></tr><tr><td>快排平均 O(n log n)，最坏 O(n²)</td><td>基本有序/逆序 + 首元素枢轴时最坏</td></tr><tr><td>简单选择比较次数 = n(n−1)/2</td><td>与初始序列无关；移动次数 0~3(n−1)</td></tr><tr><td>Dijkstra 单源 O(n²)；Floyd 全源 O(n³) / O(n²)</td><td>Dijkstra 不能负权；Floyd 可负权、不能负权回路</td></tr><tr><td>装填因子 α = 记录数 ÷ 表长</td><td>α 越大冲突越多、ASL 越大；开放定址 α ≤ 0.75</td></tr><tr><td>哈夫曼：WPL = Σ(权 × 路径长度)；n 叶共 2n−1 结点</td><td>WPL 不是权值和；只有度 0/2 结点</td></tr><tr><td>0-1 背包用 DP；分数背包用贪心</td><td>物品能否分割是分界</td></tr></tbody></table></div>
+<div class="doc-table"><table><thead><tr><th>A</th><th>B</th><th>区分点</th></tr></thead><tbody><tr><td>建堆</td><td>堆排序</td><td>O(n) vs O(n log n)</td></tr><tr><td>Dijkstra</td><td>Floyd</td><td>单源 vs 全源；负权</td></tr><tr><td>快排最坏</td><td>快排平均</td><td>O(n²) 基本有序 vs O(n log n)</td></tr><tr><td>0-1 背包</td><td>分数背包</td><td>不可分割 DP vs 可分割贪心</td></tr><tr><td>稳定排序</td><td>不稳定排序</td><td>插入/冒泡/归并/基数 vs 选择/希尔/快排/堆</td></tr></tbody></table></div>
+<h2>四、程序设计语言与编译</h2>
+<div class="doc-table"><table><thead><tr><th>公式 / 结论</th><th>适用条件与易错</th></tr></thead><tbody><tr><td>编译生成目标代码；解释逐句执行</td><td>目标代码生成与硬件最密切</td></tr><tr><td>中缀 → 前缀/后缀：括号 → 高优先级 → 低优先级</td><td>操作数顺序不变；前缀运算符在前、后缀在后</td></tr><tr><td>传值 = 复制实参值；传址 = 共享地址；传名 = 文本替换</td><td>传值不改实参；传址改实参</td></tr><tr><td>静态类型编译期检查；动态类型运行期检查</td><td>重载编译期、重写运行期</td></tr><tr><td>表达式树：前序 = 前缀，后序 = 后缀，中序 = 中缀</td><td>中缀要加括号才唯一</td></tr><tr><td>编译五阶段：词法 → 语法 → 语义 → 中间代码（含优化） → 目标代码</td><td>符号表贯穿；目标代码生成最依赖硬件</td></tr></tbody></table></div>
+<div class="doc-table"><table><thead><tr><th>A</th><th>B</th><th>区分点</th></tr></thead><tbody><tr><td>编译</td><td>解释</td><td>生成目标代码 vs 不生成、逐句执行</td></tr><tr><td>重载</td><td>重写</td><td>同类不同参/编译期 vs 子类覆盖/运行期</td></tr><tr><td>传值</td><td>传址</td><td>复制值 vs 共享地址</td></tr><tr><td>静态绑定</td><td>动态绑定</td><td>编译期确定 vs 运行期按对象类型确定</td></tr></tbody></table></div>
+<h2>五、软件工程</h2>
+<div class="doc-table"><table><thead><tr><th>公式 / 结论</th><th>适用条件与易错</th></tr></thead><tbody><tr><td>PERT 期望 = (O + 4M + P) ÷ 6</td><td>权重 4 给最可能；不是三者平均</td></tr><tr><td>关键路径 = 最长路径，总时差 0</td><td>决定最短工期；可能多条</td></tr><tr><td>McCabe V(G) = E − N + 2 = 判定结点 + 1 = 区域数</td><td>单连通图；三式结果应一致</td></tr><tr><td>沟通路径 = n(n−1) ÷ 2</td><td>n 人两两沟通，不重复计</td></tr><tr><td>耦合（低→高）：非直接 &lt; 数据 &lt; 标记 &lt; 控制 &lt; 外部 &lt; 公共 &lt; 内容</td><td>越低越好</td></tr><tr><td>内聚（高→低）：功能 &gt; 顺序 &gt; 通信 &gt; 过程 &gt; 时间 &gt; 逻辑 &gt; 偶然</td><td>越高越好</td></tr><tr><td>维护占比：改善性 &gt; 适应性 &gt; 改正性 &gt; 预防性</td><td>改善性最大，约 50%+</td></tr><tr><td>ISO 9126 六特性：功能、可靠、易用、效率、可维护、可移植</td><td>不含可扩展性</td></tr></tbody></table></div>
+<div class="doc-table"><table><thead><tr><th>A</th><th>B</th><th>区分点</th></tr></thead><tbody><tr><td>结构化分析</td><td>面向对象分析</td><td>DFD + 数据字典 vs 类图 + 顺序图</td></tr><tr><td>时间内聚</td><td>功能内聚</td><td>同一时间段执行 vs 单一功能</td></tr><tr><td>关键路径</td><td>最短路径</td><td>项目最长路径/总时差 0 vs 图的最短路径</td></tr><tr><td>判定表/判定树</td><td>DFD</td><td>加工逻辑 vs 数据流动（无控制流）</td></tr></tbody></table></div>
+</main>
+<footer class="doc-footer">本文档由同名 Markdown 生成（UTF-8 编码）；内容修改请改 .md 后重新运行 <code>node tools/build-docs.js</code>。</footer>
+</body>
+</html>

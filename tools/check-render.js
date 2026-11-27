@@ -74,6 +74,9 @@ if (!realHome.includes('按模块浏览') || !realHome.includes('2020 年下半�
 if (!realHome.includes('自选真题练习') || !realHome.includes('data-act="real-start"')) {
   problems.push('真题首页缺少自选真题练习筛选器');
 }
+if (!realHome.includes('data-scale="75"')) {
+  problems.push('自选真题练习缺少 75 题档（上午卷满卷题量）');
+}
 if (!realHome.includes('2025 年') || !realHome.includes('待补')) {
   problems.push('真题首页缺少 2025/2026 待补年份');
 }
@@ -94,6 +97,11 @@ const realCustom = RK.router.routes.real.render({ s: '1', y: '2023,2024', t: 'mo
 const realCustomCount = realCustom.match(/第 1 \/ (\d+) 题/);
 if (!realCustomCount || realCustomCount[1] !== '20') {
   problems.push('自选真题题量不符：期望 20 题（2023+2024 匹配池已超 20，按 20 题档截断），实际 ' + (realCustomCount ? realCustomCount[1] : '未渲染'));
+}
+const real75 = RK.router.routes.real.render({ s: '1', t: 'morning', n: '75' });
+const real75Count = real75.match(/第 1 \/ (\d+) 题/);
+if (!real75Count || real75Count[1] !== '75') {
+  problems.push('自选真题 75 题档不符：期望 75 题（全库匹配池 445 题），实际 ' + (real75Count ? real75Count[1] : '未渲染'));
 }
 const real2025 = RK.router.routes.real.render({ p: '2025-05', browse: '1' });
 if (!real2025.includes('#/real?q=ZR-2025-05-') || !real2025.includes('原题')) {

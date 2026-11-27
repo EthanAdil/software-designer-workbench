@@ -39,7 +39,8 @@
     return '<div class="opts-hint">以下选项仅对应题干' + label + '；其余横线请在同一原题的其他题目中作答。</div>';
   }
   var SEL_KEY = 'real_sel';
-  var SCALES = [0, 20, 30, 50];
+  /* 0 = 全部匹配题；75 = 上午卷满卷题量，与真题总题量一致 */
+  var SCALES = [0, 20, 30, 50, 75];
 
   function paperLabel(key) {
     return RK.real.paperMap[key] ? RK.real.paperMap[key].label : key;
@@ -90,7 +91,7 @@
       if (Object.prototype.toString.call(saved.m) === '[object Array]') {
         sel.modules = saved.m.filter(function (k) { return !!RK.MODULE_MAP[k]; });
       }
-      if ([0, 20, 30, 50].indexOf(Number(saved.n)) >= 0) sel.n = Number(saved.n);
+      if (SCALES.indexOf(Number(saved.n)) >= 0) sel.n = Number(saved.n);
     }
     return sel;
   }

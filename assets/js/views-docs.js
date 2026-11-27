@@ -1,5 +1,5 @@
 /* ==========================================================================
- * views-docs.js —— 备考文档：docs/ 下 18 篇备考 HTML 的汇总入口
+ * views-docs.js —— 备考文档：docs/ 下 19 篇备考 HTML 的汇总入口
  * 工作台自身文档（docs/平台开发/）不在此列，只在本页提示位置。
  * ========================================================================== */
 (function (RK) {
@@ -87,7 +87,7 @@
     },
     {
       name: '专项与技巧',
-      hint: '下午题模板与上午卷避坑',
+      hint: '下午题模板、上午卷避坑与考前速查',
       layout: 'list',
       items: [
         {
@@ -99,26 +99,24 @@
           title: '04 · 答题技巧与避坑清单',
           desc: '时间分配、答题顺序、蒙题原则、易混对比',
           path: 'docs/04-答题技巧与避坑清单.html'
+        },
+        {
+          title: '08 · 考前必看清单（初版）',
+          desc: '五模块核心公式与易混概念，公式附适用条件，考前速查',
+          path: 'docs/08-考前必看清单.html'
         }
       ]
     },
     {
-      name: '工具模板',
-      hint: '错题归档用',
+      name: '错题与周复盘',
+      hint: '每周归档 + 周日复盘，数据同源',
       layout: 'list',
       items: [
         {
           title: '05 · 错题周次归档',
           desc: 'W1 起按周归档：分类记录、原因分析、知识点归纳、改进措施，含错因标签口径',
           path: 'docs/05-错题周次归档.html'
-        }
-      ]
-    },
-    {
-      name: '周复盘',
-      hint: '每周日填一次，数据来自「错题本 → 数据管理 → 导出备份」',
-      layout: 'list',
-      items: [
+        },
         {
           title: '06 · 周复盘',
           desc: '按 01 第六节模板记录的 W1 起每周复盘：任务、刷题、错题、自评与下周动作',
@@ -148,14 +146,14 @@
 
   RK.router.add('docs', {
     title: '备考文档',
-    sub: 'docs 下 18 篇备考文档的 HTML 版本，按主题分组，点击在新标签打开；工作台开发文档在 docs/平台开发/，不在此列',
+    sub: 'docs 下 19 篇备考文档的 HTML 版本，按主题分组，点击在新标签打开；工作台开发文档在 docs/平台开发/，不在此列',
     render: function () {
       var total = 0;
       GROUPS.forEach(function (g) { total += g.items.length; });
 
       var h = '<div class="card"><div class="card-head"><h2>文档总览</h2>' +
         '<span class="hint">共 ' + total + ' 篇 · UTF-8 HTML</span></div>' +
-        '<p class="dim" style="margin:0;font-size:13px">建议顺序：00 情报 → 01 计划 → 02 精要（随学习进度）→ 03 / 04 专项与技巧 → 05 错题归档 → 06 周复盘（每周日）→ 07 真题来源（W27）。</p>' +
+        '<p class="dim" style="margin:0;font-size:13px">建议顺序：00 情报 → 01 计划 → 02 精要（随学习进度）→ 03 / 04 专项与技巧 → 05 / 06 错题与周复盘（每周）→ 07 真题来源（W27）→ 08 考前必看（冲刺）。</p>' +
         '<div class="row-wrap mt-8" style="font-size:12px;color:var(--text-3)">' +
         '<span>Markdown 为源文件</span><span>·</span>' +
         '<span>修改后运行 <span class="mono">node tools/build-docs.js</span> 重新生成 HTML</span>' +
